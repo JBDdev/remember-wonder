@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CollectMote : MonoBehaviour
 {
+    [SerializeField] private Renderer modelRend;
+    [SerializeField] private ParticleSystem collectPSys;
     [SerializeField][TagSelector] private string[] collectorTags;
 
     /// <summary>
@@ -19,7 +21,9 @@ public class CollectMote : MonoBehaviour
         {
             MoteCollected?.Invoke(this);
             //TODO: Become translucent and uncollectable, or collectable but without increasing number?
-            Destroy(gameObject);
+            modelRend.enabled = false;
+
+            if (collectPSys) { collectPSys.Play(); }
         }
     }
 }
