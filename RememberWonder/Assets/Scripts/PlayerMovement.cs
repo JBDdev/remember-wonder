@@ -14,6 +14,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public bool usedJump = false;
     [SerializeField] public float maxIncline;
 
+    [Header("External References")]
+    [SerializeField] GameObject cameraFollower;
+
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -29,8 +32,8 @@ public class PlayerMovement : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate()
-    {                  
-        Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+    {
+        Vector3 direction = (cameraFollower.transform.forward * Input.GetAxis("Vertical")) + (cameraFollower.transform.right * Input.GetAxis("Horizontal"));
 
         transform.position += direction * Time.deltaTime * maxSpeed;
 
