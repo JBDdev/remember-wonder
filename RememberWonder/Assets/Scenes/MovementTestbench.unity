@@ -1295,7 +1295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1971491815}
   verticalPivot: {fileID: 721266535}
-  rotateOnMouseDown: 1
+  rotateOnMouseDown: 0
   invertX: 0
   invertY: 0
   lookSpeed: 1000

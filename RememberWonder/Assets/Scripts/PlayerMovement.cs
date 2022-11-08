@@ -17,7 +17,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("External References")]
     [SerializeField] GameObject cameraFollower;
 
+    //Internal Component References
     Rigidbody rb;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 direction = (cameraFollower.transform.forward * Input.GetAxis("Vertical")) + (cameraFollower.transform.right * Input.GetAxis("Horizontal"));
+
+        direction.Normalize();
 
         transform.position += direction * Time.deltaTime * maxSpeed;
 
