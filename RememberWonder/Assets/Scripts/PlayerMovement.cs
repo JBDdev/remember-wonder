@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Player Movement Variables")]
     [SerializeField] float maxSpeed;
+    [SerializeField] float accModifier;
 
     //TODO: Evaluate utility of Input System Package
 
@@ -39,8 +40,13 @@ public class PlayerMovement : MonoBehaviour
 
         direction.Normalize();
 
-        transform.position += direction * Time.deltaTime * maxSpeed;
+        rb.AddForce(direction * accModifier, ForceMode.Acceleration);
+        //transform.position += direction * maxSpeed * Time.deltaTime;
 
+        //Clamp the output velocity
+        rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y, Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
+
+        //Jump handling
         if (Input.GetAxis("Jump") > 0 && !usedJump) 
         {
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
