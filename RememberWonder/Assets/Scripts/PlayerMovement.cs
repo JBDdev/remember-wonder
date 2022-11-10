@@ -15,11 +15,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public bool usedJump = false;
     [SerializeField] public float maxIncline;
 
+    [Header("Child Object References")]
+    [SerializeField] GameObject holdLocation;
+
     [Header("External References")]
     [SerializeField] GameObject cameraFollower;
+    [SerializeField] GameObject heldObject;
 
     //Internal Component References
     Rigidbody rb;
+
+    //Accessors
+    public GameObject HoldLocation {get {return holdLocation;}}
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update() 
     {
-        
     }
 
     // Update is called once per frame
@@ -40,9 +46,14 @@ public class PlayerMovement : MonoBehaviour
 
         direction.Normalize();
 
-        rb.AddForce(direction * accModifier, ForceMode.Acceleration);
-        //transform.position += direction * maxSpeed * Time.deltaTime;
 
+        //Brody's Note to Self: The best way to acheive better velocity clamping would be to scale the force being applied by how close we are to maximum speed.
+
+        // if(rb.velocity.sqrMagnitude < maxSpeed * maxSpeed)
+        //     rb.AddForce(direction * accModifier, ForceMode.Acceleration);
+        //transform.position += direction * maxSpeed * Time.deltaTime;
+ 
+        rb.AddForce(direction * accModifier, ForceMode.Acceleration);
         //Clamp the output velocity
         rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y, Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
 
@@ -66,4 +77,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
+
 }
