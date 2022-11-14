@@ -10,10 +10,21 @@ public static class InputHub
         get
         {
             if (instance == null)
+            {
                 instance = new BaseControls();
+                instance.Enable();
+            }
 
             return instance;
         }
+    }
+
+    public static void ToggleInputEnabled(bool enabled)
+    {
+        if (enabled)
+            Inst.Enable();
+        else
+            Inst.Disable();
     }
 
     /// <summary>
