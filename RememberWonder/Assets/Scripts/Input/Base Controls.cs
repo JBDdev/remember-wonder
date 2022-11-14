@@ -53,6 +53,33 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LookX"",
+                    ""type"": ""Value"",
+                    ""id"": ""95fd8a73-dc9b-4465-be11-b354025386f3"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LookY"",
+                    ""type"": ""Value"",
+                    ""id"": ""50f4c6a5-0978-4a81-9a41-dd6fa2243e12"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""EnablePointerLook"",
+                    ""type"": ""Button"",
+                    ""id"": ""cd37d751-c032-4057-a18b-f351f19e7ed3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -165,6 +192,61 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""82c9a73c-b286-4ee5-a64f-0d26ca00581e"",
+                    ""path"": ""<Gamepad>/rightStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookX"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d3c32f44-a4b7-4f0c-89f7-a7860773f86a"",
+                    ""path"": ""<Pointer>/delta/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookX"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""53005fd0-bdf2-4499-aa2e-7082572195c7"",
+                    ""path"": ""<Gamepad>/rightStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookY"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""19088ca5-4b01-4a79-b482-49ee2b342385"",
+                    ""path"": ""<Pointer>/delta/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookY"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3351e96c-8e44-4a8c-b357-104ed463f789"",
+                    ""path"": ""<Pointer>/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EnablePointerLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -176,6 +258,9 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
         m_Gameplay_MoveX = m_Gameplay.FindAction("MoveX", throwIfNotFound: true);
         m_Gameplay_MoveY = m_Gameplay.FindAction("MoveY", throwIfNotFound: true);
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
+        m_Gameplay_LookX = m_Gameplay.FindAction("LookX", throwIfNotFound: true);
+        m_Gameplay_LookY = m_Gameplay.FindAction("LookY", throwIfNotFound: true);
+        m_Gameplay_EnablePointerLook = m_Gameplay.FindAction("EnablePointerLook", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -238,6 +323,9 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_MoveX;
     private readonly InputAction m_Gameplay_MoveY;
     private readonly InputAction m_Gameplay_Jump;
+    private readonly InputAction m_Gameplay_LookX;
+    private readonly InputAction m_Gameplay_LookY;
+    private readonly InputAction m_Gameplay_EnablePointerLook;
     public struct GameplayActions
     {
         private @BaseControls m_Wrapper;
@@ -245,6 +333,9 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
         public InputAction @MoveX => m_Wrapper.m_Gameplay_MoveX;
         public InputAction @MoveY => m_Wrapper.m_Gameplay_MoveY;
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
+        public InputAction @LookX => m_Wrapper.m_Gameplay_LookX;
+        public InputAction @LookY => m_Wrapper.m_Gameplay_LookY;
+        public InputAction @EnablePointerLook => m_Wrapper.m_Gameplay_EnablePointerLook;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -263,6 +354,15 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
                 @Jump.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
+                @LookX.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookX;
+                @LookX.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookX;
+                @LookX.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookX;
+                @LookY.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookY;
+                @LookY.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookY;
+                @LookY.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookY;
+                @EnablePointerLook.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnablePointerLook;
+                @EnablePointerLook.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnablePointerLook;
+                @EnablePointerLook.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnablePointerLook;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -276,6 +376,15 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @LookX.started += instance.OnLookX;
+                @LookX.performed += instance.OnLookX;
+                @LookX.canceled += instance.OnLookX;
+                @LookY.started += instance.OnLookY;
+                @LookY.performed += instance.OnLookY;
+                @LookY.canceled += instance.OnLookY;
+                @EnablePointerLook.started += instance.OnEnablePointerLook;
+                @EnablePointerLook.performed += instance.OnEnablePointerLook;
+                @EnablePointerLook.canceled += instance.OnEnablePointerLook;
             }
         }
     }
@@ -285,5 +394,8 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
         void OnMoveX(InputAction.CallbackContext context);
         void OnMoveY(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnLookX(InputAction.CallbackContext context);
+        void OnLookY(InputAction.CallbackContext context);
+        void OnEnablePointerLook(InputAction.CallbackContext context);
     }
 }
