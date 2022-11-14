@@ -5,6 +5,10 @@ using UnityEngine;
 public static class InputHub
 {
     private static BaseControls instance;
+    /// <summary>
+    /// The hub's input instance, from which everything else is accessed.<br/>
+    /// If the instance is null, it will be instantiated, enabled, and then returned.
+    /// </summary>
     public static BaseControls Inst
     {
         get
