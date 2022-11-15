@@ -20,6 +20,11 @@ public class CameraController : MonoBehaviour
     {
         transform.position = player.transform.position;
 
+        RotateCamera();
+    }
+
+    private void RotateCamera()
+    {
         //If we rotate on mouse down, and none of the mouse buttons are down, don't rotate.
         if (rotateOnMouseDown && !(Input.GetMouseButton(0) || Input.GetMouseButton(1) || Input.GetMouseButton(2)))
             return;
