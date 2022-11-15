@@ -8,8 +8,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSpeed;
     [SerializeField] float accModifier;
 
-    //TODO: Evaluate utility of Input System Package
-
     [Header("Jump Controls")]
     [SerializeField] float jumpForce;
     [SerializeField] public bool usedJump = false;
@@ -21,22 +19,40 @@ public class PlayerMovement : MonoBehaviour
     //Internal Component References
     Rigidbody rb;
 
-    // Start is called before the first frame update
     void Start()
     {
         //Get references to components on the GameObject
         rb = GetComponent<Rigidbody>();
-    }
 
-    void Update() 
+        InputHub.Inst.Gameplay.Jump.performed += OnJumpPerformed;
+    }
+    private void OnDestroy()
     {
-        
+        InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
     }
 
-    // Update is called once per frame
+    private void OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    {
+        print($"Jump performed, did we press or release?: " +
+            $"{(InputHub.Inst.Gameplay.Jump.WasPressedThisFrame() ? "Pressed" : "Released")}");
+
+        if (usedJump)
+            return;
+
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.AddForce(new Vector3(0f, jumpForce, 0f));
+        usedJump = true;
+    }
+
+    void Update()
+    {
+
+    }
+
     void FixedUpdate()
     {
-        Vector3 direction = (cameraFollower.transform.forward * Input.GetAxis("Vertical")) + (cameraFollower.transform.right * Input.GetAxis("Horizontal"));
+        Vector3 direction = cameraFollower.transform.forward * InputHub.Inst.Gameplay.MoveY.ReadValue<float>();
+        direction += cameraFollower.transform.right * InputHub.Inst.Gameplay.MoveX.ReadValue<float>();
 
         direction.Normalize();
 
@@ -45,15 +61,6 @@ public class PlayerMovement : MonoBehaviour
 
         //Clamp the output velocity
         rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y, Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
-
-        //Jump handling
-        if (Input.GetAxis("Jump") > 0 && !usedJump) 
-        {
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-            rb.AddForce(new Vector3(0f, jumpForce, 0f));
-            usedJump = true;
-        }
-
     }
 
     void OnCollisionEnter(Collision col)
