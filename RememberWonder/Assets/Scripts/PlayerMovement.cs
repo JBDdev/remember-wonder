@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update() 
     {
+        
     }
 
     // Update is called once per frame
@@ -53,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
         //     rb.AddForce(direction * accModifier, ForceMode.Acceleration);
         //transform.position += direction * maxSpeed * Time.deltaTime;
  
-        rb.AddForce(direction * accModifier, ForceMode.Acceleration);
+        rb.AddForce(direction * accModifier, ForceMode.Force);
         //Clamp the output velocity
         rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y, Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
 
@@ -76,6 +77,15 @@ public class PlayerMovement : MonoBehaviour
             usedJump = false;
         }
 
+    }
+
+    void OnCollisionStay(Collision col) 
+    {
+        if (col.GetContact(0).normal.y >= maxIncline)
+        {
+            //Debug.Log(col.GetContact(0).normal.y);
+            usedJump = false;
+        }
     }
 
 
