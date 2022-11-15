@@ -4949,7 +4949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modelRend: {fileID: 2944411881442968390}
-  collectPSys: {fileID: 0}
+  collectPSys: {fileID: 3332376646390574229}
   collectorTags:
   - Player
 --- !u!114 &4334391588535324519
