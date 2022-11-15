@@ -51,12 +51,12 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "EnablePointerLook",
+                    "name": "LookActive",
                     "type": "Button",
                     "id": "cd37d751-c032-4057-a18b-f351f19e7ed3",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -222,7 +222,51 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "EnablePointerLook",
+                    "action": "LookActive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "80c53d40-a6bd-45fb-85dd-f67e53346850",
+                    "path": "<Gamepad>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LookActive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "069ac317-8dac-4e81-b83e-5d847453f12e",
+                    "path": "<Gamepad>/rightStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LookActive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ef3d6d4e-87aa-480f-bdbb-2f35390cfa95",
+                    "path": "<Gamepad>/rightStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LookActive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0dfa14c6-3f5e-447e-b887-2446e60f9dba",
+                    "path": "<Gamepad>/rightStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LookActive",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

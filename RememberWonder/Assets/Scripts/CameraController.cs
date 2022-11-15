@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] Transform verticalPivot;
     [Space(5)]
-    [SerializeField] bool rotateOnMouseDown;
+    [SerializeField] bool clickAndDrag;
     [SerializeField] bool invertX;
     [SerializeField] bool invertY;
     [SerializeField] float lookSpeed;
@@ -21,7 +21,7 @@ public class CameraController : MonoBehaviour
         transform.position = player.transform.position;
 
         //If we rotate on mouse down, and none of the mouse buttons are down, don't rotate.
-        if (rotateOnMouseDown && !InputHub.Inst.Gameplay.EnablePointerLook.IsPressed())
+        if (clickAndDrag && !InputHub.Inst.Gameplay.LookActive.IsPressed())
             return;
 
         yaw += lookSpeed * InputHub.Inst.Gameplay.LookX.ReadValue<float>() * Time.deltaTime;

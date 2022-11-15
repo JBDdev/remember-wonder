@@ -73,12 +73,12 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""EnablePointerLook"",
+                    ""name"": ""LookActive"",
                     ""type"": ""Button"",
                     ""id"": ""cd37d751-c032-4057-a18b-f351f19e7ed3"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
@@ -244,7 +244,51 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""EnablePointerLook"",
+                    ""action"": ""LookActive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""80c53d40-a6bd-45fb-85dd-f67e53346850"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookActive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""069ac317-8dac-4e81-b83e-5d847453f12e"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookActive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ef3d6d4e-87aa-480f-bdbb-2f35390cfa95"",
+                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookActive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0dfa14c6-3f5e-447e-b887-2446e60f9dba"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookActive"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -260,7 +304,7 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_LookX = m_Gameplay.FindAction("LookX", throwIfNotFound: true);
         m_Gameplay_LookY = m_Gameplay.FindAction("LookY", throwIfNotFound: true);
-        m_Gameplay_EnablePointerLook = m_Gameplay.FindAction("EnablePointerLook", throwIfNotFound: true);
+        m_Gameplay_LookActive = m_Gameplay.FindAction("LookActive", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -325,7 +369,7 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_LookX;
     private readonly InputAction m_Gameplay_LookY;
-    private readonly InputAction m_Gameplay_EnablePointerLook;
+    private readonly InputAction m_Gameplay_LookActive;
     public struct GameplayActions
     {
         private @BaseControls m_Wrapper;
@@ -335,7 +379,7 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
         public InputAction @LookX => m_Wrapper.m_Gameplay_LookX;
         public InputAction @LookY => m_Wrapper.m_Gameplay_LookY;
-        public InputAction @EnablePointerLook => m_Wrapper.m_Gameplay_EnablePointerLook;
+        public InputAction @LookActive => m_Wrapper.m_Gameplay_LookActive;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -360,9 +404,9 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
                 @LookY.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookY;
                 @LookY.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookY;
                 @LookY.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookY;
-                @EnablePointerLook.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnablePointerLook;
-                @EnablePointerLook.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnablePointerLook;
-                @EnablePointerLook.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnablePointerLook;
+                @LookActive.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookActive;
+                @LookActive.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookActive;
+                @LookActive.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookActive;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -382,9 +426,9 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
                 @LookY.started += instance.OnLookY;
                 @LookY.performed += instance.OnLookY;
                 @LookY.canceled += instance.OnLookY;
-                @EnablePointerLook.started += instance.OnEnablePointerLook;
-                @EnablePointerLook.performed += instance.OnEnablePointerLook;
-                @EnablePointerLook.canceled += instance.OnEnablePointerLook;
+                @LookActive.started += instance.OnLookActive;
+                @LookActive.performed += instance.OnLookActive;
+                @LookActive.canceled += instance.OnLookActive;
             }
         }
     }
@@ -396,6 +440,6 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnLookX(InputAction.CallbackContext context);
         void OnLookY(InputAction.CallbackContext context);
-        void OnEnablePointerLook(InputAction.CallbackContext context);
+        void OnLookActive(InputAction.CallbackContext context);
     }
 }
