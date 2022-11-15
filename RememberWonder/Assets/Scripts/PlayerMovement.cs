@@ -8,8 +8,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSpeed;
     [SerializeField] float accModifier;
 
-    //TODO: Evaluate utility of Input System Package
-
     [Header("Jump Controls")]
     [SerializeField] float jumpForce;
     [SerializeField] public bool usedJump = false;
@@ -21,7 +19,6 @@ public class PlayerMovement : MonoBehaviour
     //Internal Component References
     Rigidbody rb;
 
-    // Start is called before the first frame update
     void Start()
     {
         //Get references to components on the GameObject
@@ -52,7 +49,6 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         Vector3 direction = cameraFollower.transform.forward * InputHub.Inst.Gameplay.MoveY.ReadValue<float>();
