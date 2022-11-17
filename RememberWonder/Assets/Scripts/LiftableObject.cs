@@ -26,15 +26,15 @@ public class LiftableObject : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.CompareTag("Player"))
-            if(Input.GetKeyDown(KeyCode.E))
-                this.Target = col.gameObject.GetComponent<PlayerMovement>().HoldLocation.transform;
+        //if(col.gameObject.CompareTag("Player"))
+            //if(Input.GetKeyDown(KeyCode.E))
+                //this.Target = col.gameObject.GetComponent<PlayerMovement>().HoldLocation.transform;
     }
     void OnTriggerStay(Collider col)
     {
-        if(col.gameObject.CompareTag("Player"))
-            if(Input.GetKeyDown(KeyCode.E))
-                this.Target = col.gameObject.GetComponent<PlayerMovement>().HoldLocation.transform;
+        //if(col.gameObject.CompareTag("Player"))
+            //if(Input.GetKeyDown(KeyCode.E))
+                //this.Target = col.gameObject.GetComponent<PlayerMovement>().HoldLocation.transform;
 
     }
 }
