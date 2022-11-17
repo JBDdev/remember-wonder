@@ -47,11 +47,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 5864955303093575436, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
   verticalPivot: {fileID: 6624148240084081148}
+  ownedCam: {fileID: 0}
   clickAndDrag: 0
   invertX: 0
   invertY: 0
   lookSpeed: 100
   pitchRange: {x: -75, y: 75}
+  avoidRadius: 0
+  avoidLayers:
+    serializedVersion: 2
+    m_Bits: 53
+  camToTargetSpeed: 0.01
 --- !u!1 &6624148239004880128
 GameObject:
   m_ObjectHideFlags: 0

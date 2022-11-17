@@ -38,10 +38,12 @@ public class PlayerMovement : MonoBehaviour
         col = GetComponent<CapsuleCollider>();
 
         InputHub.Inst.Gameplay.Jump.performed += OnJumpPerformed;
+        InputHub.Inst.Gameplay.Quit.performed += OnQuitPerformed;
     }
     private void OnDestroy()
     {
         InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
+        InputHub.Inst.Gameplay.Quit.performed -= OnQuitPerformed;
     }
 
     private void OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
@@ -55,6 +57,11 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(new Vector3(0f, jumpForce, 0f));
         usedJump = true;
+    }
+
+    private void OnQuitPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    {
+        Application.Quit();
     }
 
     void Update()
