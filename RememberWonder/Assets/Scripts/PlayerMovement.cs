@@ -92,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         if (col.GetContact(0).normal.y >= maxIncline)
         {
             //Debug.Log(col.GetContact(0).normal.y);
-            usedJump = false;
+            //usedJump = false;
         }
     }
 
