@@ -34,8 +34,11 @@ public class PushPullObject : MonoBehaviour
 
     private void OnTriggerExit(Collider col)
     {
-        InputHub.Inst.Gameplay.Interact.performed -= OnInteractPerformed;
-        player = null;
+        if (col.transform == player)
+        {
+            InputHub.Inst.Gameplay.Interact.performed -= OnInteractPerformed;
+            player = null;
+        }
     }
 
     void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
