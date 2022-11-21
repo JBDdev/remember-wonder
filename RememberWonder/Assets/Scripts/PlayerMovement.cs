@@ -26,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rb;
     CapsuleCollider col;
 
-
     //Accessors
     public GameObject HoldLocation {get {return holdLocation;}}
 
