@@ -23,7 +23,7 @@ public class CollectMote : MonoBehaviour
             //TODO: Become translucent and uncollectable, or collectable but without increasing number?
             modelRend.enabled = false;
 
-            if (collectPSys) { collectPSys.Play(); }
+            if (collectPSys) { collectPSys.Play(); collectPSys.gameObject.SetActive(false); }
         }
     }
 }
