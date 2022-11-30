@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] bool grounded = true;
     bool groundedCheck;
     [SerializeField] public float maxIncline;
+    [SerializeField] public float fallGravMultiplier = 1;
 
     [Header("Child Object References")]
     [SerializeField] GameObject holdLocation;
@@ -87,6 +88,18 @@ public class PlayerMovement : MonoBehaviour
             Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
 
         grounded = IsGrounded(col.height * transform.localScale.y, col.radius * transform.localScale.y);
+
+        //If we're grounded, any jumps we may have done have ended, so we're no longer using jump.
+        if (grounded) { usedJump = false; }
+
+        //If NOT grounded, fall gravity is modified, and we're falling (not rising),
+        //  apply extra force to simulate that modifier (3D Unity Physics don't support a "gravity scale" for
+        //  individual rigidbodies)
+        else if (!Mathf.Approximately(fallGravMultiplier, 1)
+            && rb.velocity.y < 0)
+        {
+            rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
+        }
     }
 
     private bool IsGrounded(float currentColHeight, float currentColRadius)
