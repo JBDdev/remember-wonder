@@ -149,6 +149,93 @@ public static class UtilFunctions
     #endregion
 
     /// <summary>
+    /// Draws a sphere out of lines using <see cref="Debug.DrawLine(Vector3, Vector3, Color)"/>.<br/>
+    /// Taken from <br/>
+    /// <see href="https://github.com/Unity-Technologies/Graphics/pull/2287/files#diff-cc2ed84f51a3297faff7fd239fe421ca1ca75b9643a22f7808d3a274ff3252e9R195"/>,
+    /// <br/>which was found via <see href="https://forum.unity.com/goto/post?id=8098139#post-8098139"/>.
+    /// </summary>
+    public static void DrawSphere(Vector3 pos, float radius,
+        Color color = default, float duration = 0f)
+    {
+        Vector3[] v = _cacheUnitSphere;
+        int len = v.Length / 3;
+
+        for (int i = 0; i < len; i++)
+        {
+            var startX = pos + radius * v[0 * len + i];
+            var endX = pos + radius * v[0 * len + (i + 1) % len];
+            var startY = pos + radius * v[1 * len + i];
+            var endY = pos + radius * v[1 * len + (i + 1) % len];
+            var startZ = pos + radius * v[2 * len + i];
+            var endZ = pos + radius * v[2 * len + (i + 1) % len];
+            Debug.DrawLine(startX, endX, color, duration);
+            Debug.DrawLine(startY, endY, color, duration);
+            Debug.DrawLine(startZ, endZ, color, duration);
+        }
+    }
+    /// <summary>
+    /// Draws a sphere out of lines using <see cref="Debug.DrawLine(Vector3, Vector3, Color)"/>.<br/>
+    /// This overload draws <paramref name="horzDivisions"/> z-plane circles rotated around the z-axis,
+    /// and y-plane circles rotated around the y axis (as opposed<br/> to 
+    /// <see cref="DrawSphere(Vector3, float, Color, float)"/>'s three lines along each axis plane).
+    /// </summary>
+    public static void DrawSphere(Vector3 pos, float radius, int horzDivisions, int vertDivisions,
+        Color horzColor = default, Color vertColor = default, float duration = 0f)
+    {
+        Vector3[] v = _cacheUnitSphere;
+        int len = v.Length / 3;
+
+        for (int i = 0; i < horzDivisions; i++)
+        {
+            var rotAmnt = Quaternion.AngleAxis(i * (180 / horzDivisions), Vector3.forward);
+            for (int j = 0; j < len; j++)
+            {
+                var start = rotAmnt * (radius * v[2 * len + j]);
+                var end = rotAmnt * (radius * v[2 * len + (j + 1) % len]);
+
+                start += pos;
+                end += pos;
+                Debug.DrawLine(start, end, horzColor, duration);
+            }
+        }
+
+        for (int i = 0; i < vertDivisions; i++)
+        {
+            var rotAmnt = Quaternion.AngleAxis(i * (180 / vertDivisions), Vector3.up);
+            for (int j = 0; j < len; j++)
+            {
+                var start = rotAmnt * (radius * v[1 * len + j]);
+                var end = rotAmnt * (radius * v[1 * len + (j + 1) % len]);
+
+                start += pos;
+                end += pos;
+                Debug.DrawLine(start, end, vertColor, duration);
+            }
+        }
+    }
+
+    private static Vector3[] _cacheUnitSphere = MakeUnitSphere(16);
+    /// <summary>
+    /// Makes a unit circle out of points. Three rings of points for each axis;<br/>
+    /// each ring has <paramref name="len"/> points.
+    /// </summary>
+    private static Vector3[] MakeUnitSphere(int len)
+    {
+        Debug.Assert(len > 2);
+        var v = new Vector3[len * 3];
+        for (int i = 0; i < len; i++)
+        {
+            var f = i / (float)len;
+            float cosNum = Mathf.Cos(f * Mathf.PI * 2.0f);
+            float sinNum = Mathf.Sin(f * Mathf.PI * 2.0f);
+            v[0 * len + i] = new Vector3(cosNum, sinNum, 0);
+            v[1 * len + i] = new Vector3(0, cosNum, sinNum);
+            v[2 * len + i] = new Vector3(sinNum, 0, cosNum);
+        }
+        return v;
+    }
+
+    /// <summary>
     /// Checks to see if this float is equal to <paramref name="target"/>, within a 
     /// given <paramref name="range"/>.
     /// </summary>
