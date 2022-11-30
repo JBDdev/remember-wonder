@@ -236,7 +236,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -555,6 +555,7 @@ GameObject:
   - component: {fileID: 2799647181738628250}
   - component: {fileID: 3444478816659136972}
   - component: {fileID: 1963292366687093624}
+  - component: {fileID: 2901853122598234113}
   m_Layer: 5
   m_Name: MoteCanvas
   m_TagString: Untagged
@@ -644,6 +645,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2901853122598234113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268850369694919621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d31086454213c4e9f48e3c138bcd61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  motesCollectedTxt: {fileID: 4401220051737876680}
+  totalMotesTxt: {fileID: 4459323322323323020}
 --- !u!1 &8296108395789656216
 GameObject:
   m_ObjectHideFlags: 0
