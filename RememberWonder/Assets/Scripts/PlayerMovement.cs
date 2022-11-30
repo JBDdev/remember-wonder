@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     CapsuleCollider col;
 
     //Accessors
-    public GameObject HoldLocation {get {return holdLocation;}}
+    public GameObject HoldLocation { get { return holdLocation; } }
 
     // Start is called before the first frame update
     void Start()
@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
         //print($"Jump performed, did we press or release?: " +
-            //$"{(InputHub.Inst.Gameplay.Jump.WasPressedThisFrame() ? "Pressed" : "Released")}");
+        //$"{(InputHub.Inst.Gameplay.Jump.WasPressedThisFrame() ? "Pressed" : "Released")}");
 
         if (!grounded)
             return;
@@ -58,66 +58,52 @@ public class PlayerMovement : MonoBehaviour
         usedJump = true;
     }
 
-    private void OnQuitPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    private void OnQuitPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
         Application.Quit();
     }
 
-    void Update()
-    {
-
-    }
-
     void FixedUpdate()
     {
+        //TODO: Only apply force when either move input is performed?
+        //  (That's already the case, because direction's set to zero when no input, but still.)
         Vector3 direction = cameraFollower.transform.forward * InputHub.Inst.Gameplay.MoveY.ReadValue<float>();
         direction += cameraFollower.transform.right * InputHub.Inst.Gameplay.MoveX.ReadValue<float>();
 
         direction.Normalize();
 
-
-        //Brody's Note to Self: The best way to acheive better velocity clamping would be to scale the force being applied by how close we are to maximum speed.
+        //Brody's Note to Self: The best way to acheive better velocity clamping would be to scale the force
+        //  being applied by how close we are to maximum speed.
 
         // if(rb.velocity.sqrMagnitude < maxSpeed * maxSpeed)
         //     rb.AddForce(direction * accModifier, ForceMode.Acceleration);
         //transform.position += direction * maxSpeed * Time.deltaTime;
- 
+
         rb.AddForce(direction * accModifier, ForceMode.Force);
         //Clamp the output velocity
-        rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y, Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
+        rb.velocity = new Vector3(
+            Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed),
+            rb.velocity.y,
+            Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
 
-        //Grounded Check (good lord)
-        Vector3 point1 = transform.position + Vector3.up * col.radius;
-        Vector3 point2 = transform.position - Vector3.up * col.radius + (Vector3.up * col.height);
-        groundedCheck = Physics.CapsuleCast(point1, point2, col.radius - 0.1f, Vector3.down, out RaycastHit groundHit, col.bounds.extents.y + 0.2f);
-
-        if(groundedCheck && groundHit.normal.y >= maxIncline)
-        {
-            grounded = true;
-        }
-        else
-            grounded = false;
+        grounded = IsGrounded(col.height * transform.localScale.y, col.radius * transform.localScale.y);
     }
-/*
-    void OnCollisionEnter(Collision col)
+
+    private bool IsGrounded(float currentColHeight, float currentColRadius)
     {
-        //Debug.Log("test");
-        if (col.GetContact(0).normal.y >= maxIncline)
-        {
-            //Debug.Log(col.GetContact(0).normal.y);
-            usedJump = false;
-        }
+        Vector3 point1 = transform.position + Vector3.up * currentColHeight / 2;
+        point1 += Vector3.down * currentColRadius;
 
+        Vector3 point2 = transform.position + Vector3.down * currentColHeight / 2;
+        point2 += Vector3.up * currentColRadius;
+
+        currentColRadius -= 0.02f;
+        groundedCheck = Physics.CapsuleCast(
+            point1, point2,
+            currentColRadius, Vector3.down,
+            out RaycastHit groundHit,
+            0.1f);
+
+        return groundedCheck && groundHit.normal.y >= maxIncline;
     }
-
-    void OnCollisionStay(Collision col) 
-    {
-        if (col.GetContact(0).normal.y >= maxIncline)
-        {
-            //Debug.Log(col.GetContact(0).normal.y);
-            usedJump = false;
-        }
-    }
-*/
-
 }
