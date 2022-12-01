@@ -56,8 +56,12 @@ public class PlayerMovement : MonoBehaviour
         //print($"Jump performed, did we press or release?: " +
         //$"{(InputHub.Inst.Gameplay.Jump.WasPressedThisFrame() ? "Pressed" : "Released")}");
 
-        if (!grounded || pullingObject)
+        if (!grounded)
             return;
+
+        if (pullingObject)
+            if (PulledObject.GetComponent<PushPullObject>().disableJump)
+                return;
 
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(new Vector3(0f, jumpForce, 0f));
@@ -76,11 +80,14 @@ public class PlayerMovement : MonoBehaviour
             if (!pullingObject)
             {
                 pullingObject = true;
+                if (PulledObject.GetComponent<PushPullObject>().disableJump)
+                    rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             }
             else 
             {
                 pullingObject = false;
                 usedJump = false;
+                rb.constraints = RigidbodyConstraints.FreezeRotation;
             }
         }
     }

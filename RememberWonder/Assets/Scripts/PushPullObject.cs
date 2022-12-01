@@ -8,6 +8,7 @@ public class PushPullObject : MonoBehaviour
     [SerializeField] bool grabbed;
     public string[] usableAxes;
     public float maxPullDistance;
+    public bool disableJump;
 
     public Vector3 defaultPos;
 
@@ -34,6 +35,7 @@ public class PushPullObject : MonoBehaviour
         //Debug.Log("entered");
         if (col.gameObject.CompareTag("Player"))
         {
+            
             InputHub.Inst.Gameplay.Interact.performed += OnInteractPerformed;
             player = col.gameObject;
             player.GetComponent<PlayerMovement>().PulledObject = transform.gameObject;
@@ -45,6 +47,7 @@ public class PushPullObject : MonoBehaviour
         //Debug.Log("exited");
         if (col.gameObject.CompareTag("Player"))
         {
+            
             InputHub.Inst.Gameplay.Interact.performed -= OnInteractPerformed;
             player.GetComponent<PlayerMovement>().PulledObject = null;
             player = null;
