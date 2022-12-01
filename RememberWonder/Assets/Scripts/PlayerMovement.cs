@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player Movement Variables")]
     [SerializeField] float maxSpeed;
     [SerializeField] float accModifier;
-    bool pullingObject = false;
+    public bool pullingObject = false;
 
     [Header("Jump Controls")]
     [SerializeField] float jumpForce;

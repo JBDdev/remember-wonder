@@ -39,7 +39,8 @@ public class PushPullObject : MonoBehaviour
         //Debug.Log("entered");
         if (col.gameObject.CompareTag("Player"))
         {
-            
+            if (col.gameObject.GetComponent<PlayerMovement>().pullingObject)
+                return;
             InputHub.Inst.Gameplay.Interact.performed += OnInteractPerformed;
             player = col.gameObject;
             player.GetComponent<PlayerMovement>().PulledObject = transform.gameObject;
@@ -55,7 +56,8 @@ public class PushPullObject : MonoBehaviour
         //Debug.Log("exited");
         if (col.gameObject.CompareTag("Player"))
         {
-            
+            if (col.gameObject.GetComponent<PlayerMovement>().pullingObject)
+                return;
             InputHub.Inst.Gameplay.Interact.performed -= OnInteractPerformed;
             player.GetComponent<PlayerMovement>().PulledObject = null;
             player = null;
@@ -78,7 +80,10 @@ public class PushPullObject : MonoBehaviour
                 if (grabbed)
                     Destroy(rb);
                 else
+                {
                     rb = transform.gameObject.AddComponent<Rigidbody>();
+                    rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+                }
             }
 
             if (grabbed)
