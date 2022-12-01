@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player Movement Variables")]
     [SerializeField] float maxSpeed;
     [SerializeField] float accModifier;
+    bool pullingObject = false;
 
     [Header("Jump Controls")]
     [SerializeField] float jumpForce;
@@ -29,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Accessors
     public GameObject HoldLocation { get { return holdLocation; } }
+    public GameObject PulledObject { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -39,11 +41,13 @@ public class PlayerMovement : MonoBehaviour
 
         InputHub.Inst.Gameplay.Jump.performed += OnJumpPerformed;
         InputHub.Inst.Gameplay.Quit.performed += OnQuitPerformed;
+        InputHub.Inst.Gameplay.Interact.performed += OnInteractPerformed;
     }
     private void OnDestroy()
     {
         InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
         InputHub.Inst.Gameplay.Quit.performed -= OnQuitPerformed;
+        InputHub.Inst.Gameplay.Interact.performed -= OnInteractPerformed;
     }
 
     private void OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
@@ -51,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         //print($"Jump performed, did we press or release?: " +
         //$"{(InputHub.Inst.Gameplay.Jump.WasPressedThisFrame() ? "Pressed" : "Released")}");
 
-        if (!grounded)
+        if (!grounded || pullingObject)
             return;
 
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
@@ -62,6 +66,22 @@ public class PlayerMovement : MonoBehaviour
     private void OnQuitPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
         Application.Quit();
+    }
+
+    private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    {
+        if (PulledObject != null) 
+        {
+            if (!pullingObject)
+            {
+                pullingObject = true;
+            }
+            else 
+            {
+                pullingObject = false;
+                usedJump = false;
+            }
+        }
     }
 
     void FixedUpdate()
