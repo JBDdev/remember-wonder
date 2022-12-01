@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PushPullObject : MonoBehaviour
@@ -12,11 +13,14 @@ public class PushPullObject : MonoBehaviour
 
     public Vector3 defaultPos;
 
+    Rigidbody rb;
+
     // Start is called before the first frame update
     void Start()
     {
         grabbed = false;
         defaultPos = transform.position;
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -58,13 +62,26 @@ public class PushPullObject : MonoBehaviour
     {
         if (player != null) 
         {
-            if (!grabbed)
+            grabbed = !grabbed;
+
+            //Rigidbody rb = GetComponent<Rigidbody>();
+            if (!disableJump)
+            {
+                if (grabbed)
+                    Destroy(rb);
+                else
+                    rb = transform.gameObject.AddComponent<Rigidbody>();
+            }
+
+            if (grabbed)
                 transform.parent = player.transform;
             else
                 transform.parent = null;
 
-            grabbed = !grabbed;
+            
         }
+        
+       
     }
 
 }
