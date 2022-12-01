@@ -25,18 +25,22 @@ public class PushPullObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
+        //Debug.Log("entered");
         if (col.gameObject.CompareTag("Player"))
         {
             InputHub.Inst.Gameplay.Interact.performed += OnInteractPerformed;
             player = col.gameObject;
+            player.GetComponent<PlayerMovement>().PulledObject = transform.gameObject;
         }
     }
 
     private void OnTriggerExit(Collider col)
     {
-        if (col.transform == player)
+        //Debug.Log("exited");
+        if (col.gameObject.CompareTag("Player"))
         {
             InputHub.Inst.Gameplay.Interact.performed -= OnInteractPerformed;
+            player.GetComponent<PlayerMovement>().PulledObject = null;
             player = null;
         }
     }
