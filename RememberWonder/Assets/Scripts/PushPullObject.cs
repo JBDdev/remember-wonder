@@ -43,6 +43,10 @@ public class PushPullObject : MonoBehaviour
             InputHub.Inst.Gameplay.Interact.performed += OnInteractPerformed;
             player = col.gameObject;
             player.GetComponent<PlayerMovement>().PulledObject = transform.gameObject;
+            foreach (Renderer r in GetComponentsInChildren<Renderer>()) 
+            {
+                r.material.color = Color.gray;
+            }
         }
     }
 
@@ -55,6 +59,10 @@ public class PushPullObject : MonoBehaviour
             InputHub.Inst.Gameplay.Interact.performed -= OnInteractPerformed;
             player.GetComponent<PlayerMovement>().PulledObject = null;
             player = null;
+            foreach (Renderer r in GetComponentsInChildren<Renderer>())
+            {
+                r.material.color = Color.white;
+            }
         }
     }
 
