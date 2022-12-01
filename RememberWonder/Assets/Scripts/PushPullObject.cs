@@ -9,7 +9,8 @@ public class PushPullObject : MonoBehaviour
     public string[] usableAxes;
     public float maxPullDistance;
 
-    Vector3 defaultPos;
+    public Vector3 defaultPos;
+
     // Start is called before the first frame update
     void Start()
     {

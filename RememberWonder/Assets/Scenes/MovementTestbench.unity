@@ -1939,6 +1939,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   grabbed: 0
+  usableAxes:
+  - x
+  - z
+  maxPullDistance: 10
+  defaultPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1587831973
 GameObject:
   m_ObjectHideFlags: 0

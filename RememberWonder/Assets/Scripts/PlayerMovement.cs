@@ -103,16 +103,37 @@ public class PlayerMovement : MonoBehaviour
 
         if (pullingObject)
         {
+            PushPullObject p = PulledObject.GetComponent<PushPullObject>();
             //Restrict axis pulling on certain objects
-            if (!PulledObject.GetComponent<PushPullObject>().usableAxes.Contains("z"))
+            if (!p.usableAxes.Contains("z"))
             {
                 direction.z = 0f;
             }
 
-            if (!PulledObject.GetComponent<PushPullObject>().usableAxes.Contains("x"))
+            if (!p.usableAxes.Contains("x"))
             {
                 direction.x = 0f;
             }
+
+            //Restrict axis movement via max pull distance
+            if (direction.x < 0 && PulledObject.transform.position.x < p.defaultPos.x - PulledObject.GetComponent<PushPullObject>().maxPullDistance)
+            {
+                direction.x = 0f;
+            }
+            else if (direction.x > 0 && PulledObject.transform.position.x > p.defaultPos.x + PulledObject.GetComponent<PushPullObject>().maxPullDistance)
+            {
+                direction.x = 0f;
+            }
+
+            if (direction.z < 0 && PulledObject.transform.position.z < p.defaultPos.z - PulledObject.GetComponent<PushPullObject>().maxPullDistance)
+            {
+                direction.z = 0f;
+            }
+            else if (direction.z > 0 && PulledObject.transform.position.z > p.defaultPos.z + PulledObject.GetComponent<PushPullObject>().maxPullDistance)
+            {
+                direction.z = 0f;
+            }
+
         }
 
         rb.AddForce(direction * accModifier, ForceMode.Force);
