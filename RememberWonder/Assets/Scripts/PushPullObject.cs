@@ -6,10 +6,15 @@ public class PushPullObject : MonoBehaviour
 {
     [SerializeField] GameObject player;
     [SerializeField] bool grabbed;
+    public string[] usableAxes;
+    public float maxPullDistance;
+
+    Vector3 defaultPos;
     // Start is called before the first frame update
     void Start()
     {
         grabbed = false;
+        defaultPos = transform.position;
     }
 
     // Update is called once per frame

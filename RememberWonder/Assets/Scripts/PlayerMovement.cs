@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -100,12 +101,28 @@ public class PlayerMovement : MonoBehaviour
         //     rb.AddForce(direction * accModifier, ForceMode.Acceleration);
         //transform.position += direction * maxSpeed * Time.deltaTime;
 
+        if (pullingObject)
+        {
+            //Restrict axis pulling on certain objects
+            if (!PulledObject.GetComponent<PushPullObject>().usableAxes.Contains("z"))
+            {
+                direction.z = 0f;
+            }
+
+            if (!PulledObject.GetComponent<PushPullObject>().usableAxes.Contains("x"))
+            {
+                direction.x = 0f;
+            }
+        }
+
         rb.AddForce(direction * accModifier, ForceMode.Force);
         //Clamp the output velocity
         rb.velocity = new Vector3(
             Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed),
             rb.velocity.y,
             Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
+
+        
 
         grounded = IsGrounded(col.height * transform.localScale.y, col.radius * transform.localScale.y);
 
