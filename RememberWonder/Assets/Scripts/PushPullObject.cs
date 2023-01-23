@@ -39,14 +39,15 @@ public class PushPullObject : MonoBehaviour
         //Debug.Log("entered");
         if (col.gameObject.CompareTag("Player"))
         {
-            if (col.gameObject.GetComponent<PlayerMovement>().pullingObject)
+            Debug.Log("Grounded: " + col.gameObject.GetComponent<PlayerMovement>().grounded);
+            if (col.gameObject.GetComponent<PlayerMovement>().PulledObject != null || col.gameObject.GetComponent<PlayerMovement>().pullingObject || !col.gameObject.GetComponent<PlayerMovement>().grounded)
                 return;
             InputHub.Inst.Gameplay.Interact.performed += OnInteractPerformed;
             player = col.gameObject;
             player.GetComponent<PlayerMovement>().PulledObject = transform.gameObject;
             foreach (Renderer r in GetComponentsInChildren<Renderer>()) 
             {
-                r.material.color = Color.gray;
+                r.material.color = Color.gray; 
             }
         }
     }

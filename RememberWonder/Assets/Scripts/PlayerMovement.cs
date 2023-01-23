@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump Controls")]
     [SerializeField] float jumpForce;
     [SerializeField] public bool usedJump = false;
-    [SerializeField] bool grounded = true;
+    [SerializeField] public bool grounded = true;
     bool groundedCheck;
     [SerializeField] public float maxIncline;
     [SerializeField] public float fallGravMultiplier = 1;
@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
         //Get references to components on the GameObject
         rb = GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();
+
+        PulledObject = null;
 
         InputHub.Inst.Gameplay.Jump.performed += OnJumpPerformed;
         InputHub.Inst.Gameplay.Quit.performed += OnQuitPerformed;
