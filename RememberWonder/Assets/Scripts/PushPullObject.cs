@@ -5,100 +5,87 @@ using UnityEngine;
 
 public class PushPullObject : MonoBehaviour
 {
-    [SerializeField] GameObject player;
+    [SerializeField] PlayerMovement player;
     [SerializeField] bool grabbed;
     public string[] usableAxes;
     public float maxPullDistance;
     public bool disableJump;
-
     public Vector3 defaultPos;
 
     Rigidbody rb;
+    Renderer[] childRendsCache;
 
-    // Start is called before the first frame update
     void Start()
     {
         grabbed = false;
         defaultPos = transform.position;
+
         rb = GetComponent<Rigidbody>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnDestroy()
-    {
-        
+        childRendsCache = GetComponentsInChildren<Renderer>();
     }
 
     private void OnTriggerEnter(Collider col)
     {
-        //Debug.Log("entered");
-        if (col.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("Grounded: " + col.gameObject.GetComponent<PlayerMovement>().ForceGroundedUpdate());
-            if (col.gameObject.GetComponent<PlayerMovement>().PulledObject != null || col.gameObject.GetComponent<PlayerMovement>().pullingObject || !col.gameObject.GetComponent<PlayerMovement>().ForceGroundedUpdate())
-                return;
-            InputHub.Inst.Gameplay.Interact.performed += OnInteractPerformed;
-            player = col.gameObject;
-            player.GetComponent<PlayerMovement>().PulledObject = transform.gameObject;
-            foreach (Renderer r in GetComponentsInChildren<Renderer>()) 
-            {
-                r.material.color = Color.gray; 
-            }
-        }
+        if (!col.gameObject.CompareTag("Player")) return;
+
+        player = col.gameObject.GetComponent<PlayerMovement>();
+
+        //Debug.Log("Grounded: " + player.IsGrounded());
+
+        if (player.PulledObject || player.pullingObject || !player.IsGrounded())
+            return;
+        player.PulledObject = this;
+
+        InputHub.Inst.Gameplay.Interact.performed += OnInteractPerformed;
+
+        UpdateChildRends(rend => rend.material.color = Color.grey);
     }
 
     private void OnTriggerExit(Collider col)
     {
-        //Debug.Log("exited");
-        if (col.gameObject.CompareTag("Player"))
-        {
-            if (col.gameObject.GetComponent<PlayerMovement>().pullingObject)
-                return;
-            InputHub.Inst.Gameplay.Interact.performed -= OnInteractPerformed;
-            player.GetComponent<PlayerMovement>().PulledObject = null;
-            player = null;
-            foreach (Renderer r in GetComponentsInChildren<Renderer>())
-            {
-                r.material.color = Color.white;
-            }
-        }
+        if (!col.gameObject.CompareTag("Player")) return;
+
+        //We should have a ref to player; we get one when they enter.
+        //  If we don't, this function fired twice or something.
+        if (!player || player.pullingObject) return;
+
+        InputHub.Inst.Gameplay.Interact.performed -= OnInteractPerformed;
+
+        player.PulledObject = null;
+        player = null;
+
+        UpdateChildRends(rend => rend.material.color = Color.white);
     }
 
-    void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        if (player != null) 
+        if (!player || !player.IsGrounded()) return;
+
+        grabbed = !grabbed;
+
+        //Rigidbody rb = GetComponent<Rigidbody>();
+        if (!disableJump)
         {
-            if(!player.GetComponent<PlayerMovement>().ForceGroundedUpdate())
-                return;
-
-            grabbed = !grabbed;
-
-            //Rigidbody rb = GetComponent<Rigidbody>();
-            if (!disableJump)
-            {
-                if (grabbed)
-                    Destroy(rb);
-                else
-                {
-                    rb = transform.gameObject.AddComponent<Rigidbody>();
-                    rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-                }
-            }
-
             if (grabbed)
-                transform.parent = player.transform;
+                Destroy(rb);
             else
-                transform.parent = null;
-
-            
+            {
+                rb = transform.gameObject.AddComponent<Rigidbody>();
+                rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            }
         }
-        
-       
+
+        if (grabbed)
+            transform.parent = player.transform;
+        else
+            transform.parent = null;
     }
 
+    private void UpdateChildRends(System.Action<Renderer> updateFunc, bool refreshCache = false)
+    {
+        if (refreshCache) childRendsCache = GetComponentsInChildren<Renderer>();
+
+        foreach (Renderer rend in childRendsCache)
+            updateFunc(rend);
+    }
 }

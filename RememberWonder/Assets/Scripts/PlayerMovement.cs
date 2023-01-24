@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Accessors
     public GameObject HoldLocation { get { return holdLocation; } }
-    public GameObject PulledObject { get; set; }
+    public PushPullObject PulledObject { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -61,9 +61,8 @@ public class PlayerMovement : MonoBehaviour
         if (!grounded)
             return;
 
-        if (pullingObject)
-            if (PulledObject.GetComponent<PushPullObject>().disableJump)
-                return;
+        if (pullingObject && PulledObject.disableJump)
+            return;
 
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(new Vector3(0f, jumpForce, 0f));
@@ -75,77 +74,45 @@ public class PlayerMovement : MonoBehaviour
         Application.Quit();
     }
 
-    private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        if(!ForceGroundedUpdate())
-                return;
+        if (!IsGrounded() || !PulledObject)
+            return;
 
-        if (PulledObject != null) 
+        if (!pullingObject)
         {
-            if (!pullingObject)
-            {
-                pullingObject = true;
-                if (PulledObject.GetComponent<PushPullObject>().disableJump)
-                    rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
-            }
-            else 
-            {
-                pullingObject = false;
-                usedJump = false;
-                rb.constraints = RigidbodyConstraints.FreezeRotation;
-            }
+            pullingObject = true;
+            if (PulledObject.disableJump)
+                rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        }
+        else
+        {
+            pullingObject = false;
+            usedJump = false;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
         }
     }
 
     void FixedUpdate()
     {
-        //TODO: Only apply force when either move input is performed?
-        //  (That's already the case, because direction's set to zero when no input, but still.)
+        //TODO: Instead of polling, only move when input is read
+        //  (may require consolidating movement into one 2D vector, as opposed to two separate floats)
         Vector3 direction = cameraFollower.transform.forward * InputHub.Inst.Gameplay.MoveY.ReadValue<float>();
         direction += cameraFollower.transform.right * InputHub.Inst.Gameplay.MoveX.ReadValue<float>();
 
         direction.Normalize();
 
+        /*
         //Brody's Note to Self: The best way to acheive better velocity clamping would be to scale the force
         //  being applied by how close we are to maximum speed.
-
-        // if(rb.velocity.sqrMagnitude < maxSpeed * maxSpeed)
-        //     rb.AddForce(direction * accModifier, ForceMode.Acceleration);
-        //transform.position += direction * maxSpeed * Time.deltaTime;
+        if (rb.velocity.sqrMagnitude < maxSpeed * maxSpeed)
+            rb.AddForce(direction * accModifier, ForceMode.Acceleration);
+        transform.position += direction * maxSpeed * Time.deltaTime;
+        */
 
         if (pullingObject)
         {
-            PushPullObject p = PulledObject.GetComponent<PushPullObject>();
-            //Restrict axis pulling on certain objects
-            if (!p.usableAxes.Contains("z"))
-            {
-                direction.z = 0f;
-            }
-
-            if (!p.usableAxes.Contains("x"))
-            {
-                direction.x = 0f;
-            }
-
-            //Restrict axis movement via max pull distance
-            if (direction.x < 0 && PulledObject.transform.position.x < p.defaultPos.x - PulledObject.GetComponent<PushPullObject>().maxPullDistance)
-            {
-                direction.x = 0f;
-            }
-            else if (direction.x > 0 && PulledObject.transform.position.x > p.defaultPos.x + PulledObject.GetComponent<PushPullObject>().maxPullDistance)
-            {
-                direction.x = 0f;
-            }
-
-            if (direction.z < 0 && PulledObject.transform.position.z < p.defaultPos.z - PulledObject.GetComponent<PushPullObject>().maxPullDistance)
-            {
-                direction.z = 0f;
-            }
-            else if (direction.z > 0 && PulledObject.transform.position.z > p.defaultPos.z + PulledObject.GetComponent<PushPullObject>().maxPullDistance)
-            {
-                direction.z = 0f;
-            }
-
+            ApplyPullRestrictions(ref direction);
         }
 
         rb.AddForce(direction * accModifier, ForceMode.Force);
@@ -155,41 +122,75 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity.y,
             Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
 
-        
-
-        grounded = IsGrounded(col.height * transform.localScale.y, col.radius * transform.localScale.y);
-
         //If we're grounded, any jumps we may have done have ended, so we're no longer using jump.
-        if (grounded) { usedJump = false; }
+        if (IsGrounded()) { usedJump = false; }
 
-        //If NOT grounded, fall gravity is modified, and we're falling (not rising),
-        //  apply extra force to simulate that modifier (3D Unity Physics don't support a "gravity scale" for
-        //  individual rigidbodies)
-        else if (!Mathf.Approximately(fallGravMultiplier, 1)
-            && rb.velocity.y < 0)
+        //If NOT grounded, fall gravity should be modified, and we're falling (not rising),
+        else if (!Mathf.Approximately(fallGravMultiplier, 1) && rb.velocity.y < 0)
         {
+            //Apply extra force based on the multiplier (There's no "gravity scale" for 3D Rigidbodies).
+            //Gravity's already applied once by default; if 1.01, apply the extra 0.01
             rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
         }
     }
 
-    public bool ForceGroundedUpdate()
+    private void ApplyPullRestrictions(ref Vector3 restrictedDir)
     {
-        grounded = IsGrounded(col.height * transform.localScale.y, col.radius * transform.localScale.y);
-        return grounded;
+        // Restrict axis pulling on certain objects
+
+        if (!PulledObject.usableAxes.Contains("z"))
+        {
+            restrictedDir.z = 0f;
+        }
+
+        if (!PulledObject.usableAxes.Contains("x"))
+        {
+            restrictedDir.x = 0f;
+        }
+
+        // Restrict axis movement via max pull distance
+
+        //X is beyond the negative max distance
+        if (restrictedDir.x < 0
+            && PulledObject.transform.position.x < PulledObject.defaultPos.x - PulledObject.maxPullDistance)
+        {
+            restrictedDir.x = 0f;
+        }
+        //X is beyond the positive max distance
+        else if (restrictedDir.x > 0
+            && PulledObject.transform.position.x > PulledObject.defaultPos.x + PulledObject.maxPullDistance)
+        {
+            restrictedDir.x = 0f;
+        }
+        //Z is beyond the negative max distance
+        if (restrictedDir.z < 0
+            && PulledObject.transform.position.z < PulledObject.defaultPos.z - PulledObject.maxPullDistance)
+        {
+            restrictedDir.z = 0f;
+        }
+        //Z is beyond the positive max distance
+        else if (restrictedDir.z > 0
+            && PulledObject.transform.position.z > PulledObject.defaultPos.z + PulledObject.maxPullDistance)
+        {
+            restrictedDir.z = 0f;
+        }
     }
 
-    private bool IsGrounded(float currentColHeight, float currentColRadius)
+    public bool IsGrounded()
     {
-        Vector3 point1 = transform.position + Vector3.up * currentColHeight / 2;
-        point1 += Vector3.down * currentColRadius;
+        float height = col.height * transform.localScale.y;
+        float radius = col.radius * transform.localScale.y;
 
-        Vector3 point2 = transform.position + Vector3.down * currentColHeight / 2;
-        point2 += Vector3.up * currentColRadius;
+        Vector3 point1 = transform.position + Vector3.up * height / 2;
+        point1 += Vector3.down * radius;
 
-        currentColRadius -= 0.02f;
+        Vector3 point2 = transform.position + Vector3.down * height / 2;
+        point2 += Vector3.up * radius;
+
+        radius -= 0.02f;
         groundedCheck = Physics.CapsuleCast(
             point1, point2,
-            currentColRadius, Vector3.down,
+            radius, Vector3.down,
             out RaycastHit groundHit,
             0.1f);
 
