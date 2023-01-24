@@ -77,6 +77,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
     {
+        if(!ForceGroundedUpdate())
+                return;
+
         if (PulledObject != null) 
         {
             if (!pullingObject)
@@ -167,6 +170,12 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
         }
+    }
+
+    public bool ForceGroundedUpdate()
+    {
+        grounded = IsGrounded(col.height * transform.localScale.y, col.radius * transform.localScale.y);
+        return grounded;
     }
 
     private bool IsGrounded(float currentColHeight, float currentColRadius)

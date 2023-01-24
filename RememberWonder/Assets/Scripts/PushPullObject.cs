@@ -39,8 +39,8 @@ public class PushPullObject : MonoBehaviour
         //Debug.Log("entered");
         if (col.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Grounded: " + col.gameObject.GetComponent<PlayerMovement>().grounded);
-            if (col.gameObject.GetComponent<PlayerMovement>().PulledObject != null || col.gameObject.GetComponent<PlayerMovement>().pullingObject || !col.gameObject.GetComponent<PlayerMovement>().grounded)
+            Debug.Log("Grounded: " + col.gameObject.GetComponent<PlayerMovement>().ForceGroundedUpdate());
+            if (col.gameObject.GetComponent<PlayerMovement>().PulledObject != null || col.gameObject.GetComponent<PlayerMovement>().pullingObject || !col.gameObject.GetComponent<PlayerMovement>().ForceGroundedUpdate())
                 return;
             InputHub.Inst.Gameplay.Interact.performed += OnInteractPerformed;
             player = col.gameObject;
@@ -73,6 +73,9 @@ public class PushPullObject : MonoBehaviour
     {
         if (player != null) 
         {
+            if(!player.GetComponent<PlayerMovement>().ForceGroundedUpdate())
+                return;
+
             grabbed = !grabbed;
 
             //Rigidbody rb = GetComponent<Rigidbody>();
