@@ -165,6 +165,15 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
         }
+
+        Debug.DrawRay(transform.position, cameraFollower.transform.forward * 2.5f, Color.yellow);
+        Debug.DrawRay(transform.position, cameraFollower.transform.right * 2.5f, Color.yellow);
+
+        Debug.DrawRay(transform.position, rb.velocity, Color.magenta.Adjust(1, 0.75f));
+        Debug.DrawRay(transform.position, rb.velocity - Vector3.up * rb.velocity.y, Color.magenta);
+
+        Debug.DrawRay(transform.position, direction, Color.green);
+        UtilFunctions.DrawSphere(transform.position + direction, 0.15f, 6, 6, Color.green, Color.green);
     }
 
     private bool IsGrounded(float currentColHeight, float currentColRadius)
