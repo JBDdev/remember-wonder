@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump Controls")]
     [SerializeField] float jumpForce;
     public bool usedJump = false;
-    bool groundedCheck;
     public float maxIncline;
     public float fallGravMultiplier = 1;
 
@@ -108,18 +107,21 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(direction * accModifier, ForceMode.Acceleration);
         transform.position += direction * maxSpeed * Time.deltaTime;
         */
-        bool pulledToFar = false;
+
+        bool pulledTooFar = false;
         if (pullingObject)
         {
-            pulledToFar = ApplyPullRestrictions(ref direction);
+            pulledTooFar = ApplyPullRestrictions(ref direction);
         }
 
         rb.AddForce(direction * accModifier, ForceMode.Force);
         //Clamp the output velocity
-        if (pulledToFar)
+        if (pulledTooFar)
             rb.velocity = Vector3.zero;
         else
         {
+            //Only components are clamped; therefore, player could maybe move past max speed
+            //if X and Z are both in bounds individually?
             rb.velocity = new Vector3(
                 Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed),
                 rb.velocity.y,
@@ -140,7 +142,6 @@ public class PlayerMovement : MonoBehaviour
 
     private bool ApplyPullRestrictions(ref Vector3 restrictedDir)
     {
-        bool haltMovement = false;
         // Restrict axis pulling on certain objects
 
         if (!PulledObject.usableAxes.Contains("z"))
@@ -154,6 +155,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Restrict axis movement via max pull distance
+        bool haltMovement = false;
 
         //X is beyond the negative max distance
         if (restrictedDir.x < 0
@@ -185,7 +187,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return haltMovement;
-
     }
 
     public bool IsGrounded()
@@ -200,14 +201,13 @@ public class PlayerMovement : MonoBehaviour
         point2 += Vector3.up * radius;
 
         radius -= 0.02f;
-        groundedCheck = Physics.CapsuleCast(
+        bool groundedCheck = Physics.CapsuleCast(
             point1, point2,
             radius, Vector3.down,
             out RaycastHit groundHit,
             0.1f);
 
         return groundedCheck && groundHit.normal.y >= maxIncline;
-
     }
 
     //public float GroundHitNormalY() 

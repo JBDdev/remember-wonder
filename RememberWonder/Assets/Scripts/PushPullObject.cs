@@ -30,7 +30,7 @@ public class PushPullObject : MonoBehaviour
 
         player = col.gameObject.GetComponent<PlayerMovement>();
 
-        if (player.gameObject.transform.position.y >= transform.position.y + 1.5f) 
+        if (player.transform.position.y >= transform.position.y + 1.5f) 
         {
             player = null;
             return;
