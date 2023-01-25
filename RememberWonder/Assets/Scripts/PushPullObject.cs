@@ -30,6 +30,16 @@ public class PushPullObject : MonoBehaviour
 
         player = col.gameObject.GetComponent<PlayerMovement>();
 
+        if (player.gameObject.transform.position.y >= transform.position.y + 1.5f) 
+        {
+            player = null;
+            return;
+        }
+
+        Debug.Log(transform.position.y + 1.5f);
+        Debug.Log(player.gameObject.transform.position.y);
+        Debug.Log(player.gameObject.transform.position.y >= transform.position.y + 1.5f);
+
         //Debug.Log("Grounded: " + player.IsGrounded());
 
         if (player.PulledObject || player.pullingObject || !player.IsGrounded())

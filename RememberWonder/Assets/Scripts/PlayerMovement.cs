@@ -12,11 +12,10 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jump Controls")]
     [SerializeField] float jumpForce;
-    [SerializeField] public bool usedJump = false;
-    [SerializeField] public bool grounded = true;
+    public bool usedJump = false;
     bool groundedCheck;
-    [SerializeField] public float maxIncline;
-    [SerializeField] public float fallGravMultiplier = 1;
+    public float maxIncline;
+    public float fallGravMultiplier = 1;
 
     [Header("Child Object References")]
     [SerializeField] GameObject holdLocation;
@@ -58,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
         //print($"Jump performed, did we press or release?: " +
         //$"{(InputHub.Inst.Gameplay.Jump.WasPressedThisFrame() ? "Pressed" : "Released")}");
 
-        if (!grounded)
+        if (!IsGrounded())
             return;
 
         if (pullingObject && PulledObject.disableJump)
@@ -109,18 +108,23 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(direction * accModifier, ForceMode.Acceleration);
         transform.position += direction * maxSpeed * Time.deltaTime;
         */
-
+        bool pulledToFar = false;
         if (pullingObject)
         {
-            ApplyPullRestrictions(ref direction);
+            pulledToFar = ApplyPullRestrictions(ref direction);
         }
 
         rb.AddForce(direction * accModifier, ForceMode.Force);
         //Clamp the output velocity
-        rb.velocity = new Vector3(
-            Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed),
-            rb.velocity.y,
-            Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
+        if (pulledToFar)
+            rb.velocity = Vector3.zero;
+        else
+        {
+            rb.velocity = new Vector3(
+                Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed),
+                rb.velocity.y,
+                Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
+        }
 
         //If we're grounded, any jumps we may have done have ended, so we're no longer using jump.
         if (IsGrounded()) { usedJump = false; }
@@ -134,8 +138,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void ApplyPullRestrictions(ref Vector3 restrictedDir)
+    private bool ApplyPullRestrictions(ref Vector3 restrictedDir)
     {
+        bool haltMovement = false;
         // Restrict axis pulling on certain objects
 
         if (!PulledObject.usableAxes.Contains("z"))
@@ -155,25 +160,32 @@ public class PlayerMovement : MonoBehaviour
             && PulledObject.transform.position.x < PulledObject.defaultPos.x - PulledObject.maxPullDistance)
         {
             restrictedDir.x = 0f;
+            haltMovement = true;
         }
         //X is beyond the positive max distance
         else if (restrictedDir.x > 0
             && PulledObject.transform.position.x > PulledObject.defaultPos.x + PulledObject.maxPullDistance)
         {
             restrictedDir.x = 0f;
+            haltMovement = true;
         }
         //Z is beyond the negative max distance
         if (restrictedDir.z < 0
             && PulledObject.transform.position.z < PulledObject.defaultPos.z - PulledObject.maxPullDistance)
         {
             restrictedDir.z = 0f;
+            haltMovement = true;
         }
         //Z is beyond the positive max distance
         else if (restrictedDir.z > 0
             && PulledObject.transform.position.z > PulledObject.defaultPos.z + PulledObject.maxPullDistance)
         {
             restrictedDir.z = 0f;
+            haltMovement = true;
         }
+
+        return haltMovement;
+
     }
 
     public bool IsGrounded()
@@ -195,5 +207,27 @@ public class PlayerMovement : MonoBehaviour
             0.1f);
 
         return groundedCheck && groundHit.normal.y >= maxIncline;
+
     }
+
+    //public float GroundHitNormalY() 
+    //{
+    //    float height = col.height * transform.localScale.y;
+    //    float radius = col.radius * transform.localScale.y;
+
+    //    Vector3 point1 = transform.position + Vector3.up * height / 2;
+    //    point1 += Vector3.down * radius;
+
+    //    Vector3 point2 = transform.position + Vector3.down * height / 2;
+    //    point2 += Vector3.up * radius;
+
+    //    radius -= 0.02f;
+    //    groundedCheck = Physics.CapsuleCast(
+    //        point1, point2,
+    //        radius, Vector3.down,
+    //        out RaycastHit groundHit,
+    //        0.1f);
+
+    //    return groundHit.normal.y;
+    //}
 }
