@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject holdLocation;
 
     [Header("External References")]
-    [SerializeField] GameObject cameraFollower;
+    [SerializeField] GameObject cameraPivot;
     [SerializeField] GameObject heldObject;
 
     //Internal Component References
@@ -73,9 +73,9 @@ public class PlayerMovement : MonoBehaviour
         Application.Quit();
     }
 
-    private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        if (PulledObject != null) 
+        if (PulledObject != null)
         {
             if (!pullingObject)
             {
@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
                 if (PulledObject.GetComponent<PushPullObject>().disableJump)
                     rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             }
-            else 
+            else
             {
                 pullingObject = false;
                 usedJump = false;
@@ -96,8 +96,8 @@ public class PlayerMovement : MonoBehaviour
     {
         //TODO: Only apply force when either move input is performed?
         //  (That's already the case, because direction's set to zero when no input, but still.)
-        Vector3 direction = cameraFollower.transform.forward * InputHub.Inst.Gameplay.MoveY.ReadValue<float>();
-        direction += cameraFollower.transform.right * InputHub.Inst.Gameplay.MoveX.ReadValue<float>();
+        Vector3 direction = Vector3.Cross(cameraPivot.transform.right, Vector3.up) * InputHub.Inst.Gameplay.MoveY.ReadValue<float>();
+        direction += cameraPivot.transform.right * InputHub.Inst.Gameplay.MoveX.ReadValue<float>();
 
         direction.Normalize();
 
@@ -150,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity.y,
             Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
 
-        
+
 
         grounded = IsGrounded(col.height * transform.localScale.y, col.radius * transform.localScale.y);
 
