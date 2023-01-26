@@ -143,14 +143,9 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        rb.AddForce(direction * accModifier, ForceMode.Force);
-        //Clamp the output velocity
-        rb.velocity = new Vector3(
-            Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed),
-            rb.velocity.y,
-            Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
-
-        
+        //Clamping force output
+        if (Mathf.Abs(rb.velocity.x) < maxSpeed && Mathf.Abs(rb.velocity.z) < maxSpeed)
+            rb.AddForce(direction * accModifier, ForceMode.Force);       
 
         grounded = IsGrounded(col.height * transform.localScale.y, col.radius * transform.localScale.y);
 
