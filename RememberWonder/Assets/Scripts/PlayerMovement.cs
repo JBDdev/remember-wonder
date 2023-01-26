@@ -108,24 +108,19 @@ public class PlayerMovement : MonoBehaviour
         transform.position += direction * maxSpeed * Time.deltaTime;
         */
 
-        bool pulledTooFar = false;
         if (pullingObject)
         {
-            pulledTooFar = ApplyPullRestrictions(ref direction);
+            //If we find we're at max pull distance, zero out velocity.
+            if (ApplyPullRestrictions(ref direction))
+            {
+                rb.velocity = Vector3.zero;
+            }
         }
 
-        rb.AddForce(direction * accModifier, ForceMode.Force);
-        //Clamp the output velocity
-        if (pulledTooFar)
-            rb.velocity = Vector3.zero;
-        else
+        //Clamp force output
+        else if (Mathf.Abs(rb.velocity.x) < maxSpeed && Mathf.Abs(rb.velocity.z) < maxSpeed)
         {
-            //Only components are clamped; therefore, player could maybe move past max speed
-            //if X and Z are both in bounds individually?
-            rb.velocity = new Vector3(
-                Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed),
-                rb.velocity.y,
-                Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
+            rb.AddForce(direction * accModifier, ForceMode.Force);
         }
 
         //If we're grounded, any jumps we may have done have ended, so we're no longer using jump.
@@ -138,6 +133,8 @@ public class PlayerMovement : MonoBehaviour
             //Gravity's already applied once by default; if 1.01, apply the extra 0.01
             rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
         }
+
+        DrawDebugMovementRays(direction);
     }
 
     private bool ApplyPullRestrictions(ref Vector3 restrictedDir)
@@ -155,38 +152,53 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Restrict axis movement via max pull distance
-        bool haltMovement = false;
+
+        bool pastMaxDistance = false;
 
         //X is beyond the negative max distance
         if (restrictedDir.x < 0
             && PulledObject.transform.position.x < PulledObject.defaultPos.x - PulledObject.maxPullDistance)
         {
             restrictedDir.x = 0f;
-            haltMovement = true;
+            pastMaxDistance = true;
         }
         //X is beyond the positive max distance
         else if (restrictedDir.x > 0
             && PulledObject.transform.position.x > PulledObject.defaultPos.x + PulledObject.maxPullDistance)
         {
             restrictedDir.x = 0f;
-            haltMovement = true;
+            pastMaxDistance = true;
         }
         //Z is beyond the negative max distance
         if (restrictedDir.z < 0
             && PulledObject.transform.position.z < PulledObject.defaultPos.z - PulledObject.maxPullDistance)
         {
             restrictedDir.z = 0f;
-            haltMovement = true;
+            pastMaxDistance = true;
         }
         //Z is beyond the positive max distance
         else if (restrictedDir.z > 0
             && PulledObject.transform.position.z > PulledObject.defaultPos.z + PulledObject.maxPullDistance)
         {
             restrictedDir.z = 0f;
-            haltMovement = true;
+            pastMaxDistance = true;
         }
 
-        return haltMovement;
+        return pastMaxDistance;
+    }
+
+    private void DrawDebugMovementRays(Vector3 direction)
+    {
+#if UNITY_EDITOR
+        Debug.DrawRay(transform.position, cameraFollower.transform.forward * 2.5f, Color.yellow);
+        Debug.DrawRay(transform.position, cameraFollower.transform.right * 2.5f, Color.yellow);
+
+        Debug.DrawRay(transform.position, rb.velocity, Color.magenta.Adjust(1, 0.75f));
+        Debug.DrawRay(transform.position, rb.velocity - Vector3.up * rb.velocity.y, Color.magenta);
+
+        Debug.DrawRay(transform.position, direction, Color.green);
+        UtilFunctions.DrawSphere(transform.position + direction, 0.15f, 6, 6, Color.green, Color.green);
+#endif
     }
 
     public bool IsGrounded()
