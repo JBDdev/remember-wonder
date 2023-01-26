@@ -189,8 +189,8 @@ public class PlayerMovement : MonoBehaviour
     private void DrawDebugMovementRays(Vector3 direction)
     {
 #if UNITY_EDITOR
-        Debug.DrawRay(transform.position, cameraFollower.transform.forward * 2.5f, Color.yellow);
-        Debug.DrawRay(transform.position, cameraFollower.transform.right * 2.5f, Color.yellow);
+        Debug.DrawRay(transform.position, Vector3.Cross(cameraPivot.transform.right, Vector3.up) * 2.5f, Color.yellow);
+        Debug.DrawRay(transform.position, cameraPivot.transform.right * 2.5f, Color.yellow);
 
         Debug.DrawRay(transform.position, rb.velocity, Color.magenta.Adjust(1, 0.75f));
         Debug.DrawRay(transform.position, rb.velocity - Vector3.up * rb.velocity.y, Color.magenta);
