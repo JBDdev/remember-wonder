@@ -18,7 +18,10 @@ public class PivotControl : MonoBehaviour
     {
         //If we rotate on mouse down, and none of the mouse buttons are down, don't rotate.
         if (clickAndDrag && !InputHub.Inst.Gameplay.LookActive.IsPressed())
+        {
+            transform.localRotation = targetRotation;
             return;
+        }
 
         yaw += lookSpeed * InputHub.Inst.Gameplay.LookX.ReadValue<float>() * Time.deltaTime;
         //Axis for yaw is multiplied by -1 if invertX is true
