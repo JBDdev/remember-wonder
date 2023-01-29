@@ -1403,11 +1403,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1971491815}
   verticalPivot: {fileID: 721266535}
-  rotateOnMouseDown: 0
+  ownedCam: {fileID: 0}
+  clickAndDrag: 0
   invertX: 0
   invertY: 0
   lookSpeed: 1000
   pitchRange: {x: -75, y: 75}
+  avoidRadius: 0
+  avoidLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  camToTargetSpeed: 0.01
 --- !u!4 &1309662553
 Transform:
   m_ObjectHideFlags: 0
@@ -2043,10 +2049,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 5
   accModifier: 50
+  pullingObject: 0
   jumpForce: 350
   usedJump: 0
   maxIncline: 1
+  fallGravMultiplier: 1
+  holdLocation: {fileID: 0}
   cameraFollower: {fileID: 1309662551}
+  heldObject: {fileID: 0}
 --- !u!54 &1971491817
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2127,60 +2137,60 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1001 &3254107567781746145
+--- !u!1001 &3419223833902824765
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3254107569163002470, guid: 7ce97639cf745304a9cef6a7230debd8, type: 3}
-      propertyPath: m_Name
-      value: Cardboard Box
-      objectReference: {fileID: 0}
-    - target: {fileID: 3254107569163002473, guid: 7ce97639cf745304a9cef6a7230debd8, type: 3}
+    - target: {fileID: 599935726079923696, guid: 0a0d490b67d843f4489112a2e6d0fe10, type: 3}
       propertyPath: m_RootOrder
       value: 17
       objectReference: {fileID: 0}
-    - target: {fileID: 3254107569163002473, guid: 7ce97639cf745304a9cef6a7230debd8, type: 3}
+    - target: {fileID: 599935726079923696, guid: 0a0d490b67d843f4489112a2e6d0fe10, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.3837166
       objectReference: {fileID: 0}
-    - target: {fileID: 3254107569163002473, guid: 7ce97639cf745304a9cef6a7230debd8, type: 3}
+    - target: {fileID: 599935726079923696, guid: 0a0d490b67d843f4489112a2e6d0fe10, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.15
+      value: 3.433
       objectReference: {fileID: 0}
-    - target: {fileID: 3254107569163002473, guid: 7ce97639cf745304a9cef6a7230debd8, type: 3}
+    - target: {fileID: 599935726079923696, guid: 0a0d490b67d843f4489112a2e6d0fe10, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.8314376
+      value: 8.54
       objectReference: {fileID: 0}
-    - target: {fileID: 3254107569163002473, guid: 7ce97639cf745304a9cef6a7230debd8, type: 3}
+    - target: {fileID: 599935726079923696, guid: 0a0d490b67d843f4489112a2e6d0fe10, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3254107569163002473, guid: 7ce97639cf745304a9cef6a7230debd8, type: 3}
+    - target: {fileID: 599935726079923696, guid: 0a0d490b67d843f4489112a2e6d0fe10, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3254107569163002473, guid: 7ce97639cf745304a9cef6a7230debd8, type: 3}
+    - target: {fileID: 599935726079923696, guid: 0a0d490b67d843f4489112a2e6d0fe10, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3254107569163002473, guid: 7ce97639cf745304a9cef6a7230debd8, type: 3}
+    - target: {fileID: 599935726079923696, guid: 0a0d490b67d843f4489112a2e6d0fe10, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3254107569163002473, guid: 7ce97639cf745304a9cef6a7230debd8, type: 3}
+    - target: {fileID: 599935726079923696, guid: 0a0d490b67d843f4489112a2e6d0fe10, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3254107569163002473, guid: 7ce97639cf745304a9cef6a7230debd8, type: 3}
+    - target: {fileID: 599935726079923696, guid: 0a0d490b67d843f4489112a2e6d0fe10, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3254107569163002473, guid: 7ce97639cf745304a9cef6a7230debd8, type: 3}
+    - target: {fileID: 599935726079923696, guid: 0a0d490b67d843f4489112a2e6d0fe10, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 599935726079923711, guid: 0a0d490b67d843f4489112a2e6d0fe10, type: 3}
+      propertyPath: m_Name
+      value: Interior Cardboard Box
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7ce97639cf745304a9cef6a7230debd8, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 0a0d490b67d843f4489112a2e6d0fe10, type: 3}
