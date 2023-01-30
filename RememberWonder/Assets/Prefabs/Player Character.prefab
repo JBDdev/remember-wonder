@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1905955175068764244}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -104,7 +104,6 @@ MonoBehaviour:
   pullingObject: 0
   jumpForce: 350
   usedJump: 0
-  grounded: 1
   maxIncline: 0.5
   fallGravMultiplier: 1
   holdLocation: {fileID: 5864955304277689247}
