@@ -36,9 +36,9 @@ public class PushPullObject : MonoBehaviour
             return;
         }
 
-        Debug.Log(transform.position.y + 1.5f);
-        Debug.Log(player.gameObject.transform.position.y);
-        Debug.Log(player.gameObject.transform.position.y >= transform.position.y + 1.5f);
+        //Debug.Log(transform.position.y + 1.5f);
+        //Debug.Log(player.gameObject.transform.position.y);
+        //Debug.Log(player.gameObject.transform.position.y >= transform.position.y + 1.5f);
 
         //Debug.Log("Grounded: " + player.IsGrounded());
 
