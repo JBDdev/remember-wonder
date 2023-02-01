@@ -9,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSpeed;
     [SerializeField] float accModifier;
     public bool pullingObject = false;
+#if UNITY_EDITOR
+    [SerializeField] bool visualizeMoveInput;
+#endif
 
     [Header("Jump Controls")]
     [SerializeField] float jumpForce;
@@ -199,6 +202,8 @@ public class PlayerMovement : MonoBehaviour
     private void DrawDebugMovementRays(Vector3 direction)
     {
 #if UNITY_EDITOR
+        if (!visualizeMoveInput) return;
+
         var lightGrey = new Color(0.75f, 0.75f, 0.75f, 0.8f);
         Debug.DrawRay(transform.position, cameraFollower.transform.forward * 2.5f, lightGrey.Adjust(2, 1));
         Debug.DrawRay(transform.position, cameraFollower.transform.right * 2.5f, lightGrey.Adjust(0, 1));
@@ -206,8 +211,8 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawRay(transform.position, rb.velocity, Color.yellow.Adjust(3, 0.6f));
         Debug.DrawRay(transform.position, rb.velocity - Vector3.up * rb.velocity.y, Color.yellow);
 
-        Debug.DrawRay(transform.position, direction, lightGrey.Adjust(3, 1));
-        UtilFunctions.DrawSphere(transform.position + direction, 0.15f, 6, 6, lightGrey.Adjust(3, 1));
+        Debug.DrawRay(transform.position, direction, Color.white);
+        UtilFunctions.DrawSphere(transform.position + direction, 0.15f, 6, 6, Color.white);
 #endif
     }
 
