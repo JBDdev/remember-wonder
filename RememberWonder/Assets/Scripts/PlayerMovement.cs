@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jump Controls")]
     [SerializeField] float jumpForce;
-    public bool usedJump = false;
+    public bool jumpInProgress = false;
     public float maxIncline;
     public float fallGravMultiplier = 1;
 
@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     //Accessors
     public GameObject HoldLocation { get { return holdLocation; } }
     public PushPullObject PulledObject { get; set; }
+    public Vector3 Velocity { get => rb.velocity; }
 
     // Start is called before the first frame update
     void Start()
@@ -64,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(new Vector3(0f, jumpForce, 0f));
-        usedJump = true;
+        jumpInProgress = true;
     }
 
     private void OnQuitPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
@@ -86,13 +87,14 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             pullingObject = false;
-            usedJump = false;
             rb.constraints = RigidbodyConstraints.FreezeRotation;
         }
     }
 
     void FixedUpdate()
     {
+        IsGrounded();
+
         //TODO: Instead of polling, only move when input is read
         //  (may require consolidating movement into one 2D vector, as opposed to two separate floats)
         Vector3 direction = Vector3.Cross(cameraPivot.transform.right, Vector3.up) * InputHub.Inst.Gameplay.MoveY.ReadValue<float>();
@@ -121,9 +123,6 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(direction * accModifier, ForceMode.Force);
         }
-
-        //If we're grounded, any jumps we may have done have ended, so we're no longer using jump.
-        if (IsGrounded()) { usedJump = false; }
 
         //If NOT grounded, fall gravity should be modified, and we're falling (not rising),
         else if (!Mathf.Approximately(fallGravMultiplier, 1) && rb.velocity.y < 0)
@@ -202,14 +201,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded()
     {
-        float height = col.height * transform.localScale.y;
-        float radius = col.radius * transform.localScale.y;
-
-        Vector3 point1 = transform.position + Vector3.up * height / 2;
-        point1 += Vector3.down * radius;
-
-        Vector3 point2 = transform.position + Vector3.down * height / 2;
-        point2 += Vector3.up * radius;
+        GetCapsuleCastParams(out _, out float radius, out Vector3 point1, out Vector3 point2);
 
         radius -= 0.02f;
         bool groundedCheck = Physics.CapsuleCast(
@@ -218,7 +210,23 @@ public class PlayerMovement : MonoBehaviour
             out RaycastHit groundHit,
             0.1f);
 
+        if (jumpInProgress && groundedCheck)
+        {
+            Coroutilities.DoNextFrame(this, () => jumpInProgress = rb.velocity.y > 0);
+        }
         return groundedCheck && groundHit.normal.y >= maxIncline;
+    }
+
+    public void GetCapsuleCastParams(out float height, out float radius, out Vector3 top, out Vector3 bottom)
+    {
+        height = col.height * transform.localScale.y;
+        radius = col.radius * transform.localScale.y;
+
+        top = transform.position + Vector3.up * height / 2;
+        top += Vector3.down * radius;   //Go from tip to center of cap-sphere
+
+        bottom = transform.position + Vector3.down * height / 2;
+        bottom += Vector3.up * radius;
     }
 
     //public float GroundHitNormalY() 

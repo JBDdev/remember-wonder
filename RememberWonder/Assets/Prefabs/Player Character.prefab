@@ -44,11 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba9ac506fec0c224ea1fb6beef7d286f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 5864955303093575427}
   clickAndDrag: 0
   invertX: 0
   invertY: 0
   lookSpeed: 100
   pitchRange: {x: -75, y: 75}
+  maxYOffsetOnJump: 2
+  castWidth: 1.5
+  visualize: 0
 --- !u!1 &5864955303093575437
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,7 +107,7 @@ MonoBehaviour:
   accModifier: 50
   pullingObject: 0
   jumpForce: 350
-  usedJump: 0
+  jumpInProgress: 0
   maxIncline: 0.5
   fallGravMultiplier: 1
   holdLocation: {fileID: 5864955304277689247}

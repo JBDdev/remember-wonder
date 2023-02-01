@@ -256,15 +256,29 @@ public static class UtilFunctions
     }
 
     /// <summary>
-    /// Sets one channel (RGBA, 0123) of a color by <paramref name="val"/>. Optionally allows adding instead.
+    /// Sets one channel (RGBA, 0123) of a color to <paramref name="value"/> and returns the result. 
+    /// Optionally allows adding instead.
     /// </summary>
-    /// <remarks>Will return the color unchanged if <paramref name="indToAdjust"/> is invalid (i&lt;0, i&gt;3).</remarks>
-    public static Color Adjust(this Color c, int indToAdjust, float val, bool addVal = false)
+    /// <remarks>Will return the color unchanged if <paramref name="indexToAdjust"/> is invalid (i&lt;0, i&gt;3).</remarks>
+    public static Color Adjust(this Color c, int indexToAdjust, float value, bool addValue = false)
     {
-        if (indToAdjust < 0 || indToAdjust > 3) return c;
+        if (indexToAdjust < 0 || indexToAdjust > 3) return c;
 
-        c[indToAdjust] = addVal ? c[indToAdjust] + val : val;
+        c[indexToAdjust] = addValue ? c[indexToAdjust] + value : value;
         return c;
+    }
+
+    /// <summary>
+    /// Sets one component (XYZ, 012) of a vector to <paramref name="value"/> and returns the result.
+    /// Optionally allows adding instead.
+    /// </summary>
+    /// <remarks>Will return the vector unchanged if <paramref name="indexToAdjust"/> is invalid (i&lt;0, i&gt;2).</remarks>
+    public static Vector3 Adjust(this Vector3 v, int indexToAdjust, float value, bool addValue = false)
+    {
+        if (indexToAdjust < 0 || indexToAdjust > 2) return v;
+
+        v[indexToAdjust] = addValue ? v[indexToAdjust] + value : value;
+        return v;
     }
 
     public static Vector3 ClampComponents(Vector3 v,
@@ -304,6 +318,8 @@ public static class UtilFunctions
     /// Divides two vectors component-wise.
     /// </summary>
     public static Vector3 InverseScale(Vector3 a, Vector3 b) => new Vector3(a.x / b.x, a.y / b.y, a.z / b.z);
+
+    public static Vector3 inverseLocalScale(this Transform tform) => InverseScale(Vector3.one, tform.localScale);
 
     /// <summary>
     /// Scales this transform so that it's sized as if its parent had a scale of (1,1,1).
