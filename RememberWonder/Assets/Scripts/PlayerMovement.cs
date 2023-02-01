@@ -191,14 +191,15 @@ public class PlayerMovement : MonoBehaviour
     private void DrawDebugMovementRays(Vector3 direction)
     {
 #if UNITY_EDITOR
-        Debug.DrawRay(transform.position, Vector3.Cross(cameraPivot.transform.right, Vector3.up) * 2.5f, Color.yellow);
-        Debug.DrawRay(transform.position, cameraPivot.transform.right * 2.5f, Color.yellow);
+        var lightGrey = new Color(0.75f, 0.75f, 0.75f, 0.8f);
+        Debug.DrawRay(transform.position, Vector3.Cross(cameraPivot.transform.right, Vector3.up) * 2.5f, lightGrey.Adjust(2, 1));
+        Debug.DrawRay(transform.position, cameraPivot.transform.right * 2.5f, lightGrey.Adjust(0, 1));
 
-        Debug.DrawRay(transform.position, rb.velocity, Color.magenta.Adjust(1, 0.75f));
-        Debug.DrawRay(transform.position, rb.velocity - Vector3.up * rb.velocity.y, Color.magenta);
+        Debug.DrawRay(transform.position, rb.velocity, Color.yellow.Adjust(3, 0.6f));
+        Debug.DrawRay(transform.position, rb.velocity - Vector3.up * rb.velocity.y, Color.yellow);
 
-        Debug.DrawRay(transform.position, direction, Color.green);
-        UtilFunctions.DrawSphere(transform.position + direction, 0.15f, 6, 6, Color.green, Color.green);
+        Debug.DrawRay(transform.position, direction, lightGrey.Adjust(3, 1));
+        UtilFunctions.DrawSphere(transform.position + direction, 0.15f, 6, 6, lightGrey.Adjust(3, 1));
 #endif
     }
 
