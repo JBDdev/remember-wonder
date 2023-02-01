@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Child Object References")]
     [SerializeField] GameObject holdLocation;
+    [SerializeField] GameObject characterModel;
 
     [Header("External References")]
     [SerializeField] GameObject cameraFollower;
@@ -26,6 +27,10 @@ public class PlayerMovement : MonoBehaviour
     //Internal Component References
     Rigidbody rb;
     CapsuleCollider col;
+
+    [Header("Rotation Controls")]
+    [SerializeField] float rotationSpeed;
+    [SerializeField] float minRotationDistance;
 
     //Accessors
     public GameObject HoldLocation { get { return holdLocation; } }
@@ -123,6 +128,9 @@ public class PlayerMovement : MonoBehaviour
         if (Mathf.Abs(rb.velocity.x) < maxSpeed && Mathf.Abs(rb.velocity.z) < maxSpeed)
         {
             rb.AddForce(direction * accModifier, ForceMode.Force);
+            if(rb.velocity.sqrMagnitude > minRotationDistance)
+                RotateCharacterModel(rb.velocity);
+
         }
 
         //If we're grounded, any jumps we may have done have ended, so we're no longer using jump.
@@ -245,4 +253,9 @@ public class PlayerMovement : MonoBehaviour
 
     //    return groundHit.normal.y;
     //}
+
+    private void RotateCharacterModel(Vector3 direction) 
+    {
+        characterModel.transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+    }
 }
