@@ -110,6 +110,9 @@ public class PlayerMovement : MonoBehaviour
         transform.position += direction * maxSpeed * Time.deltaTime;
         */
 
+
+        //Clamp force output
+
         if (pullingObject)
         {
             //If we find we're at max pull distance, zero out velocity.
@@ -118,8 +121,8 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = Vector3.zero;
             }
         }
-        //Clamp force output
-        else if (Mathf.Abs(rb.velocity.x) < maxSpeed && Mathf.Abs(rb.velocity.z) < maxSpeed)
+
+        if (Mathf.Abs(rb.velocity.x) < maxSpeed && Mathf.Abs(rb.velocity.z) < maxSpeed)
         {
             rb.AddForce(direction * accModifier, ForceMode.Force);
         }
