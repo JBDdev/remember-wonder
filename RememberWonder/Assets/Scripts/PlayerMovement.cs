@@ -128,9 +128,8 @@ public class PlayerMovement : MonoBehaviour
         if (Mathf.Abs(rb.velocity.x) < maxSpeed && Mathf.Abs(rb.velocity.z) < maxSpeed)
         {
             rb.AddForce(direction * accModifier, ForceMode.Force);
-            if(rb.velocity.sqrMagnitude > minRotationDistance)
+            if (rb.velocity.sqrMagnitude > minRotationDistance)
                 RotateCharacterModel(rb.velocity);
-
         }
 
         //If we're grounded, any jumps we may have done have ended, so we're no longer using jump.
@@ -254,8 +253,9 @@ public class PlayerMovement : MonoBehaviour
     //    return groundHit.normal.y;
     //}
 
-    private void RotateCharacterModel(Vector3 direction) 
+    private void RotateCharacterModel(Vector3 direction)
     {
+        if (direction == Vector3.zero) return;
         characterModel.transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
     }
 }
