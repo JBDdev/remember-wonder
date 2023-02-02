@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player Movement Variables")]
     [SerializeField] float maxSpeed;
     [SerializeField] float accModifier;
-    [SerializeField] float wallRaycastDistance = 1f;
     public bool pullingObject = false;
 #if UNITY_EDITOR
     [SerializeField] bool visualizeMoveInput;
@@ -131,8 +130,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (Mathf.Abs(rb.velocity.x) < maxSpeed && Mathf.Abs(rb.velocity.z) < maxSpeed)
         {
-            Physics.Raycast(transform.position, direction, out RaycastHit hit, wallRaycastDistance);
-            direction = Vector3.ProjectOnPlane(direction, hit.normal);
             rb.AddForce(direction * accModifier, ForceMode.Force);
             if (rb.velocity.sqrMagnitude > minRotationDistance)
                 RotateCharacterModel(rb.velocity);
