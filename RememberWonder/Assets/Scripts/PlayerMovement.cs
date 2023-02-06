@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSpeed;
     [SerializeField] float accModifier;
     public bool pullingObject = false;
+    [SerializeField] float wallRaycastDistance = 1f;
 #if UNITY_EDITOR
     [SerializeField] bool visualizeMoveInput;
 #endif
