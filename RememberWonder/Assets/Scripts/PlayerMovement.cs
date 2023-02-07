@@ -123,6 +123,8 @@ public class PlayerMovement : MonoBehaviour
     private void ApplyMoveForce(bool grounded)
     {
         Vector3 direction = InputHub.Inst.Gameplay.Move.ReadValue<Vector2>();
+        float percentHeld = direction.magnitude;
+
         direction =
             Quaternion.LookRotation(Vector3.Cross(cameraPivot.transform.right, Vector3.up))
             * direction.SwapAxes(1, 2);
@@ -139,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //If both axes are under max speed, apply force in direction.
-        if (Mathf.Abs(rb.velocity.x) < maxSpeed && Mathf.Abs(rb.velocity.z) < maxSpeed)
+        if (Mathf.Abs(rb.velocity.x) < maxSpeed * percentHeld && Mathf.Abs(rb.velocity.z) < maxSpeed * percentHeld)
         {
             rb.AddForce(direction * accModifier, ForceMode.Force);
 
