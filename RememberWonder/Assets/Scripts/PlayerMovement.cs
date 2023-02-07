@@ -9,10 +9,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSpeed;
     [SerializeField] float accModifier;
     public bool pullingObject = false;
-    [SerializeField] float airFriction = 1f;
-    [SerializeField] float directionDeadzone = 0.01f;
+    [Space(5)]
     [SerializeField] Vector3 directionLastFrame;
+    [SerializeField] float dirChangeThreshold = 0.01f;
+    [SerializeField][Range(0, 1)] float airFriction = 1f;
 #if UNITY_EDITOR
+    [Space(5)]
     [SerializeField] bool visualizeMoveInput;
 #endif
 
@@ -133,12 +135,14 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        //If we are moving in a significantly different direction
-        if (!(Mathf.Abs(directionLastFrame.x - direction.x) < directionDeadzone && Mathf.Abs(directionLastFrame.z - direction.z) < directionDeadzone) && !IsGrounded())
+        //If we are not grounded and moving in a significantly different direction (axis delta > deadzone),
+        if (!IsGrounded()
+            && (Mathf.Abs(directionLastFrame.x - direction.x) > dirChangeThreshold
+            || Mathf.Abs(directionLastFrame.z - direction.z) > dirChangeThreshold))
         {
             rb.velocity = new Vector3(rb.velocity.x * airFriction, rb.velocity.y, rb.velocity.z * airFriction);
         }
-       
+
 
         if (Mathf.Abs(rb.velocity.x) < maxSpeed && Mathf.Abs(rb.velocity.z) < maxSpeed)
         {
