@@ -76,6 +76,14 @@ public static class Coroutilities
         thingToDo();
     }
 
+    /// <summary>
+    /// Calls <paramref name="thingToDo"/> in one frame. See <see cref="DoAfterDelayFrames(MonoBehaviour, Action, int)"/>.
+    /// </summary>
+    /// <param name="thingToDo">The function or lambda expression that will be called in one frame.</param>
+    /// <inheritdoc cref="DoAfterDelayFrames(MonoBehaviour, Action, int)"/>
+    public static Coroutine DoNextFrame(MonoBehaviour coroutineCaller, Action thingToDo)
+        => coroutineCaller.StartCoroutine(DoAfterDelayFrames(thingToDo, 1));
+
 
 
     /// <summary>
