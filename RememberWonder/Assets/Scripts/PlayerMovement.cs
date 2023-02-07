@@ -9,7 +9,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSpeed;
     [SerializeField] float accModifier;
     public bool pullingObject = false;
-    [SerializeField] float wallRaycastDistance = 1f;
+    [SerializeField] float airFriction = 1f;
+    [SerializeField] float directionDeadzone = 0.01f;
+    [SerializeField] Vector3 directionLastFrame;
 #if UNITY_EDITOR
     [SerializeField] bool visualizeMoveInput;
 #endif
@@ -131,6 +133,13 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        //If we are moving in a significantly different direction
+        if (!(Mathf.Abs(directionLastFrame.x - direction.x) < directionDeadzone && Mathf.Abs(directionLastFrame.z - direction.z) < directionDeadzone) && !IsGrounded())
+        {
+            rb.velocity = new Vector3(rb.velocity.x * airFriction, rb.velocity.y, rb.velocity.z * airFriction);
+        }
+       
+
         if (Mathf.Abs(rb.velocity.x) < maxSpeed && Mathf.Abs(rb.velocity.z) < maxSpeed)
         {
             rb.AddForce(direction * accModifier, ForceMode.Force);
@@ -146,7 +155,8 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
         }
 
-        DrawDebugMovementRays(direction);
+        directionLastFrame = direction;
+        //DrawDebugMovementRays(direction);
     }
 
     private bool ApplyPullRestrictions(ref Vector3 restrictedDir)

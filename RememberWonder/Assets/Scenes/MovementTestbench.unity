@@ -1517,11 +1517,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1190590471}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1309662551 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6624148238399169484, guid: 419ae1aab342abe46b254141d41f820a, type: 3}
-  m_PrefabInstance: {fileID: 6624148239706767003}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1360004040
 GameObject:
   m_ObjectHideFlags: 0
@@ -1943,6 +1938,7 @@ MonoBehaviour:
   - x
   - z
   maxPullDistance: 10
+  disableJump: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1587831973
 GameObject:
@@ -2753,10 +2749,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5864955303093575427, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
-      propertyPath: cameraFollower
-      value: 
-      objectReference: {fileID: 1309662551}
     - target: {fileID: 5864955303093575436, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
       propertyPath: m_RootOrder
       value: 7

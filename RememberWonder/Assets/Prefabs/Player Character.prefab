@@ -140,8 +140,10 @@ MonoBehaviour:
   maxSpeed: 5
   accModifier: 50
   pullingObject: 0
-  wallRaycastDistance: 1
-  visualizeMoveInput: 0
+  airFriction: 0.8
+  directionDeadzone: 0.01
+  directionLastFrame: {x: 0, y: 0, z: 0}
+  visualizeMoveInput: 1
   jumpForce: 350
   jumpInProgress: 0
   maxIncline: 0.5
