@@ -46,7 +46,7 @@ public class PushPullObject : MonoBehaviour
             return;
         player.PulledObject = this;
 
-        InputHub.Inst.Gameplay.Interact.performed += OnInteractPerformed;
+        InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
 
         UpdateChildRends(rend => rend.material.color = Color.grey);
     }
@@ -59,7 +59,7 @@ public class PushPullObject : MonoBehaviour
         //  If we don't, this function fired twice or something.
         if (!player || player.pullingObject) return;
 
-        InputHub.Inst.Gameplay.Interact.performed -= OnInteractPerformed;
+        InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
 
         player.PulledObject = null;
         player = null;
