@@ -105,6 +105,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    //---Core Methods---//
+
     void FixedUpdate()
     {
         var grounded = IsGrounded();
@@ -155,6 +157,24 @@ public class PlayerMovement : MonoBehaviour
         DrawDebugMovementRays(direction);
     }
 
+    public bool IsGrounded()
+    {
+        GetCapsuleCastParams(out _, out float radius, out Vector3 point1, out Vector3 point2);
+
+        radius -= 0.02f;
+        bool groundedCheck = Physics.CapsuleCast(
+            point1, point2,
+            radius, Vector3.down,
+            out RaycastHit groundHit,
+            0.1f);
+
+        if (jumpInProgress && groundedCheck)
+        {
+            Coroutilities.DoNextFrame(this, () => jumpInProgress = rb.velocity.y > 0);
+        }
+        return groundedCheck && groundHit.normal.y >= maxIncline;
+    }
+
     private void ApplyPullRestrictions(ref Vector3 restrictedDir)
     {
         if (!pullingObject) return;
@@ -197,23 +217,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public bool IsGrounded()
+    private void RotateCharacterModel(Vector3 direction)
     {
-        GetCapsuleCastParams(out _, out float radius, out Vector3 point1, out Vector3 point2);
-
-        radius -= 0.02f;
-        bool groundedCheck = Physics.CapsuleCast(
-            point1, point2,
-            radius, Vector3.down,
-            out RaycastHit groundHit,
-            0.1f);
-
-        if (jumpInProgress && groundedCheck)
-        {
-            Coroutilities.DoNextFrame(this, () => jumpInProgress = rb.velocity.y > 0);
-        }
-        return groundedCheck && groundHit.normal.y >= maxIncline;
+        if (direction == Vector3.zero) return;
+        characterModel.transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
     }
+
+    //---Helper Methods---//
 
     public void GetCapsuleCastParams(out float height, out float radius, out Vector3 top, out Vector3 bottom)
     {
@@ -225,12 +235,6 @@ public class PlayerMovement : MonoBehaviour
 
         bottom = transform.position + Vector3.down * height / 2;
         bottom += Vector3.up * radius;
-    }
-
-    private void RotateCharacterModel(Vector3 direction)
-    {
-        if (direction == Vector3.zero) return;
-        characterModel.transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
     }
 
     private void DrawDebugMovementRays(Vector3 direction)
