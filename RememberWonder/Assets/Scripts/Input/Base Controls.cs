@@ -198,7 +198,7 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
                     ""id"": ""b794de23-d410-43a4-8623-8b0874b279d2"",
                     ""path"": ""<Pointer>/delta"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""ScaleVector2(x=0.25,y=0.25)"",
                     ""groups"": """",
                     ""action"": ""Look"",
                     ""isComposite"": false,
