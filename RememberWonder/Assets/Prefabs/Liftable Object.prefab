@@ -116,7 +116,7 @@ MonoBehaviour:
   usableAxes:
   - x
   - z
-  maxPullDistance: 100000000
+  maxPullDistance: Infinity
   liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &2755495626801249179
