@@ -14,11 +14,13 @@ public class PushPullObject : MonoBehaviour
 
     Rigidbody rb;
     Renderer[] childRendsCache;
+    string initTag;    //QUICK AND DIRTY FIX for camera collision, Delete later?
 
     void Start()
     {
         grabbed = false;
         defaultPos = transform.position;
+        initTag = tag;
 
         rb = GetComponent<Rigidbody>();
         childRendsCache = GetComponentsInChildren<Renderer>();
@@ -32,9 +34,9 @@ public class PushPullObject : MonoBehaviour
             //Debug.Log();
             if (!grabbed && (transform.position - player.transform.position).sqrMagnitude > 3f)
             {
-               Deregister();
+                Deregister();
             }
-             
+
         }
     }
     private void OnTriggerEnter(Collider col)
@@ -76,7 +78,7 @@ public class PushPullObject : MonoBehaviour
                 transform.position = player.transform.GetChild(0).GetChild(0).transform.position;
                 transform.parent = player.transform.GetChild(0).GetChild(0).transform;
             }
-                
+
             else
                 transform.parent = player.transform;
         }
@@ -93,7 +95,7 @@ public class PushPullObject : MonoBehaviour
     }
 
     //Breakout of OnTriggerEnter / OnTriggerExit functionality
-    private void Register() 
+    private void Register()
     {
         if (player.transform.position.y >= transform.position.y + 1.5f)
         {
@@ -111,11 +113,14 @@ public class PushPullObject : MonoBehaviour
             return;
         player.PulledObject = this;
 
+        //QUICK AND DIRTY FIX for camera collision; delete later?
+        tag = "Player";
+
         InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
 
         UpdateChildRends(rend => rend.material.color = Color.grey);
     }
-    private void Deregister() 
+    private void Deregister()
     {
         //We should have a ref to player; we get one when they enter.
         //  If we don't, this function fired twice or something.
@@ -125,6 +130,9 @@ public class PushPullObject : MonoBehaviour
 
         player.PulledObject = null;
         player = null;
+
+        //QUICK AND DIRTY FIX for camera collision; delete later?
+        tag = initTag;
 
         UpdateChildRends(rend => rend.material.color = Color.white);
     }
