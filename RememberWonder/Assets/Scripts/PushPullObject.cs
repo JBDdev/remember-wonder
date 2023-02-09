@@ -9,7 +9,7 @@ public class PushPullObject : MonoBehaviour
     [SerializeField] bool grabbed;
     public string[] usableAxes;
     public float maxPullDistance;
-    public bool disableJump;
+    public bool liftable;
     public Vector3 defaultPos;
 
     Rigidbody rb;
@@ -69,24 +69,33 @@ public class PushPullObject : MonoBehaviour
 
     void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        if (!player || !player.IsGrounded()) return;
+        if (!player || (!player.IsGrounded() && !liftable)) return;
 
         grabbed = !grabbed;
 
         //Rigidbody rb = GetComponent<Rigidbody>();
-        if (!disableJump)
+        if (liftable)
         {
             if (grabbed)
                 Destroy(rb);
             else
             {
                 rb = transform.gameObject.AddComponent<Rigidbody>();
-                rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+                //rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             }
         }
 
         if (grabbed)
-            transform.parent = player.transform;
+        {
+            if (liftable)
+            {
+                transform.position = player.transform.GetChild(0).GetChild(0).transform.position;
+                transform.parent = player.transform.GetChild(0).GetChild(0).transform;
+            }
+                
+            else
+                transform.parent = player.transform;
+        }
         else
             transform.parent = null;
     }

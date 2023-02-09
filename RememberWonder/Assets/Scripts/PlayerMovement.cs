@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
         if (!IsGrounded())
             return;
 
-        if (pullingObject && PulledObject.disableJump)
+        if (pullingObject && !PulledObject.liftable)
             return;
 
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
@@ -94,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
         if (!pullingObject)
         {
             pullingObject = true;
-            if (PulledObject.disableJump)
+            if (!PulledObject.liftable)
                 rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
         }
         else
