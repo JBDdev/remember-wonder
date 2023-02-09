@@ -24,52 +24,36 @@ public class PushPullObject : MonoBehaviour
         childRendsCache = GetComponentsInChildren<Renderer>();
     }
 
+    private void Update()
+    {
+        // If we are too far away, deregister
+        if (liftable && player != null)
+        {
+            //Debug.Log();
+            if (!grabbed && (transform.position - player.transform.position).sqrMagnitude > 3f)
+            {
+               Deregister();
+            }
+             
+        }
+    }
     private void OnTriggerEnter(Collider col)
     {
         if (!col.gameObject.CompareTag("Player")) return;
 
         player = col.gameObject.GetComponent<PlayerMovement>();
-
-        if (player.transform.position.y >= transform.position.y + 1.5f) 
-        {
-            player = null;
-            return;
-        }
-
-        //Debug.Log(transform.position.y + 1.5f);
-        //Debug.Log(player.gameObject.transform.position.y);
-        //Debug.Log(player.gameObject.transform.position.y >= transform.position.y + 1.5f);
-
-        //Debug.Log("Grounded: " + player.IsGrounded());
-
-        if (player.PulledObject || player.pullingObject || !player.IsGrounded())
-            return;
-        player.PulledObject = this;
-
-        InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
-
-        UpdateChildRends(rend => rend.material.color = Color.grey);
+        Register();
     }
 
     private void OnTriggerExit(Collider col)
     {
         if (!col.gameObject.CompareTag("Player")) return;
-
-        //We should have a ref to player; we get one when they enter.
-        //  If we don't, this function fired twice or something.
-        if (!player || player.pullingObject) return;
-
-        InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
-
-        player.PulledObject = null;
-        player = null;
-
-        UpdateChildRends(rend => rend.material.color = Color.white);
+        Deregister();
     }
 
     void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        if (!player || (!player.IsGrounded() && !liftable)) return;
+        if (player == null || (!player.IsGrounded() && !liftable)) return;
 
         grabbed = !grabbed;
 
@@ -106,5 +90,42 @@ public class PushPullObject : MonoBehaviour
 
         foreach (Renderer rend in childRendsCache)
             updateFunc(rend);
+    }
+
+    //Breakout of OnTriggerEnter / OnTriggerExit functionality
+    private void Register() 
+    {
+        if (player.transform.position.y >= transform.position.y + 1.5f)
+        {
+            player = null;
+            return;
+        }
+
+        //Debug.Log(transform.position.y + 1.5f);
+        //Debug.Log(player.gameObject.transform.position.y);
+        //Debug.Log(player.gameObject.transform.position.y >= transform.position.y + 1.5f);
+
+        //Debug.Log("Grounded: " + player.IsGrounded());
+
+        if (player.PulledObject || player.pullingObject || !player.IsGrounded())
+            return;
+        player.PulledObject = this;
+
+        InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
+
+        UpdateChildRends(rend => rend.material.color = Color.grey);
+    }
+    private void Deregister() 
+    {
+        //We should have a ref to player; we get one when they enter.
+        //  If we don't, this function fired twice or something.
+        if (player == null || player.pullingObject) return;
+
+        InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
+
+        player.PulledObject = null;
+        player = null;
+
+        UpdateChildRends(rend => rend.material.color = Color.white);
     }
 }
