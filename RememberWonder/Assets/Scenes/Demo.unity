@@ -239,7 +239,7 @@ MonoBehaviour:
   - x
   - z
   maxPullDistance: 10000
-  disableJump: 0
+  liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &28583026
 BoxCollider:
@@ -252,7 +252,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.2, y: 1.9, z: 2.2}
+  m_Size: {x: 2.5, y: 2.5, z: 2.5}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &28583027
 Rigidbody:
@@ -424,7 +424,7 @@ MonoBehaviour:
   - x
   - z
   maxPullDistance: 10000
-  disableJump: 0
+  liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &75566651
 BoxCollider:
@@ -437,7 +437,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.2, y: 1.9, z: 2.2}
+  m_Size: {x: 2.5, y: 2.5, z: 2.5}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &75566652
 Rigidbody:
@@ -844,7 +844,7 @@ MonoBehaviour:
   usableAxes:
   - x
   maxPullDistance: 2
-  disableJump: 1
+  liftable: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &95982023
 BoxCollider:
@@ -876,7 +876,7 @@ MonoBehaviour:
   usableAxes:
   - x
   maxPullDistance: 1
-  disableJump: 1
+  liftable: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!1 &115778783
 GameObject:
@@ -1344,7 +1344,7 @@ MonoBehaviour:
   - x
   - z
   maxPullDistance: 10000
-  disableJump: 0
+  liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &163326436
 BoxCollider:
@@ -1357,7 +1357,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.2, y: 1.9, z: 2.2}
+  m_Size: {x: 2.5, y: 2.5, z: 2.5}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!65 &163326437
 BoxCollider:
@@ -1370,7 +1370,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.0612717, y: 2.03512, z: 2.0671952}
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &163326438
 Rigidbody:
@@ -1429,7 +1429,7 @@ MonoBehaviour:
   - x
   - z
   maxPullDistance: 10000
-  disableJump: 0
+  liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &174917687
 BoxCollider:
@@ -1442,7 +1442,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.2, y: 1.9, z: 2.2}
+  m_Size: {x: 2.5, y: 2.5, z: 2.5}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &174917688
 Rigidbody:
@@ -1647,27 +1647,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9cd76220d8cdc764289a73e6aad37d3e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.25
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9cd76220d8cdc764289a73e6aad37d3e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.25
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9cd76220d8cdc764289a73e6aad37d3e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.25
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9cd76220d8cdc764289a73e6aad37d3e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.274
+      value: -15.183
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9cd76220d8cdc764289a73e6aad37d3e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -13.31
+      value: -13.089
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9cd76220d8cdc764289a73e6aad37d3e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -27.099
+      value: -26.548
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9cd76220d8cdc764289a73e6aad37d3e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5318,7 +5318,7 @@ MonoBehaviour:
   - x
   - z
   maxPullDistance: 10000
-  disableJump: 0
+  liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &951395740
 BoxCollider:
@@ -5331,7 +5331,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.2, y: 1.9, z: 2.2}
+  m_Size: {x: 2.5, y: 2.5, z: 2.5}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &951395741
 Rigidbody:
@@ -5730,7 +5730,7 @@ MonoBehaviour:
   - x
   - z
   maxPullDistance: 10000
-  disableJump: 0
+  liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &1004139376
 BoxCollider:
@@ -5743,7 +5743,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.2, y: 1.9, z: 2.2}
+  m_Size: {x: 2.5, y: 2.5, z: 2.5}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &1004139377
 Rigidbody:
@@ -6916,7 +6916,7 @@ MonoBehaviour:
   - x
   - z
   maxPullDistance: 10000
-  disableJump: 0
+  liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &1207048794
 BoxCollider:
@@ -6929,7 +6929,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.2, y: 1.9, z: 2.2}
+  m_Size: {x: 2.5, y: 2.5, z: 2.5}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &1207048795
 Rigidbody:
@@ -7172,7 +7172,7 @@ MonoBehaviour:
   usableAxes:
   - x
   maxPullDistance: 2.5
-  disableJump: 1
+  liftable: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &1243906477
 BoxCollider:
@@ -7261,7 +7261,7 @@ MonoBehaviour:
   - x
   - z
   maxPullDistance: 10000
-  disableJump: 0
+  liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &1263598979
 BoxCollider:
@@ -7274,7 +7274,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.2, y: 1.9, z: 2.2}
+  m_Size: {x: 2.5, y: 2.5, z: 2.5}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &1263598980
 Rigidbody:
@@ -7853,7 +7853,7 @@ MonoBehaviour:
   - x
   - z
   maxPullDistance: 10000
-  disableJump: 0
+  liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &1356082295
 BoxCollider:
@@ -7866,7 +7866,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.2, y: 1.9, z: 2.2}
+  m_Size: {x: 2.5, y: 2.5, z: 2.5}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &1356082296
 Rigidbody:
@@ -8386,7 +8386,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5864955303093575436, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 47.07
+      value: 46.309
       objectReference: {fileID: 0}
     - target: {fileID: 5864955303093575436, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8394,7 +8394,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5864955303093575436, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -37.725
+      value: -37.438
       objectReference: {fileID: 0}
     - target: {fileID: 5864955303093575436, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8427,6 +8427,14 @@ PrefabInstance:
     - target: {fileID: 5864955303093575437, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
       propertyPath: m_Name
       value: Player Character
+      objectReference: {fileID: 0}
+    - target: {fileID: 5864955304277689246, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5864955304277689246, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
@@ -9558,7 +9566,7 @@ MonoBehaviour:
   - x
   - z
   maxPullDistance: 10000
-  disableJump: 0
+  liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &1690049727
 BoxCollider:
@@ -9571,7 +9579,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.2, y: 1.9, z: 2.2}
+  m_Size: {x: 2.5, y: 2.5, z: 2.5}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &1690049728
 Rigidbody:
@@ -10112,7 +10120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5925619165371413467, guid: ac405fcb7d41b154a8f1983fcf02be6a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 47.07
+      value: 46.309
       objectReference: {fileID: 0}
     - target: {fileID: 5925619165371413467, guid: ac405fcb7d41b154a8f1983fcf02be6a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10671,7 +10679,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7218716095974448595, guid: 5b8d03e62b365374b9764c65d5337111, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.724
+      value: 14.7672
       objectReference: {fileID: 0}
     - target: {fileID: 7218716095974448595, guid: 5b8d03e62b365374b9764c65d5337111, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10679,7 +10687,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7218716095974448595, guid: 5b8d03e62b365374b9764c65d5337111, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.3598
+      value: 16.3694
       objectReference: {fileID: 0}
     - target: {fileID: 7218716095974448595, guid: 5b8d03e62b365374b9764c65d5337111, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10858,6 +10866,43 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 738461852693228245, guid: 72ad11dd314ba4244980827d8de211a5, type: 3}
   m_PrefabInstance: {fileID: 140100882}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1887879377 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8027060119949002601, guid: 5b8d03e62b365374b9764c65d5337111, type: 3}
+  m_PrefabInstance: {fileID: 1877640867}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1887879381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887879377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  grabbed: 0
+  usableAxes:
+  - z
+  maxPullDistance: 100
+  liftable: 0
+  defaultPos: {x: 0, y: 0, z: 0}
+--- !u!65 &1887879382
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887879377}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 0.15, z: 0.18}
+  m_Center: {x: 0, y: 0.05389152, z: 0.0000000037252903}
 --- !u!1001 &1891160008
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11503,7 +11548,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2022651990}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44d70cc20219cd84593f67d248eafe36, type: 3}
   m_Name: 
@@ -11758,7 +11803,7 @@ MonoBehaviour:
   - x
   - z
   maxPullDistance: 10000
-  disableJump: 0
+  liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &2079328648
 BoxCollider:
@@ -11771,7 +11816,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.2, y: 1.9, z: 2.2}
+  m_Size: {x: 2.5, y: 2.5, z: 2.5}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &2079328649
 Rigidbody:
@@ -11882,7 +11927,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6902374573651916502, guid: d79dcfd64a3bd3944931343a1ab1217a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 47.07
+      value: 46.309
       objectReference: {fileID: 0}
     - target: {fileID: 6902374573651916502, guid: d79dcfd64a3bd3944931343a1ab1217a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11890,7 +11935,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6902374573651916502, guid: d79dcfd64a3bd3944931343a1ab1217a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -39.3077
+      value: -38.3577
       objectReference: {fileID: 0}
     - target: {fileID: 6902374573651916502, guid: d79dcfd64a3bd3944931343a1ab1217a, type: 3}
       propertyPath: m_LocalRotation.w
