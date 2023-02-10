@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("External References")]
     [SerializeField] GameObject cameraPivot;
     [SerializeField] GameObject heldObject;
+    [SerializeField] PushPullObject pushPullObject;
 
     //Internal Component References
     Rigidbody rb;
@@ -42,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Accessors
     public GameObject HoldLocation { get { return holdLocation; } }
-    public PushPullObject PulledObject { get; set; }
+    public PushPullObject PulledObject { get { return pushPullObject; } set { pushPullObject = value; } }
     public Vector3 Velocity { get => rb.velocity; }
 
     void Start()
@@ -74,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
         if (!IsGrounded())
             return;
 
-        if (pullingObject && PulledObject.disableJump)
+        if (pullingObject && !PulledObject.liftable)
             return;
 
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
@@ -95,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
         if (!pullingObject)
         {
             pullingObject = true;
-            if (PulledObject.disableJump)
+            if (!PulledObject.liftable)
                 rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
         }
         else
@@ -119,6 +120,15 @@ public class PlayerMovement : MonoBehaviour
             //Apply extra force based on the multiplier (There's no "gravity scale" for 3D Rigidbodies).
             //Gravity's already applied once by default; if 1.01, apply the extra 0.01
             rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
+        }
+
+        if (PulledObject != null)
+        {
+            if ((PulledObject.transform.position - transform.position).sqrMagnitude > 3 && PulledObject.liftable)
+            {
+                PulledObject = null;
+                pullingObject = false;
+            }
         }
     }
 
