@@ -235,9 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 423624415}
   grabbed: 0
-  usableAxes:
-  - x
-  - z
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
@@ -420,9 +418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 423624415}
   grabbed: 0
-  usableAxes:
-  - x
-  - z
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
@@ -841,8 +837,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 423624415}
   grabbed: 0
-  usableAxes:
-  - x
+  grabMoveMultipliers: {x: 0.5, y: 0, z: 0}
   maxPullDistance: 2
   liftable: 0
   defaultPos: {x: 0, y: 0, z: 0}
@@ -873,8 +868,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 423624415}
   grabbed: 0
-  usableAxes:
-  - x
+  grabMoveMultipliers: {x: 0.5, y: 0, z: 0}
   maxPullDistance: 1
   liftable: 0
   defaultPos: {x: 0, y: 0, z: 0}
@@ -1340,9 +1334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 423624415}
   grabbed: 0
-  usableAxes:
-  - x
-  - z
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
@@ -1425,9 +1417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 423624415}
   grabbed: 0
-  usableAxes:
-  - x
-  - z
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
@@ -5314,9 +5304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 423624415}
   grabbed: 0
-  usableAxes:
-  - x
-  - z
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
@@ -5726,9 +5714,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 423624415}
   grabbed: 0
-  usableAxes:
-  - x
-  - z
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
@@ -6912,9 +6898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 423624415}
   grabbed: 0
-  usableAxes:
-  - x
-  - z
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
@@ -7169,8 +7153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 423624415}
   grabbed: 0
-  usableAxes:
-  - x
+  grabMoveMultipliers: {x: 0.5, y: 0, z: 0}
   maxPullDistance: 2.5
   liftable: 0
   defaultPos: {x: 0, y: 0, z: 0}
@@ -7257,9 +7240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 423624415}
   grabbed: 0
-  usableAxes:
-  - x
-  - z
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
@@ -7849,9 +7830,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 423624415}
   grabbed: 0
-  usableAxes:
-  - x
-  - z
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
@@ -9562,9 +9541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 423624415}
   grabbed: 0
-  usableAxes:
-  - x
-  - z
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}
@@ -10885,8 +10862,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   grabbed: 0
-  usableAxes:
-  - z
+  grabMoveMultipliers: {x: 0, y: 0, z: 0.8}
   maxPullDistance: 100
   liftable: 0
   defaultPos: {x: 0, y: 0, z: 0}
@@ -11799,9 +11775,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 423624415}
   grabbed: 0
-  usableAxes:
-  - x
-  - z
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
   defaultPos: {x: 0, y: 0, z: 0}

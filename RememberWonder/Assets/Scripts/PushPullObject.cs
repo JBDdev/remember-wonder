@@ -7,7 +7,7 @@ public class PushPullObject : MonoBehaviour
 {
     [SerializeField] PlayerMovement player;
     [SerializeField] bool grabbed;
-    public string[] usableAxes;
+    [SerializeField] Vector3 grabMoveMultipliers = Vector3.one;
     public float maxPullDistance;
     public bool liftable;
     public Vector3 defaultPos;
@@ -15,6 +15,8 @@ public class PushPullObject : MonoBehaviour
     Rigidbody rb;
     Renderer[] childRendsCache;
     string initTag;    //QUICK AND DIRTY FIX for camera collision, Delete later?
+
+    public Vector3 GrabMoveMultipliers { get => grabMoveMultipliers; }
 
     void Start()
     {
@@ -97,7 +99,7 @@ public class PushPullObject : MonoBehaviour
     //Breakout of OnTriggerEnter / OnTriggerExit functionality
     private void Register()
     {
-        if (player.transform.position.y >= transform.position.y + 1.5f)
+        if (!player || player.transform.position.y >= transform.position.y + 1.5f)
         {
             player = null;
             return;
@@ -124,7 +126,7 @@ public class PushPullObject : MonoBehaviour
     {
         //We should have a ref to player; we get one when they enter.
         //  If we don't, this function fired twice or something.
-        if (player == null || player.pullingObject) return;
+        if (!player || player.pullingObject) return;
 
         InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
 
