@@ -68,7 +68,7 @@ public static class UtilFunctions
         return result;
     }
 
-    #region Lightly modified from unitycoder via https://gist.github.com/unitycoder/58f4b5d80f423d29e35c814a9556f9d9
+    #region Draw Box/Bounds | Lightly modified from unitycoder via https://gist.github.com/unitycoder/58f4b5d80f423d29e35c814a9556f9d9
     public static void DrawBounds(Bounds b, Color c = default, float duration = 0)
     {
         // bottom, counter-clockwise from back bottom left
@@ -278,6 +278,20 @@ public static class UtilFunctions
         if (indexToAdjust < 0 || indexToAdjust > 2) return v;
 
         v[indexToAdjust] = addValue ? v[indexToAdjust] + value : value;
+        return v;
+    }
+
+    /// <summary>
+    /// Returns a vector with the values at <paramref name="index1"/> and <paramref name="index2"/> swapped (XYZ, 012).
+    /// </summary>
+    /// <remarks>Will return the vector unchanged if <paramref name="indexToAdjust"/> is invalid (i&lt;0, i&gt;2).</remarks>
+    public static Vector3 SwapAxes(this Vector3 v, int index1, int index2)
+    {
+        if (index1 < 0 || index1 > 2) return v;
+        if (index2 < 0 || index2 > 2) return v;
+
+        //witchcraft sourced from https://twitter.com/FreyaHolmer/status/1283000617510854656
+        (v[index1], v[index2]) = (v[index2], v[index1]);
         return v;
     }
 
