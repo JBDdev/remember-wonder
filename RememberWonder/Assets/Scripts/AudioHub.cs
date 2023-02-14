@@ -17,7 +17,7 @@ public class AudioHub : MonoBehaviour
     [SerializeField] AudioSource sourcePrefab;
     [SerializeField][Min(1)] int sourcePoolSize = 10;
     [Space(10)]
-    [SerializeField] Bewildered.UDictionary<string, SoundContainer> soundLibrary;
+    [SerializeField] Bewildered.UDictionary<AudioList, SoundContainer> soundLibrary;
 
     private Stack<AudioSource> idleSources;
 
@@ -44,11 +44,11 @@ public class AudioHub : MonoBehaviour
         }
     }
 
-    public AudioSource Play(string clipName, Vector3 playPos = default)
+    public AudioSource Play(AudioList listItem, Vector3 playPos = default)
     {
-        if (!soundLibrary.TryGetValue(clipName, out var sound))
+        if (!soundLibrary.TryGetValue(listItem, out var sound))
         {
-            Debug.LogWarning($"No clip with name \"{clipName}\" found in AudioHub's sound library.");
+            Debug.LogWarning($"No clip with name \"{listItem}\" found in AudioHub's sound library.");
             return null;
         }
 

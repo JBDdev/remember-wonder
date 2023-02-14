@@ -48,7 +48,7 @@ MonoBehaviour:
   sourcePoolSize: 10
   soundLibrary:
     _serializedPairs:
-    - key: walk
+    - key: 0
       value:
         randomOrder: 0
         clips:
@@ -56,7 +56,7 @@ MonoBehaviour:
         - {fileID: 8300000, guid: 063d85cf6ecb51a49b7f4f03013a1220, type: 3}
       isDuplicateKey: 0
       index: 0
-    - key: plastic cup drop
+    - key: 1
       value:
         randomOrder: 0
         clips:
