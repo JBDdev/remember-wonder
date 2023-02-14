@@ -7,8 +7,9 @@ public class CollectMote : MonoBehaviour
 {
     [SerializeField] private Renderer modelRend;
     [SerializeField] private ParticleSystem collectPSys;
-    [SerializeField] private Bewildered.UHashSet<TagString> collectorTags;
     [SerializeField] private AudioList collectAudio;
+    [Space(10)]
+    [SerializeField] private Bewildered.UHashSet<TagString> collectorTags;
     private bool collected;
 
     /// <summary>
