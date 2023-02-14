@@ -52,12 +52,14 @@ public class AudioHub : MonoBehaviour
             return null;
         }
 
-        var clip = sound.Clip;
-
+        return Play(sound.Clip, playPos);
+    }
+    public AudioSource Play(AudioClip clip, Vector3 playPos = default)
+    {
         //If all the sources in our pool are busy, just give up.
         if (!idleSources.TryPop(out var source))
         {
-            Debug.LogWarning($"Clip {clip} (\"{clipName}\") not played; all audio sources are busy. " +
+            Debug.LogWarning($"Clip {clip} not played; all audio sources are busy. " +
                 $"Consider increasing the source pool size, or playing less sounds all at once.");
             return null;
         }
