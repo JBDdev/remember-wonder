@@ -4956,6 +4956,7 @@ MonoBehaviour:
         str: Player
       isDuplicate: 0
       index: 0
+  collectAudio: 2
 --- !u!114 &4334391588535324519
 MonoBehaviour:
   m_ObjectHideFlags: 0
