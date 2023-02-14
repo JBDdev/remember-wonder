@@ -56,3 +56,10 @@ MonoBehaviour:
         - {fileID: 8300000, guid: 063d85cf6ecb51a49b7f4f03013a1220, type: 3}
       isDuplicateKey: 0
       index: 0
+    - key: plastic cup drop
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: 7af7bc1e548a5da4a87aaa0a6e24a743, type: 3}
+      isDuplicateKey: 0
+      index: 1
