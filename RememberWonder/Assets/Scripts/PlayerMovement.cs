@@ -98,11 +98,17 @@ public class PlayerMovement : MonoBehaviour
             pullingObject = true;
             if (!PulledObject.liftable)
                 rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+
+            //If X or Z are not allowed, make ALL force unable to move the player in that axis
+            if (PulledObject.GrabMoveMultipliers.x <= 0)
+                rb.constraints |= RigidbodyConstraints.FreezePositionX;
+            if (PulledObject.GrabMoveMultipliers.z <= 0)
+                rb.constraints |= RigidbodyConstraints.FreezePositionZ;
         }
         else
         {
             pullingObject = false;
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
+            rb.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezeRotation;
         }
     }
 
@@ -135,7 +141,6 @@ public class PlayerMovement : MonoBehaviour
     private void ApplyMoveForce(bool grounded)
     {
         Vector3 direction = InputHub.Inst.Gameplay.Move.ReadValue<Vector2>();
-        float percentHeld = direction.magnitude;
 
         direction =
             Quaternion.LookRotation(Vector3.Cross(cameraPivot.transform.right, Vector3.up))
@@ -143,6 +148,8 @@ public class PlayerMovement : MonoBehaviour
 
         ApplyPullRestrictions(ref direction);
         if (direction == Vector3.zero) return;
+        
+        float percentHeld = direction.magnitude;
 
         //If we are not grounded and moving in a significantly different direction (axis delta > deadzone),
         if (!IsGrounded()
@@ -187,15 +194,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyPullRestrictions(ref Vector3 restrictedDir)
     {
-        if (!pullingObject) return;
+        //If not pulling, unrestrict all move axes and bail out
+        if (!pullingObject)
+        {
+            rb.constraints &= ~(RigidbodyConstraints.FreezePosition);
+            return;
+        }
 
-        // Restrict axis pulling on certain objects
-        if (!PulledObject.usableAxes.Contains("z"))
-            restrictedDir.z = 0f;
-        if (!PulledObject.usableAxes.Contains("x"))
-            restrictedDir.x = 0f;
+        restrictedDir.x *= PulledObject.GrabMoveMultipliers.x;
+        restrictedDir.z *= PulledObject.GrabMoveMultipliers.z;
 
-        // Restrict axis movement via max pull distance
+        //-- Restrict axis movement via max pull distance --//
 
         //X is beyond the negative max distance
         if (restrictedDir.x < 0
@@ -229,7 +238,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void RotateCharacterModel(Vector3 direction)
     {
-        if (direction == Vector3.zero) return;
+        if (direction.sqrMagnitude <= Mathf.Epsilon) return;
         characterModel.transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
     }
 
