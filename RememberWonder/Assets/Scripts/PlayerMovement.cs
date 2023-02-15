@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotationSpeed;
     [SerializeField] float minRotationDistance;
 
+    bool paused;
+
     //Accessors
     public GameObject HoldLocation { get { return holdLocation; } }
     public PushPullObject PulledObject { get { return pushPullObject; } set { pushPullObject = value; } }
@@ -52,17 +54,21 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();
 
+        paused = false;
+
         PulledObject = null;
 
         InputHub.Inst.Gameplay.Jump.performed += OnJumpPerformed;
         InputHub.Inst.Gameplay.Quit.performed += OnQuitPerformed;
         InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
+        InputHub.Inst.Gameplay.Pause.performed += OnPausePerformed;
     }
     private void OnDestroy()
     {
         InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
         InputHub.Inst.Gameplay.Quit.performed -= OnQuitPerformed;
         InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
+        InputHub.Inst.Gameplay.Pause.performed -= OnPausePerformed;
     }
 
     //---Input Events---//
@@ -86,6 +92,24 @@ public class PlayerMovement : MonoBehaviour
     private void OnQuitPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
         Application.Quit();
+    }
+
+    private void OnPausePerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    {
+        if (paused)
+        {
+            paused = false;
+            InputHub.Inst.Gameplay.Jump.performed += OnJumpPerformed;
+            InputHub.Inst.Gameplay.Quit.performed += OnQuitPerformed;
+            InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
+        }
+        else 
+        {
+            paused = true;
+            InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
+            InputHub.Inst.Gameplay.Quit.performed -= OnQuitPerformed;
+            InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
+        }
     }
 
     private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)

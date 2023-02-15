@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+public class PauseMenu : MonoBehaviour
 {
     [SerializeField] GameObject[] initialMenuOptions;
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject instructionsMenu;
     [SerializeField] GameObject settingsMenu;
+
+    [SerializeField] GameObject moteUI;
+    [SerializeField] GameObject pauseMenu;
 
     [SerializeField] int mainMenuSelection;
 
@@ -24,95 +27,68 @@ public class MainMenu : MonoBehaviour
     [SerializeField] int exitSelection;
     [SerializeField] GameObject[] highlightableElements;
 
-
+    //Settings values
     int windowSetting;
     float bgmVolume;
     float sfxVolume;
     float cameraSens;
 
+    bool paused;
+
     bool viewingInstructions;
     bool viewingSettings;
+
     // Start is called before the first frame update
     void Start()
     {
         mainMenuSelection = 0;
-        initialMenuOptions[0].GetComponent<Image>().enabled = true;
-        InputHub.Inst.Gameplay.Move.performed += ChangeSelection;
-        InputHub.Inst.Gameplay.Jump.performed += Select;
+        paused = false;
         viewingInstructions = false;
         viewingSettings = false;
+        InputHub.Inst.Gameplay.Pause.performed += PauseInput;
+        pauseMenu.SetActive(false);
+
         LoadPlayerSettings();
     }
 
-    void Select(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    void PauseInput(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
     {
-        if (!viewingInstructions)
+        TogglePauseMenu();
+    }
+    void TogglePauseMenu() 
+    {
+
+        if (viewingSettings)
+            return;
+
+        if (paused)
         {
-            switch (mainMenuSelection)
-            {
-                case 0:
-                    InputHub.Inst.Gameplay.Move.performed -= ChangeSelection;
-                    InputHub.Inst.Gameplay.Jump.performed -= Select;
-                    SceneManager.LoadScene(1);
-                    break;
-                case 1:
-                    LoadInstructions();
-                    break;
-                case 2:
-                    LoadSettings();
-                    break;
-                case 3:
-                    Application.Quit();
-                    break;
-            }
+            InputHub.Inst.Gameplay.Move.performed -= ChangeSelection;
+            InputHub.Inst.Gameplay.Jump.performed -= Select;
+            if (viewingInstructions)
+                UnloadInstructions();
+
+            if (viewingSettings)
+                UnloadSettings();
+
+            pauseMenu.SetActive(false);
+            paused = false;
+            Time.timeScale = 1f;
+            foreach (GameObject option in initialMenuOptions)
+                option.GetComponent<Image>().enabled = false;
+
+            moteUI.SetActive(true);
         }
-        else 
+        else
         {
-            UnloadInstructions();
+            InputHub.Inst.Gameplay.Move.performed += ChangeSelection;
+            InputHub.Inst.Gameplay.Jump.performed += Select;
+            pauseMenu.SetActive(true);
+            initialMenuOptions[mainMenuSelection].GetComponent<Image>().enabled = true;
+            paused = true;
+            Time.timeScale = 0f;
+            moteUI.SetActive(false);
         }
-    }
-
-    void LoadInstructions() 
-    {
-        mainMenu.SetActive(false);
-        instructionsMenu.SetActive(true);
-        viewingInstructions = true;
-    }
-
-    void UnloadInstructions() 
-    {
-        instructionsMenu.SetActive(false);
-        mainMenu.SetActive(true);
-        viewingInstructions = false;
-    }
-
-    void LoadSettings()
-    {
-        mainMenu.SetActive(false);
-        InputHub.Inst.Gameplay.Move.performed -= ChangeSelection;
-        InputHub.Inst.Gameplay.Jump.performed -= Select;
-
-        InputHub.Inst.Gameplay.Jump.performed += ConfirmSettings;
-        InputHub.Inst.Gameplay.Move.performed += SubmenuSelection;
-
-        LoadPlayerSettings();
-        settingsMenu.SetActive(true);
-        viewingSettings = true;
-    }
-    void UnloadSettings()
-    {
-        settingsMenu.SetActive(false);
-        InputHub.Inst.Gameplay.Jump.performed -= ConfirmSettings;
-        InputHub.Inst.Gameplay.Move.performed -= SubmenuSelection;
-
-        InputHub.Inst.Gameplay.Move.performed += ChangeSelection;
-        InputHub.Inst.Gameplay.Jump.performed += Select;
-
-        foreach (GameObject element in highlightableElements)
-            element.GetComponent<Image>().color = Color.white;
-
-        mainMenu.SetActive(true);
-        viewingSettings = false;
     }
 
     void ChangeSelection(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
@@ -133,9 +109,89 @@ public class MainMenu : MonoBehaviour
             option.GetComponent<Image>().enabled = false;
 
         initialMenuOptions[mainMenuSelection].GetComponent<Image>().enabled = true;
-
     }
 
+    void Select(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    {
+        if (viewingInstructions)
+            UnloadInstructions();
+        else if (viewingSettings)
+        {
+            //Not done yet!
+            UnloadSettings();
+        }
+        else 
+        {
+            //This block covers the default pause menu
+            switch (mainMenuSelection)
+            {
+                case 0:
+                    TogglePauseMenu();
+                    break;
+                case 1:
+                    LoadInstructions();
+                    break;
+                case 2:
+                    LoadSettings();
+                    break;
+                case 3:
+                    InputHub.Inst.Gameplay.Pause.performed -= PauseInput;
+                    InputHub.Inst.Gameplay.Move.performed -= ChangeSelection;
+                    InputHub.Inst.Gameplay.Jump.performed -= Select;
+                    Time.timeScale = 1f;
+                    SceneManager.LoadScene(0);
+                    break;
+            }
+        }
+    }
+
+    void LoadInstructions()
+    {
+        mainMenu.SetActive(false);
+        instructionsMenu.SetActive(true);
+        viewingInstructions = true;
+    }
+    void UnloadInstructions()
+    {
+        instructionsMenu.SetActive(false);
+        mainMenu.SetActive(true);
+        viewingInstructions = false;
+    }
+
+    void LoadSettings() 
+    {
+        mainMenu.SetActive(false);
+        InputHub.Inst.Gameplay.Pause.performed -= PauseInput;
+        InputHub.Inst.Gameplay.Move.performed -= ChangeSelection;
+        InputHub.Inst.Gameplay.Jump.performed -= Select;
+
+        InputHub.Inst.Gameplay.Jump.performed += ConfirmSettings;
+        InputHub.Inst.Gameplay.Move.performed += SubmenuSelection;
+
+        LoadPlayerSettings();
+        settingsMenu.SetActive(true);
+        viewingSettings = true;
+    }
+    void UnloadSettings()
+    {
+        settingsMenu.SetActive(false);
+        InputHub.Inst.Gameplay.Jump.performed -= ConfirmSettings;
+        InputHub.Inst.Gameplay.Move.performed -= SubmenuSelection;
+
+        InputHub.Inst.Gameplay.Pause.performed += PauseInput;
+        InputHub.Inst.Gameplay.Move.performed += ChangeSelection;
+        InputHub.Inst.Gameplay.Jump.performed += Select;
+
+        foreach (GameObject element in highlightableElements)
+            element.GetComponent<Image>().color = Color.white;
+
+        mainMenu.SetActive(true);        
+        viewingSettings = false;
+    }
+
+    //Settings Menu Functionality
+    #region Settings Menu Nonsense
+    //ReadPlayerSettings
     void LoadPlayerSettings() 
     {
         windowSetting = PlayerPrefs.GetInt("windowSetting");
@@ -156,7 +212,7 @@ public class MainMenu : MonoBehaviour
             windowOptions[1].GetComponent<Image>().color = Color.white;
             windowOptions[1].GetComponent<Image>().enabled = false;
         }
-        else
+        else 
         {
             windowOptions[0].GetComponent<Image>().color = Color.white;
             windowOptions[0].GetComponent<Image>().enabled = false;
@@ -164,6 +220,8 @@ public class MainMenu : MonoBehaviour
             windowOptions[1].GetComponent<Image>().color = Color.cyan;
             windowOptions[1].GetComponent<Image>().enabled = true;
         }
+        
+
 
         submenuSelection = windowSetting;
         //Sliders
@@ -174,7 +232,25 @@ public class MainMenu : MonoBehaviour
         submenuSelection = 0;
     }
 
-    void InitMissingPrefValues() 
+    //WriteNewSettings
+    void ApplyNewSettings() 
+    {
+        if (windowSelection == 0)
+            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        else
+            Screen.fullScreenMode = FullScreenMode.Windowed;
+
+        //Update Volume Here
+
+        //Update Camera Sensitvity Here
+
+        PlayerPrefs.SetInt("windowSetting", windowSelection);
+        PlayerPrefs.SetFloat("bgmVolume", bgmSlider.transform.GetChild(0).GetComponent<Slider>().value);
+        PlayerPrefs.SetFloat("sfxVolume", sfxSlider.transform.GetChild(0).GetComponent<Slider>().value);
+        PlayerPrefs.SetFloat("cameraSens", cameraSlider.transform.GetChild(0).GetComponent<Slider>().value);
+    }
+
+    void InitMissingPrefValues()
     {
         switch (windowSetting)
         {
@@ -212,24 +288,7 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    void ApplyNewSettings()
-    {
-        if (windowSelection == 0)
-            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
-        else
-            Screen.fullScreenMode = FullScreenMode.Windowed;
-
-        //Update Volume Here
-
-        //Update Camera Sensitvity Here
-
-        PlayerPrefs.SetInt("windowSetting", windowSelection);
-        PlayerPrefs.SetFloat("bgmVolume", bgmSlider.transform.GetChild(0).GetComponent<Slider>().value);
-        PlayerPrefs.SetFloat("sfxVolume", sfxSlider.transform.GetChild(0).GetComponent<Slider>().value);
-        PlayerPrefs.SetFloat("cameraSens", cameraSlider.transform.GetChild(0).GetComponent<Slider>().value);
-    }
-
-    void ConfirmSettings(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    void ConfirmSettings(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
     {
         if (submenuSelection < 4)
             return;
@@ -240,12 +299,12 @@ public class MainMenu : MonoBehaviour
         UnloadSettings();
     }
 
-    void SubmenuSelection(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    void SubmenuSelection(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
     {
         Vector2 input = InputHub.Inst.Gameplay.Move.ReadValue<Vector2>();
 
         //Handle Horizontal Input
-        switch (submenuSelection)
+        switch (submenuSelection) 
         {
             case 0:
                 if (input.x > 0)
@@ -312,7 +371,7 @@ public class MainMenu : MonoBehaviour
 
         //Highlight the correct element and reset all the others
 
-        foreach (GameObject element in highlightableElements)
+        foreach (GameObject element in highlightableElements) 
             element.GetComponent<Image>().color = Color.white;
 
         if (windowSelection == 0)
@@ -320,17 +379,17 @@ public class MainMenu : MonoBehaviour
             highlightableElements[0].GetComponent<Image>().enabled = true;
             highlightableElements[1].GetComponent<Image>().enabled = false;
         }
-        else if (windowSelection == 1)
+        else if (windowSelection == 1) 
         {
             highlightableElements[0].GetComponent<Image>().enabled = false;
             highlightableElements[1].GetComponent<Image>().enabled = true;
         }
 
-        switch (submenuSelection)
+        switch (submenuSelection) 
         {
             case 0:
-                if (windowSelection == 0)
-                    highlightableElements[0].GetComponent<Image>().color = Color.cyan;
+                if (windowSelection == 0) 
+                    highlightableElements[0].GetComponent<Image>().color = Color.cyan;                
                 else
                     highlightableElements[1].GetComponent<Image>().color = Color.cyan;
                 break;
@@ -344,7 +403,7 @@ public class MainMenu : MonoBehaviour
                 highlightableElements[4].GetComponent<Image>().color = Color.cyan;
                 break;
             case 4:
-                if (exitSelection == 0)
+                if(exitSelection == 0)
                     highlightableElements[5].GetComponent<Image>().color = Color.cyan;
                 else
                     highlightableElements[6].GetComponent<Image>().color = Color.cyan;
@@ -352,4 +411,5 @@ public class MainMenu : MonoBehaviour
         }
 
     }
+    #endregion
 }
