@@ -7,6 +7,8 @@ public class AudioOnMovement : MonoBehaviour
     [SerializeField] AudioList audioToPlay;
     [Tooltip("If loop is false, how often to play audio when moving (once every X seconds)")]
     [SerializeField][Min(0.01f)] float playInterval = 1;
+    [Tooltip("Play audio immediately when moving starts, instead of waiting for the first interval.")]
+    [SerializeField] bool skipFirstInterval = false;
     [SerializeField] SourceSettings audioSettings;
     [Space(10)]
     [Tooltip("The body to read velocity from. If null, movement will be determined with position delta instead.")]
@@ -43,11 +45,6 @@ public class AudioOnMovement : MonoBehaviour
             var posDelta = transform.position - previousPosition;
             moving = posDelta.sqrMagnitude >= posDeltaThreshold * posDeltaThreshold;
             previousPosition = transform.position;
-
-            /*if (posDelta != Vector3.zero)
-            {
-                print($"{posDelta.x}, {posDelta.y}, {posDelta.z}");
-            }*/
         }
 
         ManageLoopingAudio();
@@ -60,18 +57,20 @@ public class AudioOnMovement : MonoBehaviour
             //No need to be running interval stuff at all if the audio loops.
             if (audioSettings.useLoop && audioSettings.loop) yield break;
 
+            //If not moving, we're inactive. Once we've been inactive long enough, restart interval timer.
             if (!moving)
             {
-                intervalTimer = 0;
-                yield return null;
+                intervalTimer = skipFirstInterval ? playInterval : 0;
             }
-
-            //Increment interval timer, and when it reaches playInterval, play + reset timer to 0
-            intervalTimer += Time.deltaTime;
-            if (intervalTimer >= playInterval)
+            else
             {
-                intervalTimer = 0;
-                AudioHub.Inst.Play(audioToPlay, audioSettings, transform.position);
+                //Increment interval timer, and when it reaches playInterval, play + reset timer to 0
+                intervalTimer += Time.deltaTime;
+                if (intervalTimer >= playInterval)
+                {
+                    intervalTimer = 0;
+                    AudioHub.Inst.Play(audioToPlay, audioSettings, transform.position);
+                }
             }
 
             yield return null;
@@ -85,14 +84,10 @@ public class AudioOnMovement : MonoBehaviour
         if (moving)
         {
             if (!currentSource)
-            {
                 currentSource = AudioHub.Inst.Play(audioToPlay, audioSettings, transform.position);
-                print($"Playing {currentSource.clip} from {currentSource.name} @ {Time.timeAsDouble}");
-            }
         }
         else if (currentSource)
         {
-            print($"Stopping {currentSource.clip} on {currentSource.name} @ {Time.timeAsDouble}");
             currentSource.Stop();
             currentSource = null;
         }
