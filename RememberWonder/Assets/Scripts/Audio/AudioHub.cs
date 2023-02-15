@@ -20,6 +20,12 @@ public class AudioHub : MonoBehaviour
     [SerializeField] Bewildered.UDictionary<AudioList, SoundContainer> soundLibrary;
 
     private Stack<AudioSource> idleSources;
+    /// <summary>
+    /// Called whenever any audio source in the source pool is popped/pushed.
+    /// <br/>- <see cref="AudioSource"/>: The audio source in the pool that was updated.
+    /// <br/>- <see cref="bool"/>: Whether the audio source was pushed.
+    /// </summary>
+    public static System.Action<AudioSource, bool> SourcePoolUpdate;
 
     public SoundContainer GetSound(AudioList audioToGet) => soundLibrary[audioToGet];
 
@@ -71,10 +77,17 @@ public class AudioHub : MonoBehaviour
         source.transform.position = playPos;
         source.clip = clip;
         settings?.ApplyToSource(ref source);
+
         source.Play();
+        SourcePoolUpdate?.Invoke(source, false);
 
         //Wait until the clip's done, then return this source to the pool.
-        Coroutilities.DoWhen(this, () => idleSources.Push(source), () => !source.isPlaying);
+        Coroutilities.DoWhen(this, () =>
+        {
+            idleSources.Push(source);
+            SourcePoolUpdate?.Invoke(source, true);
+        }, () => !source.isPlaying);
+
         return source;
     }
 }

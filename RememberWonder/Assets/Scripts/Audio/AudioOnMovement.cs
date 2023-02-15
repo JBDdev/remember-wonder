@@ -18,6 +18,7 @@ public class AudioOnMovement : MonoBehaviour
 
     bool moving;
     Vector3 previousPosition;
+    AudioSource currentSource;
 
     Coroutine intervalTimerCorout;
     float intervalTimer;
@@ -36,13 +37,14 @@ public class AudioOnMovement : MonoBehaviour
         if (body)
         {
             moving = body.velocity.sqrMagnitude >= velocityThreshold * velocityThreshold;
-            //If moving and the sound isn't already playing (or something), start playing
         }
         else
         {
             moving = (transform.position - previousPosition).sqrMagnitude >= velocityThreshold * velocityThreshold;
             previousPosition = transform.position;
         }
+
+        ManageLoopingAudio();
     }
 
     private IEnumerator TryPlayIfMoving()
@@ -52,7 +54,6 @@ public class AudioOnMovement : MonoBehaviour
             //No need to be running interval stuff at all if the audio loops.
             if (audioSettings.useLoop && audioSettings.loop) yield break;
 
-            //Otherwise, if not moving, we're not playing audio anyway.
             if (!moving)
             {
                 intervalTimer = 0;
@@ -60,8 +61,29 @@ public class AudioOnMovement : MonoBehaviour
             }
 
             //Increment interval timer, and when it reaches playInterval, play + reset timer to 0
+            intervalTimer += Time.deltaTime;
+            if (intervalTimer >= playInterval)
+            {
+                intervalTimer = 0;
+                AudioHub.Inst.Play(audioToPlay, audioSettings, transform.position);
+            }
 
             yield return null;
+        }
+    }
+
+    private void ManageLoopingAudio()
+    {
+        if (!audioSettings.useLoop || !audioSettings.loop) return;
+
+        if (moving)
+        {
+            currentSource = AudioHub.Inst.Play(audioToPlay, audioSettings, transform.position);
+        }
+        else if (currentSource)
+        {
+            currentSource.Stop();
+            currentSource = null;
         }
     }
 }

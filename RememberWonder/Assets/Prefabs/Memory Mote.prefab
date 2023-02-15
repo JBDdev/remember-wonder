@@ -4952,7 +4952,7 @@ MonoBehaviour:
   collectPSys: {fileID: 3332376646390574229}
   collectAudio: 2
   audioSettings:
-    loop: 1
+    loop: 0
     priority: 128
     volume: 1
     pitch: 1
@@ -4964,7 +4964,7 @@ MonoBehaviour:
     volumeRolloff: 0
     minDistance: 1
     maxDistance: 500
-    useLoop: 1
+    useLoop: 0
     usePriority: 0
     useVolume: 0
     usePitch: 0
