@@ -21,6 +21,8 @@ public class AudioHub : MonoBehaviour
 
     private Stack<AudioSource> idleSources;
 
+    public SoundContainer GetSound(AudioList audioToGet) => soundLibrary[audioToGet];
+
     private void Awake()
     {
         if (instance)
@@ -53,7 +55,7 @@ public class AudioHub : MonoBehaviour
             return null;
         }
 
-        return Play(sound.Clip, settings, playPos);
+        return Play(sound.PopClip(), settings, playPos);
     }
     public AudioSource Play(AudioClip clip, Vector3 playPos) => Play(clip, null, playPos);
     public AudioSource Play(AudioClip clip, SourceSettings settings = null, Vector3 playPos = default)
@@ -84,17 +86,15 @@ public class SoundContainer
     [SerializeField] private AudioClip[] clips;
 
     private int clipIndex;
-    public AudioClip Clip
+    public AudioClip UpcomingClip { get => clips[clipIndex]; }
+    public AudioClip PopClip()
     {
-        get
-        {
-            //Make sure index isn't out of range
-            clipIndex %= clips.Length;
+        //Make sure index isn't out of range
+        clipIndex %= clips.Length;
 
-            //If not random, return current index, then increment index.
-            return clips[randomOrder
-                ? Random.Range(0, clips.Length)
-                : clipIndex++];
-        }
+        //If not random, return current index, then increment index.
+        return clips[randomOrder
+            ? Random.Range(0, clips.Length)
+            : clipIndex++];
     }
 }
