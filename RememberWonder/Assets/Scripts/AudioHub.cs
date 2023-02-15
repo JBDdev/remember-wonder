@@ -44,7 +44,8 @@ public class AudioHub : MonoBehaviour
         }
     }
 
-    public AudioSource Play(AudioList listItem, Vector3 playPos = default)
+    public AudioSource Play(AudioList listItem, Vector3 playPos) => Play(listItem, null, playPos);
+    public AudioSource Play(AudioList listItem, SourceSettings settings = null, Vector3 playPos = default)
     {
         if (!soundLibrary.TryGetValue(listItem, out var sound))
         {
@@ -52,24 +53,26 @@ public class AudioHub : MonoBehaviour
             return null;
         }
 
-        return Play(sound.Clip, playPos);
+        return Play(sound.Clip, settings, playPos);
     }
-    public AudioSource Play(AudioClip clip, Vector3 playPos = default)
+    public AudioSource Play(AudioClip clip, Vector3 playPos) => Play(clip, null, playPos);
+    public AudioSource Play(AudioClip clip, SourceSettings settings = null, Vector3 playPos = default)
     {
         //If all the sources in our pool are busy, just give up.
         if (!idleSources.TryPop(out var source))
         {
-            Debug.LogWarning($"Clip {clip} not played; all audio sources are busy. " +
+            Debug.LogWarning($"Clip \"{clip}\" not played; all audio sources are busy. " +
                 $"Consider increasing the source pool size, or playing less sounds all at once.");
             return null;
         }
 
         source.transform.position = playPos;
         source.clip = clip;
+        settings?.ApplyToSource(ref source);
         source.Play();
 
         //Wait until the clip's done, then return this source to the pool.
-        Coroutilities.DoAfterDelay(this, () => idleSources.Push(source), clip.length);
+        Coroutilities.DoWhen(this, () => idleSources.Push(source), () => !source.isPlaying);
         return source;
     }
 }

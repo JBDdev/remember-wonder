@@ -5,6 +5,7 @@ using UnityEngine;
 public class AudioOnCollide : MonoBehaviour
 {
     [SerializeField] AudioList audioToPlay;
+    [SerializeField] SourceSettings audioSettings;
     [Space(10)]
     [Tooltip("How much change in momentum the collision has to have before playing any audio." +
         "See https://wikipedia.org/wiki/Impulse_%28physics%29.")]
@@ -14,7 +15,7 @@ public class AudioOnCollide : MonoBehaviour
     {
         if (collision.impulse.sqrMagnitude >= impulseThreshold * impulseThreshold)
         {
-            AudioHub.Inst.Play(audioToPlay, collision.GetContact(0).point);
+            AudioHub.Inst.Play(audioToPlay, audioSettings, collision.GetContact(0).point);
         }
     }
 }
