@@ -20,6 +20,8 @@ public class AudioHub : MonoBehaviour
     [SerializeField] Bewildered.UDictionary<AudioList, SoundContainer> soundLibrary;
 
     private Stack<AudioSource> idleSources;
+    private SourceSettings defaultSettings;
+
     /// <summary>
     /// Called whenever any audio source in the source pool is popped/pushed.
     /// <br/>- <see cref="AudioSource"/>: The audio source in the pool that was updated.
@@ -43,12 +45,15 @@ public class AudioHub : MonoBehaviour
     private void Start()
     {
         idleSources = new Stack<AudioSource>();
+        defaultSettings = new();
 
         for (int i = 0; i < sourcePoolSize; i++)
         {
             var source = Instantiate(sourcePrefab, transform);
             source.name = source.name.Replace("(Clone)", $" [{i + 1}]");
             idleSources.Push(source);
+
+            if (i == 0) defaultSettings.InheritFromSource(source, true);
         }
     }
 
@@ -85,6 +90,7 @@ public class AudioHub : MonoBehaviour
         Coroutilities.DoWhen(this, () =>
         {
             idleSources.Push(source);
+            defaultSettings.ApplyToSource(ref source);
             SourcePoolUpdate?.Invoke(source, true);
         }, () => !source.isPlaying);
 

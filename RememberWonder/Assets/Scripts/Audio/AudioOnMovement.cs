@@ -14,7 +14,7 @@ public class AudioOnMovement : MonoBehaviour
     [Tooltip("If body isn't null, how fast this object needs to go before playing any audio.")]
     [SerializeField][Min(0.01f)] float velocityThreshold = 0.1f;
     [Tooltip("If body is null, much position needs to change per fixed update before playing any audio.")]
-    [SerializeField][Min(0.01f)] float posDeltaThreshold = 0.1f;
+    [SerializeField][Min(0.001f)] float posDeltaThreshold = 0.01f;
 
     bool moving;
     Vector3 previousPosition;
@@ -40,8 +40,14 @@ public class AudioOnMovement : MonoBehaviour
         }
         else
         {
-            moving = (transform.position - previousPosition).sqrMagnitude >= velocityThreshold * velocityThreshold;
+            var posDelta = transform.position - previousPosition;
+            moving = posDelta.sqrMagnitude >= posDeltaThreshold * posDeltaThreshold;
             previousPosition = transform.position;
+
+            /*if (posDelta != Vector3.zero)
+            {
+                print($"{posDelta.x}, {posDelta.y}, {posDelta.z}");
+            }*/
         }
 
         ManageLoopingAudio();
@@ -78,10 +84,15 @@ public class AudioOnMovement : MonoBehaviour
 
         if (moving)
         {
-            currentSource = AudioHub.Inst.Play(audioToPlay, audioSettings, transform.position);
+            if (!currentSource)
+            {
+                currentSource = AudioHub.Inst.Play(audioToPlay, audioSettings, transform.position);
+                print($"Playing {currentSource.clip} from {currentSource.name} @ {Time.timeAsDouble}");
+            }
         }
         else if (currentSource)
         {
+            print($"Stopping {currentSource.clip} on {currentSource.name} @ {Time.timeAsDouble}");
             currentSource.Stop();
             currentSource = null;
         }

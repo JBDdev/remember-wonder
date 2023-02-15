@@ -46,4 +46,27 @@ public class SourceSettings
         if (useMinDistance) source.minDistance = minDistance;
         if (useMaxDistance) source.maxDistance = maxDistance;
     }
+
+    public void InheritFromSource(AudioSource source, bool turnOnEverything)
+    {
+        loop = source.loop;
+        priority = source.priority;
+        volume = source.volume;
+        pitch = source.pitch;
+        stereoPan = source.panStereo;
+        spatialBlend = source.spatialBlend;
+        reverbZoneMix = source.reverbZoneMix;
+        dopplerLevel = source.dopplerLevel;
+        spread = source.spread;
+        volumeRolloff = source.rolloffMode;
+        minDistance = source.minDistance;
+        maxDistance = source.maxDistance;
+
+        if (turnOnEverything)
+        {
+            useLoop = usePriority = useVolume = usePitch = useStereoPan
+                = useSpatialBlend = useReverbZoneMix = useDopplerLevel
+                = useSpread = useVolumeRolloff = useMinDistance = useMaxDistance = true;
+        }
+    }
 }
