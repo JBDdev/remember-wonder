@@ -152,7 +152,6 @@ public class PivotControl : MonoBehaviour
                 1, (anyHits ? hit.point.y : castEndY) + playerCapsuleHeight / 2), initialOffset, primary, 5);
             UtilFunctions.DrawBox(transform.position, player.transform.rotation, 0.2f, primary, 5);
 
-            UtilFunctions.DrawSphere(hit.point, 0.025f, primary, 5f);
             Debug.DrawLine(player.transform.position, player.transform.position.Adjust(1, castEndY), tertiary, 5f);
             if (anyHits)
             {
@@ -162,6 +161,7 @@ public class PivotControl : MonoBehaviour
                     new Vector3(castWidth, 0.01f, castWidth),
                     tertiary,
                     5f);
+                UtilFunctions.DrawSphere(hit.point, 0.025f, primary, 5f);
             }
         }
 #endif

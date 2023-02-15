@@ -7,7 +7,7 @@ public class CollectMote : MonoBehaviour
 {
     [SerializeField] private Renderer modelRend;
     [SerializeField] private ParticleSystem collectPSys;
-    [SerializeField][TagSelector] private string[] collectorTags;
+    [SerializeField] private Bewildered.UHashSet<TagString> collectorTags;
     private bool collected;
 
     /// <summary>
@@ -31,7 +31,7 @@ public class CollectMote : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!collected && Array.Exists(collectorTags, tag => other.CompareTag(tag)))
+        if (!collected && collectorTags.Contains(other.tag))
         {
             collected = true;
 

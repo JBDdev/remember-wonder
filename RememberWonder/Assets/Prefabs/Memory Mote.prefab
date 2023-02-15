@@ -4951,7 +4951,11 @@ MonoBehaviour:
   modelRend: {fileID: 2944411881442968390}
   collectPSys: {fileID: 3332376646390574229}
   collectorTags:
-  - Player
+    _serializedValues:
+    - value:
+        str: Player
+      isDuplicate: 0
+      index: 0
 --- !u!114 &4334391588535324519
 MonoBehaviour:
   m_ObjectHideFlags: 0
