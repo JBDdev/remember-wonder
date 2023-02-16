@@ -5271,6 +5271,7 @@ MonoBehaviour:
   mainMenu: {fileID: 6695014152250976033}
   instructionsMenu: {fileID: 4102512453264299473}
   settingsMenu: {fileID: 5843571543795228470}
+  player: {fileID: 0}
   moteUI: {fileID: 9197286215229045254}
   pauseMenu: {fileID: 3648542182955554319}
   mainMenuSelection: 0

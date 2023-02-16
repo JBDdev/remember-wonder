@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject instructionsMenu;
     [SerializeField] GameObject settingsMenu;
+    [SerializeField] GameObject player;
 
     [SerializeField] GameObject moteUI;
     [SerializeField] GameObject pauseMenu;
@@ -47,6 +48,7 @@ public class PauseMenu : MonoBehaviour
         viewingSettings = false;
         InputHub.Inst.Gameplay.Pause.performed += PauseInput;
         pauseMenu.SetActive(false);
+        player = GameObject.FindGameObjectWithTag("Player");
 
         LoadPlayerSettings();
     }
@@ -89,6 +91,8 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 0f;
             moteUI.SetActive(false);
         }
+
+        player.GetComponent<PlayerMovement>().TogglePause();
     }
 
     void ChangeSelection(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
@@ -117,7 +121,6 @@ public class PauseMenu : MonoBehaviour
             UnloadInstructions();
         else if (viewingSettings)
         {
-            //Not done yet!
             UnloadSettings();
         }
         else 
