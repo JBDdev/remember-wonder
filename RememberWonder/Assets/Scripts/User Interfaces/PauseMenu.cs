@@ -322,7 +322,6 @@ public class PauseMenu : MonoBehaviour
     void SubmenuSelection(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
     {
         Vector2 input = InputHub.Inst.Gameplay.MenuNav.ReadValue<Vector2>();
-        Debug.Log(input);
 
         //Handle Horizontal Input
         switch (submenuSelection) 
