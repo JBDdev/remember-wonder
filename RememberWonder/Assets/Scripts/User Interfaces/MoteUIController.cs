@@ -15,7 +15,7 @@ public class MoteUIController : MonoBehaviour
     private void Start()
     {
         motesCollectedTxt.text = "0";
-        totalMotesTxt.text = "0";
+        totalMotesTxt.text = "14";
     }
 
     /// <summary>
