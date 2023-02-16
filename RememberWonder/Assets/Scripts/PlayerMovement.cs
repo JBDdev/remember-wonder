@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotationSpeed;
     [SerializeField] float minRotationDistance;
 
+    bool paused;
+
     //Accessors
     public GameObject HoldLocation { get { return holdLocation; } }
     public PushPullObject PulledObject { get { return pushPullObject; } set { pushPullObject = value; } }
@@ -51,6 +53,8 @@ public class PlayerMovement : MonoBehaviour
         //Get references to components on the GameObject
         rb = GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();
+
+        paused = false;
 
         PulledObject = null;
 
@@ -86,6 +90,28 @@ public class PlayerMovement : MonoBehaviour
     private void OnQuitPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
         Application.Quit();
+    }
+
+    public void TogglePause() 
+    {
+        if (paused)
+        {
+            paused = false;
+            InputHub.Inst.Gameplay.Jump.performed += OnJumpPerformed;
+            InputHub.Inst.Gameplay.Quit.performed += OnQuitPerformed;
+            InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
+            if (IsGrounded())
+            {
+                jumpInProgress = false;
+            }
+        }
+        else
+        {
+            paused = true;
+            InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
+            InputHub.Inst.Gameplay.Quit.performed -= OnQuitPerformed;
+            InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
+        }
     }
 
     private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
