@@ -56,24 +56,45 @@ MonoBehaviour:
         - {fileID: 8300000, guid: 063d85cf6ecb51a49b7f4f03013a1220, type: 3}
       isDuplicateKey: 0
       index: 0
-    - key: 1
-      value:
-        randomOrder: 0
-        clips:
-        - {fileID: 8300000, guid: 7af7bc1e548a5da4a87aaa0a6e24a743, type: 3}
-      isDuplicateKey: 0
-      index: 1
     - key: 2
       value:
         randomOrder: 0
         clips:
         - {fileID: 8300000, guid: 7eea6a52df660d543b2491c89828a8c2, type: 3}
       isDuplicateKey: 0
+      index: 1
+    - key: 1
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: 7af7bc1e548a5da4a87aaa0a6e24a743, type: 3}
+      isDuplicateKey: 0
       index: 2
+    - key: 4
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: fcfcf167f32c624479aaff8d613ea6e9, type: 3}
+      isDuplicateKey: 0
+      index: 3
     - key: 3
       value:
         randomOrder: 0
         clips:
         - {fileID: 8300000, guid: 89717a76d4c72964db6c1d755adb174b, type: 3}
       isDuplicateKey: 0
-      index: 3
+      index: 4
+    - key: 5
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: 1fc028d36d2aed24491553ab739ecf49, type: 3}
+      isDuplicateKey: 0
+      index: 5
+    - key: 6
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: c5866d936ede8ce4d9716fd17df253c3, type: 3}
+      isDuplicateKey: 0
+      index: 6

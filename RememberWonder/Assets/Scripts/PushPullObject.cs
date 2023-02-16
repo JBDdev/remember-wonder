@@ -10,6 +10,9 @@ public class PushPullObject : MonoBehaviour
     [SerializeField] Vector3 grabMoveMultipliers = Vector3.one;
     public float maxPullDistance;
     public bool liftable;
+    [SerializeField] AudioList liftAudio;
+    [SerializeField] AudioList putDownAudio;
+    [SerializeField] SourceSettings audioSettings;
     public Vector3 defaultPos;
 
     Rigidbody rb;
@@ -79,13 +82,18 @@ public class PushPullObject : MonoBehaviour
             {
                 transform.position = player.transform.GetChild(0).GetChild(0).transform.position;
                 transform.parent = player.transform.GetChild(0).GetChild(0).transform;
+
+                AudioHub.Inst.Play(liftAudio, audioSettings, transform.position);
             }
 
             else
                 transform.parent = player.transform;
         }
         else
+        {
             transform.parent = null;
+            if (liftable) AudioHub.Inst.Play(putDownAudio, audioSettings, transform.position);
+        }
     }
 
     private void UpdateChildRends(System.Action<Renderer> updateFunc, bool refreshCache = false)

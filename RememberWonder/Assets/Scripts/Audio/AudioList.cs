@@ -8,7 +8,10 @@
 public enum AudioList
 {
     Walk = 0,
-    CupDropPlastic = 1,
     CollectMote = 2,
+    CupDropPlastic = 1,
+    CupDrop = 4,
     Drag = 3,
+    Lift = 5,
+    PutDown = 6,
 }
