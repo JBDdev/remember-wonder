@@ -7,6 +7,10 @@ public class CollectMote : MonoBehaviour
 {
     [SerializeField] private Renderer modelRend;
     [SerializeField] private ParticleSystem collectPSys;
+    [Space(5)]
+    [SerializeField] private AudioList collectAudio;
+    [SerializeField] private SourceSettings audioSettings;
+    [Space(10)]
     [SerializeField] private Bewildered.UHashSet<TagString> collectorTags;
     private bool collected;
 
@@ -40,6 +44,7 @@ public class CollectMote : MonoBehaviour
             //TODO: More elaborate animation/sequence upon collection
             if (collectPSys) { collectPSys.Play(); }
 
+            AudioHub.Inst.Play(collectAudio, audioSettings, transform.position);
             MoteCollected?.Invoke(this);
         }
     }
