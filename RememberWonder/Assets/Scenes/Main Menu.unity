@@ -238,6 +238,33 @@ MonoBehaviour:
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
+  liftAudio: 0
+  putDownAudio: 0
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 0
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &28583026
 BoxCollider:
@@ -571,6 +598,33 @@ MonoBehaviour:
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
+  liftAudio: 0
+  putDownAudio: 0
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 0
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &75566651
 BoxCollider:
@@ -1340,6 +1394,33 @@ MonoBehaviour:
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 2
   liftable: 0
+  liftAudio: 0
+  putDownAudio: 0
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 0
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &95982023
 BoxCollider:
@@ -1371,6 +1452,33 @@ MonoBehaviour:
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 1
   liftable: 0
+  liftAudio: 0
+  putDownAudio: 0
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 0
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!1 &115778783
 GameObject:
@@ -1910,6 +2018,33 @@ MonoBehaviour:
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
+  liftAudio: 0
+  putDownAudio: 0
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 0
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &163326436
 BoxCollider:
@@ -2115,6 +2250,33 @@ MonoBehaviour:
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
+  liftAudio: 0
+  putDownAudio: 0
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 0
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &174917687
 BoxCollider:
@@ -7475,6 +7637,33 @@ MonoBehaviour:
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
+  liftAudio: 0
+  putDownAudio: 0
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 0
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &951395740
 BoxCollider:
@@ -7880,6 +8069,33 @@ MonoBehaviour:
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
+  liftAudio: 0
+  putDownAudio: 0
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 0
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &1004139376
 BoxCollider:
@@ -9349,6 +9565,33 @@ MonoBehaviour:
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
+  liftAudio: 0
+  putDownAudio: 0
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 0
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &1207048794
 BoxCollider:
@@ -9817,6 +10060,33 @@ MonoBehaviour:
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 2.5
   liftable: 0
+  liftAudio: 0
+  putDownAudio: 0
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 0
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &1243906477
 BoxCollider:
@@ -9904,6 +10174,33 @@ MonoBehaviour:
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
+  liftAudio: 0
+  putDownAudio: 0
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 0
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &1263598979
 BoxCollider:
@@ -10570,6 +10867,33 @@ MonoBehaviour:
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
+  liftAudio: 0
+  putDownAudio: 0
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 0
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &1356082295
 BoxCollider:
@@ -12491,7 +12815,9 @@ MonoBehaviour:
   mainMenu: {fileID: 1698409330}
   instructionsMenu: {fileID: 1626678153}
   settingsMenu: {fileID: 839649120}
+  mixer: {fileID: 24100000, guid: 19c4d08f6cea34240adf9349f6e8744e, type: 2}
   mainMenuSelection: 0
+  menuInputThreshold: 0.5
   windowOptions:
   - {fileID: 846109484}
   - {fileID: 1635657640}
@@ -12851,6 +13177,33 @@ MonoBehaviour:
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
+  liftAudio: 0
+  putDownAudio: 0
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 0
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &1690049727
 BoxCollider:
@@ -14790,6 +15143,33 @@ MonoBehaviour:
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 100
   liftable: 0
+  liftAudio: 0
+  putDownAudio: 0
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 0
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &1887879382
 BoxCollider:
@@ -16546,6 +16926,33 @@ MonoBehaviour:
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
   liftable: 1
+  liftAudio: 0
+  putDownAudio: 0
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 0
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
   defaultPos: {x: 0, y: 0, z: 0}
 --- !u!65 &2079328648
 BoxCollider:

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class MainMenu : MonoBehaviour
 {
@@ -10,8 +11,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject instructionsMenu;
     [SerializeField] GameObject settingsMenu;
+    [SerializeField] AudioMixer mixer;
 
     [SerializeField] int mainMenuSelection;
+    [SerializeField] float menuInputThreshold;
 
     [Header("Settings Menu Shenanigans")]
     [SerializeField] GameObject[] windowOptions;
@@ -24,7 +27,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] int exitSelection;
     [SerializeField] GameObject[] highlightableElements;
 
-
+    //
     int windowSetting;
     float bgmVolume;
     float sfxVolume;
@@ -37,11 +40,12 @@ public class MainMenu : MonoBehaviour
     {
         mainMenuSelection = 0;
         initialMenuOptions[0].GetComponent<Image>().enabled = true;
-        InputHub.Inst.Gameplay.Move.performed += ChangeSelection;
+        InputHub.Inst.Gameplay.MenuNav.performed += ChangeSelection;
         InputHub.Inst.Gameplay.Jump.performed += Select;
         viewingInstructions = false;
         viewingSettings = false;
         LoadPlayerSettings();
+
     }
 
     void Select(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
@@ -51,7 +55,7 @@ public class MainMenu : MonoBehaviour
             switch (mainMenuSelection)
             {
                 case 0:
-                    InputHub.Inst.Gameplay.Move.performed -= ChangeSelection;
+                    InputHub.Inst.Gameplay.MenuNav.performed -= ChangeSelection;
                     InputHub.Inst.Gameplay.Jump.performed -= Select;
                     SceneManager.LoadScene(1);
                     break;
@@ -89,11 +93,11 @@ public class MainMenu : MonoBehaviour
     void LoadSettings()
     {
         mainMenu.SetActive(false);
-        InputHub.Inst.Gameplay.Move.performed -= ChangeSelection;
+        InputHub.Inst.Gameplay.MenuNav.performed -= ChangeSelection;
         InputHub.Inst.Gameplay.Jump.performed -= Select;
 
         InputHub.Inst.Gameplay.Jump.performed += ConfirmSettings;
-        InputHub.Inst.Gameplay.Move.performed += SubmenuSelection;
+        InputHub.Inst.Gameplay.MenuNav.performed += SubmenuSelection;
 
         LoadPlayerSettings();
         settingsMenu.SetActive(true);
@@ -103,9 +107,9 @@ public class MainMenu : MonoBehaviour
     {
         settingsMenu.SetActive(false);
         InputHub.Inst.Gameplay.Jump.performed -= ConfirmSettings;
-        InputHub.Inst.Gameplay.Move.performed -= SubmenuSelection;
+        InputHub.Inst.Gameplay.MenuNav.performed -= SubmenuSelection;
 
-        InputHub.Inst.Gameplay.Move.performed += ChangeSelection;
+        InputHub.Inst.Gameplay.MenuNav.performed += ChangeSelection;
         InputHub.Inst.Gameplay.Jump.performed += Select;
 
         foreach (GameObject element in highlightableElements)
@@ -117,11 +121,11 @@ public class MainMenu : MonoBehaviour
 
     void ChangeSelection(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
     {
-        Vector2 input = InputHub.Inst.Gameplay.Move.ReadValue<Vector2>();
+        Vector2 input = InputHub.Inst.Gameplay.MenuNav.ReadValue<Vector2>();
 
-        if (input.y > 0)
+        if (input.y > menuInputThreshold)
             mainMenuSelection--;
-        else if (input.y < 0)
+        else if (input.y < -menuInputThreshold)
             mainMenuSelection++;
 
         if (mainMenuSelection < 0)
@@ -220,6 +224,13 @@ public class MainMenu : MonoBehaviour
             Screen.fullScreenMode = FullScreenMode.Windowed;
 
         //Update Volume Here
+        float bgmValue = bgmSlider.transform.GetChild(0).GetComponent<Slider>().value;
+        bgmValue = 30 - (30 * bgmValue);
+        mixer.SetFloat("bgmVol", -bgmValue);
+
+        float sfxValue = sfxSlider.transform.GetChild(0).GetComponent<Slider>().value;
+        sfxValue = 30 - (30 * sfxValue);
+        mixer.SetFloat("sfxVol", -sfxValue);
 
         //Update Camera Sensitvity Here
 
@@ -242,19 +253,19 @@ public class MainMenu : MonoBehaviour
 
     void SubmenuSelection(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        Vector2 input = InputHub.Inst.Gameplay.Move.ReadValue<Vector2>();
+        Vector2 input = InputHub.Inst.Gameplay.MenuNav.ReadValue<Vector2>();
 
         //Handle Horizontal Input
         switch (submenuSelection)
         {
             case 0:
-                if (input.x > 0)
+                if (input.x > menuInputThreshold)
                 {
                     windowSelection++;
                     if (windowSelection > 1)
                         windowSelection = 0;
                 }
-                else if (input.x < 0)
+                else if (input.x < -menuInputThreshold)
                 {
                     windowSelection--;
                     if (windowSelection < 0)
@@ -262,31 +273,31 @@ public class MainMenu : MonoBehaviour
                 }
                 break;
             case 1:
-                if (input.x > 0)
+                if (input.x > menuInputThreshold)
                     bgmSlider.transform.GetChild(0).GetComponent<Slider>().value += 0.1f;
-                else if (input.x < 0)
+                else if (input.x < -menuInputThreshold)
                     bgmSlider.transform.GetChild(0).GetComponent<Slider>().value -= 0.1f;
                 break;
             case 2:
-                if (input.x > 0)
+                if (input.x > menuInputThreshold)
                     sfxSlider.transform.GetChild(0).GetComponent<Slider>().value += 0.1f;
-                else if (input.x < 0)
+                else if (input.x < -menuInputThreshold)
                     sfxSlider.transform.GetChild(0).GetComponent<Slider>().value -= 0.1f;
                 break;
             case 3:
-                if (input.x > 0)
+                if (input.x > menuInputThreshold)
                     cameraSlider.transform.GetChild(0).GetComponent<Slider>().value += 0.1f;
-                else if (input.x < 0)
+                else if (input.x < -menuInputThreshold)
                     cameraSlider.transform.GetChild(0).GetComponent<Slider>().value -= 0.1f;
                 break;
             case 4:
-                if (input.x > 0)
+                if (input.x > menuInputThreshold)
                 {
                     exitSelection++;
                     if (exitSelection > 1)
                         exitSelection = 0;
                 }
-                else if (input.x < 0)
+                else if (input.x < -menuInputThreshold)
                 {
                     exitSelection--;
                     if (exitSelection < 0)
@@ -297,13 +308,13 @@ public class MainMenu : MonoBehaviour
 
         //Handle Vertical Input
 
-        if (input.y > 0)
+        if (input.y > menuInputThreshold)
         {
             submenuSelection--;
             if (submenuSelection < 0)
                 submenuSelection = 4;
         }
-        else if (input.y < 0)
+        else if (input.y < -menuInputThreshold)
         {
             submenuSelection++;
             if (submenuSelection > 4)

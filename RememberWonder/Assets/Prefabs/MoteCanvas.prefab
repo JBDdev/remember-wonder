@@ -537,7 +537,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 250, y: 40.98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &80782452323636441
@@ -1195,7 +1195,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 250, y: 40.98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3712593262563225722
@@ -4222,7 +4222,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -200}
   m_SizeDelta: {x: 250, y: 40.98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1617020891567231556
@@ -4780,7 +4780,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 250}
   m_SizeDelta: {x: 250, y: 40.98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4900119670713234575
@@ -5272,9 +5272,11 @@ MonoBehaviour:
   instructionsMenu: {fileID: 4102512453264299473}
   settingsMenu: {fileID: 5843571543795228470}
   player: {fileID: 0}
+  mixer: {fileID: 24100000, guid: 19c4d08f6cea34240adf9349f6e8744e, type: 2}
   moteUI: {fileID: 9197286215229045254}
   pauseMenu: {fileID: 3648542182955554319}
   mainMenuSelection: 0
+  menuInputThreshold: 0
   windowOptions:
   - {fileID: 2467751778455625123}
   - {fileID: 7285706812380147751}
