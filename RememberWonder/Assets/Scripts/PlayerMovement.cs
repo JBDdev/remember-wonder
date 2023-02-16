@@ -59,13 +59,11 @@ public class PlayerMovement : MonoBehaviour
         PulledObject = null;
 
         InputHub.Inst.Gameplay.Jump.performed += OnJumpPerformed;
-        InputHub.Inst.Gameplay.Quit.performed += OnQuitPerformed;
         InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
     }
     private void OnDestroy()
     {
         InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
-        InputHub.Inst.Gameplay.Quit.performed -= OnQuitPerformed;
         InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
     }
 
@@ -87,18 +85,12 @@ public class PlayerMovement : MonoBehaviour
         jumpInProgress = true;
     }
 
-    private void OnQuitPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
-    {
-        Application.Quit();
-    }
-
     public void TogglePause() 
     {
         if (paused)
         {
             paused = false;
             InputHub.Inst.Gameplay.Jump.performed += OnJumpPerformed;
-            InputHub.Inst.Gameplay.Quit.performed += OnQuitPerformed;
             InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
             if (IsGrounded())
             {
@@ -109,7 +101,6 @@ public class PlayerMovement : MonoBehaviour
         {
             paused = true;
             InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
-            InputHub.Inst.Gameplay.Quit.performed -= OnQuitPerformed;
             InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
         }
     }

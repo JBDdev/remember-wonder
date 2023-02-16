@@ -64,15 +64,6 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Quit"",
-                    ""type"": ""Button"",
-                    ""id"": ""ed388191-ee5a-4eee-a209-c788a03cc72d"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Press"",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Grab"",
                     ""type"": ""Button"",
                     ""id"": ""581a417c-7a2d-47bb-bd23-1ee93f6f4365"",
@@ -153,28 +144,6 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""LookActivate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""892bff31-a1ad-4d92-95ce-b2176ed3d05d"",
-                    ""path"": ""<Gamepad>/select"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Quit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a0748cf5-6dee-4fc2-9a77-804b591dc56b"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Quit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -453,7 +422,6 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
         m_Gameplay_LookActivate = m_Gameplay.FindAction("LookActivate", throwIfNotFound: true);
-        m_Gameplay_Quit = m_Gameplay.FindAction("Quit", throwIfNotFound: true);
         m_Gameplay_Grab = m_Gameplay.FindAction("Grab", throwIfNotFound: true);
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
         m_Gameplay_MenuNav = m_Gameplay.FindAction("MenuNav", throwIfNotFound: true);
@@ -520,7 +488,6 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_Look;
     private readonly InputAction m_Gameplay_LookActivate;
-    private readonly InputAction m_Gameplay_Quit;
     private readonly InputAction m_Gameplay_Grab;
     private readonly InputAction m_Gameplay_Pause;
     private readonly InputAction m_Gameplay_MenuNav;
@@ -532,7 +499,6 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
         public InputAction @Look => m_Wrapper.m_Gameplay_Look;
         public InputAction @LookActivate => m_Wrapper.m_Gameplay_LookActivate;
-        public InputAction @Quit => m_Wrapper.m_Gameplay_Quit;
         public InputAction @Grab => m_Wrapper.m_Gameplay_Grab;
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
         public InputAction @MenuNav => m_Wrapper.m_Gameplay_MenuNav;
@@ -557,9 +523,6 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
                 @LookActivate.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookActivate;
                 @LookActivate.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookActivate;
                 @LookActivate.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookActivate;
-                @Quit.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnQuit;
-                @Quit.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnQuit;
-                @Quit.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnQuit;
                 @Grab.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnGrab;
                 @Grab.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnGrab;
                 @Grab.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnGrab;
@@ -585,9 +548,6 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
                 @LookActivate.started += instance.OnLookActivate;
                 @LookActivate.performed += instance.OnLookActivate;
                 @LookActivate.canceled += instance.OnLookActivate;
-                @Quit.started += instance.OnQuit;
-                @Quit.performed += instance.OnQuit;
-                @Quit.canceled += instance.OnQuit;
                 @Grab.started += instance.OnGrab;
                 @Grab.performed += instance.OnGrab;
                 @Grab.canceled += instance.OnGrab;
@@ -607,7 +567,6 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnLookActivate(InputAction.CallbackContext context);
-        void OnQuit(InputAction.CallbackContext context);
         void OnGrab(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnMenuNav(InputAction.CallbackContext context);
