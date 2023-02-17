@@ -7,8 +7,7 @@ using UnityEngine;
 [CustomPropertyDrawer(typeof(SourceSettings))]
 public class SourceSettingsPropertyDrawer : PropertyDrawer
 {
-    static bool unfolded = false;
-
+    bool unfolded = false;
     int numberOfVars = 12;
     float lineSpacing = 2;
 
@@ -35,7 +34,12 @@ public class SourceSettingsPropertyDrawer : PropertyDrawer
             ? (position.height - lineSpacing * numberOfVars) / (numberOfVars + 1)
             : oneLinePos.height;
 
-        unfolded = EditorGUI.Foldout(oneLinePos, unfolded, label, true);
+        //To save unfolded state per-instance of SourceSettings, we can apparently use isExpanded on one of the properties
+        //in the foldout, even if said property doesn't expand. See http://answers.unity.com/answers/1160771/view.html
+        var propInFoldout = property.FindPropertyRelative("loop");
+
+        propInFoldout.isExpanded = EditorGUI.Foldout(oneLinePos, propInFoldout.isExpanded, label, true);
+        unfolded = propInFoldout.isExpanded;
         if (!unfolded) return;
 
         // Draw fields; don't indent because minibuttons are immune to indentation(?!?!?!?)
