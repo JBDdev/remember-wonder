@@ -10,8 +10,8 @@ public class SourceSettings
     [Range(0, 1)] public float volume = 1;
     [Range(-3, 3)] public float pitch = 1;
     [Range(-1, 1)] public float stereoPan = 0;
-    [Range(0, 1)] public float spatialBlend = 0;
-    [Range(0, 1.1f)] public float reverbZoneMix = 0;
+    [Range(0, 1)] public float spatialBlend = 1;
+    [Range(0, 1.1f)] public float reverbZoneMix = 1;
     [Range(0, 5)] public float dopplerLevel = 0;
     [Range(0, 360)] public float spread = 0;
     public AudioRolloffMode volumeRolloff = AudioRolloffMode.Logarithmic;
