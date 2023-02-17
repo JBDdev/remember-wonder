@@ -72,6 +72,10 @@ public class SourceSettingsPropertyDrawer : PropertyDrawer
         var toggleProp = baseProp.FindPropertyRelative(toggleName);
 
         var buttStyle = EditorStyles.miniButton;
+        var initColor = GUI.backgroundColor;
+        GUI.backgroundColor = toggleProp.boolValue
+            ? new Color(0.741f, 0.569f, 0.396f)
+            : new Color(0.478f, 0.541f, 0.659f);
         buttStyle.padding.left = 1;
         buttStyle.padding.right = 1;
         buttStyle.alignment = TextAnchor.MiddleCenter;
@@ -80,6 +84,7 @@ public class SourceSettingsPropertyDrawer : PropertyDrawer
         {
             toggleProp.boolValue = !toggleProp.boolValue;
         }
+        GUI.backgroundColor = initColor;
 
         bool prevEnableState = GUI.enabled;
         var prevLabelWidth = EditorGUIUtility.labelWidth;
