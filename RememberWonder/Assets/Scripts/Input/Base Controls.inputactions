@@ -42,15 +42,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Quit",
-                    "type": "Button",
-                    "id": "ed388191-ee5a-4eee-a209-c788a03cc72d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Grab",
                     "type": "Button",
                     "id": "581a417c-7a2d-47bb-bd23-1ee93f6f4365",
@@ -58,6 +49,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "c04e3fd0-7cdb-443d-8de9-b378a35c9183",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MenuNav",
+                    "type": "Value",
+                    "id": "7b317c11-bc41-4052-828c-3c0c4317666a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -113,28 +122,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "LookActivate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "892bff31-a1ad-4d92-95ce-b2176ed3d05d",
-                    "path": "<Gamepad>/select",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Quit",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a0748cf5-6dee-4fc2-9a77-804b591dc56b",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Quit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -269,6 +256,138 @@
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a578f5b0-a728-4f68-8637-971e9b64c235",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "23745e74-1b60-400b-bec1-06805399a52a",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Left Stick [Gamepad]",
+                    "id": "4ffb52a1-e57f-4b5b-b9ba-6ead9592f23f",
+                    "path": "2DVector(mode=2)",
+                    "interactions": "Hold(duration=0.1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MenuNav",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "61ee5c84-0648-4440-a047-c9be9b4c1fdf",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MenuNav",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "eadab616-6b05-40f6-9a25-02653235da99",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MenuNav",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "633d1675-7f65-48f1-9bea-74a0def50d66",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MenuNav",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "b19e456f-f012-4c92-8243-7fe2cdf7a5f4",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MenuNav",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "WASD [Keyboard]",
+                    "id": "c2cf3e00-91e5-4dd2-803c-e5bb3436c8c3",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MenuNav",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "e15cb39d-b362-42e0-94ef-97fee134fde2",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MenuNav",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "97caa1fd-ee59-462a-830c-e947b2eab652",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MenuNav",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "745a8105-694a-460f-9a1a-49fe0f679a66",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MenuNav",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "208bb1ae-cf0e-43aa-a9ea-d4daaab14dfd",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MenuNav",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotationSpeed;
     [SerializeField] float minRotationDistance;
 
+    bool paused;
+
     //Accessors
     public GameObject HoldLocation { get { return holdLocation; } }
     public PushPullObject PulledObject { get { return pushPullObject; } set { pushPullObject = value; } }
@@ -52,16 +54,16 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();
 
+        paused = false;
+
         PulledObject = null;
 
         InputHub.Inst.Gameplay.Jump.performed += OnJumpPerformed;
-        InputHub.Inst.Gameplay.Quit.performed += OnQuitPerformed;
         InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
     }
     private void OnDestroy()
     {
         InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
-        InputHub.Inst.Gameplay.Quit.performed -= OnQuitPerformed;
         InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
     }
 
@@ -83,9 +85,24 @@ public class PlayerMovement : MonoBehaviour
         jumpInProgress = true;
     }
 
-    private void OnQuitPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    public void TogglePause() 
     {
-        Application.Quit();
+        if (paused)
+        {
+            paused = false;
+            InputHub.Inst.Gameplay.Jump.performed += OnJumpPerformed;
+            InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
+            if (IsGrounded())
+            {
+                jumpInProgress = false;
+            }
+        }
+        else
+        {
+            paused = true;
+            InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
+            InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
+        }
     }
 
     private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)

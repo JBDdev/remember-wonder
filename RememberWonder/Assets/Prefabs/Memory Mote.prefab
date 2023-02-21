@@ -4950,8 +4950,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelRend: {fileID: 2944411881442968390}
   collectPSys: {fileID: 3332376646390574229}
+  collectAudio: 2
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 0
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
   collectorTags:
-  - Player
+    _serializedValues:
+    - value:
+        str: Player
+      isDuplicate: 0
+      index: 0
 --- !u!114 &4334391588535324519
 MonoBehaviour:
   m_ObjectHideFlags: 0
