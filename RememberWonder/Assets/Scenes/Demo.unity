@@ -918,7 +918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 423624415}
+  player: {fileID: 0}
   grabbed: 0
   grabMoveMultipliers: {x: 0.5, y: 0, z: 0}
   maxPullDistance: 2
@@ -976,7 +976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 423624415}
+  player: {fileID: 0}
   grabbed: 0
   grabMoveMultipliers: {x: 0.5, y: 0, z: 0}
   maxPullDistance: 1
@@ -3284,11 +3284,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cd76220d8cdc764289a73e6aad37d3e, type: 3}
---- !u!1 &423624415 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5864955303093575437, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
-  m_PrefabInstance: {fileID: 1428043129}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &423624421 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5864955303093575436, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
@@ -7495,7 +7490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 423624415}
+  player: {fileID: 0}
   grabbed: 0
   grabMoveMultipliers: {x: 0.5, y: 0, z: 0}
   maxPullDistance: 2.5
@@ -10830,6 +10825,7 @@ MonoBehaviour:
     useMinDistance: 0
     useMaxDistance: 0
   impulseThreshold: 1
+  printCollisionResults: 0
 --- !u!1001 &1877640867
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12182,6 +12178,7 @@ MonoBehaviour:
     useMinDistance: 0
     useMaxDistance: 0
   impulseThreshold: 1
+  printCollisionResults: 0
 --- !u!4 &2101413971 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1858661222081810888, guid: 1e07826a4c13dfb4caf400aa6f46991a, type: 3}
