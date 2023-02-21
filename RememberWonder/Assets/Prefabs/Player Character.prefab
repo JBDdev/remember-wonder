@@ -144,7 +144,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03fc6a460f063954eaebd17b0e9f2536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collidingObjects: []
+  ignoredTags:
+    _serializedValues:
+    - value:
+        str: Player
+      isDuplicate: 0
+      index: 0
+    - value:
+        str: MemoryMote
+      isDuplicate: 0
+      index: 1
+  collidingObjects:
+    _serializedValues: []
 --- !u!1 &3914002537868354355
 GameObject:
   m_ObjectHideFlags: 0
