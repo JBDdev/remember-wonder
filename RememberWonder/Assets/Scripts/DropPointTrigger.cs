@@ -26,7 +26,7 @@ public class DropPointTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        if (col.transform.tag != "Player") 
+        if (col.transform.tag != "Player" || col.transform.tag == "MemoryMote") 
         {
             collidingObjects.Add(col.gameObject);
         }
@@ -34,7 +34,7 @@ public class DropPointTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider col)
     {
-        if (col.transform.tag != "Player")
+        if (col.transform.tag != "Player" || col.transform.tag == "MemoryMote")
         {
             do
             {
