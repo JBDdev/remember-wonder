@@ -62,6 +62,8 @@ public class PushPullObject : MonoBehaviour
     {
         if (player == null || (!player.IsGrounded() && !liftable)) return;
 
+        if (liftable && player.DropLocation.GetComponent<DropPointTrigger>().InvalidDropPosition) return;
+
         grabbed = !grabbed;
 
         //Rigidbody rb = GetComponent<Rigidbody>();
