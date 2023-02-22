@@ -5,7 +5,12 @@ using UnityEngine;
 
 public class DisplayPrompt : MonoBehaviour
 {
+    enum PromptPositionType { Default, TriggererStatic, TriggererFollow }
+
     [SerializeField] private GameObject promptObj;
+    [SerializeField] private PromptPositionType positionType;
+    [Tooltip("Unused if position type does not involve the triggerer.")]
+    [SerializeField] private Vector3 offsetFromTriggerer;
     [SerializeField] private UHashSet<TagString> activatorTags;
     [Space(5)]
     [Tooltip("In units per second. If 0.5, will take 2 seconds to reach a scale of 1.")]
@@ -16,12 +21,16 @@ public class DisplayPrompt : MonoBehaviour
 
     private Vector3 initScale;
     private Coroutine promptCorout;
+    private Coroutine followCorout;
 
     public static DisplayPrompt activePromptDisplayer = null;
 
     private void Start()
     {
         initScale = promptObj.transform.localScale;
+
+        promptObj.transform.localScale = Vector3.zero;
+        promptObj.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,9 +38,7 @@ public class DisplayPrompt : MonoBehaviour
         //If other's an activator, since it just entered, this must not be the active prompt; make this the active prompt and appear.
         if (activatorTags.Contains(other.tag))
         {
-            activePromptDisplayer = this;
-            Coroutilities.TryStopCoroutine(this, ref promptCorout);
-            promptCorout = StartCoroutine(PromptAppear());
+            TriggerPromptChange(true, true, this, other);
         }
     }
     private void OnTriggerStay(Collider other)
@@ -39,9 +46,7 @@ public class DisplayPrompt : MonoBehaviour
         //If other's an activator and there's no other active prompt, make this the active prompt and appear.
         if (activatorTags.Contains(other.tag) && !activePromptDisplayer)
         {
-            activePromptDisplayer = this;
-            Coroutilities.TryStopCoroutine(this, ref promptCorout);
-            promptCorout = StartCoroutine(PromptAppear());
+            TriggerPromptChange(true, true, this, other);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -49,9 +54,7 @@ public class DisplayPrompt : MonoBehaviour
         //If other's an activator and we're the active prompt, disappear and make us not the active prompt.
         if (activatorTags.Contains(other.tag) && activePromptDisplayer == this)
         {
-            activePromptDisplayer = null;
-            Coroutilities.TryStopCoroutine(this, ref promptCorout);
-            promptCorout = StartCoroutine(PromptDisappear());
+            TriggerPromptChange(false, true, null, other);
         }
     }
     private void Update()
@@ -59,7 +62,38 @@ public class DisplayPrompt : MonoBehaviour
         //If there is an active prompt, it's not this, and this prompt is showing, disappear.
         if (activePromptDisplayer && activePromptDisplayer != this && promptObj.activeSelf)
         {
-            Coroutilities.TryStopCoroutine(this, ref promptCorout);
+            TriggerPromptChange(false, false);
+        }
+    }
+
+    private void TriggerPromptChange(bool shouldAppear, bool setActivePrompt,
+        DisplayPrompt newActivePrompt = null, Collider triggerer = null)
+    {
+        if (setActivePrompt) activePromptDisplayer = newActivePrompt;
+
+        Coroutilities.TryStopCoroutine(this, ref promptCorout);
+        if (shouldAppear)
+        {
+            switch (positionType)
+            {
+                default:
+                case PromptPositionType.Default:
+                    break;
+                case PromptPositionType.TriggererStatic:
+                    promptObj.transform.position = triggerer.transform.position + offsetFromTriggerer;
+                    break;
+                case PromptPositionType.TriggererFollow:
+                    followCorout = Coroutilities.DoUntil(this,
+                        () => promptObj.transform.position = triggerer.transform.position + offsetFromTriggerer,
+                        () => activePromptDisplayer != this);
+                    break;
+            }
+
+            promptCorout = StartCoroutine(PromptAppear());
+        }
+        else
+        {
+            Coroutilities.TryStopCoroutine(this, ref followCorout);
             promptCorout = StartCoroutine(PromptDisappear());
         }
     }
