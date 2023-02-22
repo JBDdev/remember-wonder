@@ -8,6 +8,8 @@ public class PlayVideos : MonoBehaviour
     public VideoClip[] videoClips;
     private VideoPlayer videoplayer;
     private int videoClipIndex;
+    public double time;
+    public double currentTime;
 
     private void Awake()
     {
@@ -17,35 +19,24 @@ public class PlayVideos : MonoBehaviour
     void Start()
     {
         videoplayer.clip = videoClips[0];
-        Debug.Log("video clip: " + (videoClipIndex + 1));
+        videoplayer.loopPointReached += playNextVideo;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (videoClipIndex >= 0 && videoClipIndex < videoClips.Length)
-        {
-            Debug.Log("update index: " + videoClipIndex);
-            playNextVideo();
-        }
-    }
-
-    public void delayVideoTime()
-    {
-        Invoke(nameof(playNextVideo), 2.0f);
-    }
 
     //play the next video in the tutorial
-    public void playNextVideo()
+    void playNextVideo(VideoPlayer vp)
     {
+        //Debug.Log("Video over!");
         videoClipIndex++;
         if (videoClipIndex >= videoClips.Length)
         {
-            //videoplayer.GameObject.setActive(false); 
+            vp.gameObject.SetActive(false);
+            vp.Stop();
+            vp.gameObject.transform.position += new Vector3(10000.0f, 0, 0);
             Debug.Log("not active!");
             return;
         }
-        Debug.Log("video clip: " + ( videoClipIndex + 1));
+        //Debug.Log("video clip: " + ( videoClipIndex + 1));
         videoplayer.clip = videoClips[videoClipIndex];
     }
 }

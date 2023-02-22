@@ -8096,6 +8096,8 @@ MonoBehaviour:
   - {fileID: 32900000, guid: 369d28183fbb53b47ab5d841523c4484, type: 3}
   - {fileID: 32900000, guid: 18f8bf7c80271da428f704f88dab4bf2, type: 3}
   - {fileID: 32900000, guid: ae544878fd087f74c86b722ed587817b, type: 3}
+  time: 0
+  currentTime: 0
 --- !u!4 &1090409011 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6908690799304013644, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
