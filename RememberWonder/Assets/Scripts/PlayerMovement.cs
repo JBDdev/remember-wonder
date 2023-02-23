@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Child Object References")]
     [SerializeField] GameObject holdLocation;
     [SerializeField] GameObject characterModel;
+    [SerializeField] GameObject dropLocation;
 
     [Header("External References")]
     [SerializeField] GameObject cameraPivot;
@@ -45,6 +46,9 @@ public class PlayerMovement : MonoBehaviour
 
     //Accessors
     public GameObject HoldLocation { get { return holdLocation; } }
+    public GameObject CharacterModel { get { return characterModel; } }
+    public GameObject DropLocation { get { return dropLocation; } }
+
     public PushPullObject PulledObject { get { return pushPullObject; } set { pushPullObject = value; } }
     public Vector3 Velocity { get => rb.velocity; }
 
@@ -113,8 +117,14 @@ public class PlayerMovement : MonoBehaviour
         if (!pullingObject)
         {
             pullingObject = true;
-            if (!PulledObject.liftable)
+            if (PulledObject.liftable)
+            {
+                dropLocation.SetActive(true);
+            }
+            else 
+            {
                 rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+            }
 
             //If X or Z are not allowed, make ALL force unable to move the player in that axis
             if (PulledObject.GrabMoveMultipliers.x <= 0)
@@ -124,8 +134,12 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            if (PulledObject.liftable && dropLocation.GetComponent<DropPointTrigger>().InvalidDropPosition)
+                return;
+
             pullingObject = false;
             rb.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezeRotation;
+            //dropLocation.SetActive(false);
         }
     }
 
