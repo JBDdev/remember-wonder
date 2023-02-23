@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Video;
 
 public class PlayVideos : MonoBehaviour
 {
     public VideoClip[] videoClips;
     private VideoPlayer videoplayer;
+    [SerializeField] private RawImage videoImage;
     private int videoClipIndex;
     public double time;
     public double currentTime;
@@ -15,28 +17,31 @@ public class PlayVideos : MonoBehaviour
     {
         videoplayer = GetComponent<VideoPlayer>();
     }
-    // Start is called before the first frame update
+
     void Start()
     {
         videoplayer.clip = videoClips[0];
+        //subscribing to an event
         videoplayer.loopPointReached += playNextVideo;
     }
+    private void OnDestroy()
+    {
+        videoplayer.loopPointReached -= playNextVideo;
+    }
 
-
-    //play the next video in the tutorial
+    //plays the next video
     void playNextVideo(VideoPlayer vp)
     {
-        //Debug.Log("Video over!");
         videoClipIndex++;
+
         if (videoClipIndex >= videoClips.Length)
         {
-            vp.gameObject.SetActive(false);
-            vp.Stop();
-            vp.gameObject.transform.position += new Vector3(10000.0f, 0, 0);
-            Debug.Log("not active!");
+            UtilFunctions.SafeSetActive(videoImage, false);
+            //unsubscribing to an event
+            videoplayer.loopPointReached -= playNextVideo;
             return;
         }
-        //Debug.Log("video clip: " + ( videoClipIndex + 1));
+
         videoplayer.clip = videoClips[videoClipIndex];
     }
 }
