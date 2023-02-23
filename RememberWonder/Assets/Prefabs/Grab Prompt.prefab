@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 919230253831900582}
   m_Layer: 0
   m_Name: Prompt Canvas
-  m_TagString: Untagged
+  m_TagString: MemoryMote
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 919230254484826888}
   m_Layer: 0
   m_Name: Grab Prompt
-  m_TagString: Untagged
+  m_TagString: MemoryMote
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 1524981833606909468}
   m_Layer: 0
   m_Name: Sparkle Trigger
-  m_TagString: Untagged
+  m_TagString: MemoryMote
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5171,7 +5171,7 @@ GameObject:
   - component: {fileID: 740504704665694918}
   m_Layer: 0
   m_Name: Prompt Trigger
-  m_TagString: Untagged
+  m_TagString: MemoryMote
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
