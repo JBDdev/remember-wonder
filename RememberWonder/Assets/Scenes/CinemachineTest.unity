@@ -788,6 +788,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grab Prompt (6) [Player No Follow]
       objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshObj
+      value: 
+      objectReference: {fileID: 262020926}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
       value: 3.279776
@@ -1434,6 +1438,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grab Prompt (3) [Follow Player]
       objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshObj
+      value: 
+      objectReference: {fileID: 1245492351}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
       value: 6.039593
@@ -2305,6 +2313,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grab Prompt (4) [Player No Follow]
       objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshObj
+      value: 
+      objectReference: {fileID: 1132938327}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
       value: 3.0687776
@@ -3980,6 +3992,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grab Prompt (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshObj
+      value: 
+      objectReference: {fileID: 1087748628}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.7969
@@ -4045,6 +4061,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grab Prompt (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshObj
+      value: 
+      objectReference: {fileID: 32012650}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.7969
