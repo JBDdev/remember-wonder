@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class AudioHub : MonoBehaviour
@@ -15,6 +16,7 @@ public class AudioHub : MonoBehaviour
     }
 
     [SerializeField] AudioSource sourcePrefab;
+    [SerializeField] string sourceDisplayName;
     [SerializeField][Min(1)] int sourcePoolSize = 10;
     [Space(10)]
     [SerializeField] Bewildered.UDictionary<AudioList, SoundContainer> soundLibrary;
@@ -50,7 +52,8 @@ public class AudioHub : MonoBehaviour
         for (int i = 0; i < sourcePoolSize; i++)
         {
             var source = Instantiate(sourcePrefab, transform);
-            source.name = source.name.Replace("(Clone)", $" [{i + 1}]");
+            source.name = $"(None) {(string.IsNullOrWhiteSpace(sourceDisplayName) ? source.name : sourceDisplayName)} {i + 1}";
+            source.name = source.name.Replace("(Clone)", "");
             idleSources.Push(source);
 
             if (i == 0) defaultSettings.InheritFromSource(source, true);
@@ -85,6 +88,8 @@ public class AudioHub : MonoBehaviour
 
         source.Play();
         SourcePoolUpdate?.Invoke(source, false);
+
+        source.name = Regex.Replace(source.name, "\\(.*?\\)", $"({clip.name})");
 
         //Wait until the clip's done, then return this source to the pool.
         Coroutilities.DoWhen(this, () =>
