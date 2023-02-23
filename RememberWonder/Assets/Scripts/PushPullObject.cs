@@ -20,6 +20,7 @@ public class PushPullObject : MonoBehaviour
     string initTag;    //QUICK AND DIRTY FIX for camera collision, Delete later?
 
     public Vector3 GrabMoveMultipliers { get => grabMoveMultipliers; }
+    public bool IsGrabbed { get => grabbed; }
 
     void Start()
     {

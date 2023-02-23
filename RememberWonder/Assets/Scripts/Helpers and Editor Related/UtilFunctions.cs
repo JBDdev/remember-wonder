@@ -68,6 +68,9 @@ public static class UtilFunctions
         return result;
     }
 
+    public static float GetSurfaceArea(this Bounds bounds)
+        => 2 * bounds.size.x * bounds.size.y + 2 * bounds.size.x * bounds.size.z + 2 * bounds.size.y * bounds.size.z;
+
     #region Draw Box/Bounds | Lightly modified from unitycoder via https://gist.github.com/unitycoder/58f4b5d80f423d29e35c814a9556f9d9
     public static void DrawBounds(Bounds b, Color c = default, float duration = 0)
     {

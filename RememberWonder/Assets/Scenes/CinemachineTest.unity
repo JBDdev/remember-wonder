@@ -170,6 +170,14 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &32012654
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32012648}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &45427741
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,6 +427,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grab Prompt
       objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshObj
+      value: 
+      objectReference: {fileID: 266951892}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
 --- !u!1001 &185187478
@@ -776,6 +788,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grab Prompt (6) [Player No Follow]
       objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshObj
+      value: 
+      objectReference: {fileID: 262020926}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
       value: 3.279776
@@ -850,6 +866,14 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &262020931
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262020925}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &266951890 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4874511502142924272, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -897,6 +921,14 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &266951896
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266951890}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &280034960
 GameObject:
   m_ObjectHideFlags: 0
@@ -1406,6 +1438,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grab Prompt (3) [Follow Player]
       objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshObj
+      value: 
+      objectReference: {fileID: 1245492351}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
       value: 6.039593
@@ -1576,6 +1612,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grab Prompt (5) [Follow Player]
       objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshObj
+      value: 
+      objectReference: {fileID: 742587827}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
       value: 3.8187869
@@ -1649,6 +1689,14 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &742587831
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742587826}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &743783387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2194,6 +2242,14 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1087748632
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087748626}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1132938325
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2257,6 +2313,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grab Prompt (4) [Player No Follow]
       objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshObj
+      value: 
+      objectReference: {fileID: 1132938327}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
       value: 3.0687776
@@ -2322,6 +2382,14 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1132938331
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132938326}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1135115448
 GameObject:
   m_ObjectHideFlags: 0
@@ -2739,6 +2807,14 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1245492355
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245492348}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1360004040
 GameObject:
   m_ObjectHideFlags: 0
@@ -3916,6 +3992,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grab Prompt (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshObj
+      value: 
+      objectReference: {fileID: 1087748628}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.7969
@@ -3981,6 +4061,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grab Prompt (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshObj
+      value: 
+      objectReference: {fileID: 32012650}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.7969
