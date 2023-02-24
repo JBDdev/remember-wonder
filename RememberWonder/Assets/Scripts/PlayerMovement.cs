@@ -179,6 +179,9 @@ public class PlayerMovement : MonoBehaviour
 
         ApplyPullRestrictions(ref direction);
         if (direction == Vector3.zero) return;
+
+        if(direction.sqrMagnitude > minRotationDistance)
+            RotateCharacterModel(direction.normalized);
         
         float percentHeld = direction.magnitude;
 
@@ -195,10 +198,10 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(direction * accModifier, ForceMode.Force);
 
-            if (rb.velocity.sqrMagnitude > minRotationDistance)
-            {
-                RotateCharacterModel(rb.velocity);
-            }
+            //if (rb.velocity.sqrMagnitude > minRotationDistance)
+            //{
+            //    RotateCharacterModel(rb.velocity);
+            //}
         }
 
         directionLastFrame = direction;
