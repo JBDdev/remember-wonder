@@ -38,14 +38,13 @@ public class DisplayPrompt : MonoBehaviour
         promptObj.transform.localScale = Vector3.zero;
         promptObj.SetActive(false);
 
-        if (positionType != PromptPositionType.Default) return;
-
         if (!promptContainer) promptContainer = new GameObject("Prompt Container").transform;
 
         promptOffset = promptObj.transform.localPosition;
         ((RectTransform)promptObj.transform).SetParent(promptContainer.transform, false);
 
-        Coroutilities.DoUntil(this, () => promptObj.transform.position = transform.position + promptOffset, () => !Application.isPlaying);
+        if (positionType == PromptPositionType.Default)
+            Coroutilities.DoUntil(this, () => promptObj.transform.position = transform.position + promptOffset, () => !Application.isPlaying);
     }
 
     private void OnTriggerEnter(Collider other)
