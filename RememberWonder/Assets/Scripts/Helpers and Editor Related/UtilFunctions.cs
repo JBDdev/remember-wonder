@@ -331,6 +331,48 @@ public static class UtilFunctions
             : rangeMax;
     }
 
+    /// <summary>Of two or more values, returns the one with the largest absolute value.</summary>
+    public static float MaxAbs(params float[] values)
+    {
+        for (int i = 0; i < values.Length; i++)
+            values[i] = Mathf.Abs(values[i]);
+
+        return Mathf.Max(values);
+    }
+    /// <inheritdoc cref="MaxAbs(float[])"/>
+    public static float MaxAbs(params int[] values)
+    {
+        for (int i = 0; i < values.Length; i++)
+            values[i] = Mathf.Abs(values[i]);
+
+        return Mathf.Max(values);
+    }
+    /// <inheritdoc cref="MaxAbs(float[])"/>
+    public static float MaxAbs(float a, float b) => Mathf.Abs(a) > Mathf.Abs(b) ? a : b;
+    /// <inheritdoc cref="MaxAbs(float[])"/>
+    public static float MaxAbs(int a, int b) => Mathf.Abs(a) > Mathf.Abs(b) ? a : b;
+
+    /// <summary>Of two or more values, returns the one with the smallest absolute value.</summary>
+    public static float MinAbs(params float[] values)
+    {
+        for (int i = 0; i < values.Length; i++)
+            values[i] = Mathf.Abs(values[i]);
+
+        return Mathf.Min(values);
+    }
+    /// <inheritdoc cref="MinAbs(float[])"/>
+    public static float MinAbs(params int[] values)
+    {
+        for (int i = 0; i < values.Length; i++)
+            values[i] = Mathf.Abs(values[i]);
+
+        return Mathf.Min(values);
+    }
+    /// <inheritdoc cref="MinAbs(float[])"/>
+    public static float MinAbs(float a, float b) => Mathf.Abs(a) < Mathf.Abs(b) ? a : b;
+    /// <inheritdoc cref="MinAbs(float[])"/>
+    public static float MinAbs(int a, int b) => Mathf.Abs(a) < Mathf.Abs(b) ? a : b;
+
     /// <summary>
     /// Divides two vectors component-wise.
     /// </summary>

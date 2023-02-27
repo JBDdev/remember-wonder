@@ -8,7 +8,8 @@ public class DisplayPrompt : MonoBehaviour
     enum PromptPositionType { Default, TriggererStatic, TriggererFollow }
 
     [SerializeField] private GameObject promptObj;
-    [SerializeField] private PushPullObject grabbableObj;
+    [SerializeField] private PushPullObject grabbablePromptOwner;
+    [Space(10)]
     [SerializeField] private PromptPositionType positionType;
     [Tooltip("Unused if position type does not involve the triggerer.")]
     [SerializeField] private Vector3 offsetFromTriggerer;
@@ -28,6 +29,8 @@ public class DisplayPrompt : MonoBehaviour
     public static DisplayPrompt activePromptDisplayer = null;
     private static Transform promptContainer = null;
 
+    public PushPullObject GrabbablePromptOwner { get => grabbablePromptOwner; set => grabbablePromptOwner = value; }
+
     private void Start()
     {
         initScale = promptObj.transform.localScale;
@@ -35,14 +38,13 @@ public class DisplayPrompt : MonoBehaviour
         promptObj.transform.localScale = Vector3.zero;
         promptObj.SetActive(false);
 
-        if (positionType != PromptPositionType.Default) return;
-
         if (!promptContainer) promptContainer = new GameObject("Prompt Container").transform;
 
         promptOffset = promptObj.transform.localPosition;
-        promptObj.transform.parent = promptContainer;
+        ((RectTransform)promptObj.transform).SetParent(promptContainer.transform, false);
 
-        Coroutilities.DoUntil(this, () => promptObj.transform.position = transform.position + promptOffset, () => !Application.isPlaying);
+        if (positionType == PromptPositionType.Default)
+            Coroutilities.DoUntil(this, () => promptObj.transform.position = transform.position + promptOffset, () => !Application.isPlaying);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -70,7 +72,7 @@ public class DisplayPrompt : MonoBehaviour
     {
         //If this is the active prompt, but it's not showing and isn't grabbed, appear.
         if (activePromptDisplayer == this && !promptObj.activeSelf
-            && grabbableObj && !grabbableObj.IsGrabbed)
+            && grabbablePromptOwner && !grabbablePromptOwner.IsGrabbed)
         {
             TriggerPromptChange(true, false);
         }
@@ -81,7 +83,7 @@ public class DisplayPrompt : MonoBehaviour
             TriggerPromptChange(false, false);
         }
         //If the grabbable object the prompt's tied to is grabbed, disappear the prompt, but keep it as the active prompt.
-        else if (grabbableObj && grabbableObj.IsGrabbed)
+        else if (grabbablePromptOwner && grabbablePromptOwner.IsGrabbed)
         {
             TriggerPromptChange(false, false);
         }

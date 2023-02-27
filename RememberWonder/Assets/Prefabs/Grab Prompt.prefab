@@ -245,6 +245,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 919230254484826888}
+  - component: {fileID: 6731086222666355576}
   m_Layer: 0
   m_Name: Grab Prompt
   m_TagString: MemoryMote
@@ -270,6 +271,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6731086222666355576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919230254484826889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6500e64accea18e4aa95e7565f85d018, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sparkleController: {fileID: 2368735634120701254}
+  promptController: {fileID: 740504704665694918}
+  grabbableOwner: {fileID: 0}
+  sparklingMeshRend: {fileID: 0}
+  useSparkleTriggerSizeOffset: 0
+  sparkleTriggerSizeOffset: {x: 0, y: 0, z: 0}
+  usePromptTriggerSizeOffset: 0
+  promptTriggerSizeOffset: {x: 0, y: 0, z: 0}
+  getRefs: 0
+  applyToTriggers: 0
 --- !u!1 &919230254670630461
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,7 +339,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1931989771583999915}
-  - component: {fileID: 4766279115182911359}
+  - component: {fileID: 3183176413045614687}
   - component: {fileID: 2368735634120701254}
   - component: {fileID: 5483606427473192515}
   - component: {fileID: 1524981833606909468}
@@ -342,8 +365,8 @@ Transform:
   m_Father: {fileID: 919230254484826888}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &4766279115182911359
-SphereCollider:
+--- !u!65 &3183176413045614687
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -353,7 +376,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2368735634120701254
 MonoBehaviour:
@@ -368,8 +391,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sparkleSystem: {fileID: 5483606427473192515}
-  sparklingGrabbable: {fileID: 0}
-  sparklingMeshObj: {fileID: 0}
+  triggerCollider: {fileID: 3183176413045614687}
+  grabbableSparkleOwner: {fileID: 0}
+  sparklingMeshRend: {fileID: 0}
+  triggerSizeOffset: {x: 0, y: 0, z: 0}
   sparklesPerUnitCube: 7.5
   activatorTags:
     _serializedValues:
@@ -5267,7 +5292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   promptObj: {fileID: 919230253831900587}
-  grabbableObj: {fileID: 0}
+  grabbablePromptOwner: {fileID: 0}
   positionType: 0
   offsetFromTriggerer: {x: 0, y: 0, z: 0}
   activatorTags:
