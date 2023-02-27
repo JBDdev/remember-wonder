@@ -48,8 +48,8 @@ public class GrabSparkleController : MonoBehaviour
     {
         if (!sparklingMeshRend)
         {
-            Debug.LogWarning($"Grab sparkle system on \"{transform.parent.parent.name}\" was given a null mesh. " +
-                $"Disabling to prevent further warnings.");
+            var salientName = transform.parent.parent ? transform.parent.parent.name : transform.parent.name;
+            Debug.LogWarning($"Grab sparkle system on \"{salientName}\" was given a null mesh. Disabling to prevent further warnings.");
             gameObject.SetActive(false);
             return;
         }
