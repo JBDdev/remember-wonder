@@ -89,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         jumpInProgress = true;
     }
 
-    public void TogglePause() 
+    public void TogglePause()
     {
         if (paused)
         {
@@ -121,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 dropLocation.SetActive(true);
             }
-            else 
+            else
             {
                 rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             }
@@ -173,16 +173,14 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 direction = InputHub.Inst.Gameplay.Move.ReadValue<Vector2>();
 
-        direction =
-            Quaternion.LookRotation(Vector3.Cross(cameraPivot.transform.right, Vector3.up))
-            * direction.SwapAxes(1, 2);
+        direction = Quaternion.LookRotation(Vector3.Cross(cameraPivot.transform.right, Vector3.up)) * direction.SwapAxes(1, 2);
+
+        if (direction.sqrMagnitude > minRotationDistance)
+            RotateCharacterModel(direction.normalized);
 
         ApplyPullRestrictions(ref direction);
         if (direction == Vector3.zero) return;
 
-        if(direction.sqrMagnitude > minRotationDistance)
-            RotateCharacterModel(direction.normalized);
-        
         float percentHeld = direction.magnitude;
 
         //If we are not grounded and moving in a significantly different direction (axis delta > deadzone),
