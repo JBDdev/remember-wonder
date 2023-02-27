@@ -70,9 +70,9 @@ public class DisplayPrompt : MonoBehaviour
     }
     private void Update()
     {
-        //If this is the active prompt, but it's not showing and isn't grabbed, appear.
+        //If this is the active prompt, but it's not showing (and isn't grabbed, if applicable), appear.
         if (activePromptDisplayer == this && !promptObj.activeSelf
-            && grabbablePromptOwner && !grabbablePromptOwner.IsGrabbed)
+            && (!grabbablePromptOwner || !grabbablePromptOwner.IsGrabbed))
         {
             TriggerPromptChange(true, false);
         }
@@ -92,7 +92,13 @@ public class DisplayPrompt : MonoBehaviour
     private void TriggerPromptChange(bool shouldAppear, bool setActivePrompt,
         DisplayPrompt newActivePrompt = null, Collider triggerer = null)
     {
-        if (setActivePrompt) activePromptDisplayer = newActivePrompt;
+        //If we should appear but we're already appearing/appeared, no need to do anything.
+        //  Preventing disappear redundancy is harder, has side effects, and *should* be unnecessary. Should.
+        if (shouldAppear && activePromptDisplayer == this && promptObj.activeSelf)
+            return;
+
+        if (setActivePrompt)
+            activePromptDisplayer = newActivePrompt;
 
         Coroutilities.TryStopCoroutine(this, ref promptCorout);
         if (shouldAppear)
@@ -102,9 +108,11 @@ public class DisplayPrompt : MonoBehaviour
                 default:
                 case PromptPositionType.Default:
                     break;
+
                 case PromptPositionType.TriggererStatic:
                     promptObj.transform.position = triggerer.transform.position + offsetFromTriggerer;
                     break;
+
                 case PromptPositionType.TriggererFollow:
                     followCorout = Coroutilities.DoUntil(this,
                         () => promptObj.transform.position = triggerer.transform.position + offsetFromTriggerer,
@@ -144,7 +152,7 @@ public class DisplayPrompt : MonoBehaviour
             yield return null;
         }
 
-        yield return null;
+        promptCorout = null;
     }
     private IEnumerator PromptDisappear()
     {
@@ -159,5 +167,6 @@ public class DisplayPrompt : MonoBehaviour
         }
 
         promptObj.SetActive(false);
+        promptCorout = null;
     }
 }

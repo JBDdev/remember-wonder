@@ -168,8 +168,8 @@ RectTransform:
   m_Children:
   - {fileID: 919230254670630460}
   - {fileID: 919230253819991551}
-  m_Father: {fileID: 919230254484826888}
-  m_RootOrder: 2
+  m_Father: {fileID: 8690362428020157886}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -267,7 +267,6 @@ Transform:
   m_Children:
   - {fileID: 1931989771583999915}
   - {fileID: 8690362428020157886}
-  - {fileID: 919230253831900586}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -293,6 +292,12 @@ MonoBehaviour:
   promptTriggerSizeOffset: {x: 0, y: 0, z: 0}
   getRefs: 0
   applyToTriggers: 0
+  prevGrabbableOwner: {fileID: 0}
+  prevSparklingMeshRend: {fileID: 0}
+  prevUseSparkleTriggerSizeOffset: 0
+  prevSparkleTriggerSizeOffset: {x: 0, y: 0, z: 0}
+  prevUsePromptTriggerSizeOffset: 0
+  prevPromptTriggerSizeOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &919230254670630461
 GameObject:
   m_ObjectHideFlags: 0
@@ -5212,7 +5217,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 919230253831900586}
   m_Father: {fileID: 919230254484826888}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
