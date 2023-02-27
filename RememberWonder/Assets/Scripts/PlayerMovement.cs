@@ -9,7 +9,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSpeed;
     [SerializeField] float accModifier;
     public bool pullingObject = false;
+    [Space(5)]
+    [SerializeField] Vector3 directionLastFrame;
+    [SerializeField] float dirChangeThreshold = 0.01f;
+    [SerializeField][Range(0, 1)] float airFriction = 1f;
 #if UNITY_EDITOR
+    [Space(5)]
     [SerializeField] bool visualizeMoveInput;
 #endif
 
@@ -22,10 +27,12 @@ public class PlayerMovement : MonoBehaviour
     [Header("Child Object References")]
     [SerializeField] GameObject holdLocation;
     [SerializeField] GameObject characterModel;
+    [SerializeField] GameObject dropLocation;
 
     [Header("External References")]
     [SerializeField] GameObject cameraPivot;
     [SerializeField] GameObject heldObject;
+    [SerializeField] PushPullObject pushPullObject;
 
     //Internal Component References
     Rigidbody rb;
@@ -35,30 +42,36 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotationSpeed;
     [SerializeField] float minRotationDistance;
 
+    bool paused;
+
     //Accessors
     public GameObject HoldLocation { get { return holdLocation; } }
-    public PushPullObject PulledObject { get; set; }
+    public GameObject CharacterModel { get { return characterModel; } }
+    public GameObject DropLocation { get { return dropLocation; } }
+
+    public PushPullObject PulledObject { get { return pushPullObject; } set { pushPullObject = value; } }
     public Vector3 Velocity { get => rb.velocity; }
 
-    // Start is called before the first frame update
     void Start()
     {
         //Get references to components on the GameObject
         rb = GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();
 
+        paused = false;
+
         PulledObject = null;
 
         InputHub.Inst.Gameplay.Jump.performed += OnJumpPerformed;
-        InputHub.Inst.Gameplay.Quit.performed += OnQuitPerformed;
-        InputHub.Inst.Gameplay.Interact.performed += OnInteractPerformed;
+        InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
     }
     private void OnDestroy()
     {
         InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
-        InputHub.Inst.Gameplay.Quit.performed -= OnQuitPerformed;
-        InputHub.Inst.Gameplay.Interact.performed -= OnInteractPerformed;
+        InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
     }
+
+    //---Input Events---//
 
     private void OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
@@ -68,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
         if (!IsGrounded())
             return;
 
-        if (pullingObject && PulledObject.disableJump)
+        if (pullingObject && !PulledObject.liftable)
             return;
 
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
@@ -76,9 +89,24 @@ public class PlayerMovement : MonoBehaviour
         jumpInProgress = true;
     }
 
-    private void OnQuitPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    public void TogglePause() 
     {
-        Application.Quit();
+        if (paused)
+        {
+            paused = false;
+            InputHub.Inst.Gameplay.Jump.performed += OnJumpPerformed;
+            InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
+            if (IsGrounded())
+            {
+                jumpInProgress = false;
+            }
+        }
+        else
+        {
+            paused = true;
+            InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
+            InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
+        }
     }
 
     private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
@@ -89,130 +117,92 @@ public class PlayerMovement : MonoBehaviour
         if (!pullingObject)
         {
             pullingObject = true;
-            if (PulledObject.disableJump)
+            if (PulledObject.liftable)
+            {
+                dropLocation.SetActive(true);
+            }
+            else 
+            {
                 rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+            }
+
+            //If X or Z are not allowed, make ALL force unable to move the player in that axis
+            if (PulledObject.GrabMoveMultipliers.x <= 0)
+                rb.constraints |= RigidbodyConstraints.FreezePositionX;
+            if (PulledObject.GrabMoveMultipliers.z <= 0)
+                rb.constraints |= RigidbodyConstraints.FreezePositionZ;
         }
         else
         {
+            if (PulledObject.liftable && dropLocation.GetComponent<DropPointTrigger>().InvalidDropPosition)
+                return;
+
             pullingObject = false;
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
+            rb.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezeRotation;
+            //dropLocation.SetActive(false);
         }
     }
 
+    //---Core Methods---//
+
     void FixedUpdate()
     {
-        IsGrounded();
+        var grounded = IsGrounded();
 
-        //TODO: Instead of polling, only move when input is read
-        //  (may require consolidating movement into one 2D vector, as opposed to two separate floats)
-        Vector3 direction = Vector3.Cross(cameraPivot.transform.right, Vector3.up) * InputHub.Inst.Gameplay.MoveY.ReadValue<float>();
-        direction += cameraPivot.transform.right * InputHub.Inst.Gameplay.MoveX.ReadValue<float>();
-
-        direction.Normalize();
-
-        /*
-        //Brody's Note to Self: The best way to acheive better velocity clamping would be to scale the force
-        //  being applied by how close we are to maximum speed.
-        if (rb.velocity.sqrMagnitude < maxSpeed * maxSpeed)
-            rb.AddForce(direction * accModifier, ForceMode.Acceleration);
-        transform.position += direction * maxSpeed * Time.deltaTime;
-        */
-
-
-        //Clamp force output
-
-        if (pullingObject)
-        {
-            //If we find we're at max pull distance, zero out velocity.
-            if (ApplyPullRestrictions(ref direction))
-            {
-                rb.velocity = Vector3.zero;
-            }
-        }
-
-        if (Mathf.Abs(rb.velocity.x) < maxSpeed && Mathf.Abs(rb.velocity.z) < maxSpeed)
-        {
-            rb.AddForce(direction * accModifier, ForceMode.Force);
-            if (rb.velocity.sqrMagnitude > minRotationDistance)
-                RotateCharacterModel(rb.velocity);
-        }
+        ApplyMoveForce(grounded);
 
         //If NOT grounded, fall gravity should be modified, and we're falling (not rising),
-        else if (!Mathf.Approximately(fallGravMultiplier, 1) && rb.velocity.y < 0)
+        if (!grounded && !Mathf.Approximately(fallGravMultiplier, 1) && rb.velocity.y < 0)
         {
             //Apply extra force based on the multiplier (There's no "gravity scale" for 3D Rigidbodies).
             //Gravity's already applied once by default; if 1.01, apply the extra 0.01
             rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
         }
 
+        if (PulledObject != null)
+        {
+            if ((PulledObject.transform.position - transform.position).sqrMagnitude > 3 && PulledObject.liftable)
+            {
+                PulledObject = null;
+                pullingObject = false;
+            }
+        }
+    }
+
+    private void ApplyMoveForce(bool grounded)
+    {
+        Vector3 direction = InputHub.Inst.Gameplay.Move.ReadValue<Vector2>();
+
+        direction =
+            Quaternion.LookRotation(Vector3.Cross(cameraPivot.transform.right, Vector3.up))
+            * direction.SwapAxes(1, 2);
+
+        ApplyPullRestrictions(ref direction);
+        if (direction == Vector3.zero) return;
+        
+        float percentHeld = direction.magnitude;
+
+        //If we are not grounded and moving in a significantly different direction (axis delta > deadzone),
+        if (!IsGrounded()
+            && (Mathf.Abs(directionLastFrame.x - direction.x) > dirChangeThreshold
+            || Mathf.Abs(directionLastFrame.z - direction.z) > dirChangeThreshold))
+        {
+            rb.velocity = new Vector3(rb.velocity.x * airFriction, rb.velocity.y, rb.velocity.z * airFriction);
+        }
+
+        //If both axes are under max speed, apply force in direction.
+        if (Mathf.Abs(rb.velocity.x) < maxSpeed * percentHeld && Mathf.Abs(rb.velocity.z) < maxSpeed * percentHeld)
+        {
+            rb.AddForce(direction * accModifier, ForceMode.Force);
+
+            if (rb.velocity.sqrMagnitude > minRotationDistance)
+            {
+                RotateCharacterModel(rb.velocity);
+            }
+        }
+
+        directionLastFrame = direction;
         DrawDebugMovementRays(direction);
-    }
-
-    private bool ApplyPullRestrictions(ref Vector3 restrictedDir)
-    {
-        // Restrict axis pulling on certain objects
-
-        if (!PulledObject.usableAxes.Contains("z"))
-        {
-            restrictedDir.z = 0f;
-        }
-
-        if (!PulledObject.usableAxes.Contains("x"))
-        {
-            restrictedDir.x = 0f;
-        }
-
-        // Restrict axis movement via max pull distance
-
-        bool pastMaxDistance = false;
-
-        //X is beyond the negative max distance
-        if (restrictedDir.x < 0
-            && PulledObject.transform.position.x < PulledObject.defaultPos.x - PulledObject.maxPullDistance)
-        {
-            restrictedDir.x = 0f;
-            pastMaxDistance = true;
-        }
-        //X is beyond the positive max distance
-        else if (restrictedDir.x > 0
-            && PulledObject.transform.position.x > PulledObject.defaultPos.x + PulledObject.maxPullDistance)
-        {
-            restrictedDir.x = 0f;
-            pastMaxDistance = true;
-        }
-        //Z is beyond the negative max distance
-        if (restrictedDir.z < 0
-            && PulledObject.transform.position.z < PulledObject.defaultPos.z - PulledObject.maxPullDistance)
-        {
-            restrictedDir.z = 0f;
-            pastMaxDistance = true;
-        }
-        //Z is beyond the positive max distance
-        else if (restrictedDir.z > 0
-            && PulledObject.transform.position.z > PulledObject.defaultPos.z + PulledObject.maxPullDistance)
-        {
-            restrictedDir.z = 0f;
-            pastMaxDistance = true;
-        }
-
-        return pastMaxDistance;
-    }
-
-    private void DrawDebugMovementRays(Vector3 direction)
-    {
-#if UNITY_EDITOR
-        if (!visualizeMoveInput) return;
-
-        var lightGrey = new Color(0.75f, 0.75f, 0.75f, 0.8f);
-        Debug.DrawRay(transform.position, Vector3.Cross(cameraPivot.transform.right, Vector3.up) * 2.5f, lightGrey.Adjust(2, 1));
-        Debug.DrawRay(transform.position, cameraPivot.transform.right * 2.5f, lightGrey.Adjust(0, 1));
-
-        Debug.DrawRay(transform.position, rb.velocity, Color.yellow.Adjust(3, 0.6f));
-        Debug.DrawRay(transform.position, rb.velocity - Vector3.up * rb.velocity.y, Color.yellow);
-
-        Debug.DrawRay(transform.position, direction, Color.white);
-        UtilFunctions.DrawSphere(transform.position + direction, 0.15f, 6, 6, Color.white);
-#endif
     }
 
     public bool IsGrounded()
@@ -233,6 +223,58 @@ public class PlayerMovement : MonoBehaviour
         return groundedCheck && groundHit.normal.y >= maxIncline;
     }
 
+    private void ApplyPullRestrictions(ref Vector3 restrictedDir)
+    {
+        //If not pulling, unrestrict all move axes and bail out
+        if (!pullingObject)
+        {
+            rb.constraints &= ~(RigidbodyConstraints.FreezePosition);
+            return;
+        }
+
+        restrictedDir.x *= PulledObject.GrabMoveMultipliers.x;
+        restrictedDir.z *= PulledObject.GrabMoveMultipliers.z;
+
+        //-- Restrict axis movement via max pull distance --//
+
+        //X is beyond the negative max distance
+        if (restrictedDir.x < 0
+            && PulledObject.transform.position.x < PulledObject.defaultPos.x - PulledObject.maxPullDistance)
+        {
+            restrictedDir.x = 0f;
+            rb.velocity = Vector3.zero;
+        }
+        //X is beyond the positive max distance
+        else if (restrictedDir.x > 0
+            && PulledObject.transform.position.x > PulledObject.defaultPos.x + PulledObject.maxPullDistance)
+        {
+            restrictedDir.x = 0f;
+            rb.velocity = Vector3.zero;
+        }
+        //Z is beyond the negative max distance
+        if (restrictedDir.z < 0
+            && PulledObject.transform.position.z < PulledObject.defaultPos.z - PulledObject.maxPullDistance)
+        {
+            restrictedDir.z = 0f;
+            rb.velocity = Vector3.zero;
+        }
+        //Z is beyond the positive max distance
+        else if (restrictedDir.z > 0
+            && PulledObject.transform.position.z > PulledObject.defaultPos.z + PulledObject.maxPullDistance)
+        {
+            restrictedDir.z = 0f;
+            rb.velocity = Vector3.zero;
+        }
+    }
+
+    private void RotateCharacterModel(Vector3 direction)
+    {
+        if (direction.sqrMagnitude <= Mathf.Epsilon) return;
+        characterModel.transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+    }
+
+    //---Helper Methods---//
+
     public void GetCapsuleCastParams(out float height, out float radius, out Vector3 top, out Vector3 bottom)
     {
         height = col.height * transform.localScale.y;
@@ -245,30 +287,20 @@ public class PlayerMovement : MonoBehaviour
         bottom += Vector3.up * radius;
     }
 
-    //public float GroundHitNormalY() 
-    //{
-    //    float height = col.height * transform.localScale.y;
-    //    float radius = col.radius * transform.localScale.y;
-
-    //    Vector3 point1 = transform.position + Vector3.up * height / 2;
-    //    point1 += Vector3.down * radius;
-
-    //    Vector3 point2 = transform.position + Vector3.down * height / 2;
-    //    point2 += Vector3.up * radius;
-
-    //    radius -= 0.02f;
-    //    groundedCheck = Physics.CapsuleCast(
-    //        point1, point2,
-    //        radius, Vector3.down,
-    //        out RaycastHit groundHit,
-    //        0.1f);
-
-    //    return groundHit.normal.y;
-    //}
-
-    private void RotateCharacterModel(Vector3 direction)
+    private void DrawDebugMovementRays(Vector3 direction)
     {
-        if (direction == Vector3.zero) return;
-        characterModel.transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+#if UNITY_EDITOR
+        if (!visualizeMoveInput) return;
+
+        var lightGrey = new Color(0.75f, 0.75f, 0.75f, 0.8f);
+        Debug.DrawRay(transform.position, Vector3.Cross(cameraPivot.transform.right, Vector3.up) * 2.5f, lightGrey.Adjust(2, 1));
+        Debug.DrawRay(transform.position, cameraPivot.transform.right * 2.5f, lightGrey.Adjust(0, 1));
+
+        Debug.DrawRay(transform.position, rb.velocity, Color.yellow.Adjust(3, 0.6f));
+        Debug.DrawRay(transform.position, rb.velocity - Vector3.up * rb.velocity.y, Color.yellow);
+
+        Debug.DrawRay(transform.position, direction, Color.white);
+        UtilFunctions.DrawSphere(transform.position + direction, 0.15f, 6, 6, Color.white);
+#endif
     }
 }

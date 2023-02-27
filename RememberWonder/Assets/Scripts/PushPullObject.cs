@@ -7,30 +7,122 @@ public class PushPullObject : MonoBehaviour
 {
     [SerializeField] PlayerMovement player;
     [SerializeField] bool grabbed;
-    public string[] usableAxes;
+    [SerializeField] Vector3 grabMoveMultipliers = Vector3.one;
     public float maxPullDistance;
-    public bool disableJump;
+    public bool liftable;
+    [SerializeField] AudioList liftAudio;
+    [SerializeField] AudioList putDownAudio;
+    [SerializeField] SourceSettings audioSettings;
     public Vector3 defaultPos;
 
     Rigidbody rb;
     Renderer[] childRendsCache;
+    string initTag;    //QUICK AND DIRTY FIX for camera collision, Delete later?
+
+    public Vector3 GrabMoveMultipliers { get => grabMoveMultipliers; }
+    public bool IsGrabbed { get => grabbed; }
 
     void Start()
     {
         grabbed = false;
         defaultPos = transform.position;
+        initTag = tag;
 
         rb = GetComponent<Rigidbody>();
         childRendsCache = GetComponentsInChildren<Renderer>();
     }
 
+    private void Update()
+    {
+        // If we are too far away, deregister
+        if (liftable && player != null)
+        {
+            //Debug.Log();
+            if (!grabbed && (transform.position - player.transform.position).sqrMagnitude > 3f)
+            {
+                Deregister();
+            }
+
+        }
+    }
     private void OnTriggerEnter(Collider col)
     {
         if (!col.gameObject.CompareTag("Player")) return;
 
         player = col.gameObject.GetComponent<PlayerMovement>();
+        Register();
+    }
 
-        if (player.transform.position.y >= transform.position.y + 1.5f) 
+    private void OnTriggerExit(Collider col)
+    {
+        if (!col.gameObject.CompareTag("Player")) return;
+        Deregister();
+    }
+
+    void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    {
+        if (player == null || (!player.IsGrounded() && !liftable)) return;
+
+        if (liftable && player.DropLocation.GetComponent<DropPointTrigger>().InvalidDropPosition) return;
+
+        grabbed = !grabbed;
+
+        //Rigidbody rb = GetComponent<Rigidbody>();
+        if (liftable)
+        {
+            if (grabbed)
+            {
+                Destroy(rb);
+                transform.rotation = player.CharacterModel.transform.rotation;
+            }
+                
+            else
+            {
+                if (player.DropLocation.GetComponent<DropPointTrigger>().InvalidDropPosition)
+                    return;
+                rb = transform.gameObject.AddComponent<Rigidbody>();
+                //rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            }
+        }
+
+        if (grabbed)
+        {
+            if (liftable)
+            {
+                transform.position = player.transform.GetChild(0).GetChild(0).transform.position;
+                transform.parent = player.transform.GetChild(0).GetChild(0).transform;
+                player.DropLocation.SetActive(true);
+
+                AudioHub.Inst.Play(liftAudio, audioSettings, transform.position);
+            }
+
+            else
+                transform.parent = player.transform;
+        }
+        else
+        {
+            transform.parent = null;
+            player.DropLocation.SetActive(false);
+            if (liftable) 
+            {
+                AudioHub.Inst.Play(putDownAudio, audioSettings, transform.position);
+                transform.position = player.DropLocation.transform.position;
+            } 
+        }
+    }
+
+    private void UpdateChildRends(System.Action<Renderer> updateFunc, bool refreshCache = false)
+    {
+        if (refreshCache) childRendsCache = GetComponentsInChildren<Renderer>();
+
+        foreach (Renderer rend in childRendsCache)
+            updateFunc(rend);
+    }
+
+    //Breakout of OnTriggerEnter / OnTriggerExit functionality
+    private void Register()
+    {
+        if (!player || player.transform.position.y >= transform.position.y + 1.5f)
         {
             player = null;
             return;
@@ -46,56 +138,27 @@ public class PushPullObject : MonoBehaviour
             return;
         player.PulledObject = this;
 
-        InputHub.Inst.Gameplay.Interact.performed += OnInteractPerformed;
+        //QUICK AND DIRTY FIX for camera collision; delete later?
+        tag = "Player";
+
+        InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
 
         UpdateChildRends(rend => rend.material.color = Color.grey);
     }
-
-    private void OnTriggerExit(Collider col)
+    private void Deregister()
     {
-        if (!col.gameObject.CompareTag("Player")) return;
-
         //We should have a ref to player; we get one when they enter.
         //  If we don't, this function fired twice or something.
         if (!player || player.pullingObject) return;
 
-        InputHub.Inst.Gameplay.Interact.performed -= OnInteractPerformed;
+        InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
 
         player.PulledObject = null;
         player = null;
 
+        //QUICK AND DIRTY FIX for camera collision; delete later?
+        tag = initTag;
+
         UpdateChildRends(rend => rend.material.color = Color.white);
-    }
-
-    void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
-    {
-        if (!player || !player.IsGrounded()) return;
-
-        grabbed = !grabbed;
-
-        //Rigidbody rb = GetComponent<Rigidbody>();
-        if (!disableJump)
-        {
-            if (grabbed)
-                Destroy(rb);
-            else
-            {
-                rb = transform.gameObject.AddComponent<Rigidbody>();
-                rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            }
-        }
-
-        if (grabbed)
-            transform.parent = player.transform;
-        else
-            transform.parent = null;
-    }
-
-    private void UpdateChildRends(System.Action<Renderer> updateFunc, bool refreshCache = false)
-    {
-        if (refreshCache) childRendsCache = GetComponentsInChildren<Renderer>();
-
-        foreach (Renderer rend in childRendsCache)
-            updateFunc(rend);
     }
 }

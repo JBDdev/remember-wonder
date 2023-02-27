@@ -23,6 +23,7 @@ public class PivotControl : MonoBehaviour
 
     float yaw;
     float pitch;
+    Vector2 lookAxis;
     Quaternion targetRotation;
 
     Vector3 followCache;
@@ -49,18 +50,20 @@ public class PivotControl : MonoBehaviour
         if (repositioning) followCache.y = transform.position.y;
         transform.position = followCache;
 
-        //If we rotate on mouse down, and none of the mouse buttons are down, don't rotate.
-        if (clickAndDrag && !InputHub.Inst.Gameplay.LookActive.IsPressed())
+        lookAxis = InputHub.Inst.Gameplay.Look.ReadValue<Vector2>();
+
+        //For example: If we rotate on mouse down, and none of the mouse buttons are down, don't rotate.
+        if (lookAxis == Vector2.zero || (clickAndDrag && !InputHub.Inst.Gameplay.LookActivate.IsPressed()))
         {
             transform.localRotation = targetRotation;
             return;
         }
 
-        yaw += lookSpeed * InputHub.Inst.Gameplay.LookX.ReadValue<float>() * Time.deltaTime;
+        yaw += lookSpeed * lookAxis.x * Time.deltaTime;
         //Axis for yaw is multiplied by -1 if invertX is true
         targetRotation = Quaternion.AngleAxis(yaw, Vector3.up * (invertX ? -1 : 1));
 
-        pitch += lookSpeed * InputHub.Inst.Gameplay.LookY.ReadValue<float>() * Time.deltaTime;
+        pitch += lookSpeed * lookAxis.y * Time.deltaTime;
         pitch = Mathf.Clamp(pitch, pitchRange.x, pitchRange.y);
         //Axis for pitch is multiplied by -1 if invertY is true
         targetRotation *= Quaternion.AngleAxis(pitch, Vector3.left * (invertY ? -1 : 1));
@@ -149,7 +152,6 @@ public class PivotControl : MonoBehaviour
                 1, (anyHits ? hit.point.y : castEndY) + playerCapsuleHeight / 2), initialOffset, primary, 5);
             UtilFunctions.DrawBox(transform.position, player.transform.rotation, 0.2f, primary, 5);
 
-            UtilFunctions.DrawSphere(hit.point, 0.025f, primary, 5f);
             Debug.DrawLine(player.transform.position, player.transform.position.Adjust(1, castEndY), tertiary, 5f);
             if (anyHits)
             {
@@ -159,6 +161,7 @@ public class PivotControl : MonoBehaviour
                     new Vector3(castWidth, 0.01f, castWidth),
                     tertiary,
                     5f);
+                UtilFunctions.DrawSphere(hit.point, 0.025f, primary, 5f);
             }
         }
 #endif
