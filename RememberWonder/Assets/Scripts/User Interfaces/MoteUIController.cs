@@ -8,6 +8,7 @@ public class MoteUIController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI motesCollectedTxt;
     [SerializeField] private TextMeshProUGUI totalMotesTxt;
+    [SerializeField] private TextMeshProUGUI tutorialTxt;
 
     private int _collectedCount;
     private int _totalCount;
@@ -71,5 +72,17 @@ public class MoteUIController : MonoBehaviour
     private void IncrementCollectedCount(CollectMote _)
     {
         CollectedCount++;
+    }
+
+    //Displays tutorial text on screen
+    public void DisplayTutorialText(string text) 
+    {
+        tutorialTxt.text = text;
+        tutorialTxt.transform.parent.gameObject.SetActive(true);
+    }
+
+    public void DismissTutorialText()
+    {
+        tutorialTxt.transform.parent.gameObject.SetActive(false);
     }
 }
