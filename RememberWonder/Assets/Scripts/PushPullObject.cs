@@ -20,6 +20,7 @@ public class PushPullObject : MonoBehaviour
     string initTag;    //QUICK AND DIRTY FIX for camera collision, Delete later?
 
     public Vector3 GrabMoveMultipliers { get => grabMoveMultipliers; }
+    public bool IsGrabbed { get => grabbed; }
 
     void Start()
     {
@@ -62,15 +63,23 @@ public class PushPullObject : MonoBehaviour
     {
         if (player == null || (!player.IsGrounded() && !liftable)) return;
 
+        if (liftable && player.DropLocation.GetComponent<DropPointTrigger>().InvalidDropPosition) return;
+
         grabbed = !grabbed;
 
         //Rigidbody rb = GetComponent<Rigidbody>();
         if (liftable)
         {
             if (grabbed)
+            {
                 Destroy(rb);
+                transform.rotation = player.CharacterModel.transform.rotation;
+            }
+                
             else
             {
+                if (player.DropLocation.GetComponent<DropPointTrigger>().InvalidDropPosition)
+                    return;
                 rb = transform.gameObject.AddComponent<Rigidbody>();
                 //rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             }
@@ -82,6 +91,7 @@ public class PushPullObject : MonoBehaviour
             {
                 transform.position = player.transform.GetChild(0).GetChild(0).transform.position;
                 transform.parent = player.transform.GetChild(0).GetChild(0).transform;
+                player.DropLocation.SetActive(true);
 
                 AudioHub.Inst.Play(liftAudio, audioSettings, transform.position);
             }
@@ -92,7 +102,12 @@ public class PushPullObject : MonoBehaviour
         else
         {
             transform.parent = null;
-            if (liftable) AudioHub.Inst.Play(putDownAudio, audioSettings, transform.position);
+            player.DropLocation.SetActive(false);
+            if (liftable) 
+            {
+                AudioHub.Inst.Play(putDownAudio, audioSettings, transform.position);
+                transform.position = player.DropLocation.transform.position;
+            } 
         }
     }
 
