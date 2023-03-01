@@ -60,6 +60,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: EndLevelSequence
+  sceneIndex: 0
+  triggererTags:
+    _serializedValues:
+    - value:
+        str: Player
+      isDuplicate: 0
+      index: 0
 --- !u!1 &3977846106090421916
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,7 +83,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &439373041815615167
 Transform:
   m_ObjectHideFlags: 0
