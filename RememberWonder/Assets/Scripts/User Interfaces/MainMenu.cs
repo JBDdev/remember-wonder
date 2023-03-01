@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour
     float cameraSens;
 
     bool viewingInstructions;
-    bool viewingSettings;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +43,6 @@ public class MainMenu : MonoBehaviour
         InputHub.Inst.Gameplay.MenuNav.performed += ChangeSelection;
         InputHub.Inst.Gameplay.Jump.performed += Select;
         viewingInstructions = false;
-        viewingSettings = false;
         LoadPlayerSettings();
 
     }
@@ -101,7 +100,6 @@ public class MainMenu : MonoBehaviour
 
         LoadPlayerSettings();
         settingsMenu.SetActive(true);
-        viewingSettings = true;
     }
     void UnloadSettings()
     {
@@ -116,7 +114,6 @@ public class MainMenu : MonoBehaviour
             element.GetComponent<Image>().color = Color.white;
 
         mainMenu.SetActive(true);
-        viewingSettings = false;
     }
 
     void ChangeSelection(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
