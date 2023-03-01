@@ -57,7 +57,6 @@ public class MemoryWall : MonoBehaviour
             //TODO: More elaborate sequence than just blipping away in a burst of particles?
             gameObject.SetActive(false);
             Destroy(promptTrigger);
-            Destroy(promptText.canvas.gameObject);
 
             promptSparkles.Clear();
             promptSparkles.Stop();
