@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
         //print($"Jump performed, did we press or release?: " +
         //$"{(InputHub.Inst.Gameplay.Jump.WasPressedThisFrame() ? "Pressed" : "Released")}");
 
-        if (!IsGrounded())
+        if (!IsGrounded() || jumpInProgress)
             return;
 
         if (pullingObject && !PulledObject.liftable)
@@ -89,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(new Vector3(0f, jumpForce, 0f));
         jumpInProgress = true;
-        anim.SetTrigger("Jumped");
+        anim.SetBool("Jumped", true);
     }
 
     public void TogglePause()
@@ -151,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         var grounded = IsGrounded();
-        anim.SetBool("Grounded", grounded);
+        anim.SetBool("Jumped", jumpInProgress);
 
         ApplyMoveForce(grounded);
 
