@@ -46,17 +46,18 @@ public class MoteUIController : MonoBehaviour
 
     private void Awake()
     {
-        CollectMote.MoteSpawned += UpdateMoteCounts;
+        CollectedCount = 0;
+        CollectMote.MoteSpawned += OnMoteSpawned;
         CollectMote.MoteCollected += IncrementCollectedCount;
     }
 
     private void OnDestroy()
     {
-        CollectMote.MoteSpawned -= UpdateMoteCounts;
+        CollectMote.MoteSpawned -= OnMoteSpawned;
         CollectMote.MoteCollected -= IncrementCollectedCount;
     }
 
-    private void UpdateMoteCounts(CollectMote _, bool isCollected)
+    private void OnMoteSpawned(CollectMote _, bool isCollected)
     {
         if (isCollected) { CollectedCount++; }
         TotalCount++;
