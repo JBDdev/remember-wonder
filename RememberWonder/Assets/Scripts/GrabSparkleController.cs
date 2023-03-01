@@ -12,11 +12,11 @@ public class GrabSparkleController : MonoBehaviour
     [SerializeField] private PushPullObject grabbableSparkleOwner;
     [SerializeField] private MeshRenderer sparklingMeshRend;
     [Header("Settings")]
-    [Tooltip("Trigger Collider is sized to fit the Sparkling Mesh Rend. How much extra size (in world space) should this trigger have?")]
-    [SerializeField] private Vector3 triggerSizeOffset = Vector3.zero;
     [Tooltip("How many particles to emit, for each 6 unity units squared in the surface area of sparklingMesh's axis aligned bounding box. " +
         "I.e., if sparklingMesh is a normal, unrotated cube with scale (1,1,1), sparkleSystem's rate over time will equal this.")]
     [SerializeField] private float sparklesPerUnitCube = 10;
+    [Tooltip("Trigger Collider is sized to fit the Sparkling Mesh Rend. How much extra size (in world space) should this trigger have?")]
+    [SerializeField] private Vector3 triggerSizeOffset = Vector3.zero;
     [SerializeField] private UHashSet<TagString> activatorTags;
 
     private const float UNIT_CUBE_SURFACE_AREA = 6;
@@ -25,6 +25,8 @@ public class GrabSparkleController : MonoBehaviour
     private void OnValidate() => ValidationUtility.DoOnDelayCall(this, () => InitTrigger());
     public void InitTrigger(Vector3? offsetOverride = null)
     {
+        if (!triggerCollider) return;
+
         var serializedSelf = new UnityEditor.SerializedObject(this);
 
         if (offsetOverride is Vector3 newOffset)
