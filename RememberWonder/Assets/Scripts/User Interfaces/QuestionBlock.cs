@@ -21,7 +21,7 @@ public class QuestionBlock : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) 
+        if (other.gameObject.name == "Player Character") 
         {
             other.GetComponent<PlayerMovement>().ReadingDialog = true;
             canvas.GetComponent<MoteUIController>().DisplayTutorialText(displayText);
