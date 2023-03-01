@@ -12,12 +12,6 @@ public class MoteUIController : MonoBehaviour
     private int _collectedCount;
     private int _totalCount;
 
-    private void Start()
-    {
-        motesCollectedTxt.text = "0";
-        totalMotesTxt.text = "14";
-    }
-
     /// <summary>
     /// The UI's internal count of how many motes have been collected.<br/>
     /// Automatically updates the UI when set.
@@ -52,17 +46,18 @@ public class MoteUIController : MonoBehaviour
 
     private void Awake()
     {
-        CollectMote.MoteSpawned += UpdateMoteCounts;
+        CollectedCount = 0;
+        CollectMote.MoteSpawned += OnMoteSpawned;
         CollectMote.MoteCollected += IncrementCollectedCount;
     }
 
     private void OnDestroy()
     {
-        CollectMote.MoteSpawned -= UpdateMoteCounts;
+        CollectMote.MoteSpawned -= OnMoteSpawned;
         CollectMote.MoteCollected -= IncrementCollectedCount;
     }
 
-    private void UpdateMoteCounts(CollectMote _, bool isCollected)
+    private void OnMoteSpawned(CollectMote _, bool isCollected)
     {
         if (isCollected) { CollectedCount++; }
         TotalCount++;

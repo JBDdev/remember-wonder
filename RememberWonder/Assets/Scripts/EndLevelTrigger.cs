@@ -7,23 +7,35 @@ using UnityEngine.UI;
 public class EndLevelTrigger : MonoBehaviour
 {
     [SerializeField] string scene;
+    [Tooltip("If negative, will move that many scenes ahead in the build order.")]
+    [SerializeField] int sceneIndex;
+    [SerializeField] Bewildered.UHashSet<TagString> triggererTags;
 
-    GameObject canvas;
+    /*MoteUIController moteUI;
 
     private void Start()
     {
-        canvas = GameObject.Find("MoteCanvas");
-    }
-    // Start is called before the first frame update
-    void OnTriggerEnter(Collider col) 
+        moteUI = GameObject.Find("MoteCanvas").GetComponent<MoteUIController>();
+    }*/
+
+    void OnTriggerEnter(Collider col)
     {
-        Debug.Log("hi");
-        if (col.gameObject.CompareTag("Player"))
-        {
-            if (canvas.GetComponent<MoteUIController>().CollectedCount >= 10)
-                SceneManager.LoadScene(scene);
+        if (!triggererTags.Contains(col.gameObject.tag)) return;
+
+        /*if (moteUI.CollectedCount >= 10)
+        {*/
+            if (string.IsNullOrWhiteSpace(scene))
+            {
+                SceneManager.LoadScene(sceneIndex >= 0
+                    ? sceneIndex
+                    : SceneManager.GetActiveScene().buildIndex + -sceneIndex);
+            }
             else
-                Debug.Log("Player only has " + canvas.GetComponent<MoteUIController>().CollectedCount + " motes.");
-        }
+            {
+                SceneManager.LoadScene(scene);
+            }
+        /*}
+
+        else Debug.Log("Player only has " + moteUI.GetComponent<MoteUIController>().CollectedCount + " motes.");*/
     }
 }
