@@ -69,23 +69,8 @@ public class InitGrabIndicationRefs : MonoBehaviour
             return;
         }
 
-        var serializedSparkleController = new UnityEditor.SerializedObject(sparkleController);
-        var serializedPromptController = new UnityEditor.SerializedObject(promptController);
-
-        if (grabbableOwner)
-        {
-            serializedSparkleController.FindProperty("grabbableSparkleOwner").objectReferenceValue = grabbableOwner;
-            serializedPromptController.FindProperty("grabbablePromptOwner").objectReferenceValue = grabbableOwner;
-        }
-        if (sparklingMeshRend)
-        {
-            serializedSparkleController.FindProperty("sparklingMeshRend").objectReferenceValue = sparklingMeshRend;
-        }
-
-        SetTriggerSizes();
-
-        serializedSparkleController.ApplyModifiedProperties();
-        serializedPromptController.ApplyModifiedProperties();
+        ApplyToSparkles();
+        ApplyToPrompt();
 
         prevGrabbableOwner = grabbableOwner;
         prevSparklingMeshRend = sparklingMeshRend;
@@ -93,10 +78,39 @@ public class InitGrabIndicationRefs : MonoBehaviour
         prevPromptTriggerSizeOffset = promptTriggerSizeOffset;
     }
 
-    private void SetTriggerSizes()
+    private void ApplyToSparkles()
     {
+        if (!sparkleController) return;
+
+        var serializedSparkleController = new UnityEditor.SerializedObject(sparkleController);
+
+        if (grabbableOwner)
+            serializedSparkleController.FindProperty("grabbableSparkleOwner").objectReferenceValue = grabbableOwner;
+
+        if (sparklingMeshRend)
+            serializedSparkleController.FindProperty("sparklingMeshRend").objectReferenceValue = sparklingMeshRend;
+
         sparkleController.InitTrigger(useSparkleTriggerSizeOffset ? sparkleTriggerSizeOffset : null);
 
+        serializedSparkleController.ApplyModifiedProperties();
+    }
+
+    private void ApplyToPrompt()
+    {
+        if (!promptController) return;
+
+        var serializedPromptController = new UnityEditor.SerializedObject(promptController);
+
+        if (grabbableOwner)
+            serializedPromptController.FindProperty("grabbablePromptOwner").objectReferenceValue = grabbableOwner;
+
+        SetTriggerSizes();
+
+        serializedPromptController.ApplyModifiedProperties();
+    }
+
+    private void SetTriggerSizes()
+    {
         if (!usePromptTriggerSizeOffset || !sparklingMeshRend) return;
 
         var serializedPromptTransform = new UnityEditor.SerializedObject(promptController.transform);
