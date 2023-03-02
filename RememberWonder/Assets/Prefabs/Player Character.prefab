@@ -278,7 +278,7 @@ MonoBehaviour:
   heldObject: {fileID: 0}
   pushPullObject: {fileID: 0}
   rotationSpeed: 20
-  minRotationDistance: 0.5
+  minRotationDistance: 0.001
 --- !u!54 &5864955303093575426
 Rigidbody:
   m_ObjectHideFlags: 0

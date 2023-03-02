@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float minRotationDistance;
 
     bool paused;
+    bool readingDialog;
 
     //Accessors
     public GameObject HoldLocation { get { return holdLocation; } }
@@ -52,6 +53,8 @@ public class PlayerMovement : MonoBehaviour
     public PushPullObject PulledObject { get { return pushPullObject; } set { pushPullObject = value; } }
     public Vector3 Velocity { get => rb.velocity; }
 
+    public bool ReadingDialog { get { return readingDialog; } set { readingDialog = value; } }
+
     void Start()
     {
         //Get references to components on the GameObject
@@ -59,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         col = GetComponent<CapsuleCollider>();
 
         paused = false;
+        readingDialog = false;
 
         PulledObject = null;
 
@@ -77,6 +81,12 @@ public class PlayerMovement : MonoBehaviour
     {
         //print($"Jump performed, did we press or release?: " +
         //$"{(InputHub.Inst.Gameplay.Jump.WasPressedThisFrame() ? "Pressed" : "Released")}");
+        if (readingDialog)
+        {
+            readingDialog = false;
+            GameObject.Find("MoteCanvas").GetComponent<MoteUIController>().DismissTutorialText();
+            return;
+        }
 
         if (!IsGrounded())
             return;
@@ -89,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
         jumpInProgress = true;
     }
 
-    public void TogglePause() 
+    public void TogglePause()
     {
         if (paused)
         {
@@ -111,7 +121,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        if (!IsGrounded() || !PulledObject)
+        
+        if (!IsGrounded() || !PulledObject || readingDialog)
             return;
 
         if (!pullingObject)
@@ -121,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 dropLocation.SetActive(true);
             }
-            else 
+            else
             {
                 rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             }
@@ -149,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
     {
         var grounded = IsGrounded();
 
-        ApplyMoveForce(grounded);
+        if(!readingDialog) ApplyMoveForce(grounded);
 
         //If NOT grounded, fall gravity should be modified, and we're falling (not rising),
         if (!grounded && !Mathf.Approximately(fallGravMultiplier, 1) && rb.velocity.y < 0)
@@ -173,13 +184,14 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 direction = InputHub.Inst.Gameplay.Move.ReadValue<Vector2>();
 
-        direction =
-            Quaternion.LookRotation(Vector3.Cross(cameraPivot.transform.right, Vector3.up))
-            * direction.SwapAxes(1, 2);
+        direction = Quaternion.LookRotation(Vector3.Cross(cameraPivot.transform.right, Vector3.up)) * direction.SwapAxes(1, 2);
+
+        if (direction.sqrMagnitude > minRotationDistance)
+            RotateCharacterModel(direction.normalized);
 
         ApplyPullRestrictions(ref direction);
         if (direction == Vector3.zero) return;
-        
+
         float percentHeld = direction.magnitude;
 
         //If we are not grounded and moving in a significantly different direction (axis delta > deadzone),
@@ -195,10 +207,10 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(direction * accModifier, ForceMode.Force);
 
-            if (rb.velocity.sqrMagnitude > minRotationDistance)
-            {
-                RotateCharacterModel(rb.velocity);
-            }
+            //if (rb.velocity.sqrMagnitude > minRotationDistance)
+            //{
+            //    RotateCharacterModel(rb.velocity);
+            //}
         }
 
         directionLastFrame = direction;
