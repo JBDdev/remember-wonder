@@ -3611,7 +3611,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3300848550594857034, guid: 92c9986a6db7ba347ba9895f1e00834d, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4821454591407907289, guid: 92c9986a6db7ba347ba9895f1e00834d, type: 3}
       propertyPath: m_Name
@@ -12314,16 +12314,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 958985445}
     m_Modifications:
     - target: {fileID: 5864955303093575427, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
-      propertyPath: jumpForce
-      value: 350
-      objectReference: {fileID: 0}
-    - target: {fileID: 5864955303093575427, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
       propertyPath: cameraFollower
       value: 
       objectReference: {fileID: 2115070010}
     - target: {fileID: 5864955303093575436, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5864955303093575436, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5864955303093575436, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5864955303093575436, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5864955303093575436, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12363,6 +12371,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5864955303093575436, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5864955303093575436, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5864955303093575437, guid: ff7b67d7c2a036945a1493591cf2d9b2, type: 3}

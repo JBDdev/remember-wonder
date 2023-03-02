@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject cameraPivot;
     [SerializeField] GameObject heldObject;
     [SerializeField] PushPullObject pushPullObject;
+    [SerializeField] Animator anim;
 
     //Internal Component References
     Rigidbody rb;
@@ -60,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
         //Get references to components on the GameObject
         rb = GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();
+        anim = transform.GetComponentInChildren<Animator>();
 
         paused = false;
         readingDialog = false;
@@ -88,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        if (!IsGrounded())
+        if (!IsGrounded() || jumpInProgress)
             return;
 
         if (pullingObject && !PulledObject.liftable)
@@ -97,6 +99,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(new Vector3(0f, jumpForce, 0f));
         jumpInProgress = true;
+        anim.SetBool("Jumped", true);
     }
 
     public void TogglePause()
@@ -159,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         var grounded = IsGrounded();
+        anim.SetBool("Jumped", jumpInProgress);
 
         if(!readingDialog) ApplyMoveForce(grounded);
 
@@ -185,6 +189,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 direction = InputHub.Inst.Gameplay.Move.ReadValue<Vector2>();
 
         direction = Quaternion.LookRotation(Vector3.Cross(cameraPivot.transform.right, Vector3.up)) * direction.SwapAxes(1, 2);
+
+        anim.SetFloat("Walk Speed", direction.sqrMagnitude);
 
         if (direction.sqrMagnitude > minRotationDistance)
             RotateCharacterModel(direction.normalized);
