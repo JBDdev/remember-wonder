@@ -37,6 +37,7 @@ public class DisplayPrompt : MonoBehaviour
 
         promptObj.transform.localScale = Vector3.zero;
         promptObj.SetActive(false);
+        promptObj.name += $" ( {(transform.parent.parent ? transform.parent.parent.name : transform.parent.name)} )";
 
         if (!promptContainer) promptContainer = new GameObject("Prompt Container").transform;
 

@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float minRotationDistance;
 
     bool paused;
+    bool readingDialog;
 
     //Accessors
     public GameObject HoldLocation { get { return holdLocation; } }
@@ -53,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
     public PushPullObject PulledObject { get { return pushPullObject; } set { pushPullObject = value; } }
     public Vector3 Velocity { get => rb.velocity; }
 
+    public bool ReadingDialog { get { return readingDialog; } set { readingDialog = value; } }
+
     void Start()
     {
         //Get references to components on the GameObject
@@ -61,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
         anim = transform.GetComponentInChildren<Animator>();
 
         paused = false;
+        readingDialog = false;
 
         PulledObject = null;
 
@@ -79,6 +83,12 @@ public class PlayerMovement : MonoBehaviour
     {
         //print($"Jump performed, did we press or release?: " +
         //$"{(InputHub.Inst.Gameplay.Jump.WasPressedThisFrame() ? "Pressed" : "Released")}");
+        if (readingDialog)
+        {
+            readingDialog = false;
+            GameObject.Find("MoteCanvas").GetComponent<MoteUIController>().DismissTutorialText();
+            return;
+        }
 
         if (!IsGrounded() || jumpInProgress)
             return;
@@ -114,7 +124,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        if (!IsGrounded() || !PulledObject)
+        
+        if (!IsGrounded() || !PulledObject || readingDialog)
             return;
 
         if (!pullingObject)
@@ -153,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
         var grounded = IsGrounded();
         anim.SetBool("Jumped", jumpInProgress);
 
-        ApplyMoveForce(grounded);
+        if(!readingDialog) ApplyMoveForce(grounded);
 
         //If NOT grounded, fall gravity should be modified, and we're falling (not rising),
         if (!grounded && !Mathf.Approximately(fallGravMultiplier, 1) && rb.velocity.y < 0)
