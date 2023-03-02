@@ -14254,7 +14254,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4130473050805078591, guid: 6d1c2bcbd161f62459ab7739a6e0cd82, type: 3}
       propertyPath: motesToUnlock
-      value: 1
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 8931428651235673734, guid: 6d1c2bcbd161f62459ab7739a6e0cd82, type: 3}
       propertyPath: m_LocalScale.x
