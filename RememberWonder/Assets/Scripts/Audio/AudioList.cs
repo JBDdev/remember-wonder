@@ -14,4 +14,6 @@ public enum AudioList
     Drag = 3,
     Lift = 5,
     PutDown = 6,
+    HotAirBloon = 7,
+    RubberDuck =8,
 }

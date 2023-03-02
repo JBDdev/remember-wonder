@@ -2851,6 +2851,46 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8254455, y: 1.765937, z: 1.334586}
   m_Center: {x: 0, y: -0.1450929, z: 0.6803953}
+--- !u!114 &350025228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350025225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373a2e1aad1b56042ade2f5b46649ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioToPlay: 8
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 1
+    reverbZoneMix: 1
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
+  impulseThreshold: 1
+  printCollisionResults: 0
 --- !u!1001 &360083582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6708,6 +6748,46 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8254455, y: 1.7659367, z: 1.3345859}
   m_Center: {x: 0, y: -0.14509289, z: 0.68039525}
+--- !u!114 &834603390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834603384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373a2e1aad1b56042ade2f5b46649ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioToPlay: 8
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 1
+    reverbZoneMix: 1
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
+  impulseThreshold: 1
+  printCollisionResults: 0
 --- !u!1 &844966301 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7617977901601700448, guid: 43ddcf3315a432a42a585a96d5975dfa, type: 3}
@@ -8329,6 +8409,46 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8254455, y: 1.7659367, z: 1.3345859}
   m_Center: {x: 0, y: -0.14509289, z: 0.68039525}
+--- !u!114 &1067212245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067212242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373a2e1aad1b56042ade2f5b46649ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioToPlay: 8
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 1
+    reverbZoneMix: 1
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
+  impulseThreshold: 1
+  printCollisionResults: 0
 --- !u!4 &1068382848 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5207516331949549439, guid: 16d68f4c88ab7e743bc11d66391d5a80, type: 3}
@@ -11549,6 +11669,46 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1356800395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672281293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373a2e1aad1b56042ade2f5b46649ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioToPlay: 1
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 1
+    reverbZoneMix: 1
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
+  impulseThreshold: 1
+  printCollisionResults: 0
 --- !u!1 &1361913138
 GameObject:
   m_ObjectHideFlags: 0
@@ -13645,6 +13805,46 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1622185747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622185741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373a2e1aad1b56042ade2f5b46649ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioToPlay: 8
+  audioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 1
+    reverbZoneMix: 1
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
+  impulseThreshold: 1
+  printCollisionResults: 0
 --- !u!1 &1632878078
 GameObject:
   m_ObjectHideFlags: 0
@@ -19252,6 +19452,27 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 4947031357635619515, guid: 7e9407ce1d448e146ba39294a896ce05, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7e9407ce1d448e146ba39294a896ce05, type: 3}
+--- !u!1 &4947031358844154719 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5216869445197879276, guid: 7e9407ce1d448e146ba39294a896ce05, type: 3}
+  m_PrefabInstance: {fileID: 4947031358844154718}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &4947031358844154720
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4947031358844154719}
+  serializedVersion: 2
+  m_Mass: 3
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &5003418824285221191
 PrefabInstance:
   m_ObjectHideFlags: 0

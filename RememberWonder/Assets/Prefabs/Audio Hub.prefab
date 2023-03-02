@@ -99,3 +99,17 @@ MonoBehaviour:
         - {fileID: 8300000, guid: c5866d936ede8ce4d9716fd17df253c3, type: 3}
       isDuplicateKey: 0
       index: 6
+    - key: 7
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: f88b5035f792761478d80bf0ddae30a2, type: 3}
+      isDuplicateKey: 0
+      index: 7
+    - key: 8
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: 84f55ff65a9472f4b965eaa1207f1abc, type: 3}
+      isDuplicateKey: 0
+      index: 8
