@@ -17,9 +17,9 @@ public class InitGrabIndicationRefs : MonoBehaviour
     [SerializeField] private bool usePromptTriggerSizeOffset;
     [SerializeField] private Vector3 promptTriggerSizeOffset;
     [Space(10)]
-    [SerializeField][BoolButton("Get")] private bool getRefs = false;
+    [SerializeField][BoolButton] private bool getRefs = false;
     [Space(5)]
-    [SerializeField][BoolButton("Apply")] private bool applyToTriggers = false;
+    [SerializeField][BoolButton] private bool applyToTriggers = false;
 
     [SerializeField][HideInInspector] private PushPullObject prevGrabbableOwner;
     [SerializeField][HideInInspector] private MeshRenderer prevSparklingMeshRend;
@@ -65,7 +65,7 @@ public class InitGrabIndicationRefs : MonoBehaviour
             && prevUsePromptTriggerSizeOffset == usePromptTriggerSizeOffset
             && prevPromptTriggerSizeOffset == promptTriggerSizeOffset)
         {
-            print("Nothing to apply!");
+            Debug.Log($"InitGrabIndicationRefs ( <color=#999>{name}</color> ): Nothing to apply!");
             return;
         }
 
