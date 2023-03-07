@@ -7719,7 +7719,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6222862910651025820, guid: e6849e088a40bbd49bfd37c325bdd8ab, type: 3}
       propertyPath: soundLibrary._serializedPairs.Array.size
-      value: 17
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 6222862910651025820, guid: e6849e088a40bbd49bfd37c325bdd8ab, type: 3}
       propertyPath: soundLibrary._serializedPairs.Array.data[9].key
@@ -7754,6 +7754,10 @@ PrefabInstance:
       value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 6222862910651025820, guid: e6849e088a40bbd49bfd37c325bdd8ab, type: 3}
+      propertyPath: soundLibrary._serializedPairs.Array.data[17].key
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 6222862910651025820, guid: e6849e088a40bbd49bfd37c325bdd8ab, type: 3}
       propertyPath: soundLibrary._serializedPairs.Array.data[9].index
       value: 9
       objectReference: {fileID: 0}
@@ -7786,6 +7790,10 @@ PrefabInstance:
       value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 6222862910651025820, guid: e6849e088a40bbd49bfd37c325bdd8ab, type: 3}
+      propertyPath: soundLibrary._serializedPairs.Array.data[17].index
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 6222862910651025820, guid: e6849e088a40bbd49bfd37c325bdd8ab, type: 3}
       propertyPath: soundLibrary._serializedPairs.Array.data[9].isDuplicateKey
       value: 0
       objectReference: {fileID: 0}
@@ -7815,6 +7823,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6222862910651025820, guid: e6849e088a40bbd49bfd37c325bdd8ab, type: 3}
       propertyPath: soundLibrary._serializedPairs.Array.data[16].isDuplicateKey
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6222862910651025820, guid: e6849e088a40bbd49bfd37c325bdd8ab, type: 3}
+      propertyPath: soundLibrary._serializedPairs.Array.data[17].isDuplicateKey
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6222862910651025820, guid: e6849e088a40bbd49bfd37c325bdd8ab, type: 3}
@@ -7850,6 +7862,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6222862910651025820, guid: e6849e088a40bbd49bfd37c325bdd8ab, type: 3}
+      propertyPath: soundLibrary._serializedPairs.Array.data[17].value.clips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6222862910651025820, guid: e6849e088a40bbd49bfd37c325bdd8ab, type: 3}
       propertyPath: soundLibrary._serializedPairs.Array.data[9].value.clips.Array.data[0]
       value: 
       objectReference: {fileID: 8300000, guid: 1e806372c7209dd428fdf3def06819e9, type: 3}
@@ -7881,6 +7897,10 @@ PrefabInstance:
       propertyPath: soundLibrary._serializedPairs.Array.data[16].value.clips.Array.data[0]
       value: 
       objectReference: {fileID: 8300000, guid: 92bfe6272942bdd43b43adc5feec93ee, type: 3}
+    - target: {fileID: 6222862910651025820, guid: e6849e088a40bbd49bfd37c325bdd8ab, type: 3}
+      propertyPath: soundLibrary._serializedPairs.Array.data[17].value.clips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 51a3555734b8d9d4a870c396f0cb9d05, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6849e088a40bbd49bfd37c325bdd8ab, type: 3}
 --- !u!4 &942492287 stripped
@@ -7933,7 +7953,7 @@ MonoBehaviour:
   audioSettings:
     loop: 0
     priority: 128
-    volume: 0.5
+    volume: 1
     pitch: 1
     stereoPan: 0
     spatialBlend: 0
@@ -9178,7 +9198,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1068382850
+--- !u!114 &1068382854
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9187,14 +9207,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 267205548}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373a2e1aad1b56042ade2f5b46649ad7, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a9d9722106b3494b874869568e35ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   audioToPlay: 13
+  playInterval: 1
+  skipFirstInterval: 0
   audioSettings:
-    loop: 0
+    loop: 1
     priority: 128
-    volume: 0.3
+    volume: 0.5
     pitch: 1
     stereoPan: 0
     spatialBlend: 1
@@ -9204,7 +9226,7 @@ MonoBehaviour:
     volumeRolloff: 0
     minDistance: 1
     maxDistance: 500
-    useLoop: 0
+    useLoop: 1
     usePriority: 0
     useVolume: 1
     usePitch: 0
@@ -9216,8 +9238,9 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
-  impulseThreshold: 1
-  printCollisionResults: 0
+  body: {fileID: 1068382849}
+  velocityThreshold: 0.1
+  posDeltaThreshold: 0.01
 --- !u!1 &1080461176
 GameObject:
   m_ObjectHideFlags: 0

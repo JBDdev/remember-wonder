@@ -24,4 +24,5 @@ public enum AudioList
     MetalDrop = 14,
     ToyDrop = 15,
     CarDrop = 16,
+    Error =17,
 }

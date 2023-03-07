@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sourcePrefab: {fileID: 7429508136159080657, guid: a07c09c0d93cf9545a8c72a58084dcda, type: 3}
   sourceDisplayName: AHSource
-  sourcePoolSize: 10
+  sourcePoolSize: 20
   soundLibrary:
     _serializedPairs:
     - key: 0
