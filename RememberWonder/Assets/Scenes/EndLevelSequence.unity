@@ -341,8 +341,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'You have reached the end of the demo for Remember Wonder. You can keep
-    playing to search for the remaining memory motes if you''d like! Thank you for
+  m_text: 'You have reached the end of the demo for Remember Wonder.  Thank you for
     playtesting our game! - The HOA Team
 
 
