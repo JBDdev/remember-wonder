@@ -17,6 +17,9 @@ public class AudioOnCollide : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        //Ignore collisions before the first frame of level load.
+        if (Time.timeSinceLevelLoadAsDouble < Time.maximumDeltaTime) return;
+
 #if UNITY_EDITOR
         if (printCollisionResults)
         {

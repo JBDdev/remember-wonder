@@ -63,6 +63,8 @@ public class AudioHub : MonoBehaviour
     public AudioSource Play(AudioList listItem, Vector3 playPos) => Play(listItem, null, playPos);
     public AudioSource Play(AudioList listItem, SourceSettings settings = null, Vector3 playPos = default)
     {
+        if (listItem == AudioList.None) return null;
+
         if (!soundLibrary.TryGetValue(listItem, out var sound))
         {
             Debug.LogWarning($"No clip with name \"{listItem}\" found in AudioHub's sound library.");
