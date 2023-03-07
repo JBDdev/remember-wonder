@@ -26,9 +26,15 @@ public class DropPointTrigger : MonoBehaviour
             invalidDropPosition = false;
 
         if (invalidDropPosition)
+        {
+            transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", invalidPlacement);
             transform.GetChild(0).GetComponent<Renderer>().material.color = invalidPlacement;
+        }
         else
+        {
+            transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", validPlacement);
             transform.GetChild(0).GetComponent<Renderer>().material.color = validPlacement;
+        }
     }
 
     private void OnTriggerEnter(Collider col)
