@@ -331,7 +331,7 @@ MonoBehaviour:
   fallGravMultiplier: 1
   holdLocation: {fileID: 5864955304277689247}
   characterModel: {fileID: 1057102758488478985}
-  dropLocation: {fileID: 1383095898077055922}
+  dropLocation: {fileID: 8189179929393414955}
   cameraPivot: {fileID: 3914002537868354355}
   heldObject: {fileID: 0}
   pushPullObject: {fileID: 0}

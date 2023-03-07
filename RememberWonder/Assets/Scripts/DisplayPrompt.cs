@@ -29,6 +29,13 @@ public class DisplayPrompt : MonoBehaviour
     public static DisplayPrompt activePromptDisplayer = null;
     private static Transform promptContainer = null;
 
+    /// <summary>
+    /// Invoked whenever this prompt is told to start appearing/disappearing.
+    /// <br/>- <see cref="bool"/>: Whether this prompt should be appearing or not.
+    /// <br/>- <see cref="Collider"/>: The collider that triggered the state change. Null if not triggered by a collision event.
+    /// </summary>
+    public System.Action<bool, Collider> PromptStateChange;
+
     public PushPullObject GrabbablePromptOwner { get => grabbablePromptOwner; set => grabbablePromptOwner = value; }
 
     private void Start()
@@ -55,6 +62,7 @@ public class DisplayPrompt : MonoBehaviour
         //If other's an activator, since it just entered, this must not be the active prompt; make this the active prompt and appear.
         TriggerPromptChange(true, true, this, other);
     }
+
     private void OnTriggerStay(Collider other)
     {
         if (!activatorTags.Contains(other.tag) || activePromptDisplayer) return;
@@ -62,6 +70,7 @@ public class DisplayPrompt : MonoBehaviour
         //If other's an activator and there's no other active prompt, make this the active prompt and appear.
         TriggerPromptChange(true, true, this, other);
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (!activatorTags.Contains(other.tag) || activePromptDisplayer != this) return;
@@ -69,6 +78,7 @@ public class DisplayPrompt : MonoBehaviour
         //If other's an activator and we're the active prompt, disappear and make us not the active prompt.
         TriggerPromptChange(false, true, null, other);
     }
+
     private void Update()
     {
         //If this is the active prompt, but it's not showing (and isn't grabbed, if applicable), appear.
@@ -128,6 +138,8 @@ public class DisplayPrompt : MonoBehaviour
             Coroutilities.TryStopCoroutine(this, ref followCorout);
             promptCorout = StartCoroutine(PromptDisappear());
         }
+
+        PromptStateChange?.Invoke(shouldAppear, triggerer);
     }
 
     private IEnumerator PromptAppear()

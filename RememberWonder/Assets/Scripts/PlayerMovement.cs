@@ -27,10 +27,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("Child Object References")]
     [SerializeField] GameObject holdLocation;
     [SerializeField] GameObject characterModel;
-    [SerializeField] GameObject dropLocation;
+    [SerializeField] DropPointTrigger dropLocation;
+    [SerializeField] GameObject cameraPivot;
 
     [Header("External References")]
-    [SerializeField] GameObject cameraPivot;
     [SerializeField] GameObject heldObject;
     [SerializeField] PushPullObject pushPullObject;
     [SerializeField] Animator anim;
@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     //Accessors
     public GameObject HoldLocation { get { return holdLocation; } }
     public GameObject CharacterModel { get { return characterModel; } }
-    public GameObject DropLocation { get { return dropLocation; } }
+    public DropPointTrigger DropLocation { get { return dropLocation; } }
 
     public PushPullObject PulledObject { get { return pushPullObject; } set { pushPullObject = value; } }
     public Vector3 Velocity { get => rb.velocity; }
@@ -124,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        
+
         if (!IsGrounded() || !PulledObject || readingDialog)
             return;
 
@@ -133,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
             pullingObject = true;
             if (PulledObject.liftable)
             {
-                dropLocation.SetActive(true);
+                dropLocation.gameObject.SetActive(true);
             }
             else
             {
@@ -148,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (PulledObject.liftable && dropLocation.GetComponent<DropPointTrigger>().InvalidDropPosition)
+            if (PulledObject.liftable && dropLocation.InvalidDropPosition)
                 return;
 
             pullingObject = false;
@@ -164,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
         var grounded = IsGrounded();
         anim.SetBool("Jumped", jumpInProgress);
 
-        if(!readingDialog) ApplyMoveForce(grounded);
+        if (!readingDialog) ApplyMoveForce(grounded);
 
         //If NOT grounded, fall gravity should be modified, and we're falling (not rising),
         if (!grounded && !Mathf.Approximately(fallGravMultiplier, 1) && rb.velocity.y < 0)
