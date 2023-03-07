@@ -25,6 +25,8 @@ public class PutOnSurface : MonoBehaviour
 
     private void OnValidate() => ValidationUtility.DoOnDelayCall(this, () =>
     {
+        var serializedSelf = new SerializedObject(this);
+
         if (surfaceAhead)
             FindSurfaceInDirection(transform, true);
         else if (surfaceBehind)
@@ -32,9 +34,10 @@ public class PutOnSurface : MonoBehaviour
         else if (surfaceCamera)
             FindSurfaceInDirection(SceneView.lastActiveSceneView.camera.transform, true);
 
-        surfaceBehind = false;
-        surfaceAhead = false;
-        surfaceCamera = false;
+        serializedSelf.FindProperty("surfaceAhead").boolValue = false;
+        serializedSelf.FindProperty("surfaceBehind").boolValue = false;
+        serializedSelf.FindProperty("surfaceCamera").boolValue = false;
+        serializedSelf.ApplyModifiedPropertiesWithoutUndo();
     });
 
     private void FindSurfaceInDirection(Transform referencePoint, bool forward)
@@ -44,14 +47,22 @@ public class PutOnSurface : MonoBehaviour
 
         if (Physics.Raycast(surfaceFinderRay, out var hit, maxDistanceFromSurface, surfaceLayers, triggerInteraction))
         {
-            transform.position = hit.point + hit.normal * offsetFromSurface;
-            transform.forward = faceTowardSurface ? -hit.normal : hit.normal;
-            
+            var serializedTransform = new SerializedObject(transform);
+            var targetParent = parentToSurface ? hit.transform : transform.parent;
+
             if (parentToSurface)
             {
-                transform.parent = hit.transform;
+                Undo.SetTransformParent(transform, hit.transform, $"Parent \"{name}\" to surface \"{hit.transform.name}\"");
                 EditorGUIUtility.PingObject(transform);
             }
+
+            serializedTransform.FindProperty("m_LocalPosition").vector3Value =
+                targetParent.InverseTransformPoint(hit.point + hit.normal * offsetFromSurface);
+
+            serializedTransform.FindProperty("m_LocalRotation").quaternionValue =
+                Quaternion.Inverse(targetParent.rotation) * Quaternion.LookRotation(faceTowardSurface ? -hit.normal : hit.normal);
+
+            serializedTransform.ApplyModifiedProperties();
         }
         else Debug.Log($"PutOnSurface ( <color=#999>{name}</color> ): No surface found!");
     }
