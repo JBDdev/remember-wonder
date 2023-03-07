@@ -38,7 +38,11 @@ public class CollectMote : MonoBehaviour
         MoteSpawned?.Invoke(this, collected);
 
         if (!collected)
-            idleAudioSource = AudioHub.Inst.Play(idleAudio, idleAudioSettings, transform.position);
+        {
+            Coroutilities.DoAfterDelayFrames(this,
+                () => idleAudioSource = AudioHub.Inst.Play(idleAudio, idleAudioSettings, transform.position),
+                1);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

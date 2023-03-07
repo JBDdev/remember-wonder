@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6902374573651916502}
+  - component: {fileID: 2492776421903188954}
   - component: {fileID: 6902374573651916501}
-  - component: {fileID: 6902374573651916500}
   - component: {fileID: 6902374573651916521}
   m_Layer: 0
   m_Name: Camera Brain
@@ -34,6 +34,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &2492776421903188954
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6902374573651916499}
+  m_Enabled: 0
 --- !u!20 &6902374573651916501
 Camera:
   m_ObjectHideFlags: 0
@@ -77,14 +85,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &6902374573651916500
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6902374573651916499}
-  m_Enabled: 1
 --- !u!114 &6902374573651916521
 MonoBehaviour:
   m_ObjectHideFlags: 0
