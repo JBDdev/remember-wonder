@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 3725723744037842559}
-  rotateSpeed: 1
+  rotateSpeed: 30
   rotateAxis: {x: 0, y: 1, z: 0}
   bobAmount: 0
   bobSpeed: 0

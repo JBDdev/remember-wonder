@@ -23,8 +23,17 @@ public class QuestionBlock : MonoBehaviour
     {
         if (other.gameObject.name == "Player Character") 
         {
-            other.GetComponent<PlayerMovement>().ReadingDialog = true;
+            //other.GetComponent<PlayerMovement>().ReadingDialog = true;
             canvas.GetComponent<MoteUIController>().DisplayTutorialText(displayText);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.name == "Player Character")
+        {
+            //other.GetComponent<PlayerMovement>().ReadingDialog = true;
+            canvas.GetComponent<MoteUIController>().DismissTutorialText();
         }
     }
 }
