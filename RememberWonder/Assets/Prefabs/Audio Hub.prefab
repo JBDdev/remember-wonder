@@ -49,7 +49,7 @@ MonoBehaviour:
   sourcePoolSize: 20
   soundLibrary:
     _serializedPairs:
-    - key: 0
+    - key: 18
       value:
         randomOrder: 0
         clips:

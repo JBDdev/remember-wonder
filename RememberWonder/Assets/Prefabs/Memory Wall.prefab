@@ -321,6 +321,32 @@ MonoBehaviour:
         str: Player
       isDuplicate: 0
       index: 0
+  unlockAudio: 2
+  unlockAudioSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 0.8
+    stereoPan: 0
+    spatialBlend: 1
+    reverbZoneMix: 1
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 1
+    useStereoPan: 0
+    useSpatialBlend: 0
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
 --- !u!1 &2971065743511552105
 GameObject:
   m_ObjectHideFlags: 0

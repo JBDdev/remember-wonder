@@ -7,7 +7,8 @@
 /// </summary>
 public enum AudioList
 {
-    Walk = 0,
+    None = 0,
+    Walk = 18,
     CollectMote = 2,
     CupDropPlastic = 1,
     CupDrop = 4,
@@ -15,7 +16,7 @@ public enum AudioList
     Lift = 5,
     PutDown = 6,
     HotAirBloon = 7,
-    RubberDuck =8,
+    RubberDuck = 8,
     BookDrop = 9,
     Drawing = 10,
     FlipBook = 11,
@@ -24,5 +25,5 @@ public enum AudioList
     MetalDrop = 14,
     ToyDrop = 15,
     CarDrop = 16,
-    Error =17,
+    Error = 17,
 }
