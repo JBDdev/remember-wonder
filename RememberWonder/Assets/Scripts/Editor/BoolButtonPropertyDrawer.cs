@@ -20,11 +20,21 @@ public class BoolButtonPropertyDrawer : PropertyDrawer
     {
         EditorGUI.BeginProperty(position, label, property);
 
-        position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
-        if (GUI.Button(position, TypedAttrib.textOverride, EditorStyles.miniButton))
+        var initColor = GUI.backgroundColor;
+
+        //If we have a color corresponding to the current bool state, set bg color to that.
+        if (!property.boolValue && TypedAttrib.falseColor is Color fColor)
+            GUI.backgroundColor = fColor;
+        else if (property.boolValue && TypedAttrib.trueColor is Color tColor)
+            GUI.backgroundColor = tColor;
+
+        //If we have no text override, use default label text in this button. When it's clicked, swap the bool value.
+        if (GUI.Button(position, TypedAttrib.textOverride != null ? TypedAttrib.textOverride : label.text, EditorStyles.miniButton))
         {
             property.boolValue = !property.boolValue;
         }
+
+        GUI.backgroundColor = initColor;
 
         EditorGUI.EndProperty();
     }
