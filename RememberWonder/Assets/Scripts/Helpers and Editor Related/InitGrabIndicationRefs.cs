@@ -5,7 +5,7 @@ using UnityEngine;
 public class InitGrabIndicationRefs : MonoBehaviour
 {
 #if UNITY_EDITOR
-    [Header("Editor Only")]
+    [Header("EDITOR ONLY")]
     [SerializeField] private GrabSparkleController sparkleController;
     [SerializeField] private DisplayPrompt promptController;
     [Space(10)]
@@ -17,12 +17,15 @@ public class InitGrabIndicationRefs : MonoBehaviour
     [SerializeField] private bool usePromptTriggerSizeOffset;
     [SerializeField] private Vector3 promptTriggerSizeOffset;
     [Space(10)]
-    [SerializeField][BoolButton] private bool getRefs = false;
+    [SerializeField][BoolButton("Try Get References")] private bool getRefs = false;
     [Space(5)]
-    [SerializeField][BoolButton] private bool applyToTriggers = false;
+    [SerializeField][BoolButton("Give Owner Prompt Reference")] private bool giveOwnerPromptRef = false;
+    [Space(5)]
+    [SerializeField][BoolButton("Apply Offsets to Triggers")] private bool applyToTriggers = false;
 
     [SerializeField][HideInInspector] private PushPullObject prevGrabbableOwner;
     [SerializeField][HideInInspector] private MeshRenderer prevSparklingMeshRend;
+    //[Space]
     [SerializeField][HideInInspector] private bool prevUseSparkleTriggerSizeOffset;
     [SerializeField][HideInInspector] private Vector3 prevSparkleTriggerSizeOffset;
     [SerializeField][HideInInspector] private bool prevUsePromptTriggerSizeOffset;
@@ -31,9 +34,11 @@ public class InitGrabIndicationRefs : MonoBehaviour
     private void OnValidate() => ValidationUtility.DoOnDelayCall(this, () =>
     {
         TryGetRefs();
+        TryGiveOwnerPromptRef();
         TryApply();
 
         getRefs = false;
+        giveOwnerPromptRef = false;
         applyToTriggers = false;
     });
 
@@ -52,6 +57,29 @@ public class InitGrabIndicationRefs : MonoBehaviour
 
             serializedSelf.ApplyModifiedProperties();
         }
+    }
+
+    private void TryGiveOwnerPromptRef()
+    {
+        if (!giveOwnerPromptRef) return;
+
+        if (!promptController)
+        {
+            Debug.Log($"InitGrabIndicationRefs ( <color=#999>{name}</color> ): No prompt ref to give! Is Prompt Controller assigned?");
+            return;
+        }
+        if (!grabbableOwner)
+        {
+            Debug.Log($"InitGrabIndicationRefs ( <color=#999>{name}</color> ): No owner to give refs to! Is Grabbable Owner assigned?");
+            return;
+        }
+
+        var serializedOwner = new UnityEditor.SerializedObject(grabbableOwner);
+        
+        serializedOwner.FindProperty("grabPrompt").objectReferenceValue = promptController;
+        UnityEditor.EditorGUIUtility.PingObject(grabbableOwner);
+        
+        serializedOwner.ApplyModifiedProperties();
     }
 
     private void TryApply()
