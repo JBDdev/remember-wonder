@@ -25,14 +25,15 @@ public class MoteFloat : MonoBehaviour
 
         //Raycast to place mote shadow on floor
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit))
+        if (shadow && Physics.Raycast(transform.position, Vector3.down, out hit))
             shadow.position = new Vector3(hit.point.x, hit.point.y + shadowFloorOffset, hit.point.z);
     }
 
     private void Update()
     {
         model.rotation *= Quaternion.AngleAxis(rotateSpeed * Time.deltaTime, rotateAxis);
-        shadow.rotation *= Quaternion.AngleAxis(rotateSpeed * Time.deltaTime, shadowRotateAxis);
+        if (shadow)
+            shadow.rotation *= Quaternion.AngleAxis(rotateSpeed * Time.deltaTime, shadowRotateAxis);
 
         bobProgress += bobSpeed * Time.deltaTime;
         bobPos = initPos + Vector3.up * bobAmount * Mathf.Sin(bobProgress);
