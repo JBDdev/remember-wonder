@@ -5,35 +5,55 @@ using UnityEngine;
 public class InitGrabIndicationRefs : MonoBehaviour
 {
 #if UNITY_EDITOR
-    [Header("Editor Only")]
+    [Header("EDITOR ONLY")]
+    [Header("Self References")]
     [SerializeField] private GrabSparkleController sparkleController;
     [SerializeField] private DisplayPrompt promptController;
-    [Space(10)]
+    [Header("Affected Grab Object References")]
     [SerializeField] private PushPullObject grabbableOwner;
     [SerializeField] private MeshRenderer sparklingMeshRend;
+    [Header("Relative Trigger Offsets")]
     [Space(5)]
     [SerializeField] private bool useSparkleTriggerSizeOffset;
     [SerializeField] private Vector3 sparkleTriggerSizeOffset;
+    [Space(3)]
+    [SerializeField] private bool useSparkleTriggerPosOffset;
+    [SerializeField] private Vector3 sparkleTriggerPosOffset;
+    [Space(6)]
     [SerializeField] private bool usePromptTriggerSizeOffset;
     [SerializeField] private Vector3 promptTriggerSizeOffset;
+    [Space(3)]
+    [SerializeField] private bool usePromptTriggerPosOffset;
+    [SerializeField] private Vector3 promptTriggerPosOffset;
     [Space(10)]
-    [SerializeField][BoolButton] private bool getRefs = false;
+    [SerializeField][BoolButton("Try Get References")] private bool getRefs = false;
     [Space(5)]
-    [SerializeField][BoolButton] private bool applyToTriggers = false;
+    [SerializeField][BoolButton("Give Owner This Prompt Reference")] private bool giveOwnerPromptRef = false;
+    [Space(5)]
+    [SerializeField][BoolButton("Apply Offsets to Triggers")] private bool applyToTriggers = false;
 
     [SerializeField][HideInInspector] private PushPullObject prevGrabbableOwner;
     [SerializeField][HideInInspector] private MeshRenderer prevSparklingMeshRend;
+    //[Space]
     [SerializeField][HideInInspector] private bool prevUseSparkleTriggerSizeOffset;
     [SerializeField][HideInInspector] private Vector3 prevSparkleTriggerSizeOffset;
     [SerializeField][HideInInspector] private bool prevUsePromptTriggerSizeOffset;
     [SerializeField][HideInInspector] private Vector3 prevPromptTriggerSizeOffset;
+    //[Space]
+    [SerializeField][HideInInspector] private bool prevUseSparkleTriggerPosOffset;
+    [SerializeField][HideInInspector] private Vector3 prevSparkleTriggerPosOffset;
+    [SerializeField][HideInInspector] private bool prevUsePromptTriggerPosOffset;
+    [SerializeField][HideInInspector] private Vector3 prevPromptTriggerPosOffset;
+
 
     private void OnValidate() => ValidationUtility.DoOnDelayCall(this, () =>
     {
         TryGetRefs();
+        TryGiveOwnerPromptRef();
         TryApply();
 
         getRefs = false;
+        giveOwnerPromptRef = false;
         applyToTriggers = false;
     });
 
@@ -54,16 +74,35 @@ public class InitGrabIndicationRefs : MonoBehaviour
         }
     }
 
+    private void TryGiveOwnerPromptRef()
+    {
+        if (!giveOwnerPromptRef) return;
+
+        if (!promptController)
+        {
+            Debug.Log($"InitGrabIndicationRefs ( <color=#999>{name}</color> ): No prompt ref to give! Is Prompt Controller assigned?");
+            return;
+        }
+        if (!grabbableOwner)
+        {
+            Debug.Log($"InitGrabIndicationRefs ( <color=#999>{name}</color> ): No owner to give refs to! Is Grabbable Owner assigned?");
+            return;
+        }
+
+        var serializedOwner = new UnityEditor.SerializedObject(grabbableOwner);
+
+        serializedOwner.FindProperty("grabPrompt").objectReferenceValue = promptController;
+        UnityEditor.EditorGUIUtility.PingObject(grabbableOwner);
+
+        serializedOwner.ApplyModifiedProperties();
+    }
+
     private void TryApply()
     {
         if (!applyToTriggers) return;
 
-        if (prevGrabbableOwner == grabbableOwner
-            && prevSparklingMeshRend == sparklingMeshRend
-            && prevUseSparkleTriggerSizeOffset == useSparkleTriggerSizeOffset
-            && prevSparkleTriggerSizeOffset == sparkleTriggerSizeOffset
-            && prevUsePromptTriggerSizeOffset == usePromptTriggerSizeOffset
-            && prevPromptTriggerSizeOffset == promptTriggerSizeOffset)
+        //If refs are the same,
+        if (CheckOffsetsSetPrevious(false))
         {
             Debug.Log($"InitGrabIndicationRefs ( <color=#999>{name}</color> ): Nothing to apply!");
             return;
@@ -72,10 +111,50 @@ public class InitGrabIndicationRefs : MonoBehaviour
         ApplyToSparkles();
         ApplyToPrompt();
 
-        prevGrabbableOwner = grabbableOwner;
-        prevSparklingMeshRend = sparklingMeshRend;
-        prevSparkleTriggerSizeOffset = sparkleTriggerSizeOffset;
-        prevPromptTriggerSizeOffset = promptTriggerSizeOffset;
+        CheckOffsetsSetPrevious(true);
+    }
+
+    /// <summary>
+    /// Checks whether any of the trigger offsets have changed, THEN optionally<br/>
+    /// sets the previous values to the current ones (for next time), THEN returns the check result.
+    /// </summary>
+    private bool CheckOffsetsSetPrevious(bool shouldSet)
+    {
+        //Refs are the same?
+        bool anyChanges = prevGrabbableOwner == grabbableOwner && prevSparklingMeshRend == sparklingMeshRend;
+        //Sparkle size is the same?
+        anyChanges = anyChanges && prevUseSparkleTriggerSizeOffset == useSparkleTriggerSizeOffset;
+        anyChanges = anyChanges && prevSparkleTriggerSizeOffset == sparkleTriggerSizeOffset;
+        //Sparkle pos is the same?
+        anyChanges = anyChanges && prevUseSparkleTriggerPosOffset == useSparkleTriggerPosOffset;
+        anyChanges = anyChanges && prevSparkleTriggerPosOffset == sparkleTriggerPosOffset;
+        //Prompt size is the same?
+        anyChanges = anyChanges && prevUsePromptTriggerSizeOffset == usePromptTriggerSizeOffset;
+        anyChanges = anyChanges && prevPromptTriggerSizeOffset == promptTriggerSizeOffset;
+        //Prompt pos is the same?
+        anyChanges = anyChanges && prevUsePromptTriggerPosOffset == usePromptTriggerPosOffset;
+        anyChanges = anyChanges && prevPromptTriggerPosOffset == promptTriggerPosOffset;
+
+        if (shouldSet)
+        {
+            //Refs
+            prevGrabbableOwner = grabbableOwner;
+            prevSparklingMeshRend = sparklingMeshRend;
+            //Sparkle size
+            prevUseSparkleTriggerSizeOffset = useSparkleTriggerSizeOffset;
+            prevSparkleTriggerSizeOffset = sparkleTriggerSizeOffset;
+            //Sparkle pos
+            prevUseSparkleTriggerPosOffset = useSparkleTriggerPosOffset;
+            prevSparkleTriggerPosOffset = sparkleTriggerPosOffset;
+            //Prompt size
+            prevUsePromptTriggerSizeOffset = usePromptTriggerSizeOffset;
+            prevPromptTriggerSizeOffset = promptTriggerSizeOffset;
+            //Prompt pos
+            prevUsePromptTriggerPosOffset = usePromptTriggerPosOffset;
+            prevPromptTriggerPosOffset = promptTriggerPosOffset;
+        }
+
+        return anyChanges;
     }
 
     private void ApplyToSparkles()
@@ -104,12 +183,12 @@ public class InitGrabIndicationRefs : MonoBehaviour
         if (grabbableOwner)
             serializedPromptController.FindProperty("grabbablePromptOwner").objectReferenceValue = grabbableOwner;
 
-        SetTriggerSizes();
+        SetPromptTriggerSize();
 
         serializedPromptController.ApplyModifiedProperties();
     }
 
-    private void SetTriggerSizes()
+    private void SetPromptTriggerSize()
     {
         if (!usePromptTriggerSizeOffset || !sparklingMeshRend) return;
 
@@ -119,6 +198,7 @@ public class InitGrabIndicationRefs : MonoBehaviour
         adjustedScale += UtilFunctions.InverseScale(promptTriggerSizeOffset, transform.lossyScale);
 
         Vector3 adjustedPosition = transform.InverseTransformPoint(sparklingMeshRend.bounds.center);
+        adjustedPosition += UtilFunctions.InverseScale(promptTriggerPosOffset, transform.lossyScale);
 
         serializedPromptTransform.FindProperty("m_LocalScale").vector3Value = adjustedScale;
         serializedPromptTransform.FindProperty("m_LocalPosition").vector3Value = adjustedPosition;

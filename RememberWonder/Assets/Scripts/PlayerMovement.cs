@@ -24,20 +24,21 @@ public class PlayerMovement : MonoBehaviour
     public float maxIncline;
     public float fallGravMultiplier = 1;
 
+    [Header("Self Component References")]
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private CapsuleCollider primaryCol;
+    [SerializeField] private CapsuleCollider secondaryCol;
+
     [Header("Child Object References")]
-    [SerializeField] GameObject holdLocation;
+    [SerializeField] Transform pickUpPivot;
     [SerializeField] GameObject characterModel;
-    [SerializeField] GameObject dropLocation;
+    [SerializeField] DropPointTrigger dropLocation;
+    [SerializeField] GameObject cameraPivot;
 
     [Header("External References")]
-    [SerializeField] GameObject cameraPivot;
     [SerializeField] GameObject heldObject;
     [SerializeField] PushPullObject pushPullObject;
     [SerializeField] Animator anim;
-
-    //Internal Component References
-    Rigidbody rb;
-    CapsuleCollider col;
 
     [Header("Rotation Controls")]
     [SerializeField] float rotationSpeed;
@@ -46,19 +47,19 @@ public class PlayerMovement : MonoBehaviour
     bool paused;
 
     //Accessors
-    public GameObject HoldLocation { get { return holdLocation; } }
+    public Transform PickUpPivot { get { return pickUpPivot; } }
     public GameObject CharacterModel { get { return characterModel; } }
-    public GameObject DropLocation { get { return dropLocation; } }
+    public DropPointTrigger DropLocation { get { return dropLocation; } }
 
     public PushPullObject PulledObject { get { return pushPullObject; } set { pushPullObject = value; } }
     public Vector3 Velocity { get => rb.velocity; }
+    public Collider PrimaryCollider { get => primaryCol; }
+    public Collider SecondaryCollider { get => secondaryCol; }
 
 
     void Start()
     {
         //Get references to components on the GameObject
-        rb = GetComponent<Rigidbody>();
-        col = GetComponent<CapsuleCollider>();
         anim = transform.GetComponentInChildren<Animator>();
 
         paused = false;
@@ -80,7 +81,6 @@ public class PlayerMovement : MonoBehaviour
     {
         //print($"Jump performed, did we press or release?: " +
         //$"{(InputHub.Inst.Gameplay.Jump.WasPressedThisFrame() ? "Pressed" : "Released")}");
-        
 
         if (!IsGrounded() || jumpInProgress)
             return;
@@ -116,16 +116,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        
-        if (!IsGrounded() || !PulledObject)
-            return;
+        //If a PulledObject hasn't been registered, don't do anything. (See PushPullObject)
+        if (!PulledObject) return;
 
         if (!pullingObject)
         {
             pullingObject = true;
+
             if (PulledObject.liftable)
             {
-                dropLocation.SetActive(true);
+                dropLocation.gameObject.SetActive(true);
             }
             else
             {
@@ -140,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (PulledObject.liftable && dropLocation.GetComponent<DropPointTrigger>().InvalidDropPosition)
+            if (PulledObject.liftable && dropLocation.InvalidDropPosition)
                 return;
 
             pullingObject = false;
@@ -164,15 +164,6 @@ public class PlayerMovement : MonoBehaviour
             //Apply extra force based on the multiplier (There's no "gravity scale" for 3D Rigidbodies).
             //Gravity's already applied once by default; if 1.01, apply the extra 0.01
             rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
-        }
-
-        if (PulledObject != null)
-        {
-            if ((PulledObject.transform.position - transform.position).sqrMagnitude > 3 && PulledObject.liftable)
-            {
-                PulledObject = null;
-                pullingObject = false;
-            }
         }
     }
 
@@ -204,11 +195,6 @@ public class PlayerMovement : MonoBehaviour
         if (Mathf.Abs(rb.velocity.x) < maxSpeed * percentHeld && Mathf.Abs(rb.velocity.z) < maxSpeed * percentHeld)
         {
             rb.AddForce(direction * accModifier, ForceMode.Force);
-
-            //if (rb.velocity.sqrMagnitude > minRotationDistance)
-            //{
-            //    RotateCharacterModel(rb.velocity);
-            //}
         }
 
         directionLastFrame = direction;
@@ -287,8 +273,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void GetCapsuleCastParams(out float height, out float radius, out Vector3 top, out Vector3 bottom)
     {
-        height = col.height * transform.localScale.y;
-        radius = col.radius * transform.localScale.y;
+        height = primaryCol.height * transform.localScale.y;
+        radius = primaryCol.radius * transform.localScale.y;
 
         top = transform.position + Vector3.up * height / 2;
         top += Vector3.down * radius;   //Go from tip to center of cap-sphere

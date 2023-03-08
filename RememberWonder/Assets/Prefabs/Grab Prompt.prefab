@@ -288,9 +288,14 @@ MonoBehaviour:
   sparklingMeshRend: {fileID: 0}
   useSparkleTriggerSizeOffset: 0
   sparkleTriggerSizeOffset: {x: 0, y: 0, z: 0}
+  useSparkleTriggerPosOffset: 0
+  sparkleTriggerPosOffset: {x: 0, y: 0, z: 0}
   usePromptTriggerSizeOffset: 0
   promptTriggerSizeOffset: {x: 0, y: 0, z: 0}
+  usePromptTriggerPosOffset: 0
+  promptTriggerPosOffset: {x: 0, y: 0, z: 0}
   getRefs: 0
+  giveOwnerPromptRef: 0
   applyToTriggers: 0
   prevGrabbableOwner: {fileID: 0}
   prevSparklingMeshRend: {fileID: 0}
@@ -298,6 +303,10 @@ MonoBehaviour:
   prevSparkleTriggerSizeOffset: {x: 0, y: 0, z: 0}
   prevUsePromptTriggerSizeOffset: 0
   prevPromptTriggerSizeOffset: {x: 0, y: 0, z: 0}
+  prevUseSparkleTriggerPosOffset: 0
+  prevSparkleTriggerPosOffset: {x: 0, y: 0, z: 0}
+  prevUsePromptTriggerPosOffset: 0
+  prevPromptTriggerPosOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &919230254670630461
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,8 +408,9 @@ MonoBehaviour:
   triggerCollider: {fileID: 3183176413045614687}
   grabbableSparkleOwner: {fileID: 0}
   sparklingMeshRend: {fileID: 0}
-  triggerSizeOffset: {x: 0, y: 0, z: 0}
   sparklesPerUnitCube: 7.5
+  triggerSizeOffset: {x: 0, y: 0, z: 0}
+  triggerPosOffset: {x: 0, y: 0, z: 0}
   activatorTags:
     _serializedValues:
     - value:
@@ -5297,6 +5307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 982daa45eea846f47866a99f01b7911f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerCol: {fileID: 1384953003691579062}
   promptObj: {fileID: 919230253831900587}
   grabbablePromptOwner: {fileID: 0}
   positionType: 0
