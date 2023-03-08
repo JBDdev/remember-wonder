@@ -8,9 +8,16 @@ using UnityEditor;
 public class PutOnSurface : MonoBehaviour
 {
 #if UNITY_EDITOR
+    private enum AlignType
+    {
+        Dont,
+        Toward,
+        Away,
+    }
+
     [Header("EDITOR ONLY")]
     [SerializeField] private float offsetFromSurface = 0.001f;
-    [SerializeField] private bool faceTowardSurface = true;
+    [SerializeField] private AlignType alignWithSurface;
     [SerializeField] private bool parentToSurface = true;
     [Space(5)]
     [SerializeField] private float maxDistanceFromSurface = 50f;
@@ -25,16 +32,17 @@ public class PutOnSurface : MonoBehaviour
 
     private void OnValidate() => ValidationUtility.DoOnDelayCall(this, () =>
     {
-        if (surfaceAhead)
-            FindSurfaceInDirection(transform, true);
-        else if (surfaceBehind)
-            FindSurfaceInDirection(transform, false);
-        else if (surfaceCamera)
-            FindSurfaceInDirection(SceneView.lastActiveSceneView.camera.transform, true);
+        if (!EditorApplication.isPlayingOrWillChangePlaymode && !EditorApplication.isCompiling)
+        {
+            if (surfaceAhead)
+                FindSurfaceInDirection(transform, true);
+            else if (surfaceBehind)
+                FindSurfaceInDirection(transform, false);
+            else if (surfaceCamera)
+                FindSurfaceInDirection(SceneView.lastActiveSceneView.camera.transform, true);
+        }
 
-        surfaceBehind = false;
-        surfaceAhead = false;
-        surfaceCamera = false;
+        ResetButtons();
     });
 
     private void FindSurfaceInDirection(Transform referencePoint, bool forward)
@@ -46,7 +54,18 @@ public class PutOnSurface : MonoBehaviour
         {
             Undo.RegisterCompleteObjectUndo(transform, $"Move \"{name}\" to hit point {hit.point} on surface \"{hit.transform.name}\"");
             transform.position = hit.point + hit.normal * offsetFromSurface;
-            transform.forward = faceTowardSurface ? -hit.normal : hit.normal;
+            switch (alignWithSurface)
+            {
+                default:
+                case AlignType.Dont:
+                    break;
+                case AlignType.Toward:
+                    transform.forward = -hit.normal;
+                    break;
+                case AlignType.Away:
+                    transform.forward = hit.normal;
+                    break;
+            }
             Undo.IncrementCurrentGroup();
 
             if (parentToSurface)
@@ -56,6 +75,17 @@ public class PutOnSurface : MonoBehaviour
             }
         }
         else Debug.Log($"PutOnSurface ( <color=#999>{name}</color> ): No surface found!");
+
+        ResetButtons();
+    }
+
+    private void ResetButtons()
+    {
+        var serializedSelf = new SerializedObject(this);
+        serializedSelf.FindProperty("surfaceBehind").boolValue = false;
+        serializedSelf.FindProperty("surfaceAhead").boolValue = false;
+        serializedSelf.FindProperty("surfaceCamera").boolValue = false;
+        serializedSelf.ApplyModifiedPropertiesWithoutUndo();
     }
 #endif
 }
