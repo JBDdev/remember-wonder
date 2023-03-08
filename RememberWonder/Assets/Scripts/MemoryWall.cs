@@ -14,6 +14,9 @@ public class MemoryWall : MonoBehaviour
     [Tooltip("If 0, instead requires every mote in the scene. If -1, requires 1 less than that. Etc.")]
     [SerializeField] private int motesToUnlock;
     [SerializeField] private Bewildered.UHashSet<TagString> unlockerTags;
+    [Space(5)]
+    [SerializeField] private AudioList unlockAudio;
+    [SerializeField] private SourceSettings unlockAudioSettings;
 
     private int internalMoteTracker;
     private int motesInScene;
@@ -65,6 +68,7 @@ public class MemoryWall : MonoBehaviour
             {
                 unlockBurst.transform.position = collision.contacts[0].point;
                 unlockBurst.Play();
+                AudioHub.Inst.Play(unlockAudio, unlockAudioSettings, unlockBurst.transform.position);
             }
         }
     }
