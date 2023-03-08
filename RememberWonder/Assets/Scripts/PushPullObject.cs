@@ -10,10 +10,13 @@ public class PushPullObject : MonoBehaviour
     [SerializeField] Vector3 grabMoveMultipliers = Vector3.one;
     public float maxPullDistance;
     public bool liftable;
-    [SerializeField] AudioList liftAudio;
-    [SerializeField] AudioList putDownAudio;
-    [SerializeField] SourceSettings audioSettings;
     public Vector3 defaultPos;
+    [Header("Audio")]
+    [SerializeField] AudioList liftAudio;
+    [SerializeField] SourceSettings liftAudioSettings;
+    [Space(5)]
+    [SerializeField] AudioList putDownAudio;
+    [SerializeField] SourceSettings putDownAudioSettings;
 
     Rigidbody rb;
     Renderer[] childRendsCache;
@@ -75,7 +78,7 @@ public class PushPullObject : MonoBehaviour
                 Destroy(rb);
                 transform.rotation = player.CharacterModel.transform.rotation;
             }
-                
+
             else
             {
                 if (player.DropLocation.GetComponent<DropPointTrigger>().InvalidDropPosition)
@@ -93,7 +96,7 @@ public class PushPullObject : MonoBehaviour
                 transform.parent = player.transform.GetChild(0).GetChild(0).transform;
                 player.DropLocation.SetActive(true);
 
-                AudioHub.Inst.Play(liftAudio, audioSettings, transform.position);
+                AudioHub.Inst.Play(liftAudio, liftAudioSettings, transform.position);
             }
 
             else
@@ -103,11 +106,11 @@ public class PushPullObject : MonoBehaviour
         {
             transform.parent = null;
             player.DropLocation.SetActive(false);
-            if (liftable) 
+            if (liftable)
             {
-                AudioHub.Inst.Play(putDownAudio, audioSettings, transform.position);
+                AudioHub.Inst.Play(putDownAudio, putDownAudioSettings, transform.position);
                 transform.position = player.DropLocation.transform.position;
-            } 
+            }
         }
     }
 

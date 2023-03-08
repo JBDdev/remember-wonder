@@ -21,7 +21,7 @@ public class MoteFloat : MonoBehaviour
 
     private void Start()
     {
-        initPos = model.position;
+        initPos = model.localPosition;
 
         //Raycast to place mote shadow on floor
         RaycastHit hit;
@@ -36,6 +36,6 @@ public class MoteFloat : MonoBehaviour
 
         bobProgress += bobSpeed * Time.deltaTime;
         bobPos = initPos + Vector3.up * bobAmount * Mathf.Sin(bobProgress);
-        model.position = bobPos;
+        model.localPosition = bobPos;
     }
 }
