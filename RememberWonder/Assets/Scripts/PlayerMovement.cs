@@ -24,8 +24,13 @@ public class PlayerMovement : MonoBehaviour
     public float maxIncline;
     public float fallGravMultiplier = 1;
 
+    [Header("Self Component References")]
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private CapsuleCollider primaryCol;
+    [SerializeField] private CapsuleCollider secondaryCol;
+
     [Header("Child Object References")]
-    [SerializeField] GameObject holdLocation;
+    [SerializeField] Transform pickUpPivot;
     [SerializeField] GameObject characterModel;
     [SerializeField] DropPointTrigger dropLocation;
     [SerializeField] GameObject cameraPivot;
@@ -35,10 +40,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] PushPullObject pushPullObject;
     [SerializeField] Animator anim;
 
-    //Internal Component References
-    Rigidbody rb;
-    CapsuleCollider col;
-
     [Header("Rotation Controls")]
     [SerializeField] float rotationSpeed;
     [SerializeField] float minRotationDistance;
@@ -47,20 +48,20 @@ public class PlayerMovement : MonoBehaviour
     bool readingDialog;
 
     //Accessors
-    public GameObject HoldLocation { get { return holdLocation; } }
+    public Transform PickUpPivot { get { return pickUpPivot; } }
     public GameObject CharacterModel { get { return characterModel; } }
     public DropPointTrigger DropLocation { get { return dropLocation; } }
 
     public PushPullObject PulledObject { get { return pushPullObject; } set { pushPullObject = value; } }
     public Vector3 Velocity { get => rb.velocity; }
+    public Collider PrimaryCollider { get => primaryCol; }
+    public Collider SecondaryCollider { get => secondaryCol; }
 
     public bool ReadingDialog { get { return readingDialog; } set { readingDialog = value; } }
 
     void Start()
     {
         //Get references to components on the GameObject
-        rb = GetComponent<Rigidbody>();
-        col = GetComponent<CapsuleCollider>();
         anim = transform.GetComponentInChildren<Animator>();
 
         paused = false;
@@ -295,8 +296,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void GetCapsuleCastParams(out float height, out float radius, out Vector3 top, out Vector3 bottom)
     {
-        height = col.height * transform.localScale.y;
-        radius = col.radius * transform.localScale.y;
+        height = primaryCol.height * transform.localScale.y;
+        radius = primaryCol.radius * transform.localScale.y;
 
         top = transform.position + Vector3.up * height / 2;
         top += Vector3.down * radius;   //Go from tip to center of cap-sphere

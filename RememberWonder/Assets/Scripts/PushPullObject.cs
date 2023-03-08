@@ -8,11 +8,11 @@ public class PushPullObject : MonoBehaviour
 {
     [SerializeField][ReadOnlyInspector] private PlayerMovement player;
     [SerializeField][ReadOnlyInspector] private bool grabbed;
+    [ReadOnlyInspector] public Vector3 defaultPos;
     [SerializeField] private DisplayPrompt grabPrompt;
     public bool liftable;
     [SerializeField] private Vector3 grabMoveMultipliers = Vector3.one;
     public float maxPullDistance;
-    public Vector3 defaultPos;
     [Header("Audio")]
     [SerializeField] private AudioList liftAudio;
     [SerializeField] private SourceSettings liftAudioSettings;
@@ -22,6 +22,7 @@ public class PushPullObject : MonoBehaviour
 
     Rigidbody rb;
     string initTag;    //QUICK AND DIRTY FIX for camera collision, Delete later?
+    Transform parentBeforeGrab;
 
     public Vector3 GrabMoveMultipliers { get => grabMoveMultipliers; }
     public bool IsGrabbed { get => grabbed; }
@@ -67,7 +68,6 @@ public class PushPullObject : MonoBehaviour
 
         grabbed = !grabbed;
 
-        //Rigidbody rb = GetComponent<Rigidbody>();
         if (liftable)
         {
             if (grabbed)
@@ -80,8 +80,8 @@ public class PushPullObject : MonoBehaviour
             {
                 if (player.DropLocation.InvalidDropPosition)
                     return;
+
                 rb = transform.gameObject.AddComponent<Rigidbody>();
-                //rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             }
         }
 
@@ -89,19 +89,23 @@ public class PushPullObject : MonoBehaviour
         {
             if (liftable)
             {
-                transform.position = player.transform.GetChild(0).GetChild(0).transform.position;
-                transform.parent = player.transform.GetChild(0).GetChild(0).transform;
-                player.DropLocation.gameObject.SetActive(true);
+                transform.position = player.PickUpPivot.position;
+
+                parentBeforeGrab = transform.parent;
+                transform.parent = player.PickUpPivot;
 
                 AudioHub.Inst.Play(liftAudio, liftAudioSettings, transform.position);
             }
-
             else
+            {
+                parentBeforeGrab = transform.parent;
                 transform.parent = player.transform;
+            }
         }
         else
         {
-            transform.parent = null;
+            transform.parent = parentBeforeGrab;
+
             player.DropLocation.gameObject.SetActive(false);
             if (liftable)
             {
@@ -129,14 +133,8 @@ public class PushPullObject : MonoBehaviour
         //  If we already have a player ref, no need to re-register.
         if (player || !registeredCollider.TryGetComponent(out player)) return;
 
-        // !!! DELETE LATER?: Abort registration if the player's too high above this grab object.
-        if (player.transform.position.y >= transform.position.y + 1.5f)
-        {
-            player = null;
-            return;
-        }
-
-        if (player.PulledObject || player.pullingObject || !player.IsGrounded()) return;
+        //If the player's already grabbing an object, abort registration (but don't nullify player? why not?).
+        //if (player.PulledObject || player.pullingObject || !player.IsGrounded()) return;
 
         player.PulledObject = this;
 
