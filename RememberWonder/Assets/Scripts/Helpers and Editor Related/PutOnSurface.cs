@@ -44,12 +44,14 @@ public class PutOnSurface : MonoBehaviour
 
         if (Physics.Raycast(surfaceFinderRay, out var hit, maxDistanceFromSurface, surfaceLayers, triggerInteraction))
         {
+            Undo.RegisterCompleteObjectUndo(transform, $"Move \"{name}\" to hit point {hit.point} on surface \"{hit.transform.name}\"");
             transform.position = hit.point + hit.normal * offsetFromSurface;
             transform.forward = faceTowardSurface ? -hit.normal : hit.normal;
-            
+            Undo.IncrementCurrentGroup();
+
             if (parentToSurface)
             {
-                transform.parent = hit.transform;
+                Undo.SetTransformParent(transform, hit.transform, $"Parent \"{name}\" to surface \"{hit.transform.name}\"");
                 EditorGUIUtility.PingObject(transform);
             }
         }
