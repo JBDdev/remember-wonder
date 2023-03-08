@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QuestionBlock : MonoBehaviour
 {
-    [SerializeField] string displayText;
+    [SerializeField] Sprite tutorialImage;
     [SerializeField] GameObject canvas;
 
     // Start is called before the first frame update
@@ -23,8 +23,17 @@ public class QuestionBlock : MonoBehaviour
     {
         if (other.gameObject.name == "Player Character") 
         {
-            other.GetComponent<PlayerMovement>().ReadingDialog = true;
-            canvas.GetComponent<MoteUIController>().DisplayTutorialText(displayText);
+            //other.GetComponent<PlayerMovement>().ReadingDialog = true;
+            canvas.GetComponent<MoteUIController>().DisplayTutorialText(tutorialImage);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.name == "Player Character")
+        {
+            //other.GetComponent<PlayerMovement>().ReadingDialog = true;
+            canvas.GetComponent<MoteUIController>().DismissTutorialText();
         }
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class CollectMote : MonoBehaviour
 {
     [SerializeField] private Renderer modelRend;
+    [SerializeField] private GameObject shadowObj;
     [SerializeField] private ParticleSystem collectPSys;
     [Space(5)]
     [SerializeField] private Bewildered.UHashSet<TagString> collectorTags;
@@ -53,6 +54,7 @@ public class CollectMote : MonoBehaviour
 
             //TODO: Become translucent and uncollectable, or collectable but without increasing number?
             modelRend.enabled = false;
+            shadowObj.SafeSetActive(false);
             //TODO: More elaborate animation/sequence upon collection
             if (collectPSys) { collectPSys.Play(); }
 
