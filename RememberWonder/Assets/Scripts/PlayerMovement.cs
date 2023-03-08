@@ -125,13 +125,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-
-        if (!IsGrounded() || !PulledObject || readingDialog)
+        if (!PulledObject || readingDialog)
             return;
 
         if (!pullingObject)
         {
             pullingObject = true;
+            
             if (PulledObject.liftable)
             {
                 dropLocation.gameObject.SetActive(true);
@@ -173,15 +173,6 @@ public class PlayerMovement : MonoBehaviour
             //Apply extra force based on the multiplier (There's no "gravity scale" for 3D Rigidbodies).
             //Gravity's already applied once by default; if 1.01, apply the extra 0.01
             rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
-        }
-
-        if (PulledObject != null)
-        {
-            if ((PulledObject.transform.position - transform.position).sqrMagnitude > 3 && PulledObject.liftable)
-            {
-                PulledObject = null;
-                pullingObject = false;
-            }
         }
     }
 

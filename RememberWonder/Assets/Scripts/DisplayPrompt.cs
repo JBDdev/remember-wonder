@@ -36,8 +36,9 @@ public class DisplayPrompt : MonoBehaviour
     /// Invoked whenever this prompt is told to start appearing/disappearing.
     /// <br/>- <see cref="bool"/>: Whether this prompt should be appearing or not.
     /// <br/>- <see cref="Collider"/>: The collider that triggered the state change. Null if not triggered by a collision event.
+    /// <br/>- <see cref="bool"/>: Is this prompt currently active (promptObj.activeSelf)?
     /// </summary>
-    public System.Action<bool, Collider> PromptStateChange;
+    public System.Action<bool, Collider, bool> PromptStateChange;
 
     public PushPullObject GrabbablePromptOwner { get => grabbablePromptOwner; set => grabbablePromptOwner = value; }
 
@@ -114,7 +115,9 @@ public class DisplayPrompt : MonoBehaviour
             TriggerPromptChange(false, false);
         }
         //If the grabbable object the prompt's tied to is grabbed, disappear the prompt, but keep it as the active prompt.
-        else if (grabbablePromptOwner && grabbablePromptOwner.IsGrabbed)
+        //  Also check if the prompt is active and if it's not already disappearing.
+        else if (grabbablePromptOwner && grabbablePromptOwner.IsGrabbed
+            && promptObj.activeSelf && promptCorout == null)
         {
             TriggerPromptChange(false, false);
         }
@@ -123,6 +126,8 @@ public class DisplayPrompt : MonoBehaviour
     private void TriggerPromptChange(bool shouldAppear, bool setActivePrompt,
         DisplayPrompt newActivePrompt = null, Collider triggerer = null)
     {
+        PromptStateChange?.Invoke(shouldAppear, triggerer, promptObj.activeSelf);
+
         if (triggerer) lastKnownTriggerer = triggerer;
 
         //If we should appear but we're already appearing/appeared, no need to do anything.
@@ -160,8 +165,6 @@ public class DisplayPrompt : MonoBehaviour
             Coroutilities.TryStopCoroutine(this, ref followCorout);
             promptCorout = StartCoroutine(PromptDisappear());
         }
-
-        PromptStateChange?.Invoke(shouldAppear, triggerer);
     }
 
     private IEnumerator PromptAppear()

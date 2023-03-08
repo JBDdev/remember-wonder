@@ -103,7 +103,7 @@ public class PushPullObject : MonoBehaviour
         }
     }
 
-    private void OnGrabPromptStateChange(bool appearing, Collider changeTriggerer)
+    private void OnGrabPromptStateChange(bool appearing, Collider changeTriggerer, bool currentActive)
     {
         if (appearing && changeTriggerer)
         {
