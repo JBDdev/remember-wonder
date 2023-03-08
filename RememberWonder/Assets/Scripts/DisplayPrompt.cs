@@ -7,6 +7,7 @@ public class DisplayPrompt : MonoBehaviour
 {
     enum PromptPositionType { Default, TriggererStatic, TriggererFollow }
 
+    [SerializeField] private BoxCollider triggerCol;
     [SerializeField] private GameObject promptObj;
     [SerializeField] private PushPullObject grabbablePromptOwner;
     [Space(10)]
@@ -25,6 +26,8 @@ public class DisplayPrompt : MonoBehaviour
     private Coroutine promptCorout;
     private Coroutine followCorout;
     private Vector3 promptOffset;
+
+    private Collider lastKnownTriggerer;
 
     public static DisplayPrompt activePromptDisplayer = null;
     private static Transform promptContainer = null;
@@ -81,11 +84,28 @@ public class DisplayPrompt : MonoBehaviour
 
     private void Update()
     {
-        //If this is the active prompt, but it's not showing (and isn't grabbed, if applicable), appear.
-        if (activePromptDisplayer == this && !promptObj.activeSelf
-            && (!grabbablePromptOwner || !grabbablePromptOwner.IsGrabbed))
+        //If this is the active prompt...
+        if (activePromptDisplayer == this)
         {
-            TriggerPromptChange(true, false);
+            //...but it's not showing (and isn't grabbed, if applicable),
+            if (!promptObj.activeSelf && (!grabbablePromptOwner || !grabbablePromptOwner.IsGrabbed))
+            {
+                //appear without setting (no need, it's already set).
+                TriggerPromptChange(true, false);
+            }
+            //...and we're showing...
+            else if (promptObj.activeSelf)
+            {
+                var triggerGlobalCenter = transform.TransformPoint(triggerCol.center);
+                var sqrDistanceToTriggerExtent = transform.TransformVector(triggerCol.size / 2).sqrMagnitude;
+
+                //...and the last known triggerer is farther away from the trigger's center than the trigger's extents,
+                if (Vector3.Distance(lastKnownTriggerer.ClosestPoint(triggerGlobalCenter), triggerGlobalCenter) >= sqrDistanceToTriggerExtent)
+                {
+                    //disappear and make this not the active prompt.
+                    TriggerPromptChange(false, true, null);
+                }
+            }
         }
 
         //If there is an active prompt, it's not this, and this prompt is showing, disappear.
@@ -103,6 +123,8 @@ public class DisplayPrompt : MonoBehaviour
     private void TriggerPromptChange(bool shouldAppear, bool setActivePrompt,
         DisplayPrompt newActivePrompt = null, Collider triggerer = null)
     {
+        if (triggerer) lastKnownTriggerer = triggerer;
+
         //If we should appear but we're already appearing/appeared, no need to do anything.
         //  Preventing disappear redundancy is harder, has side effects, and *should* be unnecessary. Should.
         if (shouldAppear && activePromptDisplayer == this && promptObj.activeSelf)

@@ -373,6 +373,9 @@ public static class UtilFunctions
     /// <inheritdoc cref="MinAbs(float[])"/>
     public static float MinAbs(int a, int b) => Mathf.Abs(a) < Mathf.Abs(b) ? a : b;
 
+    public static float MaxComponent(this Vector3 v) => Mathf.Max(v.x, v.y, v.z);
+    public static float MinComponent(this Vector3 v) => Mathf.Min(v.x, v.y, v.z);
+
     /// <summary>
     /// Divides two vectors component-wise.
     /// </summary>

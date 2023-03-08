@@ -46,18 +46,6 @@ public class PushPullObject : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Update()
-    {
-        if (liftable && player)
-        {
-            //If we are too far away, deregister
-            if (!grabbed && (transform.position - player.transform.position).sqrMagnitude > 3f)
-            {
-                Deregister();
-            }
-        }
-    }
-
     void OnInteractPerformedWhileRegistered(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
         //If we don't have a player reference, bail out.
@@ -133,8 +121,8 @@ public class PushPullObject : MonoBehaviour
         //  If we already have a player ref, no need to re-register.
         if (player || !registeredCollider.TryGetComponent(out player)) return;
 
-        //If the player's already grabbing an object, abort registration (but don't nullify player? why not?).
-        //if (player.PulledObject || player.pullingObject || !player.IsGrounded()) return;
+        /*//If the player's already grabbing an object, abort registration (but don't nullify player? why not?).
+        if (player.PulledObject || player.pullingObject || !player.IsGrounded()) return;*/
 
         player.PulledObject = this;
 
