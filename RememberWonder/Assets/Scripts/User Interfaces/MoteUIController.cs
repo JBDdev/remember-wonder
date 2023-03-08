@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MoteUIController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI motesCollectedTxt;
     [SerializeField] private TextMeshProUGUI totalMotesTxt;
-    [SerializeField] private TextMeshProUGUI tutorialTxt;
+    [SerializeField] private Image tutorialImage;
 
     private int _collectedCount;
     private int _totalCount;
@@ -70,14 +71,15 @@ public class MoteUIController : MonoBehaviour
     }
 
     //Displays tutorial text on screen
-    public void DisplayTutorialText(string text) 
+    public void DisplayTutorialText(Sprite sprite) 
     {
-        tutorialTxt.text = text;
-        tutorialTxt.transform.parent.gameObject.SetActive(true);
+        tutorialImage.sprite = sprite;
+        tutorialImage.transform.parent.gameObject.SetActive(true);
+        tutorialImage.SetNativeSize();
     }
 
     public void DismissTutorialText()
     {
-        tutorialTxt.transform.parent.gameObject.SetActive(false);
+        tutorialImage.transform.parent.gameObject.SetActive(false);
     }
 }
