@@ -82,7 +82,6 @@ public class PlayerMovement : MonoBehaviour
         //print($"Jump performed, did we press or release?: " +
         //$"{(InputHub.Inst.Gameplay.Jump.WasPressedThisFrame() ? "Pressed" : "Released")}");
 
-
         if (!IsGrounded() || jumpInProgress)
             return;
 
@@ -196,11 +195,6 @@ public class PlayerMovement : MonoBehaviour
         if (Mathf.Abs(rb.velocity.x) < maxSpeed * percentHeld && Mathf.Abs(rb.velocity.z) < maxSpeed * percentHeld)
         {
             rb.AddForce(direction * accModifier, ForceMode.Force);
-
-            //if (rb.velocity.sqrMagnitude > minRotationDistance)
-            //{
-            //    RotateCharacterModel(rb.velocity);
-            //}
         }
 
         directionLastFrame = direction;
