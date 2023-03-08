@@ -10,6 +10,7 @@ public class MoteFloat : MonoBehaviour
     [Space(5)]
     [SerializeField] private float rotateSpeed;
     [SerializeField] private Vector3 rotateAxis = Vector3.up;
+    [SerializeField] private Vector3 shadowRotateAxis = Vector3.forward;
     [Space(5)]
     [SerializeField] private float bobAmount;
     [SerializeField] private float bobSpeed;
@@ -31,7 +32,7 @@ public class MoteFloat : MonoBehaviour
     private void Update()
     {
         model.rotation *= Quaternion.AngleAxis(rotateSpeed * Time.deltaTime, rotateAxis);
-        shadow.rotation *= Quaternion.AngleAxis(rotateSpeed * Time.deltaTime, rotateAxis);
+        shadow.rotation *= Quaternion.AngleAxis(rotateSpeed * Time.deltaTime, shadowRotateAxis);
 
         bobProgress += bobSpeed * Time.deltaTime;
         bobPos = initPos + Vector3.up * bobAmount * Mathf.Sin(bobProgress);
