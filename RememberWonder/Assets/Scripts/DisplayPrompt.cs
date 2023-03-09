@@ -31,6 +31,7 @@ public class DisplayPrompt : MonoBehaviour
 
     public static DisplayPrompt activePromptDisplayer = null;
     private static Transform promptContainer = null;
+    private static bool somethingIsGrabbed;
 
     /// <summary>
     /// Invoked whenever this prompt is told to start appearing/disappearing.
@@ -41,6 +42,8 @@ public class DisplayPrompt : MonoBehaviour
     public System.Action<bool, Collider, bool> PromptStateChange;
 
     public PushPullObject GrabbablePromptOwner { get => grabbablePromptOwner; set => grabbablePromptOwner = value; }
+
+    //--- Setup ---//
 
     private void Start()
     {
@@ -59,9 +62,21 @@ public class DisplayPrompt : MonoBehaviour
             Coroutilities.DoUntil(this, () => promptObj.transform.position = transform.position + promptOffset, () => !Application.isPlaying);
     }
 
+    private void OnEnable()
+    {
+        PlayerMovement.GrabStateChange += SetSomethingIsGrabbed;
+    }
+    private void OnDisable()
+    {
+        PlayerMovement.GrabStateChange -= SetSomethingIsGrabbed;
+    }
+    private void SetSomethingIsGrabbed(bool isGrabbed) => somethingIsGrabbed = isGrabbed;
+
+    //--- Core Functions ---//
+
     private void OnTriggerEnter(Collider other)
     {
-        if (!activatorTags.Contains(other.tag)) return;
+        if (somethingIsGrabbed || !activatorTags.Contains(other.tag)) return;
 
         //If other's an activator, since it just entered, this must not be the active prompt; make this the active prompt and appear.
         TriggerPromptChange(true, true, this, other);
@@ -69,7 +84,7 @@ public class DisplayPrompt : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (!activatorTags.Contains(other.tag) || activePromptDisplayer) return;
+        if (somethingIsGrabbed || !activatorTags.Contains(other.tag) || activePromptDisplayer) return;
 
         //If other's an activator and there's no other active prompt, make this the active prompt and appear.
         TriggerPromptChange(true, true, this, other);
@@ -77,7 +92,7 @@ public class DisplayPrompt : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (!activatorTags.Contains(other.tag) || activePromptDisplayer != this) return;
+        if (somethingIsGrabbed || !activatorTags.Contains(other.tag) || activePromptDisplayer != this) return;
 
         //If other's an activator and we're the active prompt, disappear and make us not the active prompt.
         TriggerPromptChange(false, true, null, other);
@@ -94,6 +109,12 @@ public class DisplayPrompt : MonoBehaviour
                 //appear without setting (no need, it's already set).
                 TriggerPromptChange(true, false);
             }
+            //...and it's owner is currently grabbed, disappear, but remain the active prompt.
+            //  Only run once by checking if it's already disappeared or on its way.
+            else if (grabbablePromptOwner && grabbablePromptOwner.IsGrabbed && promptObj.activeSelf && promptCorout == null)
+            {
+                TriggerPromptChange(false, false);
+            }
             //...and we're showing...
             else if (promptObj.activeSelf)
             {
@@ -108,16 +129,8 @@ public class DisplayPrompt : MonoBehaviour
                 }
             }
         }
-
         //If there is an active prompt, it's not this, and this prompt is showing, disappear.
-        if (activePromptDisplayer && activePromptDisplayer != this && promptObj.activeSelf)
-        {
-            TriggerPromptChange(false, false);
-        }
-        //If the grabbable object the prompt's tied to is grabbed, disappear the prompt, but keep it as the active prompt.
-        //  Also check if the prompt is active and if it's not already disappearing.
-        else if (grabbablePromptOwner && grabbablePromptOwner.IsGrabbed
-            && promptObj.activeSelf && promptCorout == null)
+        else if (activePromptDisplayer && promptObj.activeSelf)
         {
             TriggerPromptChange(false, false);
         }

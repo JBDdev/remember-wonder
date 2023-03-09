@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float minRotationDistance;
 
     bool paused;
+
+    /// <summary>
+    /// Invoked whenever this we start or stop grabbing something..
+    /// <br/>- <see cref="bool"/>: True if we just grabbed something. False if just stopped.
+    /// </summary>
+    public static Action<bool> GrabStateChange;
 
     //Accessors
     public Transform PickUpPivot { get { return pickUpPivot; } }
@@ -145,8 +152,9 @@ public class PlayerMovement : MonoBehaviour
 
             pullingObject = false;
             rb.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezeRotation;
-            //dropLocation.SetActive(false);
         }
+
+        GrabStateChange?.Invoke(pullingObject);
     }
 
     //---Core Methods---//

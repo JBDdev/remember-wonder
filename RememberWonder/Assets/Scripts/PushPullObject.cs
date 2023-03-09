@@ -21,8 +21,10 @@ public class PushPullObject : MonoBehaviour
     [SerializeField] private SourceSettings putDownAudioSettings;
 
     Rigidbody rb;
+
     string initTag;    //QUICK AND DIRTY FIX for camera collision, Delete later?
     Transform parentBeforeGrab;
+    float initMass;
 
     public Vector3 GrabMoveMultipliers { get => grabMoveMultipliers; }
     public bool IsGrabbed { get => grabbed; }
@@ -44,6 +46,7 @@ public class PushPullObject : MonoBehaviour
         initTag = tag;
 
         rb = GetComponent<Rigidbody>();
+        if (rb) initMass = rb.mass;
     }
 
     void OnInteractPerformedWhileRegistered(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
@@ -70,6 +73,7 @@ public class PushPullObject : MonoBehaviour
                     return;
 
                 rb = transform.gameObject.AddComponent<Rigidbody>();
+                rb.mass = initMass;
             }
         }
 
