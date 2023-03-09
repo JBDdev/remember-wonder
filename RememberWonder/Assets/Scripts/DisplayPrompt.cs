@@ -153,7 +153,11 @@ public class DisplayPrompt : MonoBehaviour
 
                 case PromptPositionType.TriggererFollow:
                     followCorout = Coroutilities.DoUntil(this,
-                        () => promptObj.transform.position = triggerer.transform.position + offsetFromTriggerer,
+                        () =>
+                        {
+                            if (!triggerer) return;
+                            promptObj.transform.position = triggerer.transform.position + offsetFromTriggerer;
+                        },
                         () => activePromptDisplayer != this);
                     break;
             }
