@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
 
 public class InitGrabIndicationRefs : MonoBehaviour
 {
@@ -25,12 +26,6 @@ public class InitGrabIndicationRefs : MonoBehaviour
     [Space(3)]
     [SerializeField] private bool usePromptTriggerPosOffset;
     [SerializeField] private Vector3 promptTriggerPosOffset;
-    [Space(10)]
-    [SerializeField][BoolButton("Try Get References")] private bool getRefs = false;
-    [Space(5)]
-    [SerializeField][BoolButton("Give Owner This Prompt Reference")] private bool giveOwnerPromptRef = false;
-    [Space(5)]
-    [SerializeField][BoolButton("Apply Offsets to Triggers")] private bool applyToTriggers = false;
 
     [SerializeField][HideInInspector] private PushPullObject prevGrabbableOwner;
     [SerializeField][HideInInspector] private MeshRenderer prevSparklingMeshRend;
@@ -45,22 +40,9 @@ public class InitGrabIndicationRefs : MonoBehaviour
     [SerializeField][HideInInspector] private bool prevUsePromptTriggerPosOffset;
     [SerializeField][HideInInspector] private Vector3 prevPromptTriggerPosOffset;
 
-
-    private void OnValidate() => ValidationUtility.DoOnDelayCall(this, () =>
-    {
-        TryGetRefs();
-        TryGiveOwnerPromptRef();
-        TryApply();
-
-        getRefs = false;
-        giveOwnerPromptRef = false;
-        applyToTriggers = false;
-    });
-
+    [Button("Try Get References", EButtonEnableMode.Editor)]
     private void TryGetRefs()
     {
-        if (!getRefs) return;
-
         if (transform.parent)
         {
             var serializedSelf = new UnityEditor.SerializedObject(this);
@@ -74,10 +56,9 @@ public class InitGrabIndicationRefs : MonoBehaviour
         }
     }
 
+    [Button("Give Owner This Prompt Reference", EButtonEnableMode.Editor)]
     private void TryGiveOwnerPromptRef()
     {
-        if (!giveOwnerPromptRef) return;
-
         if (!promptController)
         {
             Debug.Log($"InitGrabIndicationRefs ( <color=#999>{name}</color> ): No prompt ref to give! Is Prompt Controller assigned?");
@@ -97,10 +78,9 @@ public class InitGrabIndicationRefs : MonoBehaviour
         serializedOwner.ApplyModifiedProperties();
     }
 
+    [Button("Apply Offsets to Triggers", EButtonEnableMode.Editor)]
     private void TryApply()
     {
-        if (!applyToTriggers) return;
-
         //If refs are the same,
         if (CheckOffsetsSetPrevious(false))
         {
