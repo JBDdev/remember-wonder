@@ -13,6 +13,7 @@ public class PushPullObject : MonoBehaviour
     public bool liftable;
     [SerializeField] private Vector3 grabMoveMultipliers = Vector3.one;
     public float maxPullDistance;
+    [SerializeField] PhysicMaterial physMat;
     [Header("Audio")]
     [SerializeField] private AudioList liftAudio;
     [SerializeField] private SourceSettings liftAudioSettings;
@@ -65,6 +66,8 @@ public class PushPullObject : MonoBehaviour
             {
                 Destroy(rb);
                 transform.rotation = player.CharacterModel.transform.rotation;
+                foreach (BoxCollider b in transform.GetComponents<BoxCollider>())
+                    b.material = physMat;
             }
 
             else
@@ -74,6 +77,8 @@ public class PushPullObject : MonoBehaviour
 
                 rb = transform.gameObject.AddComponent<Rigidbody>();
                 rb.mass = initMass;
+                foreach (BoxCollider b in transform.GetComponents<BoxCollider>())
+                    b.material = null;
             }
         }
 

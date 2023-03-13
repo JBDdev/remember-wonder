@@ -2124,6 +2124,7 @@ MonoBehaviour:
   liftable: 0
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   maxPullDistance: 5
+  physMat: {fileID: 0}
   liftAudio: 0
   liftAudioSettings:
     loop: 0
@@ -3028,6 +3029,7 @@ MonoBehaviour:
   liftable: 1
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 13400000, guid: 49e6e2e43aac342479c7f77fe5acdc4f, type: 2}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
