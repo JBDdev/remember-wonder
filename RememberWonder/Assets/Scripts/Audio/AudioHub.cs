@@ -91,6 +91,8 @@ public class AudioHub : MonoBehaviour
         source.Play();
         SourcePoolUpdate?.Invoke(source, false);
 
+        //Regex to select any text enclosed in parentheses. The first backslash escapes the second backslash in C#, which
+        //and that second backslash escapes the parenthesis in regex.
         source.name = Regex.Replace(source.name, "\\(.*?\\)", $"({clip.name})");
 
         //Wait until the clip's done, then return this source to the pool.
