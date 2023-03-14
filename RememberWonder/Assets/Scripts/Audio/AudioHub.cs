@@ -114,7 +114,7 @@ public class SoundContainer
     [SerializeField] private AudioClip[] clips;
 
     private int clipIndex;
-    public AudioClip UpcomingClip { get => clips[clipIndex]; }
+    public AudioClip UpcomingClip { get => clips[clipIndex % clips.Length]; }
     public AudioClip PopClip()
     {
         //Make sure index isn't out of range
