@@ -10,6 +10,8 @@ public class EndLevelTrigger : MonoBehaviour
     [Tooltip("If negative, will move that many scenes ahead in the build order.")]
     [SerializeField] int sceneIndex;
     [SerializeField] Bewildered.UHashSet<TagString> triggererTags;
+    [Header("End Level Screen")]
+    [SerializeField] GameObject resultsScreen;
 
     /*MoteUIController moteUI;
 
@@ -23,12 +25,13 @@ public class EndLevelTrigger : MonoBehaviour
         if (!triggererTags.Contains(col.gameObject.tag)) return;
 
         //Run the call to clear the UI
+        GameObject.Find("MoteCanvas").gameObject.SetActive(false);
         //Run the call to stop player input
+        GameObject.Find("Player Character").gameObject.GetComponent<PlayerMovement>().TogglePause();
 
         //Run the call to pull up end screen
-        //Spawn in the greyed out puzzle pieces (or just have them pre-added in advance)
+        resultsScreen.SetActive(true);
         //Loop thru and fill in each piece + play audio
-        //Elephant backflip?
         //Assign Press A to Continue and make that prompt show up on screen
 
         
