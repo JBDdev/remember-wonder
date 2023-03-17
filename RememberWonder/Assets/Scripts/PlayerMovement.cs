@@ -112,12 +112,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 jumpInProgress = false;
             }
+            Time.timeScale = 1f;
         }
         else
         {
             paused = true;
             InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
             InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
+            Time.timeScale= 0f;
         }
     }
 
