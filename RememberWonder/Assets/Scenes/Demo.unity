@@ -263,6 +263,7 @@ MonoBehaviour:
   liftable: 1
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -633,6 +634,7 @@ MonoBehaviour:
   liftable: 1
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -1043,6 +1045,7 @@ MonoBehaviour:
   liftable: 0
   grabMoveMultipliers: {x: 0.5, y: 0, z: 0}
   maxPullDistance: 1.75
+  physMat: {fileID: 0}
   liftAudio: 0
   liftAudioSettings:
     loop: 0
@@ -1127,6 +1130,7 @@ MonoBehaviour:
   liftable: 0
   grabMoveMultipliers: {x: 0.5, y: 0, z: 0}
   maxPullDistance: 1
+  physMat: {fileID: 0}
   liftAudio: 0
   liftAudioSettings:
     loop: 0
@@ -1921,6 +1925,7 @@ MonoBehaviour:
   liftable: 1
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -8086,6 +8091,7 @@ MonoBehaviour:
   liftable: 1
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -8557,15 +8563,15 @@ PrefabInstance:
       objectReference: {fileID: 1123410478}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerPosOffset.y
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.x
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.y
-      value: -1
+      value: -1.75
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.z
@@ -8597,15 +8603,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerPosOffset.y
-      value: -0.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.x
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.y
-      value: -0.8
+      value: -1.75
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.z
@@ -8637,11 +8643,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.041254085
+      value: 0.04355867
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.007394186
+      value: 0.0005760044
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.z
@@ -8653,7 +8659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0013749888
+      value: 0.005920443
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8777,6 +8783,7 @@ MonoBehaviour:
   liftable: 1
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -10411,6 +10418,7 @@ MonoBehaviour:
   liftable: 1
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -10667,6 +10675,7 @@ MonoBehaviour:
   liftable: 0
   grabMoveMultipliers: {x: 0.5, y: 0, z: 0}
   maxPullDistance: 2.5
+  physMat: {fileID: 0}
   liftAudio: 0
   liftAudioSettings:
     loop: 0
@@ -11162,6 +11171,7 @@ MonoBehaviour:
   liftable: 1
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -12398,15 +12408,15 @@ PrefabInstance:
       objectReference: {fileID: 782637439}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerPosOffset.y
-      value: -0.5
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.x
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.y
-      value: -1
+      value: -1.75
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.z
@@ -12438,15 +12448,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerPosOffset.y
-      value: -0.4
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.x
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.y
-      value: -0.8
+      value: -1.75
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.z
@@ -12478,11 +12488,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.040823914
+      value: 0.04309664
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.0072758393
+      value: 0.0004576575
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.z
@@ -12494,7 +12504,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0038346094
+      value: 0.00093811774
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12893,6 +12903,7 @@ MonoBehaviour:
   liftable: 1
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -15641,6 +15652,7 @@ MonoBehaviour:
   liftable: 1
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -18451,6 +18463,7 @@ MonoBehaviour:
   liftable: 1
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
