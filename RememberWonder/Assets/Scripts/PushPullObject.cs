@@ -136,7 +136,7 @@ public class PushPullObject : MonoBehaviour
         player.PulledObject = this;
 
         // !!! QUICK AND DIRTY FIX for camera collision; delete later? !!!
-        tag = "Player";
+        if (liftable) tag = "Player";
 
         InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformedWhileRegistered;
     }
@@ -152,6 +152,6 @@ public class PushPullObject : MonoBehaviour
         player = null;
 
         //!!! QUICK AND DIRTY FIX for camera collision; delete later? !!!
-        tag = initTag;
+        if (liftable) tag = initTag;
     }
 }
