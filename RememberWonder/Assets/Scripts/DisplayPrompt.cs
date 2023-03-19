@@ -150,7 +150,7 @@ public class DisplayPrompt : MonoBehaviour
         if (shouldAppear && activePromptDisplayer == this && promptObj.activeSelf)
             return;
 
-        PromptStateChange?.Invoke(shouldAppear, triggerer, promptObj.activeSelf);
+        //PromptStateChange?.Invoke(shouldAppear, triggerer, promptObj.activeSelf);
 
         if (setActivePrompt)
             activePromptDisplayer = newActivePrompt;
@@ -180,11 +180,16 @@ public class DisplayPrompt : MonoBehaviour
             }
 
             promptCorout = StartCoroutine(PromptAppear());
+            //Wait a little to let any false positives settle down before triggering a state change.
+            Coroutilities.DoAfterDelayFrames(this,
+                () => PromptStateChange?.Invoke(true, triggerer, promptObj.activeSelf),
+                3);
         }
         else
         {
             Coroutilities.TryStopCoroutine(this, ref followCorout);
             promptCorout = StartCoroutine(PromptDisappear());
+            PromptStateChange?.Invoke(false, triggerer, promptObj.activeSelf);
         }
     }
 
