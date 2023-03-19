@@ -139,14 +139,18 @@ public class DisplayPrompt : MonoBehaviour
     private void TriggerPromptChange(bool shouldAppear, bool setActivePrompt,
         DisplayPrompt newActivePrompt = null, Collider triggerer = null)
     {
-        PromptStateChange?.Invoke(shouldAppear, triggerer, promptObj.activeSelf);
-
         if (triggerer) lastKnownTriggerer = triggerer;
+        //print($"<color=#0F0>{transform.parent.parent.name} Prompt change triggered. " +
+        //    $"Appearing: {shouldAppear}. Is active prompt: {activePromptDisplayer == this}. " +
+        //    $"Prompt obj active: {promptObj.activeSelf}. " +
+        //    $"Triggerer is \"{triggerer}\"</color>");
 
         //If we should appear but we're already appearing/appeared, no need to do anything.
         //  Preventing disappear redundancy is harder, has side effects, and *should* be unnecessary. Should.
         if (shouldAppear && activePromptDisplayer == this && promptObj.activeSelf)
             return;
+
+        PromptStateChange?.Invoke(shouldAppear, triggerer, promptObj.activeSelf);
 
         if (setActivePrompt)
             activePromptDisplayer = newActivePrompt;
