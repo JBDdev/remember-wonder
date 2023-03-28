@@ -230,8 +230,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 3018399342850743478}
+  shadow: {fileID: 0}
+  shadowFloorOffset: 0
   rotateSpeed: 30
   rotateAxis: {x: 0, y: 1, z: 0}
+  shadowRotateAxis: {x: 0, y: 0, z: 1}
   bobAmount: 0.1
   bobSpeed: 2
 --- !u!1 &3914002537868354355
@@ -343,7 +346,7 @@ MonoBehaviour:
   accModifier: 50
   pullingObject: 0
   directionLastFrame: {x: 0, y: 0, z: 0}
-  dirChangeThreshold: 0.01
+  dirChangeThreshold: 0.1
   airFriction: 0.8
   visualizeMoveInput: 1
   jumpForce: 350
@@ -357,6 +360,8 @@ MonoBehaviour:
   characterModel: {fileID: 1057102758488478985}
   dropLocation: {fileID: 8189179929393414955}
   cameraPivot: {fileID: 3914002537868354355}
+  shadow: {fileID: 0}
+  shadowFloorOffset: 0.01
   heldObject: {fileID: 0}
   pushPullObject: {fileID: 0}
   anim: {fileID: 0}
