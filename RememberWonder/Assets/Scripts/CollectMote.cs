@@ -38,7 +38,7 @@ public class CollectMote : MonoBehaviour
         //TODO: On scene startup, check saved data to see if this mote's been collected; maybe each mote has an ID?
         MoteSpawned?.Invoke(this, collected);
 
-        if (!collected)
+        if (!collected && idleAudio != AudioList.None)
         {
             Coroutilities.DoAfterDelayFrames(this,
                 () => idleAudioSource = AudioHub.Inst.Play(idleAudio, idleAudioSettings, transform.position),
