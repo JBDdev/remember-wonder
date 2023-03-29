@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [Space(5)]
     [SerializeField] Vector3 directionLastFrame;
     [SerializeField] float dirChangeThreshold = 0.01f;
-    [SerializeField] [Range(0, 1)] float airFriction = 1f;
+    [SerializeField][Range(0, 1)] float airFriction = 1f;
 #if UNITY_EDITOR
     [Space(5)]
     [SerializeField] bool visualizeMoveInput;
@@ -122,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
             paused = true;
             InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
             InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
-            Time.timeScale= 0f;
+            Time.timeScale = 0f;
         }
     }
 
@@ -189,7 +189,7 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
         }
 
-        
+
     }
 
     private void ApplyMoveForce(bool grounded)
@@ -262,6 +262,7 @@ public class PlayerMovement : MonoBehaviour
         restrictedDir.z *= PulledObject.GrabMoveMultipliers.z;
 
         //-- Restrict axis movement via max pull distance --//
+        if (PulledObject.liftable) return;
 
         //X is beyond the negative max distance
         if (restrictedDir.x < 0
