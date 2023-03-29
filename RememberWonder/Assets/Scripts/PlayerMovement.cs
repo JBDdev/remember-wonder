@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [Space(5)]
     [SerializeField] Vector3 directionLastFrame;
     [SerializeField] float dirChangeThreshold = 0.01f;
-    [SerializeField][Range(0, 1)] float airFriction = 1f;
+    [SerializeField] [Range(0, 1)] float airFriction = 1f;
 #if UNITY_EDITOR
     [Space(5)]
     [SerializeField] bool visualizeMoveInput;
@@ -186,14 +186,13 @@ public class PlayerMovement : MonoBehaviour
         if (direction.sqrMagnitude > minRotationDistance)
             RotateCharacterModel(direction.normalized);
 
-        ApplyPullRestrictions(ref direction);
+        ApplyPullRestrictions(ref direction, grounded);
         if (direction == Vector3.zero) return;
 
         float percentHeld = direction.magnitude;
 
         //If we are not grounded and moving in a significantly different direction (axis delta > deadzone),
-        if (!IsGrounded()
-            && (Mathf.Abs(directionLastFrame.x - direction.x) > dirChangeThreshold
+        if (!grounded && (Mathf.Abs(directionLastFrame.x - direction.x) > dirChangeThreshold
             || Mathf.Abs(directionLastFrame.z - direction.z) > dirChangeThreshold))
         {
             rb.velocity = new Vector3(rb.velocity.x * airFriction, rb.velocity.y, rb.velocity.z * airFriction);
@@ -227,12 +226,18 @@ public class PlayerMovement : MonoBehaviour
         return groundedCheck && groundHit.normal.y >= maxIncline;
     }
 
-    private void ApplyPullRestrictions(ref Vector3 restrictedDir)
+    private void ApplyPullRestrictions(ref Vector3 restrictedDir, bool grounded)
     {
         //If not pulling, unrestrict all move axes and bail out
         if (!pullingObject)
         {
             rb.constraints &= ~(RigidbodyConstraints.FreezePosition);
+            return;
+        }
+        //Otherwise, if this object isn't liftable, we shouldn't be able to pull it if we're not grounded
+        if (!grounded && !PulledObject.liftable)
+        {
+            restrictedDir = Vector3.zero;
             return;
         }
 

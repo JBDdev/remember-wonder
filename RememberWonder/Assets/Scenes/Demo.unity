@@ -261,8 +261,11 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0, z: 0}
   grabPrompt: {fileID: 1272959417}
   liftable: 1
+  liftedTag:
+    str: CurrentlyLifted
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -315,19 +318,6 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
---- !u!65 &28583026
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 28583021}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.5, y: 2.5, z: 2.5}
-  m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &28583027
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -631,8 +621,11 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0, z: 0}
   grabPrompt: {fileID: 898162288}
   liftable: 1
+  liftedTag:
+    str: CurrentlyLifted
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -685,19 +678,6 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
---- !u!65 &75566651
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 75566646}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.5, y: 2.5, z: 2.5}
-  m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &75566652
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1041,8 +1021,11 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0, z: 0}
   grabPrompt: {fileID: 2043549643}
   liftable: 0
+  liftedTag:
+    str: 
   grabMoveMultipliers: {x: 0.5, y: 0, z: 0}
   maxPullDistance: 1.75
+  physMat: {fileID: 0}
   liftAudio: 0
   liftAudioSettings:
     loop: 0
@@ -1125,8 +1108,11 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0, z: 0}
   grabPrompt: {fileID: 470639459}
   liftable: 0
+  liftedTag:
+    str: 
   grabMoveMultipliers: {x: 0.5, y: 0, z: 0}
   maxPullDistance: 1
+  physMat: {fileID: 0}
   liftAudio: 0
   liftAudioSettings:
     loop: 0
@@ -1919,8 +1905,11 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0, z: 0}
   grabPrompt: {fileID: 83386696}
   liftable: 1
+  liftedTag:
+    str: CurrentlyLifted
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -1973,19 +1962,6 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
---- !u!65 &174917687
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 174917682}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.5, y: 2.5, z: 2.5}
-  m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &174917688
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8088,8 +8064,11 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0, z: 0}
   grabPrompt: {fileID: 815358441}
   liftable: 1
+  liftedTag:
+    str: CurrentlyLifted
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -8142,19 +8121,6 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
---- !u!65 &951395740
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 951395735}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.5, y: 2.5, z: 2.5}
-  m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &951395741
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8561,15 +8527,15 @@ PrefabInstance:
       objectReference: {fileID: 1123410478}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerPosOffset.y
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.x
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.y
-      value: -1
+      value: -1.75
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.z
@@ -8601,15 +8567,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerPosOffset.y
-      value: -0.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.x
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.y
-      value: -0.8
+      value: -1.75
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.z
@@ -8641,11 +8607,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.041254085
+      value: 0.04355867
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.007394186
+      value: 0.0005760044
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.z
@@ -8657,7 +8623,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0013749888
+      value: 0.005920443
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8779,8 +8745,11 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0, z: 0}
   grabPrompt: {fileID: 268595420}
   liftable: 1
+  liftedTag:
+    str: CurrentlyLifted
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -8833,19 +8802,6 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
---- !u!65 &1004139376
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1004139371}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.5, y: 2.5, z: 2.5}
-  m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &1004139377
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10413,8 +10369,11 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0, z: 0}
   grabPrompt: {fileID: 263945926}
   liftable: 1
+  liftedTag:
+    str: CurrentlyLifted
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -10467,19 +10426,6 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
---- !u!65 &1207048794
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1207048789}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.5, y: 2.5, z: 2.5}
-  m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &1207048795
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10669,8 +10615,11 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0, z: 0}
   grabPrompt: {fileID: 777575856}
   liftable: 0
+  liftedTag:
+    str: 
   grabMoveMultipliers: {x: 0.5, y: 0, z: 0}
   maxPullDistance: 2.5
+  physMat: {fileID: 0}
   liftAudio: 0
   liftAudioSettings:
     loop: 0
@@ -11164,8 +11113,11 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0, z: 0}
   grabPrompt: {fileID: 702531429}
   liftable: 1
+  liftedTag:
+    str: CurrentlyLifted
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -11218,19 +11170,6 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
---- !u!65 &1263598979
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263598974}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.5, y: 2.5, z: 2.5}
-  m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &1263598980
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12402,15 +12341,15 @@ PrefabInstance:
       objectReference: {fileID: 782637439}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerPosOffset.y
-      value: -0.5
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.x
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.y
-      value: -1
+      value: -1.75
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.z
@@ -12442,15 +12381,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerPosOffset.y
-      value: -0.4
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.x
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.y
-      value: -0.8
+      value: -1.75
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.z
@@ -12482,11 +12421,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.040823914
+      value: 0.04309664
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.0072758393
+      value: 0.0004576575
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.z
@@ -12498,7 +12437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0038346094
+      value: 0.00093811774
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12895,8 +12834,11 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0, z: 0}
   grabPrompt: {fileID: 349470966}
   liftable: 1
+  liftedTag:
+    str: CurrentlyLifted
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -12949,19 +12891,6 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
---- !u!65 &1356082295
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1356082290}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.5, y: 2.5, z: 2.5}
-  m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &1356082296
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15643,8 +15572,11 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0, z: 0}
   grabPrompt: {fileID: 2066998997}
   liftable: 1
+  liftedTag:
+    str: CurrentlyLifted
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -15697,19 +15629,6 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
---- !u!65 &1690049727
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1690049722}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.5, y: 2.5, z: 2.5}
-  m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &1690049728
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18453,8 +18372,11 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0, z: 0}
   grabPrompt: {fileID: 149776160}
   liftable: 1
+  liftedTag:
+    str: CurrentlyLifted
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 0}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -18507,19 +18429,6 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
---- !u!65 &2079328648
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2079328643}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.5, y: 2.5, z: 2.5}
-  m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &2079328649
 Rigidbody:
   m_ObjectHideFlags: 0
