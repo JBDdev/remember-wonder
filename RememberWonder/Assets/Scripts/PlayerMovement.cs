@@ -35,6 +35,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject characterModel;
     [SerializeField] DropPointTrigger dropLocation;
     [SerializeField] GameObject cameraPivot;
+    [SerializeField] Transform shadow;
+    [SerializeField] float shadowFloorOffset;
+    [SerializeField] LayerMask shadowLayerMask = ~0;
 
     [Header("External References")]
     [SerializeField] GameObject heldObject;
@@ -161,6 +164,16 @@ public class PlayerMovement : MonoBehaviour
 
     //---Core Methods---//
 
+    private void Update()
+    {
+        //Update Drop Shadow 
+        RaycastHit hit;
+        if (shadow && Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, shadowLayerMask, QueryTriggerInteraction.Ignore))
+        {
+            //float yPos = hit.collider.bounds.center.y + hit.collider.bounds.extents.y;
+            shadow.position = new Vector3(hit.point.x, hit.point.y + shadowFloorOffset, hit.point.z);
+        }
+    }
     void FixedUpdate()
     {
         var grounded = IsGrounded();
@@ -175,6 +188,8 @@ public class PlayerMovement : MonoBehaviour
             //Gravity's already applied once by default; if 1.01, apply the extra 0.01
             rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
         }
+
+        
     }
 
     private void ApplyMoveForce(bool grounded)
