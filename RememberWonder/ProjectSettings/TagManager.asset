@@ -8,6 +8,7 @@ TagManager:
   - Liftable
   - PushPull
   - MemoryMote
+  - CurrentlyLifted
   layers:
   - Default
   - TransparentFX
