@@ -6,13 +6,15 @@ using UnityEngine;
 
 public class PushPullObject : MonoBehaviour
 {
-    [SerializeField][ReadOnlyInspector] private PlayerMovement player;
-    [SerializeField][ReadOnlyInspector] private bool grabbed;
+    [SerializeField] [ReadOnlyInspector] private PlayerMovement player;
+    [SerializeField] [ReadOnlyInspector] private bool grabbed;
     [ReadOnlyInspector] public Vector3 defaultPos;
     [SerializeField] private DisplayPrompt grabPrompt;
     public bool liftable;
+    [SerializeField] private TagString liftedTag;
     [SerializeField] private Vector3 grabMoveMultipliers = Vector3.one;
     public float maxPullDistance;
+    [SerializeField] PhysicMaterial physMat;
     [Header("Audio")]
     [SerializeField] private AudioList liftAudio;
     [SerializeField] private SourceSettings liftAudioSettings;
@@ -65,6 +67,8 @@ public class PushPullObject : MonoBehaviour
             {
                 Destroy(rb);
                 transform.rotation = player.CharacterModel.transform.rotation;
+                foreach (BoxCollider b in transform.GetComponents<BoxCollider>())
+                    b.material = physMat;
             }
 
             else
@@ -74,6 +78,8 @@ public class PushPullObject : MonoBehaviour
 
                 rb = transform.gameObject.AddComponent<Rigidbody>();
                 rb.mass = initMass;
+                foreach (BoxCollider b in transform.GetComponents<BoxCollider>())
+                    b.material = null;
             }
         }
 
@@ -123,15 +129,14 @@ public class PushPullObject : MonoBehaviour
     {
         //Try to get a reference to the player from the collider. Only move on if we succeed.
         //  If we already have a player ref, no need to re-register.
-        if (player || !registeredCollider.TryGetComponent(out player)) return;
+        if (player || !registeredCollider.TryGetComponent(out player)) { print("register failed"); return; }
 
         /*//If the player's already grabbing an object, abort registration (but don't nullify player? why not?).
         if (player.PulledObject || player.pullingObject || !player.IsGrounded()) return;*/
 
         player.PulledObject = this;
 
-        // !!! QUICK AND DIRTY FIX for camera collision; delete later? !!!
-        tag = "Player";
+        if (liftable && !string.IsNullOrEmpty(liftedTag)) tag = liftedTag;
 
         InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformedWhileRegistered;
     }
@@ -146,7 +151,6 @@ public class PushPullObject : MonoBehaviour
         player.PulledObject = null;
         player = null;
 
-        //!!! QUICK AND DIRTY FIX for camera collision; delete later? !!!
-        tag = initTag;
+        if (liftable) tag = initTag;
     }
 }
