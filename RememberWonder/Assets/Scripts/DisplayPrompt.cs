@@ -23,9 +23,11 @@ public class DisplayPrompt : MonoBehaviour
     [SerializeField] private float overshootBounceSpeed;
 
     private Vector3 initScale;
+    private Vector3 promptOffset;
+
     private Coroutine promptCorout;
     private Coroutine followCorout;
-    private Vector3 promptOffset;
+    private Coroutine appearBufferCorout;
 
     private Collider lastKnownTriggerer;
 
@@ -41,6 +43,7 @@ public class DisplayPrompt : MonoBehaviour
     /// </summary>
     public System.Action<bool, Collider, bool> PromptStateChange;
 
+    public bool IsActivePrompt { get => activePromptDisplayer == this; }
     public PushPullObject GrabbablePromptOwner { get => grabbablePromptOwner; set => grabbablePromptOwner = value; }
 
     //--- Setup ---//
@@ -92,7 +95,7 @@ public class DisplayPrompt : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (somethingIsGrabbed || !activatorTags.Contains(other.tag) || activePromptDisplayer != this) return;
+        if (somethingIsGrabbed || !activatorTags.Contains(other.tag) || !IsActivePrompt) return;
 
         //If other's an activator and we're the active prompt, disappear and make us not the active prompt.
         TriggerPromptChange(false, true, null, other);
@@ -101,7 +104,7 @@ public class DisplayPrompt : MonoBehaviour
     private void Update()
     {
         //If this is the active prompt...
-        if (activePromptDisplayer == this)
+        if (IsActivePrompt)
         {
             //...but it's not showing (and isn't grabbed, if applicable),
             if (!promptObj.activeSelf && (!grabbablePromptOwner || !grabbablePromptOwner.IsGrabbed))
@@ -109,12 +112,15 @@ public class DisplayPrompt : MonoBehaviour
                 //appear without setting (no need, it's already set).
                 TriggerPromptChange(true, false);
             }
+
             //...and it's owner is currently grabbed, disappear, but remain the active prompt.
             //  Only run once by checking if it's already disappeared or on its way.
-            else if (grabbablePromptOwner && grabbablePromptOwner.IsGrabbed && promptObj.activeSelf && promptCorout == null)
+            else if (grabbablePromptOwner && grabbablePromptOwner.IsGrabbed
+                && promptObj.activeSelf && promptCorout == null)
             {
                 TriggerPromptChange(false, false);
             }
+
             //...and we're showing...
             else if (promptObj.activeSelf)
             {
@@ -140,14 +146,15 @@ public class DisplayPrompt : MonoBehaviour
         DisplayPrompt newActivePrompt = null, Collider triggerer = null)
     {
         if (triggerer) lastKnownTriggerer = triggerer;
-        //print($"<color=#0F0>{transform.parent.parent.name} Prompt change triggered. " +
-        //    $"Appearing: {shouldAppear}. Is active prompt: {activePromptDisplayer == this}. " +
-        //    $"Prompt obj active: {promptObj.activeSelf}. " +
-        //    $"Triggerer is \"{triggerer}\"</color>");
+
+        /*print($"<color=#0F0>{transform.parent.parent.name} Prompt change triggered. " +
+            $"Appearing: {shouldAppear}. Is active prompt: {IsActivePrompt}. " +
+            $"Prompt obj active: {promptObj.activeSelf}. " +
+            $"Triggerer is \"{triggerer}\"</color>");*/
 
         //If we should appear but we're already appearing/appeared, no need to do anything.
         //  Preventing disappear redundancy is harder, has side effects, and *should* be unnecessary. Should.
-        if (shouldAppear && activePromptDisplayer == this && promptObj.activeSelf)
+        if (shouldAppear && IsActivePrompt && promptObj.activeSelf)
             return;
 
         //PromptStateChange?.Invoke(shouldAppear, triggerer, promptObj.activeSelf);
@@ -175,19 +182,28 @@ public class DisplayPrompt : MonoBehaviour
                             if (!triggerer) return;
                             promptObj.transform.position = triggerer.transform.position + offsetFromTriggerer;
                         },
-                        () => activePromptDisplayer != this);
+                        () => !IsActivePrompt);
                     break;
             }
 
             promptCorout = StartCoroutine(PromptAppear());
             //Wait a little to let any false positives settle down before triggering a state change.
-            Coroutilities.DoAfterDelayFrames(this,
-                () => PromptStateChange?.Invoke(true, triggerer, promptObj.activeSelf),
-                3);
+            if (appearBufferCorout == null)
+            {
+                appearBufferCorout = Coroutilities.DoAfterDelayFrames(this,
+                        () =>
+                        {
+                            PromptStateChange?.Invoke(true, triggerer, promptObj.activeSelf);
+                            appearBufferCorout = null;
+                        },
+                        3);
+            }
         }
         else
         {
             Coroutilities.TryStopCoroutine(this, ref followCorout);
+            Coroutilities.TryStopCoroutine(this, ref appearBufferCorout);
+
             promptCorout = StartCoroutine(PromptDisappear());
             PromptStateChange?.Invoke(false, triggerer, promptObj.activeSelf);
         }

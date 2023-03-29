@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSpeed;
     [SerializeField] float accModifier;
     public bool pullingObject = false;
+#if UNITY_EDITOR
+    [SerializeField][ReadOnlyInspector] private PushPullObject _PulledObjPreview = null;
+#endif
     [Space(5)]
     [SerializeField] Vector3 directionLastFrame;
     [SerializeField] float dirChangeThreshold = 0.01f;
@@ -166,6 +169,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+#if UNITY_EDITOR
+        _PulledObjPreview = PulledObject;
+#endif
+
         //Update Drop Shadow 
         RaycastHit hit;
         if (shadow && Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, shadowLayerMask, QueryTriggerInteraction.Ignore))
@@ -188,8 +195,6 @@ public class PlayerMovement : MonoBehaviour
             //Gravity's already applied once by default; if 1.01, apply the extra 0.01
             rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
         }
-
-
     }
 
     private void ApplyMoveForce(bool grounded)

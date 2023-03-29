@@ -21,6 +21,10 @@ public class PushPullObject : MonoBehaviour
     [Space(5)]
     [SerializeField] private AudioList putDownAudio;
     [SerializeField] private SourceSettings putDownAudioSettings;
+#if UNITY_EDITOR
+    [Header("EDITOR ONLY")]
+    [SerializeField] bool printRegistrationResults;
+#endif
 
     Rigidbody rb;
 
@@ -115,11 +119,22 @@ public class PushPullObject : MonoBehaviour
 
     private void OnGrabPromptStateChange(bool appearing, Collider changeTriggerer, bool currentActive)
     {
+#if UNITY_EDITOR
+        if (printRegistrationResults)
+        {
+            print($"{name}: <color={(appearing ? "#0F0" : "#FF0")}>Prompt state changed @ {Time.timeAsDouble}!</color> " +
+                $"<color=#777>appearing: {appearing}, changeTriggerer: {(changeTriggerer ? changeTriggerer : "null")}, " +
+                $"currentActive: {currentActive}</color>" +
+                $"\n\t{(appearing ? $"Registering? {!!changeTriggerer}" : $"Deregistering? {!grabPrompt.IsActivePrompt}")}");
+        }
+#endif
+
         if (appearing && changeTriggerer)
         {
             Register(changeTriggerer);
         }
-        else if (!appearing)
+        //Don't deregister if the prompt has disappeared, but is still the active prompt.
+        else if (!appearing && !grabPrompt.IsActivePrompt)
         {
             Deregister();
         }
@@ -130,9 +145,6 @@ public class PushPullObject : MonoBehaviour
         //Try to get a reference to the player from the collider. Only move on if we succeed.
         //  If we already have a player ref, no need to re-register.
         if (player || !registeredCollider.TryGetComponent(out player)) return;
-
-        /*//If the player's already grabbing an object, abort registration (but don't nullify player? why not?).
-        if (player.PulledObject || player.pullingObject || !player.IsGrounded()) return;*/
 
         player.PulledObject = this;
 
