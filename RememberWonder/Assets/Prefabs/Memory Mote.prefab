@@ -5097,6 +5097,9 @@ MonoBehaviour:
   shadowRotateAxis: {x: 0, y: 0, z: 1}
   bobAmount: 0.1
   bobSpeed: 2
+  shadowLayerMask:
+    serializedVersion: 2
+    m_Bits: 55
 --- !u!1001 &4547846863025053634
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -263,9 +263,9 @@ MonoBehaviour:
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
   physMat: {fileID: 13400000, guid: 49e6e2e43aac342479c7f77fe5acdc4f, type: 2}
+  maxPullDistance: 10000
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -318,6 +318,7 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
+  printRegistrationResults: 0
 --- !u!54 &28583027
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -623,9 +624,9 @@ MonoBehaviour:
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
   physMat: {fileID: 13400000, guid: 49e6e2e43aac342479c7f77fe5acdc4f, type: 2}
+  maxPullDistance: 10000
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -678,6 +679,7 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
+  printRegistrationResults: 0
 --- !u!54 &75566652
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1023,9 +1025,9 @@ MonoBehaviour:
   liftable: 0
   liftedTag:
     str: 
-  grabMoveMultipliers: {x: 1, y: 0, z: 0}
-  maxPullDistance: 1.75
   physMat: {fileID: 0}
+  maxPullDistance: 1.75
+  grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
     loop: 0
@@ -1078,6 +1080,7 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
+  printRegistrationResults: 0
 --- !u!65 &95982023
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1110,9 +1113,9 @@ MonoBehaviour:
   liftable: 0
   liftedTag:
     str: 
-  grabMoveMultipliers: {x: 1, y: 0, z: 0}
-  maxPullDistance: 1
   physMat: {fileID: 0}
+  maxPullDistance: 1
+  grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
     loop: 0
@@ -1165,6 +1168,7 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
+  printRegistrationResults: 0
 --- !u!114 &95982027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1907,9 +1911,9 @@ MonoBehaviour:
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
   physMat: {fileID: 13400000, guid: 49e6e2e43aac342479c7f77fe5acdc4f, type: 2}
+  maxPullDistance: 10000
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -1962,6 +1966,7 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
+  printRegistrationResults: 0
 --- !u!54 &174917688
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8066,9 +8071,9 @@ MonoBehaviour:
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
   physMat: {fileID: 13400000, guid: 49e6e2e43aac342479c7f77fe5acdc4f, type: 2}
+  maxPullDistance: 10000
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -8121,6 +8126,7 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
+  printRegistrationResults: 0
 --- !u!54 &951395741
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8747,9 +8753,9 @@ MonoBehaviour:
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
   physMat: {fileID: 13400000, guid: 49e6e2e43aac342479c7f77fe5acdc4f, type: 2}
+  maxPullDistance: 10000
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -8802,6 +8808,7 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
+  printRegistrationResults: 0
 --- !u!54 &1004139377
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10371,9 +10378,9 @@ MonoBehaviour:
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
   physMat: {fileID: 13400000, guid: 49e6e2e43aac342479c7f77fe5acdc4f, type: 2}
+  maxPullDistance: 10000
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -10426,6 +10433,7 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
+  printRegistrationResults: 0
 --- !u!54 &1207048795
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10617,9 +10625,9 @@ MonoBehaviour:
   liftable: 0
   liftedTag:
     str: 
-  grabMoveMultipliers: {x: 1, y: 0, z: 0}
-  maxPullDistance: 2.5
   physMat: {fileID: 0}
+  maxPullDistance: 2.5
+  grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
     loop: 0
@@ -10672,6 +10680,7 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
+  printRegistrationResults: 0
 --- !u!65 &1243906477
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11115,9 +11124,9 @@ MonoBehaviour:
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
   physMat: {fileID: 13400000, guid: 49e6e2e43aac342479c7f77fe5acdc4f, type: 2}
+  maxPullDistance: 10000
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -11170,6 +11179,7 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
+  printRegistrationResults: 0
 --- !u!54 &1263598980
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12836,9 +12846,9 @@ MonoBehaviour:
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
   physMat: {fileID: 13400000, guid: 49e6e2e43aac342479c7f77fe5acdc4f, type: 2}
+  maxPullDistance: 10000
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -12891,6 +12901,7 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
+  printRegistrationResults: 0
 --- !u!54 &1356082296
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15574,9 +15585,9 @@ MonoBehaviour:
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
   physMat: {fileID: 13400000, guid: 49e6e2e43aac342479c7f77fe5acdc4f, type: 2}
+  maxPullDistance: 10000
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -15629,6 +15640,7 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
+  printRegistrationResults: 0
 --- !u!54 &1690049728
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17218,7 +17230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 738461852693228245, guid: 72ad11dd314ba4244980827d8de211a5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.15
+      value: 15.44
       objectReference: {fileID: 0}
     - target: {fileID: 738461852693228245, guid: 72ad11dd314ba4244980827d8de211a5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -17251,6 +17263,10 @@ PrefabInstance:
     - target: {fileID: 738461852693228245, guid: 72ad11dd314ba4244980827d8de211a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334391588535324519, guid: 72ad11dd314ba4244980827d8de211a5, type: 3}
+      propertyPath: shadowFloorOffset
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 9080327578356246064, guid: 72ad11dd314ba4244980827d8de211a5, type: 3}
       propertyPath: m_Name
@@ -18374,9 +18390,9 @@ MonoBehaviour:
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
   physMat: {fileID: 13400000, guid: 49e6e2e43aac342479c7f77fe5acdc4f, type: 2}
+  maxPullDistance: 10000
+  grabMoveMultipliers: {x: 1, y: 1, z: 1}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
@@ -18429,6 +18445,7 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
+  printRegistrationResults: 0
 --- !u!54 &2079328649
 Rigidbody:
   m_ObjectHideFlags: 0
