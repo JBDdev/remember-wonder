@@ -36,36 +36,37 @@ public class EndLevelTrigger : MonoBehaviour
 
     void HandleEndScreen() 
     {
-        //Run the call to clear the UI
-        moteCanvas = GameObject.Find("MoteCanvas");
-        //Debug.Log(moteCanvas);
-        moteCanvas.SetActive(false);
+        ////Run the call to clear the UI
+        //moteCanvas = GameObject.Find("MoteCanvas");
+        ////Debug.Log(moteCanvas);
+        //moteCanvas.SetActive(false);
 
-        //Run the call to stop player input
-        GameObject.Find("Player Character").gameObject.GetComponent<PlayerMovement>().TogglePause();
+        ////Run the call to stop player input
+        //GameObject.Find("Player Character").gameObject.GetComponent<PlayerMovement>().TogglePause();
 
-        int motesToRemove = 16 - moteCanvas.GetComponent<MoteUIController>().CollectedCount;
-        //Add the correct # of piece icons
-        for (int i = 0; i < motesToRemove; i++) 
-        {           
-            resultsScreen.transform.GetChild(2).GetChild(15-i).gameObject.SetActive(false);
-        }
+        //int motesToRemove = 16 - moteCanvas.GetComponent<MoteUIController>().CollectedCount;
+        ////Add the correct # of piece icons
+        //for (int i = 0; i < motesToRemove; i++) 
+        //{           
+        //    resultsScreen.transform.GetChild(2).GetChild(15-i).gameObject.SetActive(false);
+        //}
 
-        //Run the call to pull up end screen
-        resultsScreen.SetActive(true);
+        ////Run the call to pull up end screen
+        //resultsScreen.SetActive(true);
 
-        //Loop thru and fill in each piece + play audio
-        FillPiece(0);
+        ////Loop thru and fill in each piece + play audio
+        //FillPiece(0);
 
 
-        while (filledPieces < moteCanvas.GetComponent<MoteUIController>().CollectedCount)
-        {
-            //Coroutilities.DoAfterDelay(this, () => FillPiece(filledPieces), delayNextFill);
-            FillPiece(filledPieces);
-        }
+        //while (filledPieces < moteCanvas.GetComponent<MoteUIController>().CollectedCount)
+        //{
+        //    //Coroutilities.DoAfterDelay(this, () => FillPiece(filledPieces), delayNextFill);
+        //    FillPiece(filledPieces);
+        //}
 
         //Assign Press A to Continue and make that prompt show up on screen
-        Invoke("EnableInput", resultsScreen.transform.GetChild(2).childCount * delayNextFill);
+        //Invoke("EnableInput", resultsScreen.transform.GetChild(2).childCount * delayNextFill);
+        OnPressContinue(new UnityEngine.InputSystem.InputAction.CallbackContext());
     }
     void FillPiece(int index) 
     {
