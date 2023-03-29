@@ -2226,8 +2226,11 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0, z: 0}
   grabPrompt: {fileID: 1603679168}
   liftable: 0
+  liftedTag:
+    str: 
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   maxPullDistance: 5
+  physMat: {fileID: 0}
   liftAudio: 0
   liftAudioSettings:
     loop: 0
@@ -3214,8 +3217,11 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0, z: 0}
   grabPrompt: {fileID: 76999346}
   liftable: 1
+  liftedTag:
+    str: 
   grabMoveMultipliers: {x: 1, y: 1, z: 1}
   maxPullDistance: 10000
+  physMat: {fileID: 13400000, guid: 49e6e2e43aac342479c7f77fe5acdc4f, type: 2}
   liftAudio: 5
   liftAudioSettings:
     loop: 0
