@@ -161,6 +161,11 @@ namespace NaughtyAttributes.Editor
 
                 EditorGUI.BeginDisabledGroup(!buttonEnabled);
 
+                if (buttonAttribute.TopPadding > 0)
+                {
+                    EditorGUILayout.Space(buttonAttribute.TopPadding);
+                }
+
                 if (GUILayout.Button(buttonText, _buttonStyle))
                 {
                     object[] defaultParams = methodInfo.GetParameters().Select(p => p.DefaultValue).ToArray();

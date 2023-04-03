@@ -40,7 +40,7 @@ public class InitGrabIndicationRefs : MonoBehaviour
     [SerializeField][HideInInspector] private bool prevUsePromptTriggerPosOffset;
     [SerializeField][HideInInspector] private Vector3 prevPromptTriggerPosOffset;
 
-    [Button("Try Get References", EButtonEnableMode.Editor)]
+    [Button("Try Get References", EButtonEnableMode.Editor, 15)]
     private void TryGetRefs()
     {
         if (transform.parent)
@@ -56,7 +56,7 @@ public class InitGrabIndicationRefs : MonoBehaviour
         }
     }
 
-    [Button("Give Owner This Prompt Reference", EButtonEnableMode.Editor)]
+    [Button("Give Owner This Prompt Reference", EButtonEnableMode.Editor, 3)]
     private void TryGiveOwnerPromptRef()
     {
         if (!promptController)
@@ -78,7 +78,7 @@ public class InitGrabIndicationRefs : MonoBehaviour
         serializedOwner.ApplyModifiedProperties();
     }
 
-    [Button("Apply Offsets to Triggers", EButtonEnableMode.Editor)]
+    [Button("Apply Offsets to Triggers", EButtonEnableMode.Editor, 3)]
     private void TryApply()
     {
         //If refs are the same,

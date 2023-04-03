@@ -23,11 +23,13 @@ namespace NaughtyAttributes
     {
         public string Text { get; private set; }
         public EButtonEnableMode SelectedEnableMode { get; private set; }
+        public float TopPadding { get; private set; }
 
-        public ButtonAttribute(string text = null, EButtonEnableMode enabledMode = EButtonEnableMode.Always)
+        public ButtonAttribute(string text = null, EButtonEnableMode enabledMode = EButtonEnableMode.Always, float topPadding = 0)
         {
             this.Text = text;
             this.SelectedEnableMode = enabledMode;
+            this.TopPadding = topPadding;
         }
     }
 }
