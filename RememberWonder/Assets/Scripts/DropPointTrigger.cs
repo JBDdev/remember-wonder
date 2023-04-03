@@ -8,14 +8,24 @@ public class DropPointTrigger : MonoBehaviour
     bool invalidDropPosition;
     public bool InvalidDropPosition { get { return invalidDropPosition; } }
 
+    [SerializeField] Renderer outlineRendCache;
+    [SerializeField] Renderer arrowRendCache;
+    [Space(5)]
     [SerializeField] UHashSet<TagString> ignoredTags;
     [SerializeField] UHashSet<Collider> collidingObjects;
-    [SerializeField] Vector4 validPlacement;
-    [SerializeField] Vector4 invalidPlacement;
+    [Space(5)]
+    [SerializeField] Color32 validPlacement = Color.white;
+    [SerializeField] Color32 invalidPlacement = Color.white;
+    [SerializeField] bool inheritAlpha = true;
+
+    float outlineInitAlpha;
+    float arrowInitAlpha;
 
     void Start()
     {
         collidingObjects = new();
+        outlineInitAlpha = ((Color32)outlineRendCache.material.GetColor("_Color")).a;
+        arrowInitAlpha = ((Color32)arrowRendCache.material.color).a;
     }
 
     void FixedUpdate()
@@ -27,13 +37,23 @@ public class DropPointTrigger : MonoBehaviour
 
         if (invalidDropPosition)
         {
-            transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", invalidPlacement);
-            transform.GetChild(0).GetComponent<Renderer>().material.color = invalidPlacement;
+            outlineRendCache.material.SetColor("_Color", invalidPlacement.Adjust(3, (byte)(inheritAlpha
+                ? outlineInitAlpha
+                : invalidPlacement.a)));
+
+            arrowRendCache.material.color = invalidPlacement.Adjust(3, (byte)(inheritAlpha
+                ? arrowInitAlpha
+                : invalidPlacement.a));
         }
         else
         {
-            transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", validPlacement);
-            transform.GetChild(0).GetComponent<Renderer>().material.color = validPlacement;
+            outlineRendCache.material.SetColor("_Color", validPlacement.Adjust(3, (byte)(inheritAlpha
+                ? outlineInitAlpha
+                : invalidPlacement.a)));
+
+            arrowRendCache.material.color = validPlacement.Adjust(3, (byte)(inheritAlpha
+                ? arrowInitAlpha
+                : invalidPlacement.a));
         }
     }
 

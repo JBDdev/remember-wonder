@@ -233,8 +233,8 @@ MeshRenderer:
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
@@ -287,6 +287,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03fc6a460f063954eaebd17b0e9f2536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlineRendCache: {fileID: 1244827308449117351}
+  arrowRendCache: {fileID: 4154762973627017177}
   ignoredTags:
     _serializedValues:
     - value:
@@ -299,8 +301,13 @@ MonoBehaviour:
       index: 1
   collidingObjects:
     _serializedValues: []
-  validPlacement: {x: 0, y: 255, z: 255, w: 255}
-  invalidPlacement: {x: 255, y: 0, z: 0, w: 255}
+  validPlacement:
+    serializedVersion: 2
+    rgba: 2583691008
+  invalidPlacement:
+    serializedVersion: 2
+    rgba: 2566914303
+  inheritAlpha: 1
 --- !u!114 &3198252532447686491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,14 +323,14 @@ MonoBehaviour:
   model: {fileID: 3018399342850743478}
   shadow: {fileID: 0}
   shadowFloorOffset: 0
+  shadowLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   rotateSpeed: 30
   rotateAxis: {x: 0, y: 1, z: 0}
   shadowRotateAxis: {x: 0, y: 0, z: 1}
   bobAmount: 0.1
   bobSpeed: 2
-  shadowLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!1 &3914002537868354355
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,6 +683,11 @@ PrefabInstance:
 --- !u!4 &3018399342850743478 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0e06f61a93eb01348b864fe8bb9492ea, type: 3}
+  m_PrefabInstance: {fileID: 3344269381715196765}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4154762973627017177 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 0e06f61a93eb01348b864fe8bb9492ea, type: 3}
   m_PrefabInstance: {fileID: 3344269381715196765}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8488286938420105006

@@ -270,6 +270,18 @@ public static class UtilFunctions
         c[indexToAdjust] = addValue ? c[indexToAdjust] + value : value;
         return c;
     }
+    /// <remarks>
+    /// <b>Note this is for <see cref="Color32"/>s; values should be between 0 and 255.</b><br/>
+    /// Will return the color unchanged if <paramref name="indexToAdjust"/> is invalid (i&lt;0, i&gt;3).
+    /// </remarks>
+    /// <inheritdoc cref="Adjust(Color, int, float, bool)"/>
+    public static Color32 Adjust(this Color32 c, int indexToAdjust, byte value, bool addValue = false)
+    {
+        if (indexToAdjust < 0 || indexToAdjust > 3) return c;
+
+        c[indexToAdjust] = addValue ? (byte)(c[indexToAdjust] + value) : value;
+        return c;
+    }
 
     /// <summary>
     /// Sets one component (XYZ, 012) of a vector to <paramref name="value"/> and returns the result.
