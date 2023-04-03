@@ -28,13 +28,6 @@ public class GrabSparkleController : MonoBehaviour
     {
         if (!triggerCollider) return;
 
-        var serializedSelf = new UnityEditor.SerializedObject(this);
-
-        if (scaleOffsetOverride is Vector3 newScaleOffset)
-            serializedSelf.FindProperty("triggerSizeOffset").vector3Value = newScaleOffset;
-        if (posOffsetOverride is Vector3 newPosOffset)
-            serializedSelf.FindProperty("triggerPosOffset").vector3Value = newPosOffset;
-
         if (sparklingMeshRend)
         {
             triggerCollider.size = UtilFunctions.InverseScale(sparklingMeshRend.bounds.size, transform.lossyScale);
@@ -46,8 +39,24 @@ public class GrabSparkleController : MonoBehaviour
             triggerCollider.center = Vector3.zero;
         }
 
-        triggerCollider.size += UtilFunctions.InverseScale(triggerSizeOffset, transform.lossyScale);
+        var serializedSelf = new UnityEditor.SerializedObject(this);
+
+        if (scaleOffsetOverride is Vector3 newScaleOffset)
+            serializedSelf.FindProperty("triggerSizeOffset").vector3Value = newScaleOffset;
+        if (posOffsetOverride is Vector3 newPosOffset)
+            serializedSelf.FindProperty("triggerPosOffset").vector3Value = newPosOffset;
+
+        var unzeroedSize = triggerCollider.size + UtilFunctions.InverseScale(triggerSizeOffset, transform.lossyScale);
         triggerCollider.center += UtilFunctions.InverseScale(triggerPosOffset, transform.lossyScale);
+
+        //Go through all axes of trigger size,
+        for (int i = 0; i < 3; i++)
+        {
+            //and make all zero/negative values a very small positive number instead.
+            //  (BoxColliders don't support negative size.)
+            unzeroedSize[i] = unzeroedSize[i] <= 0 ? 1E-5f : unzeroedSize[i];
+        }
+        triggerCollider.size = unzeroedSize;
 
         serializedSelf.ApplyModifiedProperties();
     }

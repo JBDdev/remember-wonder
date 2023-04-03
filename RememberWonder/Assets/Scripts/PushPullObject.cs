@@ -59,6 +59,8 @@ public class PushPullObject : MonoBehaviour
     {
         //If we don't have a player reference, bail out.
         //If this isn't liftable and the player's not grounded, bail out.
+        //  Airborne grabbing liftables sometimes causes anti-gravity nonsense when it really,
+        //  REALLY shouldn't, so change this at risk.
         if (!player || (!liftable && !player.IsGrounded())) return;
 
         if (liftable && player.DropLocation.InvalidDropPosition) return;

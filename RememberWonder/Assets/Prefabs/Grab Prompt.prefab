@@ -294,9 +294,6 @@ MonoBehaviour:
   promptTriggerSizeOffset: {x: 0, y: 0, z: 0}
   usePromptTriggerPosOffset: 0
   promptTriggerPosOffset: {x: 0, y: 0, z: 0}
-  getRefs: 0
-  giveOwnerPromptRef: 0
-  applyToTriggers: 0
   prevGrabbableOwner: {fileID: 0}
   prevSparklingMeshRend: {fileID: 0}
   prevUseSparkleTriggerSizeOffset: 0
@@ -5311,7 +5308,7 @@ MonoBehaviour:
   promptObj: {fileID: 919230253831900587}
   grabbablePromptOwner: {fileID: 0}
   positionType: 0
-  offsetFromTriggerer: {x: 0, y: 0, z: 0}
+  offsetFromTriggerer: {x: 0, y: 0.6, z: 0}
   activatorTags:
     _serializedValues:
     - value:

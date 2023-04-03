@@ -157,8 +157,6 @@ public class DisplayPrompt : MonoBehaviour
         if (shouldAppear && IsActivePrompt && promptObj.activeSelf)
             return;
 
-        //PromptStateChange?.Invoke(shouldAppear, triggerer, promptObj.activeSelf);
-
         if (setActivePrompt)
             activePromptDisplayer = newActivePrompt;
 

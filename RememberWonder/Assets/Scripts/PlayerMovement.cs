@@ -133,6 +133,10 @@ public class PlayerMovement : MonoBehaviour
     {
         //If a PulledObject hasn't been registered, don't do anything. (See PushPullObject)
         if (!PulledObject) return;
+        //If it has, it's not liftable, and we're not grounded, also don't do anything.
+        //  Airborne grabbing liftables sometimes causes anti-gravity nonsense when it really,
+        //  REALLY shouldn't, so change this at risk.
+        if (!PulledObject.liftable && !IsGrounded()) return;
 
         if (!pullingObject)
         {
