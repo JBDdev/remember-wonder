@@ -18,6 +18,10 @@ public class EndLevelTrigger : MonoBehaviour
     [SerializeField] GameObject resultsScreen;
     [SerializeField] float startFillDelay;
     [SerializeField] float delayNextFill;
+    [Header("Audio")]
+    [SerializeField] AudioList collect;
+    [SerializeField] AudioList pullUpMenu;
+    [SerializeField] SourceSettings sourceSettings;
 
     int filledPieces = 0;
     bool fillingPieces = false;
@@ -35,7 +39,7 @@ public class EndLevelTrigger : MonoBehaviour
                 FillPiece();
             }
 
-            if (filledPieces >= 16 - motesToRemove)
+            if (filledPieces >= moteCanvas.GetComponent<MoteUIController>().CollectedCount)
             {
                 fillingPieces = false;
                 EnableInput();
@@ -58,8 +62,10 @@ public class EndLevelTrigger : MonoBehaviour
         //Debug.Log(moteCanvas);
         moteCanvas.SetActive(false);
 
+        AudioHub.Inst.Play(pullUpMenu, sourceSettings);
+
         //Run the call to stop player input
-        //GameObject.Find("Player Character").gameObject.GetComponent<PlayerMovement>().TogglePause();
+        GameObject.Find("Player Character").gameObject.GetComponent<PlayerMovement>().TogglePause();
 
         motesToRemove = 16 - moteCanvas.GetComponent<MoteUIController>().TotalCount;
         //Add the correct # of piece icons
@@ -71,14 +77,13 @@ public class EndLevelTrigger : MonoBehaviour
         resultsScreen.SetActive(true);
 
         fillingPieces = true;
-
-        Debug.Log(motesToRemove);
     }
 
     //This code is called every time a piece needs to be filled in
     void FillPiece() 
     {
         resultsScreen.transform.GetChild(2).GetChild(filledPieces).GetComponent<Image>().color = Color.white;
+        AudioHub.Inst.Play(collect, sourceSettings);
         filledPieces++;
     }
 
@@ -90,10 +95,10 @@ public class EndLevelTrigger : MonoBehaviour
 
     void OnPressContinue(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
     {
-        /*if (moteUI.CollectedCount >= 10)
-        {*/
+        
         InputHub.Inst.Gameplay.Jump.performed -= OnPressContinue;
-        //GameObject.Find("Player Character").gameObject.GetComponent<PlayerMovement>().TogglePause();
+
+        GameObject.Find("Player Character").gameObject.GetComponent<PlayerMovement>().TogglePause();
         if (string.IsNullOrWhiteSpace(scene))
         {
             SceneManager.LoadScene(sceneIndex >= 0
@@ -104,9 +109,5 @@ public class EndLevelTrigger : MonoBehaviour
         {
             SceneManager.LoadScene(scene);
         }
-        /*}
-
-
-        else Debug.Log("Player only has " + moteUI.GetComponent<MoteUIController>().CollectedCount + " motes.");*/
     }
 }
