@@ -55,7 +55,7 @@ public class GrabSparkleController : MonoBehaviour
             //  (BoxColliders don't support negative size.)
             newSize[i] = newSize[i] <= 0 ? 1E-5f : newSize[i];
         }
-        
+
         serializedTrigger.FindProperty("m_Size").vector3Value = newSize;
         serializedTrigger.FindProperty("m_Center").vector3Value = newCenter;
 
@@ -64,13 +64,11 @@ public class GrabSparkleController : MonoBehaviour
     }
 #endif
 
-    private void Start() => Coroutilities.DoAfterDelayFrames(this, () =>
+    private void Start()
     {
-        var salientName = transform.parent.parent ? transform.parent.parent.name : transform.parent.name;
-        print($"{salientName}: sparkling mesh rend is \"{sparklingMeshRend}\"");
-
         if (!sparklingMeshRend)
         {
+            var salientName = transform.parent.parent ? transform.parent.parent.name : transform.parent.name;
             Debug.LogWarning($"Grab sparkle system on \"{salientName}\" was given a null mesh. Disabling to prevent further warnings.");
             gameObject.SetActive(false);
             return;
@@ -91,7 +89,7 @@ public class GrabSparkleController : MonoBehaviour
 
         var sparkleSysMain = sparkleSystem.main;
         sparkleSysMain.customSimulationSpace = sparklingMeshRend.transform.parent;
-    }, 2);
+    }
 
     private void OnTriggerStay(Collider other)
     {
