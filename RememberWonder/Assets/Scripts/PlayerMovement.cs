@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSpeed;
     [SerializeField] float accModifier;
     public bool pullingObject = false;
+#if UNITY_EDITOR
+    [SerializeField][ReadOnlyInspector] private PushPullObject _PulledObjPreview = null;
+#endif
     [Space(5)]
     [SerializeField] Vector3 directionLastFrame;
     [SerializeField] float dirChangeThreshold = 0.01f;
@@ -24,47 +28,54 @@ public class PlayerMovement : MonoBehaviour
     public float maxIncline;
     public float fallGravMultiplier = 1;
 
+    [Header("Self Component References")]
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private CapsuleCollider primaryCol;
+    [SerializeField] private CapsuleCollider secondaryCol;
+
     [Header("Child Object References")]
-    [SerializeField] GameObject holdLocation;
+    [SerializeField] Transform pickUpPivot;
     [SerializeField] GameObject characterModel;
-    [SerializeField] GameObject dropLocation;
+    [SerializeField] DropPointTrigger dropLocation;
+    [SerializeField] GameObject cameraPivot;
+    [SerializeField] Transform shadow;
+    [SerializeField] float shadowFloorOffset;
+    [SerializeField] LayerMask shadowLayerMask = ~0;
 
     [Header("External References")]
-    [SerializeField] GameObject cameraPivot;
     [SerializeField] GameObject heldObject;
     [SerializeField] PushPullObject pushPullObject;
     [SerializeField] Animator anim;
-
-    //Internal Component References
-    Rigidbody rb;
-    CapsuleCollider col;
 
     [Header("Rotation Controls")]
     [SerializeField] float rotationSpeed;
     [SerializeField] float minRotationDistance;
 
     bool paused;
-    bool readingDialog;
+
+    /// <summary>
+    /// Invoked whenever this we start or stop grabbing something..
+    /// <br/>- <see cref="bool"/>: True if we just grabbed something. False if just stopped.
+    /// </summary>
+    public static Action<bool> GrabStateChange;
 
     //Accessors
-    public GameObject HoldLocation { get { return holdLocation; } }
+    public Transform PickUpPivot { get { return pickUpPivot; } }
     public GameObject CharacterModel { get { return characterModel; } }
-    public GameObject DropLocation { get { return dropLocation; } }
+    public DropPointTrigger DropLocation { get { return dropLocation; } }
 
     public PushPullObject PulledObject { get { return pushPullObject; } set { pushPullObject = value; } }
     public Vector3 Velocity { get => rb.velocity; }
+    public Collider PrimaryCollider { get => primaryCol; }
+    public Collider SecondaryCollider { get => secondaryCol; }
 
-    public bool ReadingDialog { get { return readingDialog; } set { readingDialog = value; } }
 
     void Start()
     {
         //Get references to components on the GameObject
-        rb = GetComponent<Rigidbody>();
-        col = GetComponent<CapsuleCollider>();
         anim = transform.GetComponentInChildren<Animator>();
 
         paused = false;
-        readingDialog = false;
 
         PulledObject = null;
 
@@ -83,12 +94,6 @@ public class PlayerMovement : MonoBehaviour
     {
         //print($"Jump performed, did we press or release?: " +
         //$"{(InputHub.Inst.Gameplay.Jump.WasPressedThisFrame() ? "Pressed" : "Released")}");
-        if (readingDialog)
-        {
-            readingDialog = false;
-            GameObject.Find("MoteCanvas").GetComponent<MoteUIController>().DismissTutorialText();
-            return;
-        }
 
         if (!IsGrounded() || jumpInProgress)
             return;
@@ -113,27 +118,33 @@ public class PlayerMovement : MonoBehaviour
             {
                 jumpInProgress = false;
             }
+            Time.timeScale = 1f;
         }
         else
         {
             paused = true;
             InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
             InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
+            Time.timeScale = 0f;
         }
     }
 
     private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        
-        if (!IsGrounded() || !PulledObject || readingDialog)
-            return;
+        //If a PulledObject hasn't been registered, don't do anything. (See PushPullObject)
+        if (!PulledObject) return;
+        //If it has, it's not liftable, and we're not grounded, also don't do anything.
+        //  Airborne grabbing liftables sometimes causes anti-gravity nonsense when it really,
+        //  REALLY shouldn't, so change this at risk.
+        if (!PulledObject.liftable && !IsGrounded()) return;
 
         if (!pullingObject)
         {
             pullingObject = true;
+
             if (PulledObject.liftable)
             {
-                dropLocation.SetActive(true);
+                dropLocation.gameObject.SetActive(true);
             }
             else
             {
@@ -148,23 +159,38 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (PulledObject.liftable && dropLocation.GetComponent<DropPointTrigger>().InvalidDropPosition)
+            if (PulledObject.liftable && dropLocation.InvalidDropPosition)
                 return;
 
             pullingObject = false;
             rb.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezeRotation;
-            //dropLocation.SetActive(false);
         }
+
+        GrabStateChange?.Invoke(pullingObject);
     }
 
     //---Core Methods---//
 
+    private void Update()
+    {
+#if UNITY_EDITOR
+        _PulledObjPreview = PulledObject;
+#endif
+
+        //Update Drop Shadow 
+        RaycastHit hit;
+        if (shadow && Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, shadowLayerMask, QueryTriggerInteraction.Ignore))
+        {
+            //float yPos = hit.collider.bounds.center.y + hit.collider.bounds.extents.y;
+            shadow.position = new Vector3(hit.point.x, hit.point.y + shadowFloorOffset, hit.point.z);
+        }
+    }
     void FixedUpdate()
     {
         var grounded = IsGrounded();
         anim.SetBool("Jumped", jumpInProgress);
 
-        if(!readingDialog) ApplyMoveForce(grounded);
+        ApplyMoveForce(grounded);
 
         //If NOT grounded, fall gravity should be modified, and we're falling (not rising),
         if (!grounded && !Mathf.Approximately(fallGravMultiplier, 1) && rb.velocity.y < 0)
@@ -172,15 +198,6 @@ public class PlayerMovement : MonoBehaviour
             //Apply extra force based on the multiplier (There's no "gravity scale" for 3D Rigidbodies).
             //Gravity's already applied once by default; if 1.01, apply the extra 0.01
             rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
-        }
-
-        if (PulledObject != null)
-        {
-            if ((PulledObject.transform.position - transform.position).sqrMagnitude > 3 && PulledObject.liftable)
-            {
-                PulledObject = null;
-                pullingObject = false;
-            }
         }
     }
 
@@ -195,14 +212,13 @@ public class PlayerMovement : MonoBehaviour
         if (direction.sqrMagnitude > minRotationDistance)
             RotateCharacterModel(direction.normalized);
 
-        ApplyPullRestrictions(ref direction);
+        ApplyPullRestrictions(ref direction, grounded);
         if (direction == Vector3.zero) return;
 
         float percentHeld = direction.magnitude;
 
         //If we are not grounded and moving in a significantly different direction (axis delta > deadzone),
-        if (!IsGrounded()
-            && (Mathf.Abs(directionLastFrame.x - direction.x) > dirChangeThreshold
+        if (!grounded && (Mathf.Abs(directionLastFrame.x - direction.x) > dirChangeThreshold
             || Mathf.Abs(directionLastFrame.z - direction.z) > dirChangeThreshold))
         {
             rb.velocity = new Vector3(rb.velocity.x * airFriction, rb.velocity.y, rb.velocity.z * airFriction);
@@ -212,11 +228,6 @@ public class PlayerMovement : MonoBehaviour
         if (Mathf.Abs(rb.velocity.x) < maxSpeed * percentHeld && Mathf.Abs(rb.velocity.z) < maxSpeed * percentHeld)
         {
             rb.AddForce(direction * accModifier, ForceMode.Force);
-
-            //if (rb.velocity.sqrMagnitude > minRotationDistance)
-            //{
-            //    RotateCharacterModel(rb.velocity);
-            //}
         }
 
         directionLastFrame = direction;
@@ -241,7 +252,7 @@ public class PlayerMovement : MonoBehaviour
         return groundedCheck && groundHit.normal.y >= maxIncline;
     }
 
-    private void ApplyPullRestrictions(ref Vector3 restrictedDir)
+    private void ApplyPullRestrictions(ref Vector3 restrictedDir, bool grounded)
     {
         //If not pulling, unrestrict all move axes and bail out
         if (!pullingObject)
@@ -249,11 +260,18 @@ public class PlayerMovement : MonoBehaviour
             rb.constraints &= ~(RigidbodyConstraints.FreezePosition);
             return;
         }
+        //Otherwise, if this object isn't liftable, we shouldn't be able to pull it if we're not grounded
+        if (!grounded && !PulledObject.liftable)
+        {
+            restrictedDir = Vector3.zero;
+            return;
+        }
 
         restrictedDir.x *= PulledObject.GrabMoveMultipliers.x;
         restrictedDir.z *= PulledObject.GrabMoveMultipliers.z;
 
         //-- Restrict axis movement via max pull distance --//
+        if (PulledObject.liftable) return;
 
         //X is beyond the negative max distance
         if (restrictedDir.x < 0
@@ -295,8 +313,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void GetCapsuleCastParams(out float height, out float radius, out Vector3 top, out Vector3 bottom)
     {
-        height = col.height * transform.localScale.y;
-        radius = col.radius * transform.localScale.y;
+        height = primaryCol.height * transform.localScale.y;
+        radius = primaryCol.radius * transform.localScale.y;
 
         top = transform.position + Vector3.up * height / 2;
         top += Vector3.down * radius;   //Go from tip to center of cap-sphere

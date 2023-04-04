@@ -92,8 +92,8 @@ public static class Coroutilities
     /// <param name="thingToDo">The function or lambda expression that will be called after <paramref name="yielder"/>.</param>
     /// <param name="yielder">
     /// A <see cref="YieldInstruction"/>, <see cref="CustomYieldInstruction"/>, <see cref="Coroutine"/>, or similar thing.
-    /// <paramref name="thingToDo"/> will be called after this.<br/><br/>
-    ///     Avoid passing things that aren't akin to <see cref="YieldInstruction"/>; that can cause unpredictable behavior.
+    /// <paramref name="thingToDo"/> will be called after this.<br/>
+    ///     <i>Avoid passing things that aren't akin to <see cref="YieldInstruction"/>; that can cause unpredictable behavior.</i>
     /// </param>
     /// <inheritdoc cref="DoAfterDelay(MonoBehaviour, Action, float, bool)"/>
     public static Coroutine DoAfterYielder(MonoBehaviour coroutineCaller, Action thingToDo, object yielder)

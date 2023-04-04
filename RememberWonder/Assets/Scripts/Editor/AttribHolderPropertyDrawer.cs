@@ -1,0 +1,11 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
+
+[CustomPropertyDrawer(typeof(AttribHolder))]
+public class AttribHolderPropertyDrawer : PropertyDrawer
+{
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => -2;
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) { }
+}

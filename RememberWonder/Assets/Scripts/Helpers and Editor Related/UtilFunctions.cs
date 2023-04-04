@@ -270,6 +270,18 @@ public static class UtilFunctions
         c[indexToAdjust] = addValue ? c[indexToAdjust] + value : value;
         return c;
     }
+    /// <remarks>
+    /// <b>Note this is for <see cref="Color32"/>s; values should be between 0 and 255.</b><br/>
+    /// Will return the color unchanged if <paramref name="indexToAdjust"/> is invalid (i&lt;0, i&gt;3).
+    /// </remarks>
+    /// <inheritdoc cref="Adjust(Color, int, float, bool)"/>
+    public static Color32 Adjust(this Color32 c, int indexToAdjust, byte value, bool addValue = false)
+    {
+        if (indexToAdjust < 0 || indexToAdjust > 3) return c;
+
+        c[indexToAdjust] = addValue ? (byte)(c[indexToAdjust] + value) : value;
+        return c;
+    }
 
     /// <summary>
     /// Sets one component (XYZ, 012) of a vector to <paramref name="value"/> and returns the result.
@@ -372,6 +384,9 @@ public static class UtilFunctions
     public static float MinAbs(float a, float b) => Mathf.Abs(a) < Mathf.Abs(b) ? a : b;
     /// <inheritdoc cref="MinAbs(float[])"/>
     public static float MinAbs(int a, int b) => Mathf.Abs(a) < Mathf.Abs(b) ? a : b;
+
+    public static float MaxComponent(this Vector3 v) => Mathf.Max(v.x, v.y, v.z);
+    public static float MinComponent(this Vector3 v) => Mathf.Min(v.x, v.y, v.z);
 
     /// <summary>
     /// Divides two vectors component-wise.
