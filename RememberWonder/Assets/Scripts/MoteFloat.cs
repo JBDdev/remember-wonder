@@ -5,9 +5,13 @@ using UnityEngine;
 public class MoteFloat : MonoBehaviour
 {
     [SerializeField] private Transform model;
+    [SerializeField] private Transform shadow;
+    [SerializeField] private float shadowFloorOffset;
+    [SerializeField] LayerMask shadowLayerMask;
     [Space(5)]
     [SerializeField] private float rotateSpeed;
     [SerializeField] private Vector3 rotateAxis = Vector3.up;
+    [SerializeField] private Vector3 shadowRotateAxis = Vector3.forward;
     [Space(5)]
     [SerializeField] private float bobAmount;
     [SerializeField] private float bobSpeed;
@@ -18,15 +22,26 @@ public class MoteFloat : MonoBehaviour
 
     private void Start()
     {
-        initPos = model.position;
+        initPos = model.localPosition;
+
+        //Raycast to place mote shadow on floor
+        RaycastHit hit;
+        if (shadow && Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, shadowLayerMask, QueryTriggerInteraction.Ignore))
+            shadow.position = new Vector3(hit.point.x, hit.point.y + shadowFloorOffset, hit.point.z);
     }
 
     private void Update()
     {
         model.rotation *= Quaternion.AngleAxis(rotateSpeed * Time.deltaTime, rotateAxis);
+        if (shadow)
+            shadow.rotation *= Quaternion.AngleAxis(rotateSpeed * Time.deltaTime, shadowRotateAxis);
 
         bobProgress += bobSpeed * Time.deltaTime;
         bobPos = initPos + Vector3.up * bobAmount * Mathf.Sin(bobProgress);
-        model.position = bobPos;
+        model.localPosition = bobPos;
+
+        RaycastHit hit;
+        if (shadow && Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, shadowLayerMask, QueryTriggerInteraction.Ignore))
+            shadow.position = new Vector3(hit.point.x, hit.point.y + shadowFloorOffset, hit.point.z);
     }
 }

@@ -3,20 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MoteUIController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI motesCollectedTxt;
     [SerializeField] private TextMeshProUGUI totalMotesTxt;
+    [SerializeField] private Image tutorialImage;
 
     private int _collectedCount;
     private int _totalCount;
-
-    private void Start()
-    {
-        motesCollectedTxt.text = "0";
-        totalMotesTxt.text = "14";
-    }
 
     /// <summary>
     /// The UI's internal count of how many motes have been collected.<br/>
@@ -52,17 +48,18 @@ public class MoteUIController : MonoBehaviour
 
     private void Awake()
     {
-        CollectMote.MoteSpawned += UpdateMoteCounts;
+        CollectedCount = 0;
+        CollectMote.MoteSpawned += OnMoteSpawned;
         CollectMote.MoteCollected += IncrementCollectedCount;
     }
 
     private void OnDestroy()
     {
-        CollectMote.MoteSpawned -= UpdateMoteCounts;
+        CollectMote.MoteSpawned -= OnMoteSpawned;
         CollectMote.MoteCollected -= IncrementCollectedCount;
     }
 
-    private void UpdateMoteCounts(CollectMote _, bool isCollected)
+    private void OnMoteSpawned(CollectMote _, bool isCollected)
     {
         if (isCollected) { CollectedCount++; }
         TotalCount++;
@@ -71,5 +68,18 @@ public class MoteUIController : MonoBehaviour
     private void IncrementCollectedCount(CollectMote _)
     {
         CollectedCount++;
+    }
+
+    //Displays tutorial text on screen
+    public void DisplayTutorialText(Sprite sprite) 
+    {
+        tutorialImage.sprite = sprite;
+        tutorialImage.transform.parent.gameObject.SetActive(true);
+        tutorialImage.SetNativeSize();
+    }
+
+    public void DismissTutorialText()
+    {
+        tutorialImage.transform.parent.gameObject.SetActive(false);
     }
 }

@@ -6,13 +6,19 @@ using UnityEngine;
 public class CollectMote : MonoBehaviour
 {
     [SerializeField] private Renderer modelRend;
+    [SerializeField] private GameObject shadowObj;
     [SerializeField] private ParticleSystem collectPSys;
     [Space(5)]
-    [SerializeField] private AudioList collectAudio;
-    [SerializeField] private SourceSettings audioSettings;
-    [Space(10)]
     [SerializeField] private Bewildered.UHashSet<TagString> collectorTags;
+    [Header("Audio")]
+    [SerializeField] private AudioList idleAudio;
+    [SerializeField] private SourceSettings idleAudioSettings;
+    [Space(5)]
+    [SerializeField] private AudioList collectAudio;
+    [SerializeField] private SourceSettings collectAudioSettings;
     private bool collected;
+
+    private AudioSource idleAudioSource = null;
 
     /// <summary>
     /// Called when a mote is collected.
@@ -31,6 +37,13 @@ public class CollectMote : MonoBehaviour
     {
         //TODO: On scene startup, check saved data to see if this mote's been collected; maybe each mote has an ID?
         MoteSpawned?.Invoke(this, collected);
+
+        if (!collected && idleAudio != AudioList.None)
+        {
+            Coroutilities.DoAfterDelayFrames(this,
+                () => idleAudioSource = AudioHub.Inst.Play(idleAudio, idleAudioSettings, transform.position),
+                1);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -41,10 +54,13 @@ public class CollectMote : MonoBehaviour
 
             //TODO: Become translucent and uncollectable, or collectable but without increasing number?
             modelRend.enabled = false;
+            shadowObj.SafeSetActive(false);
             //TODO: More elaborate animation/sequence upon collection
             if (collectPSys) { collectPSys.Play(); }
 
-            AudioHub.Inst.Play(collectAudio, audioSettings, transform.position);
+            AudioHub.Inst.Play(collectAudio, collectAudioSettings, transform.position);
+            if (idleAudioSource) idleAudioSource.Stop();
+
             MoteCollected?.Invoke(this);
         }
     }

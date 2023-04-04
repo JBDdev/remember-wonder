@@ -12,33 +12,51 @@ public class GrabSparkleController : MonoBehaviour
     [SerializeField] private PushPullObject grabbableSparkleOwner;
     [SerializeField] private MeshRenderer sparklingMeshRend;
     [Header("Settings")]
-    [Tooltip("Trigger Collider is sized to fit the Sparkling Mesh Rend. How much extra size (in world space) should this trigger have?")]
-    [SerializeField] private Vector3 triggerSizeOffset = Vector3.zero;
     [Tooltip("How many particles to emit, for each 6 unity units squared in the surface area of sparklingMesh's axis aligned bounding box. " +
         "I.e., if sparklingMesh is a normal, unrotated cube with scale (1,1,1), sparkleSystem's rate over time will equal this.")]
     [SerializeField] private float sparklesPerUnitCube = 10;
+    [Tooltip("Trigger Collider is sized to fit the Sparkling Mesh Rend. How much extra size (in world space) should this trigger have?")]
+    [SerializeField] private Vector3 triggerSizeOffset = Vector3.zero;
+    [SerializeField] private Vector3 triggerPosOffset = Vector3.zero;
     [SerializeField] private UHashSet<TagString> activatorTags;
 
     private const float UNIT_CUBE_SURFACE_AREA = 6;
 
 #if UNITY_EDITOR
     private void OnValidate() => ValidationUtility.DoOnDelayCall(this, () => InitTrigger());
-    public void InitTrigger(Vector3? offsetOverride = null)
+    public void InitTrigger(Vector3? scaleOffsetOverride = null, Vector3? posOffsetOverride = null)
     {
-        var serializedSelf = new UnityEditor.SerializedObject(this);
-
-        if (offsetOverride is Vector3 newOffset)
-            serializedSelf.FindProperty("triggerSizeOffset").vector3Value = newOffset;
+        if (!triggerCollider) return;
 
         if (sparklingMeshRend)
         {
             triggerCollider.size = UtilFunctions.InverseScale(sparklingMeshRend.bounds.size, transform.lossyScale);
             triggerCollider.center = transform.InverseTransformPoint(sparklingMeshRend.bounds.center);
         }
+        else
+        {
+            triggerCollider.size = Vector3.one;
+            triggerCollider.center = Vector3.zero;
+        }
 
-        else triggerCollider.size = Vector3.one;
+        var serializedSelf = new UnityEditor.SerializedObject(this);
 
-        triggerCollider.size += UtilFunctions.InverseScale(triggerSizeOffset, transform.lossyScale);
+        if (scaleOffsetOverride is Vector3 newScaleOffset)
+            serializedSelf.FindProperty("triggerSizeOffset").vector3Value = newScaleOffset;
+        if (posOffsetOverride is Vector3 newPosOffset)
+            serializedSelf.FindProperty("triggerPosOffset").vector3Value = newPosOffset;
+
+        var unzeroedSize = triggerCollider.size + UtilFunctions.InverseScale(triggerSizeOffset, transform.lossyScale);
+        triggerCollider.center += UtilFunctions.InverseScale(triggerPosOffset, transform.lossyScale);
+
+        //Go through all axes of trigger size,
+        for (int i = 0; i < 3; i++)
+        {
+            //and make all zero/negative values a very small positive number instead.
+            //  (BoxColliders don't support negative size.)
+            unzeroedSize[i] = unzeroedSize[i] <= 0 ? 1E-5f : unzeroedSize[i];
+        }
+        triggerCollider.size = unzeroedSize;
 
         serializedSelf.ApplyModifiedProperties();
     }
@@ -48,8 +66,8 @@ public class GrabSparkleController : MonoBehaviour
     {
         if (!sparklingMeshRend)
         {
-            Debug.LogWarning($"Grab sparkle system on \"{transform.parent.parent.name}\" was given a null mesh. " +
-                $"Disabling to prevent further warnings.");
+            var salientName = transform.parent.parent ? transform.parent.parent.name : transform.parent.name;
+            Debug.LogWarning($"Grab sparkle system on \"{salientName}\" was given a null mesh. Disabling to prevent further warnings.");
             gameObject.SetActive(false);
             return;
         }

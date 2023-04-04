@@ -46,10 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sourcePrefab: {fileID: 7429508136159080657, guid: a07c09c0d93cf9545a8c72a58084dcda, type: 3}
   sourceDisplayName: AHSource
-  sourcePoolSize: 10
+  sourcePoolSize: 20
   soundLibrary:
     _serializedPairs:
-    - key: 0
+    - key: 18
       value:
         randomOrder: 0
         clips:
@@ -99,3 +99,80 @@ MonoBehaviour:
         - {fileID: 8300000, guid: c5866d936ede8ce4d9716fd17df253c3, type: 3}
       isDuplicateKey: 0
       index: 6
+    - key: 7
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: f88b5035f792761478d80bf0ddae30a2, type: 3}
+      isDuplicateKey: 0
+      index: 7
+    - key: 8
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: 84f55ff65a9472f4b965eaa1207f1abc, type: 3}
+      isDuplicateKey: 0
+      index: 8
+    - key: 9
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: 1e806372c7209dd428fdf3def06819e9, type: 3}
+      isDuplicateKey: 0
+      index: 9
+    - key: 10
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: dd9af37e280e8bf4780e500d417a2bfd, type: 3}
+      isDuplicateKey: 0
+      index: 10
+    - key: 11
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: f79ff79a6e7681d498cabac2ba7c5c95, type: 3}
+      isDuplicateKey: 0
+      index: 11
+    - key: 12
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: f8f9c688eeaf3fd448e0de2e4f6981f8, type: 3}
+      isDuplicateKey: 0
+      index: 12
+    - key: 13
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: 28cb6fee575bb104386d157ed1a23196, type: 3}
+      isDuplicateKey: 0
+      index: 13
+    - key: 14
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: 9b17fd53bd3831b4fb85b0621ebe6dae, type: 3}
+      isDuplicateKey: 0
+      index: 14
+    - key: 15
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: 6ca4f12f260fef14d9000559a1dc557a, type: 3}
+      isDuplicateKey: 0
+      index: 15
+    - key: 16
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: 92bfe6272942bdd43b43adc5feec93ee, type: 3}
+      isDuplicateKey: 0
+      index: 16
+    - key: 17
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: 51a3555734b8d9d4a870c396f0cb9d05, type: 3}
+      isDuplicateKey: 0
+      index: 17
