@@ -28,45 +28,49 @@ public class GrabSparkleController : MonoBehaviour
     {
         if (!triggerCollider) return;
 
+        var serializedSelf = new UnityEditor.SerializedObject(this);
+        var serializedTrigger = new UnityEditor.SerializedObject(serializedSelf.FindProperty("triggerCollider").objectReferenceValue);
+
+        Vector3 newSize = Vector3.one;
+        Vector3 newCenter = Vector3.zero;
+
         if (sparklingMeshRend)
         {
-            triggerCollider.size = UtilFunctions.InverseScale(sparklingMeshRend.bounds.size, transform.lossyScale);
-            triggerCollider.center = transform.InverseTransformPoint(sparklingMeshRend.bounds.center);
+            newSize = UtilFunctions.InverseScale(sparklingMeshRend.bounds.size, transform.lossyScale);
+            newCenter = transform.InverseTransformPoint(sparklingMeshRend.bounds.center);
         }
-        else
-        {
-            triggerCollider.size = Vector3.one;
-            triggerCollider.center = Vector3.zero;
-        }
-
-        var serializedSelf = new UnityEditor.SerializedObject(this);
 
         if (scaleOffsetOverride is Vector3 newScaleOffset)
             serializedSelf.FindProperty("triggerSizeOffset").vector3Value = newScaleOffset;
         if (posOffsetOverride is Vector3 newPosOffset)
             serializedSelf.FindProperty("triggerPosOffset").vector3Value = newPosOffset;
 
-        var unzeroedSize = triggerCollider.size + UtilFunctions.InverseScale(triggerSizeOffset, transform.lossyScale);
-        triggerCollider.center += UtilFunctions.InverseScale(triggerPosOffset, transform.lossyScale);
+        newSize += UtilFunctions.InverseScale(triggerSizeOffset, transform.lossyScale);
+        newCenter += UtilFunctions.InverseScale(triggerPosOffset, transform.lossyScale);
 
         //Go through all axes of trigger size,
         for (int i = 0; i < 3; i++)
         {
             //and make all zero/negative values a very small positive number instead.
             //  (BoxColliders don't support negative size.)
-            unzeroedSize[i] = unzeroedSize[i] <= 0 ? 1E-5f : unzeroedSize[i];
+            newSize[i] = newSize[i] <= 0 ? 1E-5f : newSize[i];
         }
-        triggerCollider.size = unzeroedSize;
+        
+        serializedTrigger.FindProperty("m_Size").vector3Value = newSize;
+        serializedTrigger.FindProperty("m_Center").vector3Value = newCenter;
 
+        serializedTrigger.ApplyModifiedProperties();
         serializedSelf.ApplyModifiedProperties();
     }
 #endif
 
-    private void Start()
+    private void Start() => Coroutilities.DoAfterDelayFrames(this, () =>
     {
+        var salientName = transform.parent.parent ? transform.parent.parent.name : transform.parent.name;
+        print($"{salientName}: sparkling mesh rend is \"{sparklingMeshRend}\"");
+
         if (!sparklingMeshRend)
         {
-            var salientName = transform.parent.parent ? transform.parent.parent.name : transform.parent.name;
             Debug.LogWarning($"Grab sparkle system on \"{salientName}\" was given a null mesh. Disabling to prevent further warnings.");
             gameObject.SetActive(false);
             return;
@@ -87,7 +91,7 @@ public class GrabSparkleController : MonoBehaviour
 
         var sparkleSysMain = sparkleSystem.main;
         sparkleSysMain.customSimulationSpace = sparklingMeshRend.transform.parent;
-    }
+    }, 2);
 
     private void OnTriggerStay(Collider other)
     {
