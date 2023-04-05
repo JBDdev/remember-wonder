@@ -380,6 +380,7 @@ MonoBehaviour:
   invertX: 0
   invertY: 0
   lookSpeed: 100
+  lookSpeedOptionName: cameraSens
   pitchRange: {x: -75, y: 75}
   maxYOffsetOnJump: 2
   castWidth: 1.5
@@ -449,6 +450,9 @@ MonoBehaviour:
   jumpInProgress: 0
   maxIncline: 0.5
   fallGravMultiplier: 1
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   rb: {fileID: 5864955303093575426}
   primaryCol: {fileID: 5958626486520442641}
   secondaryCol: {fileID: 5864955303093575431}
