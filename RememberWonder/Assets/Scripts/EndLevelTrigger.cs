@@ -30,10 +30,10 @@ public class EndLevelTrigger : MonoBehaviour
 
     private void Update()
     {
-        if(fillingPieces) 
+        if (fillingPieces)
         {
             fillTimer += Time.deltaTime;
-            if (fillTimer >= delayNextFill) 
+            if (fillTimer >= delayNextFill)
             {
                 fillTimer = 0;
                 FillPiece();
@@ -56,7 +56,7 @@ public class EndLevelTrigger : MonoBehaviour
         Invoke("HandleEndScreen", startFillDelay);
     }
 
-    void HandleEndScreen() 
+    void HandleEndScreen()
     {
         //Run the call to clear the UI
         //Debug.Log(moteCanvas);
@@ -80,7 +80,7 @@ public class EndLevelTrigger : MonoBehaviour
     }
 
     //This code is called every time a piece needs to be filled in
-    void FillPiece() 
+    void FillPiece()
     {
         resultsScreen.transform.GetChild(2).GetChild(filledPieces).GetComponent<Image>().color = Color.white;
         AudioHub.Inst.Play(collect, sourceSettings);
@@ -93,9 +93,9 @@ public class EndLevelTrigger : MonoBehaviour
         resultsScreen.transform.GetChild(3).gameObject.SetActive(true);
     }
 
-    void OnPressContinue(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    void OnPressContinue(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        
+
         InputHub.Inst.Gameplay.Jump.performed -= OnPressContinue;
 
         GameObject.Find("Player Character").gameObject.GetComponent<PlayerMovement>().TogglePause();
