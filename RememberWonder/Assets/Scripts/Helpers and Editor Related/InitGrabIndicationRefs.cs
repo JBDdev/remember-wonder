@@ -16,16 +16,16 @@ public class InitGrabIndicationRefs : MonoBehaviour
     [Header("Relative Trigger Offsets")]
     [Space(5)]
     [SerializeField] private bool useSparkleTriggerSizeOffset;
-    [SerializeField] private Vector3 sparkleTriggerSizeOffset;
+    [SerializeField][EnableIf("useSparkleTriggerSizeOffset")] private Vector3 sparkleTriggerSizeOffset;
     [Space(3)]
     [SerializeField] private bool useSparkleTriggerPosOffset;
-    [SerializeField] private Vector3 sparkleTriggerPosOffset;
+    [SerializeField][EnableIf("useSparkleTriggerPosOffset")] private Vector3 sparkleTriggerPosOffset;
     [Space(6)]
     [SerializeField] private bool usePromptTriggerSizeOffset;
-    [SerializeField] private Vector3 promptTriggerSizeOffset;
+    [SerializeField][EnableIf("usePromptTriggerSizeOffset")] private Vector3 promptTriggerSizeOffset;
     [Space(3)]
     [SerializeField] private bool usePromptTriggerPosOffset;
-    [SerializeField] private Vector3 promptTriggerPosOffset;
+    [SerializeField][EnableIf("usePromptTriggerPosOffset")] private Vector3 promptTriggerPosOffset;
 
     [SerializeField][HideInInspector] private PushPullObject prevGrabbableOwner;
     [SerializeField][HideInInspector] private MeshRenderer prevSparklingMeshRend;
@@ -40,7 +40,7 @@ public class InitGrabIndicationRefs : MonoBehaviour
     [SerializeField][HideInInspector] private bool prevUsePromptTriggerPosOffset;
     [SerializeField][HideInInspector] private Vector3 prevPromptTriggerPosOffset;
 
-    [Button("Try Get References", EButtonEnableMode.Editor)]
+    [Button("Try Get References", EButtonEnableMode.Editor, 15)]
     private void TryGetRefs()
     {
         if (transform.parent)
@@ -50,13 +50,29 @@ public class InitGrabIndicationRefs : MonoBehaviour
             if (!grabbableOwner)
                 serializedSelf.FindProperty("grabbableOwner").objectReferenceValue = transform.parent.GetComponent<PushPullObject>();
             if (!sparklingMeshRend)
-                serializedSelf.FindProperty("sparklingMeshRend").objectReferenceValue = transform.parent.GetComponent<MeshRenderer>();
+            {
+                if (transform.parent.TryGetComponent(out MeshRenderer rendOnParent))
+                {
+                    serializedSelf.FindProperty("sparklingMeshRend").objectReferenceValue = rendOnParent;
+                }
+                else
+                {
+                    for (int i = 0; i < transform.parent.childCount; i++)
+                    {
+                        if (transform.parent.GetChild(i).TryGetComponent(out MeshRenderer rendOnChild))
+                        {
+                            serializedSelf.FindProperty("sparklingMeshRend").objectReferenceValue = rendOnChild;
+                            break;
+                        }
+                    }
+                }
+            }
 
             serializedSelf.ApplyModifiedProperties();
         }
     }
 
-    [Button("Give Owner This Prompt Reference", EButtonEnableMode.Editor)]
+    [Button("Give Owner This Prompt Reference", EButtonEnableMode.Editor, 3)]
     private void TryGiveOwnerPromptRef()
     {
         if (!promptController)
@@ -78,16 +94,9 @@ public class InitGrabIndicationRefs : MonoBehaviour
         serializedOwner.ApplyModifiedProperties();
     }
 
-    [Button("Apply Offsets to Triggers", EButtonEnableMode.Editor)]
+    [Button("Apply Refs/Offsets", EButtonEnableMode.Editor, 3)]
     private void TryApply()
     {
-        //If refs are the same,
-        if (CheckOffsetsSetPrevious(false))
-        {
-            Debug.Log($"InitGrabIndicationRefs ( <color=#999>{name}</color> ): Nothing to apply!");
-            return;
-        }
-
         ApplyToSparkles();
         ApplyToPrompt();
 
@@ -95,6 +104,7 @@ public class InitGrabIndicationRefs : MonoBehaviour
     }
 
     /// <summary>
+    /// <i>Currently unused.</i><br/>
     /// Checks whether any of the trigger offsets have changed, THEN optionally<br/>
     /// sets the previous values to the current ones (for next time), THEN returns the check result.
     /// </summary>
@@ -142,16 +152,25 @@ public class InitGrabIndicationRefs : MonoBehaviour
         if (!sparkleController) return;
 
         var serializedSparkleController = new UnityEditor.SerializedObject(sparkleController);
+        var serializedSparklePSystem = new UnityEditor.SerializedObject(serializedSparkleController.
+            FindProperty("sparkleSystem").objectReferenceValue);
 
         if (grabbableOwner)
             serializedSparkleController.FindProperty("grabbableSparkleOwner").objectReferenceValue = grabbableOwner;
 
         if (sparklingMeshRend)
+        {
             serializedSparkleController.FindProperty("sparklingMeshRend").objectReferenceValue = sparklingMeshRend;
+            serializedSparklePSystem.FindProperty("ShapeModule").
+                FindPropertyRelative("m_MeshRenderer").objectReferenceValue = sparklingMeshRend;
+        }
 
-        sparkleController.InitTrigger(useSparkleTriggerSizeOffset ? sparkleTriggerSizeOffset : null);
-
+        serializedSparklePSystem.ApplyModifiedProperties();
         serializedSparkleController.ApplyModifiedProperties();
+
+        sparkleController.InitTrigger(
+            useSparkleTriggerSizeOffset ? sparkleTriggerSizeOffset : null,
+            useSparkleTriggerPosOffset ? sparkleTriggerPosOffset : null);
     }
 
     private void ApplyToPrompt()
@@ -176,6 +195,13 @@ public class InitGrabIndicationRefs : MonoBehaviour
 
         Vector3 adjustedScale = UtilFunctions.InverseScale(sparklingMeshRend.bounds.size, transform.lossyScale);
         adjustedScale += UtilFunctions.InverseScale(promptTriggerSizeOffset, transform.lossyScale);
+        //Go through every axis of the adjusted scale,
+        for (int i = 0; i < 3; i++)
+        {
+            //and if it's zero or less, make it very small instead.
+            //  (Negative scales are technically valid here, but likely not expected/desired.)
+            adjustedScale[i] = adjustedScale[i] <= 0 ? 1E-5f : adjustedScale[i];
+        }
 
         Vector3 adjustedPosition = transform.InverseTransformPoint(sparklingMeshRend.bounds.center);
         adjustedPosition += UtilFunctions.InverseScale(promptTriggerPosOffset, transform.lossyScale);

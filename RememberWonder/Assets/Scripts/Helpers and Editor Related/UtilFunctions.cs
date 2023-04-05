@@ -4,6 +4,61 @@ using UnityEngine;
 
 public static class UtilFunctions
 {
+#if UNITY_EDITOR
+    /// <summary>
+    /// Prints the properties of a serialized object to the console using <see cref="Debug.Log(object)"/>.
+    /// </summary>
+    /// <param name="maxDepth">How many levels of child properties to print. 0 means no child properties.</param>
+    public static void PrintProperties(this UnityEditor.SerializedObject propertyOwner, int maxDepth = int.MaxValue)
+    {
+        //no negativity allowed
+        maxDepth = Mathf.Max(maxDepth, 0);
+
+        var propertyIterator = propertyOwner.GetIterator();
+        if (propertyIterator == null)
+        {
+            Debug.LogWarning($"Object {propertyOwner} has no properties.");
+            return;
+        }
+
+        propertyIterator.PrintProperties(maxDepth);
+    }
+    /// <summary>
+    /// Prints the child properties of a serialized property to the console using <see cref="Debug.Log(object)"/>.
+    /// </summary>
+    /// <inheritdoc cref="PrintProperties(UnityEditor.SerializedObject, int)"/>
+    public static void PrintProperties(this UnityEditor.SerializedProperty property, int maxDepth = int.MaxValue)
+    {
+        //no negativity allowed
+        maxDepth = Mathf.Max(maxDepth, 0);
+
+        if (!property.hasChildren)
+        {
+            Debug.LogWarning($"Property {property.name} has no child properties.");
+            return;
+        }
+
+        property.Next(true);
+        Debug.Log(">\t" + property.name + "\n");
+        int initDepth = property.depth;
+
+        string indent;
+        var currentDepth = 0;
+        while (property.Next(currentDepth < maxDepth))
+        {
+            currentDepth = property.depth - initDepth;
+            if (currentDepth < 0) break;
+
+            //Indent equal to depth, and put a ">" before the last tab.
+            indent = (currentDepth == 0 ? ">" : "") + "\t";
+            for (int i = 0; i < currentDepth - 1; i++) indent += "\t";
+            if (currentDepth > 0) indent += ">\t";
+
+            Debug.Log(indent + property.name + "\n");
+        }
+    }
+#endif
+
     /// <summary>
     /// Gets the renderers of <paramref name="obj"/> and its children, and returns the combined bounds of 
     /// all the active/enabled ones.<br/>
@@ -268,6 +323,18 @@ public static class UtilFunctions
         if (indexToAdjust < 0 || indexToAdjust > 3) return c;
 
         c[indexToAdjust] = addValue ? c[indexToAdjust] + value : value;
+        return c;
+    }
+    /// <remarks>
+    /// <b>Note this is for <see cref="Color32"/>s; values should be between 0 and 255.</b><br/>
+    /// Will return the color unchanged if <paramref name="indexToAdjust"/> is invalid (i&lt;0, i&gt;3).
+    /// </remarks>
+    /// <inheritdoc cref="Adjust(Color, int, float, bool)"/>
+    public static Color32 Adjust(this Color32 c, int indexToAdjust, byte value, bool addValue = false)
+    {
+        if (indexToAdjust < 0 || indexToAdjust > 3) return c;
+
+        c[indexToAdjust] = addValue ? (byte)(c[indexToAdjust] + value) : value;
         return c;
     }
 

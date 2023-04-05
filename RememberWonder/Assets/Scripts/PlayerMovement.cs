@@ -10,10 +10,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSpeed;
     [SerializeField] float accModifier;
     public bool pullingObject = false;
+#if UNITY_EDITOR
+    [SerializeField][ReadOnlyInspector] private PushPullObject _PulledObjPreview = null;
+#endif
     [Space(5)]
     [SerializeField] Vector3 directionLastFrame;
     [SerializeField] float dirChangeThreshold = 0.01f;
-    [SerializeField] [Range(0, 1)] float airFriction = 1f;
+    [SerializeField][Range(0, 1)] float airFriction = 1f;
 #if UNITY_EDITOR
     [Space(5)]
     [SerializeField] bool visualizeMoveInput;
@@ -24,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     public bool jumpInProgress = false;
     public float maxIncline;
     public float fallGravMultiplier = 1;
+    [SerializeField] private LayerMask groundLayers = ~0;
 
     [Header("Self Component References")]
     [SerializeField] private Rigidbody rb;
@@ -35,6 +39,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject characterModel;
     [SerializeField] DropPointTrigger dropLocation;
     [SerializeField] GameObject cameraPivot;
+    [SerializeField] Transform shadow;
+    [SerializeField] float shadowFloorOffset;
+    [SerializeField] LayerMask shadowLayerMask = ~0;
 
     [Header("External References")]
     [SerializeField] GameObject heldObject;
@@ -129,6 +136,10 @@ public class PlayerMovement : MonoBehaviour
     {
         //If a PulledObject hasn't been registered, don't do anything. (See PushPullObject)
         if (!PulledObject) return;
+        //If it has, it's not liftable, and we're not grounded, also don't do anything.
+        //  Airborne grabbing liftables sometimes causes anti-gravity nonsense when it really,
+        //  REALLY shouldn't, so change this at risk.
+        if (!PulledObject.liftable && !IsGrounded()) return;
 
         if (!pullingObject)
         {
@@ -163,6 +174,20 @@ public class PlayerMovement : MonoBehaviour
 
     //---Core Methods---//
 
+    private void Update()
+    {
+#if UNITY_EDITOR
+        _PulledObjPreview = PulledObject;
+#endif
+
+        //Update Drop Shadow 
+        RaycastHit hit;
+        if (shadow && Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, shadowLayerMask, QueryTriggerInteraction.Ignore))
+        {
+            //float yPos = hit.collider.bounds.center.y + hit.collider.bounds.extents.y;
+            shadow.position = new Vector3(hit.point.x, hit.point.y + shadowFloorOffset, hit.point.z);
+        }
+    }
     void FixedUpdate()
     {
         var grounded = IsGrounded();
@@ -221,7 +246,9 @@ public class PlayerMovement : MonoBehaviour
             point1, point2,
             radius, Vector3.down,
             out RaycastHit groundHit,
-            0.1f);
+            0.1f,
+            groundLayers,
+            QueryTriggerInteraction.Ignore);
 
         if (jumpInProgress && groundedCheck)
         {
@@ -249,6 +276,7 @@ public class PlayerMovement : MonoBehaviour
         restrictedDir.z *= PulledObject.GrabMoveMultipliers.z;
 
         //-- Restrict axis movement via max pull distance --//
+        if (PulledObject.liftable) return;
 
         //X is beyond the negative max distance
         if (restrictedDir.x < 0
