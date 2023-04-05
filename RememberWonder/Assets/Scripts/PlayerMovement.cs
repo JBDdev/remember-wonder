@@ -125,6 +125,7 @@ public class PlayerMovement : MonoBehaviour
                 jumpInProgress = false;
             }
             rb.isKinematic = false;
+            rb.freezeRotation = true;
         }
         else
         {
@@ -132,6 +133,7 @@ public class PlayerMovement : MonoBehaviour
             InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
             InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
             rb.isKinematic = true;
+            rb.freezeRotation = false;
         }
     }
 

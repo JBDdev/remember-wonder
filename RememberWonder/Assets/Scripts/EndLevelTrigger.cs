@@ -12,20 +12,42 @@ public class EndLevelTrigger : MonoBehaviour
     [Tooltip("If negative, will move that many scenes ahead in the build order.")]
     [SerializeField] int sceneIndex;
     [SerializeField] Bewildered.UHashSet<TagString> triggererTags;
+    [Space(5f)]
+    [SerializeField] GameObject moteCanvas;
     [Header("End Level Screen")]
     [SerializeField] GameObject resultsScreen;
     [SerializeField] float startFillDelay;
     [SerializeField] float delayNextFill;
-
-    GameObject moteCanvas;
+    [Header("Audio")]
+    [SerializeField] AudioList collect;
+    [SerializeField] AudioList pullUpMenu;
+    [SerializeField] SourceSettings sourceSettings;
 
     int filledPieces = 0;
-    /*MoteUIController moteUI;
+    bool fillingPieces = false;
+    float fillTimer = 0;
+    int motesToRemove = 0;
 
-    private void Start()
+    private void Update()
     {
-        moteUI = GameObject.Find("MoteCanvas").GetComponent<MoteUIController>();
-    }*/
+        if (fillingPieces)
+        {
+            fillTimer += Time.deltaTime;
+            if (fillTimer >= delayNextFill)
+            {
+                fillTimer = 0;
+                FillPiece();
+            }
+
+            if (filledPieces >= moteCanvas.GetComponent<MoteUIController>().CollectedCount)
+            {
+                fillingPieces = false;
+                EnableInput();
+            }
+        }
+
+
+    }
 
     void OnTriggerEnter(Collider col)
     {
@@ -34,43 +56,34 @@ public class EndLevelTrigger : MonoBehaviour
         Invoke("HandleEndScreen", startFillDelay);
     }
 
-    void HandleEndScreen() 
+    void HandleEndScreen()
     {
-        ////Run the call to clear the UI
-        //moteCanvas = GameObject.Find("MoteCanvas");
-        ////Debug.Log(moteCanvas);
-        //moteCanvas.SetActive(false);
+        //Run the call to clear the UI
+        //Debug.Log(moteCanvas);
+        moteCanvas.SetActive(false);
 
-        ////Run the call to stop player input
-        //GameObject.Find("Player Character").gameObject.GetComponent<PlayerMovement>().TogglePause();
+        AudioHub.Inst.Play(pullUpMenu, sourceSettings);
 
-        //int motesToRemove = 16 - moteCanvas.GetComponent<MoteUIController>().CollectedCount;
-        ////Add the correct # of piece icons
-        //for (int i = 0; i < motesToRemove; i++) 
-        //{           
-        //    resultsScreen.transform.GetChild(2).GetChild(15-i).gameObject.SetActive(false);
-        //}
+        //Run the call to stop player input
+        GameObject.Find("Player Character").gameObject.GetComponent<PlayerMovement>().TogglePause();
 
-        ////Run the call to pull up end screen
-        //resultsScreen.SetActive(true);
+        motesToRemove = 16 - moteCanvas.GetComponent<MoteUIController>().TotalCount;
+        //Add the correct # of piece icons
+        for (int i = 0; i < motesToRemove; i++)
+        {
+            resultsScreen.transform.GetChild(2).GetChild(15 - i).gameObject.SetActive(false);
+        }
+        //Run the call to pull up end screen
+        resultsScreen.SetActive(true);
 
-        ////Loop thru and fill in each piece + play audio
-        //FillPiece(0);
-
-
-        //while (filledPieces < moteCanvas.GetComponent<MoteUIController>().CollectedCount)
-        //{
-        //    //Coroutilities.DoAfterDelay(this, () => FillPiece(filledPieces), delayNextFill);
-        //    FillPiece(filledPieces);
-        //}
-
-        //Assign Press A to Continue and make that prompt show up on screen
-        //Invoke("EnableInput", resultsScreen.transform.GetChild(2).childCount * delayNextFill);
-        OnPressContinue(new UnityEngine.InputSystem.InputAction.CallbackContext());
+        fillingPieces = true;
     }
-    void FillPiece(int index) 
+
+    //This code is called every time a piece needs to be filled in
+    void FillPiece()
     {
-        resultsScreen.transform.GetChild(2).GetChild(index).GetComponent<Image>().color = Color.white;
+        resultsScreen.transform.GetChild(2).GetChild(filledPieces).GetComponent<Image>().color = Color.white;
+        AudioHub.Inst.Play(collect, sourceSettings);
         filledPieces++;
     }
 
@@ -80,11 +93,12 @@ public class EndLevelTrigger : MonoBehaviour
         resultsScreen.transform.GetChild(3).gameObject.SetActive(true);
     }
 
-    void OnPressContinue(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    void OnPressContinue(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        /*if (moteUI.CollectedCount >= 10)
-        {*/
+
         InputHub.Inst.Gameplay.Jump.performed -= OnPressContinue;
+
+        GameObject.Find("Player Character").gameObject.GetComponent<PlayerMovement>().TogglePause();
         if (string.IsNullOrWhiteSpace(scene))
         {
             SceneManager.LoadScene(sceneIndex >= 0
@@ -95,9 +109,5 @@ public class EndLevelTrigger : MonoBehaviour
         {
             SceneManager.LoadScene(scene);
         }
-        /*}
-
-
-        else Debug.Log("Player only has " + moteUI.GetComponent<MoteUIController>().CollectedCount + " motes.");*/
     }
 }
