@@ -180,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
 
         //Update Drop Shadow 
         RaycastHit hit;
-        if (shadow && Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, shadowLayerMask, QueryTriggerInteraction.Ignore))
+        if (shadow && Physics.Raycast(new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z), Vector3.down, out hit, Mathf.Infinity, shadowLayerMask, QueryTriggerInteraction.Ignore))
         {
             //float yPos = hit.collider.bounds.center.y + hit.collider.bounds.extents.y;
             shadow.position = new Vector3(hit.point.x, hit.point.y + shadowFloorOffset, hit.point.z);
