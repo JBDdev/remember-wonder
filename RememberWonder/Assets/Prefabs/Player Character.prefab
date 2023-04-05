@@ -396,10 +396,10 @@ GameObject:
   - component: {fileID: 5864955303093575436}
   - component: {fileID: 5864955303093575427}
   - component: {fileID: 5864955303093575426}
-  - component: {fileID: 5864955303093575431}
   - component: {fileID: 5864955303093575424}
   - component: {fileID: 5864955303093575425}
   - component: {fileID: 5958626486520442641}
+  - component: {fileID: 6701633588861402278}
   m_Layer: 3
   m_Name: Player Character
   m_TagString: Player
@@ -443,8 +443,7 @@ MonoBehaviour:
   pullingObject: 0
   _PulledObjPreview: {fileID: 0}
   directionLastFrame: {x: 0, y: 0, z: 0}
-  dirChangeThreshold: 0.1
-  airFriction: 0.8
+  dirChangeThreshold: 0.05
   visualizeMoveInput: 1
   jumpForce: 350
   jumpInProgress: 0
@@ -455,7 +454,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   rb: {fileID: 5864955303093575426}
   primaryCol: {fileID: 5958626486520442641}
-  secondaryCol: {fileID: 5864955303093575431}
+  secondaryCol: {fileID: 0}
   pickUpPivot: {fileID: 5864955304277689246}
   characterModel: {fileID: 1057102758488478985}
   dropLocation: {fileID: 8189179929393414955}
@@ -469,7 +468,7 @@ MonoBehaviour:
   pushPullObject: {fileID: 0}
   anim: {fileID: 0}
   rotationSpeed: 20
-  minRotationDistance: 0.001
+  minRotationDistance: 0.01
   landingSFX: 6
   landingSettings:
     loop: 0
@@ -512,20 +511,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 2
---- !u!136 &5864955303093575431
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5864955303093575437}
-  m_Material: {fileID: 13400000, guid: 49e6e2e43aac342479c7f77fe5acdc4f, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.6
-  m_Height: 1.842495
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.012069225, z: 0}
 --- !u!23 &5864955303093575424
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -583,13 +568,27 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5864955303093575437}
-  m_Material: {fileID: 13400000, guid: 1f6da22e6b57e134a9b78c91d4d6ae9b, type: 2}
+  m_Material: {fileID: 13400000, guid: 49e6e2e43aac342479c7f77fe5acdc4f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &6701633588861402278
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5864955303093575437}
+  m_Material: {fileID: 13400000, guid: 1f6da22e6b57e134a9b78c91d4d6ae9b, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.25
+  m_Height: 0
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.754, z: 0}
 --- !u!1 &5864955304277689247
 GameObject:
   m_ObjectHideFlags: 0

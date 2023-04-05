@@ -17,7 +17,6 @@ public class PlayerMovement : MonoBehaviour
     [Space(5)]
     [SerializeField] Vector3 directionLastFrame;
     [SerializeField] float dirChangeThreshold = 0.01f;
-    [SerializeField] [Range(0, 1)] float airFriction = 1f;
 #if UNITY_EDITOR
     [Space(5)]
     [SerializeField] bool visualizeMoveInput;
@@ -229,7 +228,7 @@ public class PlayerMovement : MonoBehaviour
 
         anim.SetFloat("Walk Speed", direction.sqrMagnitude);
 
-        if (direction.sqrMagnitude > minRotationDistance)
+        if (direction.sqrMagnitude > minRotationDistance * minRotationDistance)
             RotateCharacterModel(direction.normalized);
 
         ApplyPullRestrictions(ref direction, grounded);
@@ -237,11 +236,14 @@ public class PlayerMovement : MonoBehaviour
 
         float percentHeld = direction.magnitude;
 
-        //If we are not grounded and moving in a significantly different direction (axis delta > deadzone),
-        if (!grounded && (Mathf.Abs(directionLastFrame.x - direction.x) > dirChangeThreshold
+        //If we are not grounded, inputting significantly, and in a significantly different direction (axis delta > deadzone),
+        if (!grounded
+            && direction.sqrMagnitude > minRotationDistance * minRotationDistance
+            && (Mathf.Abs(directionLastFrame.x - direction.x) > dirChangeThreshold
             || Mathf.Abs(directionLastFrame.z - direction.z) > dirChangeThreshold))
         {
-            rb.velocity = new Vector3(rb.velocity.x * airFriction, rb.velocity.y, rb.velocity.z * airFriction);
+            //Make velocity point in the direction of input; input direction with the XZ magnitude of velocity, with the Y component of velocity
+            rb.velocity = (direction.normalized * Vector3.ProjectOnPlane(rb.velocity, Vector3.up).magnitude).Adjust(1, rb.velocity.y);
         }
 
         //If both axes are under max speed, apply force in direction.
