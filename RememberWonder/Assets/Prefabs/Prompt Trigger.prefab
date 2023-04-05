@@ -384,7 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 982daa45eea846f47866a99f01b7911f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerCol: {fileID: 0}
+  triggerCol: {fileID: 3781202711959215835}
   promptObj: {fileID: 3134527012447077830}
   grabbablePromptOwner: {fileID: 0}
   positionType: 0
