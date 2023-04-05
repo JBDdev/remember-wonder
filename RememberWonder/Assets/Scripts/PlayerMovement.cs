@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSpeed;
     [SerializeField] float accModifier;
     public bool pullingObject = false;
+#if UNITY_EDITOR
+    [SerializeField][ReadOnlyInspector] private PushPullObject _PulledObjPreview = null;
+#endif
     [Space(5)]
     [SerializeField] Vector3 directionLastFrame;
     [SerializeField] float dirChangeThreshold = 0.01f;
@@ -36,6 +40,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject characterModel;
     [SerializeField] DropPointTrigger dropLocation;
     [SerializeField] GameObject cameraPivot;
+    [SerializeField] Transform shadow;
+    [SerializeField] float shadowFloorOffset;
+    [SerializeField] LayerMask shadowLayerMask = ~0;
 
     [Header("External References")]
     [SerializeField] GameObject heldObject;
@@ -166,7 +173,27 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //---Core Methods---//
-    
+
+    private void Update()
+    {
+#if UNITY_EDITOR
+        _PulledObjPreview = PulledObject;
+#endif
+
+        //Update Drop Shadow 
+        RaycastHit hit;
+        if (shadow && Physics.Raycast(
+            transform.position.Adjust(1, -0.5f, true),
+            Vector3.down,
+            out hit,
+            Mathf.Infinity,
+            shadowLayerMask,
+            QueryTriggerInteraction.Ignore))
+        {
+            //float yPos = hit.collider.bounds.center.y + hit.collider.bounds.extents.y;
+            shadow.position = new Vector3(hit.point.x, hit.point.y + shadowFloorOffset, hit.point.z);
+        }
+    }
     void FixedUpdate()
     {
         var grounded = IsGrounded();

@@ -441,6 +441,7 @@ MonoBehaviour:
   maxSpeed: 5
   accModifier: 50
   pullingObject: 0
+  _PulledObjPreview: {fileID: 0}
   directionLastFrame: {x: 0, y: 0, z: 0}
   dirChangeThreshold: 0.1
   airFriction: 0.8
@@ -459,6 +460,11 @@ MonoBehaviour:
   characterModel: {fileID: 1057102758488478985}
   dropLocation: {fileID: 8189179929393414955}
   cameraPivot: {fileID: 3914002537868354355}
+  shadow: {fileID: 3125461852803679519}
+  shadowFloorOffset: 0.01
+  shadowLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   heldObject: {fileID: 0}
   pushPullObject: {fileID: 0}
   anim: {fileID: 0}
