@@ -98,6 +98,7 @@ public class GrabSparkleController : MonoBehaviour
         if (!sparkleSystem.isPlaying && (!grabbableSparkleOwner || !grabbableSparkleOwner.IsGrabbed))
         {
             sparkleSystem.Play();
+            sparkleSystem.Emit(Mathf.RoundToInt(sparkleSystem.emission.rateOverTime.constant) * 2);
         }
     }
     private void OnTriggerExit(Collider other)
