@@ -5261,7 +5261,7 @@ PrefabInstance:
       objectReference: {fileID: 1432532571}
     - target: {fileID: 8919210437384428644, guid: a0a2195ef0105384f83aaaf2c3bf3867, type: 3}
       propertyPath: pullUpMenu
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8919210437384428644, guid: a0a2195ef0105384f83aaaf2c3bf3867, type: 3}
       propertyPath: sceneIndex
@@ -5275,6 +5275,14 @@ PrefabInstance:
       propertyPath: resultsScreen
       value: 
       objectReference: {fileID: 380181019}
+    - target: {fileID: 8919210437384428644, guid: a0a2195ef0105384f83aaaf2c3bf3867, type: 3}
+      propertyPath: sourceSettings.spatialBlend
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8919210437384428644, guid: a0a2195ef0105384f83aaaf2c3bf3867, type: 3}
+      propertyPath: sourceSettings.useSpatialBlend
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0a2195ef0105384f83aaaf2c3bf3867, type: 3}
 --- !u!4 &1594861318 stripped
