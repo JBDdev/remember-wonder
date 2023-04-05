@@ -4,6 +4,61 @@ using UnityEngine;
 
 public static class UtilFunctions
 {
+#if UNITY_EDITOR
+    /// <summary>
+    /// Prints the properties of a serialized object to the console using <see cref="Debug.Log(object)"/>.
+    /// </summary>
+    /// <param name="maxDepth">How many levels of child properties to print. 0 means no child properties.</param>
+    public static void PrintProperties(this UnityEditor.SerializedObject propertyOwner, int maxDepth = int.MaxValue)
+    {
+        //no negativity allowed
+        maxDepth = Mathf.Max(maxDepth, 0);
+
+        var propertyIterator = propertyOwner.GetIterator();
+        if (propertyIterator == null)
+        {
+            Debug.LogWarning($"Object {propertyOwner} has no properties.");
+            return;
+        }
+
+        propertyIterator.PrintProperties(maxDepth);
+    }
+    /// <summary>
+    /// Prints the child properties of a serialized property to the console using <see cref="Debug.Log(object)"/>.
+    /// </summary>
+    /// <inheritdoc cref="PrintProperties(UnityEditor.SerializedObject, int)"/>
+    public static void PrintProperties(this UnityEditor.SerializedProperty property, int maxDepth = int.MaxValue)
+    {
+        //no negativity allowed
+        maxDepth = Mathf.Max(maxDepth, 0);
+
+        if (!property.hasChildren)
+        {
+            Debug.LogWarning($"Property {property.name} has no child properties.");
+            return;
+        }
+
+        property.Next(true);
+        Debug.Log(">\t" + property.name + "\n");
+        int initDepth = property.depth;
+
+        string indent;
+        var currentDepth = 0;
+        while (property.Next(currentDepth < maxDepth))
+        {
+            currentDepth = property.depth - initDepth;
+            if (currentDepth < 0) break;
+
+            //Indent equal to depth, and put a ">" before the last tab.
+            indent = (currentDepth == 0 ? ">" : "") + "\t";
+            for (int i = 0; i < currentDepth - 1; i++) indent += "\t";
+            if (currentDepth > 0) indent += ">\t";
+
+            Debug.Log(indent + property.name + "\n");
+        }
+    }
+#endif
+
     /// <summary>
     /// Gets the renderers of <paramref name="obj"/> and its children, and returns the combined bounds of 
     /// all the active/enabled ones.<br/>

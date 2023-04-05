@@ -152,18 +152,25 @@ public class InitGrabIndicationRefs : MonoBehaviour
         if (!sparkleController) return;
 
         var serializedSparkleController = new UnityEditor.SerializedObject(sparkleController);
+        var serializedSparklePSystem = new UnityEditor.SerializedObject(serializedSparkleController.
+            FindProperty("sparkleSystem").objectReferenceValue);
 
         if (grabbableOwner)
             serializedSparkleController.FindProperty("grabbableSparkleOwner").objectReferenceValue = grabbableOwner;
 
         if (sparklingMeshRend)
+        {
             serializedSparkleController.FindProperty("sparklingMeshRend").objectReferenceValue = sparklingMeshRend;
+            serializedSparklePSystem.FindProperty("ShapeModule").
+                FindPropertyRelative("m_MeshRenderer").objectReferenceValue = sparklingMeshRend;
+        }
+
+        serializedSparklePSystem.ApplyModifiedProperties();
+        serializedSparkleController.ApplyModifiedProperties();
 
         sparkleController.InitTrigger(
             useSparkleTriggerSizeOffset ? sparkleTriggerSizeOffset : null,
             useSparkleTriggerPosOffset ? sparkleTriggerPosOffset : null);
-
-        serializedSparkleController.ApplyModifiedProperties();
     }
 
     private void ApplyToPrompt()
