@@ -442,8 +442,8 @@ MonoBehaviour:
   pullingObject: 0
   _PulledObjPreview: {fileID: 0}
   directionLastFrame: {x: 0, y: 0, z: 0}
-  dirChangeThreshold: 0.1
-  airFriction: 0
+  dirChangeThreshold: 0.05
+  airFriction: 0.4
   visualizeMoveInput: 1
   jumpForce: 350
   jumpInProgress: 0

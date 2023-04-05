@@ -222,7 +222,7 @@ public class PlayerMovement : MonoBehaviour
         if (!grounded && (Mathf.Abs(directionLastFrame.x - direction.x) > dirChangeThreshold
             || Mathf.Abs(directionLastFrame.z - direction.z) > dirChangeThreshold))
         {
-            rb.velocity = new Vector3(rb.velocity.x * airFriction, rb.velocity.y, rb.velocity.z * airFriction);
+            rb.velocity = (direction.normalized * Vector3.ProjectOnPlane(rb.velocity, Vector3.up).magnitude).Adjust(1, rb.velocity.y);
         }
 
         //If both axes are under max speed, apply force in direction.
