@@ -642,19 +642,6 @@ MonoBehaviour:
     useMinDistance: 0
     useMaxDistance: 0
   printRegistrationResults: 0
---- !u!65 &186000053
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186000049}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.0612717, y: 2.03512, z: 2.0671952}
-  m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
 --- !u!54 &186000054
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1692,7 +1679,7 @@ AudioSource:
   m_GameObject: {fileID: 474833019}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4292520134047659470, guid: 19c4d08f6cea34240adf9349f6e8744e, type: 2}
   m_audioClip: {fileID: 8300000, guid: cee3f64a0df69ce49aa8a659945f4141, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -4146,6 +4133,10 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5483606427473192515, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: ShapeModule.m_MeshRenderer
+      value: 
+      objectReference: {fileID: 186000050}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: getRefs
       value: 0
@@ -4252,11 +4243,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000020999414
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0000003711062
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_ConstrainProportionsScale

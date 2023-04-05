@@ -221,77 +221,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0612717, y: 2.03512, z: 2.0671952}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
---- !u!114 &28583025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 28583021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  grabbed: 0
-  defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 0}
-  liftable: 1
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
-  liftAudio: 0
-  liftAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  putDownAudio: 0
-  putDownAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
 --- !u!65 &28583026
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -607,77 +536,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0612717, y: 2.03512, z: 2.0671952}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
---- !u!114 &75566650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 75566646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  grabbed: 0
-  defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 0}
-  liftable: 1
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
-  liftAudio: 0
-  liftAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  putDownAudio: 0
-  putDownAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
 --- !u!65 &75566651
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1429,77 +1287,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.035, y: 0.015, z: 0.101302855}
   m_Center: {x: 0.00032218368, y: 0.00074498163, z: -0.00004636591}
---- !u!114 &95982022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 95982008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  grabbed: 0
-  defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 0}
-  liftable: 0
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 2
-  liftAudio: 0
-  liftAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  putDownAudio: 0
-  putDownAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
 --- !u!65 &95982023
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1513,77 +1300,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.035, y: 0.015, z: 0.101064324}
   m_Center: {x: -0.0058947885, y: 0.0064185467, z: 0.0000729084}
---- !u!114 &95982024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 95982010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  grabbed: 0
-  defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 0}
-  liftable: 0
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 1
-  liftAudio: 0
-  liftAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  putDownAudio: 0
-  putDownAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
 --- !u!1 &115778783
 GameObject:
   m_ObjectHideFlags: 0
@@ -2105,77 +1821,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9cd76220d8cdc764289a73e6aad37d3e, type: 3}
   m_PrefabInstance: {fileID: 277864801}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &163326435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163326433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  grabbed: 0
-  defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 0}
-  liftable: 1
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
-  liftAudio: 0
-  liftAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  putDownAudio: 0
-  putDownAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
 --- !u!65 &163326436
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2363,77 +2008,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0612717, y: 2.03512, z: 2.0671952}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
---- !u!114 &174917686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 174917682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  grabbed: 0
-  defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 0}
-  liftable: 1
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
-  liftAudio: 0
-  liftAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  putDownAudio: 0
-  putDownAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
 --- !u!65 &174917687
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7911,77 +7485,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0612717, y: 2.03512, z: 2.0671952}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
---- !u!114 &951395739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 951395735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  grabbed: 0
-  defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 0}
-  liftable: 1
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
-  liftAudio: 0
-  liftAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  putDownAudio: 0
-  putDownAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
 --- !u!65 &951395740
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8369,77 +7872,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0612717, y: 2.03512, z: 2.0671952}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
---- !u!114 &1004139375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1004139371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  grabbed: 0
-  defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 0}
-  liftable: 1
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
-  liftAudio: 0
-  liftAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  putDownAudio: 0
-  putDownAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
 --- !u!65 &1004139376
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9756,77 +9188,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0612717, y: 2.03512, z: 2.0671952}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
---- !u!114 &1207048793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1207048789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  grabbed: 0
-  defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 0}
-  liftable: 1
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
-  liftAudio: 0
-  liftAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  putDownAudio: 0
-  putDownAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
 --- !u!65 &1207048794
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10277,77 +9638,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1283328469583303179, guid: 32054cca883227c44b265fa6b54ffe0c, type: 3}
   m_PrefabInstance: {fileID: 1604958276673866795}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1243906476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 95982006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  grabbed: 0
-  defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 0}
-  liftable: 0
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 2.5
-  liftAudio: 0
-  liftAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  putDownAudio: 0
-  putDownAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
 --- !u!65 &1243906477
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10417,77 +9707,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0612717, y: 2.03512, z: 2.0671952}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
---- !u!114 &1263598978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263598974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  grabbed: 0
-  defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 0}
-  liftable: 1
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
-  liftAudio: 0
-  liftAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  putDownAudio: 0
-  putDownAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
 --- !u!65 &1263598979
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11136,77 +10355,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0612717, y: 2.03512, z: 2.0671952}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
---- !u!114 &1356082294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1356082290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  grabbed: 0
-  defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 0}
-  liftable: 1
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
-  liftAudio: 0
-  liftAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  putDownAudio: 0
-  putDownAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
 --- !u!65 &1356082295
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13163,7 +12311,6 @@ RectTransform:
   - {fileID: 1698409331}
   - {fileID: 1626678154}
   - {fileID: 839649121}
-  - {fileID: 2082045788}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13345,77 +12492,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0612717, y: 2.03512, z: 2.0671952}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
---- !u!114 &1690049726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1690049722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  grabbed: 0
-  defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 0}
-  liftable: 1
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
-  liftAudio: 0
-  liftAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  putDownAudio: 0
-  putDownAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
 --- !u!65 &1690049727
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15337,77 +14413,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8027060119949002601, guid: 5b8d03e62b365374b9764c65d5337111, type: 3}
   m_PrefabInstance: {fileID: 1877640867}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1887879381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1887879377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  grabbed: 0
-  defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 0}
-  liftable: 0
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 100
-  liftAudio: 0
-  liftAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  putDownAudio: 0
-  putDownAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
 --- !u!65 &1887879382
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17089,77 +16094,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0612717, y: 2.03512, z: 2.0671952}
   m_Center: {x: -0.0036811829, y: 0.0024386868, z: 0.00019013882}
---- !u!114 &2079328647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2079328643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  grabbed: 0
-  defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 0}
-  liftable: 1
-  grabMoveMultipliers: {x: 1, y: 1, z: 1}
-  maxPullDistance: 10000
-  liftAudio: 0
-  liftAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  putDownAudio: 0
-  putDownAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
 --- !u!65 &2079328648
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17200,7 +16134,7 @@ GameObject:
   - component: {fileID: 2082045788}
   - component: {fileID: 2082045789}
   m_Layer: 5
-  m_Name: BGM
+  m_Name: Main Menu BGM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17213,17 +16147,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2082045787}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1666319451}
-  m_RootOrder: 3
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 960, y: 540}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!82 &2082045789
@@ -17235,7 +16169,7 @@ AudioSource:
   m_GameObject: {fileID: 2082045787}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4292520134047659470, guid: 19c4d08f6cea34240adf9349f6e8744e, type: 2}
   m_audioClip: {fileID: 8300000, guid: 7754707289619a3479cce84b33920931, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.1
