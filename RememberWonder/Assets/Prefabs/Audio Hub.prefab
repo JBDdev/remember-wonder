@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sourcePrefab: {fileID: 7429508136159080657, guid: a07c09c0d93cf9545a8c72a58084dcda, type: 3}
   sourceDisplayName: AHSource
-  sourcePoolSize: 20
+  sourcePoolSize: 25
   soundLibrary:
     _serializedPairs:
     - key: 18
@@ -145,7 +145,7 @@ MonoBehaviour:
       value:
         randomOrder: 0
         clips:
-        - {fileID: 8300000, guid: 28cb6fee575bb104386d157ed1a23196, type: 3}
+        - {fileID: 8300000, guid: 5f62a2855c1c2f542a4692f96168fc6d, type: 3}
       isDuplicateKey: 0
       index: 13
     - key: 14
@@ -176,3 +176,31 @@ MonoBehaviour:
         - {fileID: 8300000, guid: 51a3555734b8d9d4a870c396f0cb9d05, type: 3}
       isDuplicateKey: 0
       index: 17
+    - key: 19
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: f88b5035f792761478d80bf0ddae30a2, type: 3}
+      isDuplicateKey: 0
+      index: 18
+    - key: 20
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: f8f9c688eeaf3fd448e0de2e4f6981f8, type: 3}
+      isDuplicateKey: 0
+      index: 19
+    - key: 21
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: f79ff79a6e7681d498cabac2ba7c5c95, type: 3}
+      isDuplicateKey: 0
+      index: 20
+    - key: 22
+      value:
+        randomOrder: 0
+        clips:
+        - {fileID: 8300000, guid: dd9af37e280e8bf4780e500d417a2bfd, type: 3}
+      isDuplicateKey: 0
+      index: 21
