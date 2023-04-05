@@ -380,6 +380,7 @@ MonoBehaviour:
   invertX: 0
   invertY: 0
   lookSpeed: 100
+  lookSpeedOptionName: cameraSens
   pitchRange: {x: -75, y: 75}
   maxYOffsetOnJump: 2
   castWidth: 1.5
@@ -468,6 +469,32 @@ MonoBehaviour:
   anim: {fileID: 0}
   rotationSpeed: 20
   minRotationDistance: 0.01
+  landingSFX: 6
+  landingSettings:
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    dopplerLevel: 0
+    spread: 0
+    volumeRolloff: 0
+    minDistance: 1
+    maxDistance: 500
+    useLoop: 0
+    usePriority: 0
+    useVolume: 0
+    usePitch: 0
+    useStereoPan: 0
+    useSpatialBlend: 1
+    useReverbZoneMix: 0
+    useDopplerLevel: 0
+    useSpread: 0
+    useVolumeRolloff: 0
+    useMinDistance: 0
+    useMaxDistance: 0
 --- !u!54 &5864955303093575426
 Rigidbody:
   m_ObjectHideFlags: 0

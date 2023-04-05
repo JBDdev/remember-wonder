@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -51,7 +52,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotationSpeed;
     [SerializeField] float minRotationDistance;
 
+    [Header("Player SFX")]
+    [SerializeField] AudioList landingSFX;
+    [SerializeField] SourceSettings landingSettings;
+
     bool paused;
+    bool landed = false;
 
     /// <summary>
     /// Invoked whenever this we start or stop grabbing something..
@@ -118,14 +124,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 jumpInProgress = false;
             }
-            Time.timeScale = 1f;
+            rb.isKinematic = false;
         }
         else
         {
             paused = true;
             InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
             InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
-            Time.timeScale = 0f;
+            rb.isKinematic = true;
         }
     }
 
@@ -133,10 +139,6 @@ public class PlayerMovement : MonoBehaviour
     {
         //If a PulledObject hasn't been registered, don't do anything. (See PushPullObject)
         if (!PulledObject) return;
-        //If it has, it's not liftable, and we're not grounded, also don't do anything.
-        //  Airborne grabbing liftables sometimes causes anti-gravity nonsense when it really,
-        //  REALLY shouldn't, so change this at risk.
-        if (!PulledObject.liftable && !IsGrounded()) return;
 
         if (!pullingObject)
         {
@@ -194,7 +196,18 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         var grounded = IsGrounded();
+
+        if (!grounded) landed = false;
+        
+
         anim.SetBool("Jumped", jumpInProgress);
+        if (grounded && !landed && rb.velocity.y < 0)
+        {
+            landed = true;
+            AudioHub.Inst.Play(landingSFX, landingSettings, transform.position);
+        }
+
+        //Debug.Log(anim.GetAnimatorTransitionInfo(0).IsUserName("Landing"));
 
         ApplyMoveForce(grounded);
 
@@ -258,7 +271,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (jumpInProgress && groundedCheck)
         {
-            Coroutilities.DoNextFrame(this, () => jumpInProgress = rb.velocity.y > 0);
+            Coroutine c = Coroutilities.DoNextFrame(this, () => jumpInProgress = rb.velocity.y > 0);
         }
         return groundedCheck && groundHit.normal.y >= maxIncline;
     }
@@ -282,7 +295,6 @@ public class PlayerMovement : MonoBehaviour
         restrictedDir.z *= PulledObject.GrabMoveMultipliers.z;
 
         //-- Restrict axis movement via max pull distance --//
-        if (PulledObject.liftable) return;
 
         //X is beyond the negative max distance
         if (restrictedDir.x < 0

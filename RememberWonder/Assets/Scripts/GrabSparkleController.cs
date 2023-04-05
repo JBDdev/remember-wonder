@@ -15,12 +15,27 @@ public class GrabSparkleController : MonoBehaviour
     [Tooltip("How many particles to emit, for each 6 unity units squared in the surface area of sparklingMesh's axis aligned bounding box. " +
         "I.e., if sparklingMesh is a normal, unrotated cube with scale (1,1,1), sparkleSystem's rate over time will equal this.")]
     [SerializeField] private float sparklesPerUnitCube = 10;
+    [SerializeField][Min(0.1f)] private float colorChangeSpeed = 1;
     [Tooltip("Trigger Collider is sized to fit the Sparkling Mesh Rend. How much extra size (in world space) should this trigger have?")]
     [SerializeField] private Vector3 triggerSizeOffset = Vector3.zero;
     [SerializeField] private Vector3 triggerPosOffset = Vector3.zero;
     [SerializeField] private UHashSet<TagString> activatorTags;
 
     private const float UNIT_CUBE_SURFACE_AREA = 6;
+
+    #region Color Change Vars
+    private float colorTimeSeed = 0;
+    private ParticleSystem.ColorOverLifetimeModule sparkleSysColor;
+    private Gradient gradientCache;
+
+    private const float ONE_SIXTH = 1f / 6f;
+    private readonly Color RED = Color.HSVToRGB(0, 0.8f, 1);
+    private readonly Color ORANGE = Color.HSVToRGB(0.06f, 0.8f, 1);
+    private readonly Color YELLOW = Color.HSVToRGB(0.17f, 0.8f, 1);
+    private readonly Color GREEN = Color.HSVToRGB(0.33f, 0.8f, 1);
+    private readonly Color BLUE = Color.HSVToRGB(0.60f, 0.8f, 1);
+    private readonly Color PURPLE = Color.HSVToRGB(0.78f, 0.8f, 1);
+    #endregion
 
 #if UNITY_EDITOR
     private void OnValidate() => ValidationUtility.DoOnDelayCall(this, () => InitTrigger());
@@ -89,6 +104,8 @@ public class GrabSparkleController : MonoBehaviour
 
         var sparkleSysMain = sparkleSystem.main;
         sparkleSysMain.customSimulationSpace = sparklingMeshRend.transform.parent;
+
+        sparkleSysColor = sparkleSystem.colorOverLifetime;
     }
 
     private void OnTriggerStay(Collider other)
@@ -98,6 +115,8 @@ public class GrabSparkleController : MonoBehaviour
         if (!sparkleSystem.isPlaying && (!grabbableSparkleOwner || !grabbableSparkleOwner.IsGrabbed))
         {
             sparkleSystem.Play();
+            sparkleSystem.Emit(Mathf.RoundToInt(sparkleSystem.emission.rateOverTime.constant) * 2);
+            colorTimeSeed = Time.time - Random.Range(0f, 1f);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -112,5 +131,33 @@ public class GrabSparkleController : MonoBehaviour
         {
             sparkleSystem.Stop();
         }
+        else if (sparkleSystem.isPlaying && grabbableSparkleOwner)
+        {
+            gradientCache = sparkleSysColor.color.gradient;
+            gradientCache.SetKeys(
+                new GradientColorKey[] { new GradientColorKey(RainbowLerp(Time.time - colorTimeSeed), 0) },
+                gradientCache.alphaKeys);
+
+            sparkleSysColor.color = gradientCache;
+        }
+    }
+
+    private Color RainbowLerp(float value)
+    {
+        value %= colorChangeSpeed;
+        value /= colorChangeSpeed;
+
+        if (value < ONE_SIXTH)
+            return Color.Lerp(RED, ORANGE, Mathf.InverseLerp(0, ONE_SIXTH, value));
+        else if (value < ONE_SIXTH * 2)
+            return Color.Lerp(ORANGE, YELLOW, Mathf.InverseLerp(ONE_SIXTH, ONE_SIXTH * 2, value));
+        else if (value < ONE_SIXTH * 3)
+            return Color.Lerp(YELLOW, GREEN, Mathf.InverseLerp(ONE_SIXTH * 2, ONE_SIXTH * 3, value));
+        else if (value < ONE_SIXTH * 4)
+            return Color.Lerp(GREEN, BLUE, Mathf.InverseLerp(ONE_SIXTH * 3, ONE_SIXTH * 4, value));
+        else if (value < ONE_SIXTH * 5)
+            return Color.Lerp(BLUE, PURPLE, Mathf.InverseLerp(ONE_SIXTH * 4, ONE_SIXTH * 5, value));
+        else
+            return Color.Lerp(PURPLE, RED, Mathf.InverseLerp(ONE_SIXTH * 5, 1, value));
     }
 }
