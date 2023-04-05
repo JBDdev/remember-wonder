@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     public bool jumpInProgress = false;
     public float maxIncline;
     public float fallGravMultiplier = 1;
+    [SerializeField] private LayerMask groundLayers = ~0;
 
     [Header("Self Component References")]
     [SerializeField] private Rigidbody rb;
@@ -243,7 +244,9 @@ public class PlayerMovement : MonoBehaviour
             point1, point2,
             radius, Vector3.down,
             out RaycastHit groundHit,
-            0.1f);
+            0.1f,
+            groundLayers,
+            QueryTriggerInteraction.Ignore);
 
         if (jumpInProgress && groundedCheck)
         {
