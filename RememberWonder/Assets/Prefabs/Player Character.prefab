@@ -443,7 +443,6 @@ MonoBehaviour:
   _PulledObjPreview: {fileID: 0}
   directionLastFrame: {x: 0, y: 0, z: 0}
   dirChangeThreshold: 0.05
-  airFriction: 0.4
   visualizeMoveInput: 1
   jumpForce: 350
   jumpInProgress: 0
@@ -468,7 +467,7 @@ MonoBehaviour:
   pushPullObject: {fileID: 0}
   anim: {fileID: 0}
   rotationSpeed: 20
-  minRotationDistance: 0.001
+  minRotationDistance: 0.01
 --- !u!54 &5864955303093575426
 Rigidbody:
   m_ObjectHideFlags: 0
