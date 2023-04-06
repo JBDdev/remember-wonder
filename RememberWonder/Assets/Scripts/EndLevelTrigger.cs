@@ -23,8 +23,9 @@ public class EndLevelTrigger : MonoBehaviour
     [SerializeField] AudioList pullUpMenu;
     [SerializeField] SourceSettings sourceSettings;
 
-    int filledPieces = 0;
     bool fillingPieces = false;
+    bool loadingScene = false;
+    int filledPieces = 0;
     float fillTimer = 0;
     int motesToRemove = 0;
 
@@ -45,8 +46,6 @@ public class EndLevelTrigger : MonoBehaviour
                 EnableInput();
             }
         }
-
-
     }
 
     void OnTriggerEnter(Collider col)
@@ -95,6 +94,8 @@ public class EndLevelTrigger : MonoBehaviour
 
     void OnPressContinue(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
+        if (loadingScene) return;
+        loadingScene = true;
 
         InputHub.Inst.Gameplay.Jump.performed -= OnPressContinue;
 
