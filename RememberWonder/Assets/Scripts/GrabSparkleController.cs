@@ -116,7 +116,7 @@ public class GrabSparkleController : MonoBehaviour
         {
             sparkleSystem.Play();
             sparkleSystem.Emit(Mathf.RoundToInt(sparkleSystem.emission.rateOverTime.constant) * 2);
-            colorTimeSeed = Time.time - Random.Range(0f, 1f);
+            colorTimeSeed = Time.time - Random.Range(0f, colorChangeSpeed);
         }
     }
     private void OnTriggerExit(Collider other)
