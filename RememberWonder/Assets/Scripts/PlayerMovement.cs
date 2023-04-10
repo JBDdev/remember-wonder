@@ -200,7 +200,6 @@ public class PlayerMovement : MonoBehaviour
         var grounded = IsGrounded();
 
         if (!grounded) landed = false;
-        
 
         anim.SetBool("Jumped", jumpInProgress);
         if (grounded && !landed && rb.velocity.y < 0)
@@ -287,46 +286,50 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         //Otherwise, if this object isn't liftable, we shouldn't be able to pull it if we're not grounded
+        //  We can bail out ONLY because we've already zeroed everything
         if (!grounded && !PulledObject.liftable)
         {
-            restrictedDir = Vector3.zero;
+            ZeroDirAndVelocity(ref restrictedDir, 3);
             return;
         }
 
         restrictedDir.x *= PulledObject.GrabMoveMultipliers.x;
         restrictedDir.z *= PulledObject.GrabMoveMultipliers.z;
 
-        //-- Restrict axis movement via max pull distance --//
+        if (BeyondMaxDistance(restrictedDir, 0))    //X is beyond max distance
+            ZeroDirAndVelocity(ref restrictedDir, 0);
 
-        //X is beyond the negative max distance
-        if (restrictedDir.x < 0
-            && PulledObject.transform.position.x < PulledObject.defaultPos.x - PulledObject.maxPullDistance)
-        {
-            restrictedDir.x = 0f;
-            rb.velocity = Vector3.zero;
-        }
-        //X is beyond the positive max distance
-        else if (restrictedDir.x > 0
-            && PulledObject.transform.position.x > PulledObject.defaultPos.x + PulledObject.maxPullDistance)
-        {
-            restrictedDir.x = 0f;
-            rb.velocity = Vector3.zero;
-        }
-        //Z is beyond the negative max distance
-        if (restrictedDir.z < 0
-            && PulledObject.transform.position.z < PulledObject.defaultPos.z - PulledObject.maxPullDistance)
-        {
-            restrictedDir.z = 0f;
-            rb.velocity = Vector3.zero;
-        }
-        //Z is beyond the positive max distance
-        else if (restrictedDir.z > 0
-            && PulledObject.transform.position.z > PulledObject.defaultPos.z + PulledObject.maxPullDistance)
-        {
-            restrictedDir.z = 0f;
-            rb.velocity = Vector3.zero;
-        }
+        if (BeyondMaxDistance(restrictedDir, 2))    //Z is beyond max distance
+            ZeroDirAndVelocity(ref restrictedDir, 2);
     }
+    #region Restriction Helper Functions
+    /// <param name="axis">012, XYZ. Input any other int to zero out ALL axes.</param>
+    private void ZeroDirAndVelocity(ref Vector3 dir, int axis)
+    {
+        switch (axis)
+        {
+            case 0: dir.x = 0f; break;
+            case 1: dir.y = 0f; break;
+            case 2: dir.z = 0f; break;
+            default:
+                dir = Vector3.zero;
+                break;
+        }
+
+        rb.velocity = Vector3.zero;
+    }
+    /// <param name="axis">012, XYZ. Clamped using <see cref="Mathf.Clamp(int, int, int)"/>.</param>
+    private bool BeyondMaxDistance(Vector3 direction, int axis)
+    {
+        axis = Mathf.Clamp(axis, 0, 2);
+
+        return
+            //Beyond negative max
+            (direction[axis] < 0 && PulledObject.transform.position[axis] < PulledObject.defaultPos[axis] - PulledObject.maxPullDistance)
+            //Beyond positive max
+            || (direction[axis] > 0 && PulledObject.transform.position[axis] > PulledObject.defaultPos[axis] + PulledObject.maxPullDistance);
+    }
+    #endregion
 
     private void RotateCharacterModel(Vector3 direction)
     {
