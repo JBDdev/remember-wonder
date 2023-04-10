@@ -189,16 +189,22 @@ MonoBehaviour:
   sparklingMeshRend: {fileID: 2605685474750330192}
   useSparkleTriggerSizeOffset: 0
   sparkleTriggerSizeOffset: {x: 0, y: 0, z: 0}
+  useSparkleTriggerPosOffset: 0
+  sparkleTriggerPosOffset: {x: 0, y: 0, z: 0}
   usePromptTriggerSizeOffset: 1
   promptTriggerSizeOffset: {x: 0.05, y: 0.05, z: 0.05}
-  getRefs: 0
-  applyToTriggers: 0
+  usePromptTriggerPosOffset: 0
+  promptTriggerPosOffset: {x: 0, y: 0, z: 0}
   prevGrabbableOwner: {fileID: 0}
   prevSparklingMeshRend: {fileID: 2605685474750330192}
   prevUseSparkleTriggerSizeOffset: 0
   prevSparkleTriggerSizeOffset: {x: 0, y: 0, z: 0}
   prevUsePromptTriggerSizeOffset: 0
   prevPromptTriggerSizeOffset: {x: 0.05, y: 0.05, z: 0.05}
+  prevUseSparkleTriggerPosOffset: 0
+  prevSparkleTriggerPosOffset: {x: 0, y: 0, z: 0}
+  prevUsePromptTriggerPosOffset: 0
+  prevPromptTriggerPosOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &2605685474750330194
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,7 +481,9 @@ MonoBehaviour:
   grabbableSparkleOwner: {fileID: 0}
   sparklingMeshRend: {fileID: 2605685474750330192}
   sparklesPerUnitCube: 5
+  colorChangeSpeed: 1
   triggerSizeOffset: {x: 0, y: 0, z: 0}
+  triggerPosOffset: {x: 0, y: 0, z: 0}
   activatorTags:
     _serializedValues:
     - value:

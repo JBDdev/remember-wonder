@@ -26,4 +26,8 @@ public enum AudioList
     ToyDrop = 15,
     CarDrop = 16,
     Error = 17,
+    IdelHotAirBaloon = 19,
+    IdelBabySleep = 20,
+    IdelFlipBook = 21,
+    IdelWriting = 22,
 }

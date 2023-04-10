@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -16,7 +17,6 @@ public class PlayerMovement : MonoBehaviour
     [Space(5)]
     [SerializeField] Vector3 directionLastFrame;
     [SerializeField] float dirChangeThreshold = 0.01f;
-    [SerializeField][Range(0, 1)] float airFriction = 1f;
 #if UNITY_EDITOR
     [Space(5)]
     [SerializeField] bool visualizeMoveInput;
@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     public bool jumpInProgress = false;
     public float maxIncline;
     public float fallGravMultiplier = 1;
+    [SerializeField] private LayerMask groundLayers = ~0;
 
     [Header("Self Component References")]
     [SerializeField] private Rigidbody rb;
@@ -51,7 +52,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotationSpeed;
     [SerializeField] float minRotationDistance;
 
+    [Header("Player SFX")]
+    [SerializeField] AudioList landingSFX;
+    [SerializeField] SourceSettings landingSettings;
+
     bool paused;
+    bool landed = false;
 
     /// <summary>
     /// Invoked whenever this we start or stop grabbing something..
@@ -118,14 +124,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 jumpInProgress = false;
             }
-            Time.timeScale = 1f;
+            rb.isKinematic = false;
+            rb.freezeRotation = true;
         }
         else
         {
             paused = true;
             InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
             InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
-            Time.timeScale = 0f;
+            rb.isKinematic = true;
+            rb.freezeRotation = false;
         }
     }
 
@@ -133,10 +141,6 @@ public class PlayerMovement : MonoBehaviour
     {
         //If a PulledObject hasn't been registered, don't do anything. (See PushPullObject)
         if (!PulledObject) return;
-        //If it has, it's not liftable, and we're not grounded, also don't do anything.
-        //  Airborne grabbing liftables sometimes causes anti-gravity nonsense when it really,
-        //  REALLY shouldn't, so change this at risk.
-        if (!PulledObject.liftable && !IsGrounded()) return;
 
         if (!pullingObject)
         {
@@ -179,7 +183,13 @@ public class PlayerMovement : MonoBehaviour
 
         //Update Drop Shadow 
         RaycastHit hit;
-        if (shadow && Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, shadowLayerMask, QueryTriggerInteraction.Ignore))
+        if (shadow && Physics.Raycast(
+            transform.position.Adjust(1, -0.5f, true),
+            Vector3.down,
+            out hit,
+            Mathf.Infinity,
+            shadowLayerMask,
+            QueryTriggerInteraction.Ignore))
         {
             //float yPos = hit.collider.bounds.center.y + hit.collider.bounds.extents.y;
             shadow.position = new Vector3(hit.point.x, hit.point.y + shadowFloorOffset, hit.point.z);
@@ -188,7 +198,18 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         var grounded = IsGrounded();
+
+        if (!grounded) landed = false;
+        
+
         anim.SetBool("Jumped", jumpInProgress);
+        if (grounded && !landed && rb.velocity.y < 0)
+        {
+            landed = true;
+            AudioHub.Inst.Play(landingSFX, landingSettings, transform.position);
+        }
+
+        //Debug.Log(anim.GetAnimatorTransitionInfo(0).IsUserName("Landing"));
 
         ApplyMoveForce(grounded);
 
@@ -209,7 +230,7 @@ public class PlayerMovement : MonoBehaviour
 
         anim.SetFloat("Walk Speed", direction.sqrMagnitude);
 
-        if (direction.sqrMagnitude > minRotationDistance)
+        if (direction.sqrMagnitude > minRotationDistance * minRotationDistance)
             RotateCharacterModel(direction.normalized);
 
         ApplyPullRestrictions(ref direction, grounded);
@@ -217,11 +238,14 @@ public class PlayerMovement : MonoBehaviour
 
         float percentHeld = direction.magnitude;
 
-        //If we are not grounded and moving in a significantly different direction (axis delta > deadzone),
-        if (!grounded && (Mathf.Abs(directionLastFrame.x - direction.x) > dirChangeThreshold
+        //If we are not grounded, inputting significantly, and in a significantly different direction (axis delta > deadzone),
+        if (!grounded
+            && direction.sqrMagnitude > minRotationDistance * minRotationDistance
+            && (Mathf.Abs(directionLastFrame.x - direction.x) > dirChangeThreshold
             || Mathf.Abs(directionLastFrame.z - direction.z) > dirChangeThreshold))
         {
-            rb.velocity = new Vector3(rb.velocity.x * airFriction, rb.velocity.y, rb.velocity.z * airFriction);
+            //Make velocity point in the direction of input; input direction with the XZ magnitude of velocity, with the Y component of velocity
+            rb.velocity = (direction.normalized * Vector3.ProjectOnPlane(rb.velocity, Vector3.up).magnitude).Adjust(1, rb.velocity.y);
         }
 
         //If both axes are under max speed, apply force in direction.
@@ -243,11 +267,13 @@ public class PlayerMovement : MonoBehaviour
             point1, point2,
             radius, Vector3.down,
             out RaycastHit groundHit,
-            0.1f);
+            0.1f,
+            groundLayers,
+            QueryTriggerInteraction.Ignore);
 
         if (jumpInProgress && groundedCheck)
         {
-            Coroutilities.DoNextFrame(this, () => jumpInProgress = rb.velocity.y > 0);
+            Coroutine c = Coroutilities.DoNextFrame(this, () => jumpInProgress = rb.velocity.y > 0);
         }
         return groundedCheck && groundHit.normal.y >= maxIncline;
     }
@@ -271,7 +297,6 @@ public class PlayerMovement : MonoBehaviour
         restrictedDir.z *= PulledObject.GrabMoveMultipliers.z;
 
         //-- Restrict axis movement via max pull distance --//
-        if (PulledObject.liftable) return;
 
         //X is beyond the negative max distance
         if (restrictedDir.x < 0
