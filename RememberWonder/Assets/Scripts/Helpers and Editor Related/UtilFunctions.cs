@@ -271,7 +271,6 @@ public static class UtilFunctions
             }
         }
     }
-
     private static Vector3[] _cacheUnitSphere = MakeUnitSphere(16);
     /// <summary>
     /// Makes a unit circle out of points. Three rings of points for each axis;<br/>
@@ -291,6 +290,21 @@ public static class UtilFunctions
             v[2 * len + i] = new Vector3(sinNum, 0, cosNum);
         }
         return v;
+    }
+
+    /// <param name="xAxis">If <see langword="default"/> (zero alpha black), will be set to <see cref="Color.red"/>.</param>
+    /// <param name="yAxis">If <see langword="default"/> (zero alpha black), will be set to <see cref="Color.green"/>.</param>
+    /// <param name="zAxis">If <see langword="default"/> (zero alpha black), will be set to <see cref="Color.blue"/>.</param>
+    public static void DrawAxes(Transform axesOwner, float length = 1f, float duration = 0f,
+        Color xAxis = default, Color yAxis = default, Color zAxis = default)
+    {
+        if (xAxis == default) xAxis = Color.red;
+        if (yAxis == default) yAxis = Color.green;
+        if (zAxis == default) zAxis = Color.blue;
+
+        Debug.DrawRay(axesOwner.position, axesOwner.right * length, xAxis, duration);
+        Debug.DrawRay(axesOwner.position, axesOwner.up * length, yAxis, duration);
+        Debug.DrawRay(axesOwner.position, axesOwner.forward * length, zAxis, duration);
     }
 
     /// <summary>
