@@ -244,7 +244,7 @@ public class PlayerMovement : MonoBehaviour
             || Mathf.Abs(directionLastFrame.z - direction.z) > dirChangeThreshold))
         {
             //Make velocity point in the direction of input; input direction with the XZ magnitude of velocity, with the Y component of velocity
-            rb.velocity = (direction.normalized * Vector3.ProjectOnPlane(rb.velocity, Vector3.up).magnitude).Adjust(1, rb.velocity.y);
+            rb.velocity = (direction * Vector3.ProjectOnPlane(rb.velocity, Vector3.up).magnitude).Adjust(1, rb.velocity.y);
         }
 
         //If both axes are under max speed, apply force in direction.
