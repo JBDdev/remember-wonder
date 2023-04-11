@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -16,7 +17,6 @@ public class PlayerMovement : MonoBehaviour
     [Space(5)]
     [SerializeField] Vector3 directionLastFrame;
     [SerializeField] float dirChangeThreshold = 0.01f;
-    [SerializeField][Range(0, 1)] float airFriction = 1f;
 #if UNITY_EDITOR
     [Space(5)]
     [SerializeField] bool visualizeMoveInput;
@@ -52,7 +52,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotationSpeed;
     [SerializeField] float minRotationDistance;
 
+    [Header("Player SFX")]
+    [SerializeField] AudioList landingSFX;
+    [SerializeField] SourceSettings landingSettings;
+
     bool paused;
+    bool landed = false;
 
     /// <summary>
     /// Invoked whenever this we start or stop grabbing something..
@@ -119,14 +124,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 jumpInProgress = false;
             }
-            Time.timeScale = 1f;
+            rb.isKinematic = false;
+            rb.freezeRotation = true;
         }
         else
         {
             paused = true;
             InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
             InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
-            Time.timeScale = 0f;
+            rb.isKinematic = true;
+            rb.freezeRotation = false;
         }
     }
 
@@ -134,10 +141,6 @@ public class PlayerMovement : MonoBehaviour
     {
         //If a PulledObject hasn't been registered, don't do anything. (See PushPullObject)
         if (!PulledObject) return;
-        //If it has, it's not liftable, and we're not grounded, also don't do anything.
-        //  Airborne grabbing liftables sometimes causes anti-gravity nonsense when it really,
-        //  REALLY shouldn't, so change this at risk.
-        if (!PulledObject.liftable && !IsGrounded()) return;
 
         if (!pullingObject)
         {
@@ -180,7 +183,13 @@ public class PlayerMovement : MonoBehaviour
 
         //Update Drop Shadow 
         RaycastHit hit;
-        if (shadow && Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, shadowLayerMask, QueryTriggerInteraction.Ignore))
+        if (shadow && Physics.Raycast(
+            transform.position.Adjust(1, -0.5f, true),
+            Vector3.down,
+            out hit,
+            Mathf.Infinity,
+            shadowLayerMask,
+            QueryTriggerInteraction.Ignore))
         {
             //float yPos = hit.collider.bounds.center.y + hit.collider.bounds.extents.y;
             shadow.position = new Vector3(hit.point.x, hit.point.y + shadowFloorOffset, hit.point.z);
@@ -189,7 +198,17 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         var grounded = IsGrounded();
+
+        if (!grounded) landed = false;
+
         anim.SetBool("Jumped", jumpInProgress);
+        if (grounded && !landed && rb.velocity.y < 0)
+        {
+            landed = true;
+            AudioHub.Inst.Play(landingSFX, landingSettings, transform.position);
+        }
+
+        //Debug.Log(anim.GetAnimatorTransitionInfo(0).IsUserName("Landing"));
 
         ApplyMoveForce(grounded);
 
@@ -210,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
 
         anim.SetFloat("Walk Speed", direction.sqrMagnitude);
 
-        if (direction.sqrMagnitude > minRotationDistance)
+        if (direction.sqrMagnitude > minRotationDistance * minRotationDistance)
             RotateCharacterModel(direction.normalized);
 
         ApplyPullRestrictions(ref direction, grounded);
@@ -218,11 +237,14 @@ public class PlayerMovement : MonoBehaviour
 
         float percentHeld = direction.magnitude;
 
-        //If we are not grounded and moving in a significantly different direction (axis delta > deadzone),
-        if (!grounded && (Mathf.Abs(directionLastFrame.x - direction.x) > dirChangeThreshold
+        //If we are not grounded, inputting significantly, and in a significantly different direction (axis delta > deadzone),
+        if (!grounded
+            && direction.sqrMagnitude > minRotationDistance * minRotationDistance
+            && (Mathf.Abs(directionLastFrame.x - direction.x) > dirChangeThreshold
             || Mathf.Abs(directionLastFrame.z - direction.z) > dirChangeThreshold))
         {
-            rb.velocity = new Vector3(rb.velocity.x * airFriction, rb.velocity.y, rb.velocity.z * airFriction);
+            //Make velocity point in the direction of input; input direction with the XZ magnitude of velocity, with the Y component of velocity
+            rb.velocity = (direction.normalized * Vector3.ProjectOnPlane(rb.velocity, Vector3.up).magnitude).Adjust(1, rb.velocity.y);
         }
 
         //If both axes are under max speed, apply force in direction.
@@ -250,7 +272,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (jumpInProgress && groundedCheck)
         {
-            Coroutilities.DoNextFrame(this, () => jumpInProgress = rb.velocity.y > 0);
+            Coroutine c = Coroutilities.DoNextFrame(this, () => jumpInProgress = rb.velocity.y > 0);
         }
         return groundedCheck && groundHit.normal.y >= maxIncline;
     }
@@ -264,47 +286,50 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         //Otherwise, if this object isn't liftable, we shouldn't be able to pull it if we're not grounded
+        //  We can bail out ONLY because we've already zeroed everything
         if (!grounded && !PulledObject.liftable)
         {
-            restrictedDir = Vector3.zero;
+            ZeroDirAndVelocity(ref restrictedDir, 3);
             return;
         }
 
         restrictedDir.x *= PulledObject.GrabMoveMultipliers.x;
         restrictedDir.z *= PulledObject.GrabMoveMultipliers.z;
 
-        //-- Restrict axis movement via max pull distance --//
-        if (PulledObject.liftable) return;
+        if (BeyondMaxDistance(restrictedDir, 0))    //X is beyond max distance
+            ZeroDirAndVelocity(ref restrictedDir, 0);
 
-        //X is beyond the negative max distance
-        if (restrictedDir.x < 0
-            && PulledObject.transform.position.x < PulledObject.defaultPos.x - PulledObject.maxPullDistance)
-        {
-            restrictedDir.x = 0f;
-            rb.velocity = Vector3.zero;
-        }
-        //X is beyond the positive max distance
-        else if (restrictedDir.x > 0
-            && PulledObject.transform.position.x > PulledObject.defaultPos.x + PulledObject.maxPullDistance)
-        {
-            restrictedDir.x = 0f;
-            rb.velocity = Vector3.zero;
-        }
-        //Z is beyond the negative max distance
-        if (restrictedDir.z < 0
-            && PulledObject.transform.position.z < PulledObject.defaultPos.z - PulledObject.maxPullDistance)
-        {
-            restrictedDir.z = 0f;
-            rb.velocity = Vector3.zero;
-        }
-        //Z is beyond the positive max distance
-        else if (restrictedDir.z > 0
-            && PulledObject.transform.position.z > PulledObject.defaultPos.z + PulledObject.maxPullDistance)
-        {
-            restrictedDir.z = 0f;
-            rb.velocity = Vector3.zero;
-        }
+        if (BeyondMaxDistance(restrictedDir, 2))    //Z is beyond max distance
+            ZeroDirAndVelocity(ref restrictedDir, 2);
     }
+    #region Restriction Helper Functions
+    /// <param name="axis">012, XYZ. Input any other int to zero out ALL axes.</param>
+    private void ZeroDirAndVelocity(ref Vector3 dir, int axis)
+    {
+        switch (axis)
+        {
+            case 0: dir.x = 0f; break;
+            case 1: dir.y = 0f; break;
+            case 2: dir.z = 0f; break;
+            default:
+                dir = Vector3.zero;
+                break;
+        }
+
+        rb.velocity = Vector3.zero;
+    }
+    /// <param name="axis">012, XYZ. Clamped using <see cref="Mathf.Clamp(int, int, int)"/>.</param>
+    private bool BeyondMaxDistance(Vector3 direction, int axis)
+    {
+        axis = Mathf.Clamp(axis, 0, 2);
+
+        return
+            //Beyond negative max
+            (direction[axis] < 0 && PulledObject.transform.position[axis] < PulledObject.defaultPos[axis] - PulledObject.maxPullDistance)
+            //Beyond positive max
+            || (direction[axis] > 0 && PulledObject.transform.position[axis] > PulledObject.defaultPos[axis] + PulledObject.maxPullDistance);
+    }
+    #endregion
 
     private void RotateCharacterModel(Vector3 direction)
     {

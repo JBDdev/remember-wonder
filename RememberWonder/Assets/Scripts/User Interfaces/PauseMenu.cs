@@ -302,7 +302,7 @@ public class PauseMenu : MonoBehaviour
         if (cameraSens == -1f)
         {
             cameraSens = 0.5f;
-            PlayerPrefs.SetFloat("cameraSens", sfxVolume);
+            PlayerPrefs.SetFloat("cameraSens", cameraSens);
         }
 
         PlayerPrefs.Save();
