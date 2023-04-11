@@ -5515,9 +5515,9 @@ MonoBehaviour:
   - {fileID: 7285706812380147751}
   submenuSelection: 0
   windowSelection: 0
-  bgmSlider: {fileID: 4821454591407907289}
-  sfxSlider: {fileID: 4898923683127558231}
-  cameraSlider: {fileID: 1682300663718693909}
+  bgmSlider: {fileID: 2432951246229632627}
+  sfxSlider: {fileID: 1871006374021097617}
+  cameraSlider: {fileID: 3149407258717440915}
   exitOptions:
   - {fileID: 3499262073675983140}
   - {fileID: 4677946447652260346}

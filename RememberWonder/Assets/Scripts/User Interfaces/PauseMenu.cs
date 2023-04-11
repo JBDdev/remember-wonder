@@ -25,9 +25,9 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject[] windowOptions;
     [SerializeField] int submenuSelection;
     [SerializeField] int windowSelection;
-    [SerializeField] GameObject bgmSlider;
-    [SerializeField] GameObject sfxSlider;
-    [SerializeField] GameObject cameraSlider;
+    [SerializeField] Slider bgmSlider;
+    [SerializeField] Slider sfxSlider;
+    [SerializeField] Slider cameraSlider;
     [SerializeField] GameObject[] exitOptions;
     [SerializeField] int exitSelection;
     [SerializeField] GameObject[] highlightableElements;
@@ -48,8 +48,8 @@ public class PauseMenu : MonoBehaviour
     bool viewingInstructions;
     bool viewingSettings;
 
-    float defaultBGMVolume;
-    float defaultSFXVolume;
+    float bgmVolumeAtStart;
+    float sfxVolumeAtStart;
 
     // Start is called before the first frame update
     void Start()
@@ -62,8 +62,8 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player");
 
-        mixer.GetFloat("bgmVol", out defaultBGMVolume);
-        mixer.GetFloat("sfxVol", out defaultSFXVolume);
+        mixer.GetFloat("bgmVol", out bgmVolumeAtStart);
+        mixer.GetFloat("sfxVol", out sfxVolumeAtStart);
 
         LoadPlayerSettings();
     }
@@ -260,13 +260,14 @@ public class PauseMenu : MonoBehaviour
             windowOptions[1].GetComponent<Image>().enabled = true;
         }
 
-
-
         submenuSelection = windowSetting;
         //Sliders
-        bgmSlider.transform.GetChild(0).GetComponent<Slider>().value = bgmVolume;
-        sfxSlider.transform.GetChild(0).GetComponent<Slider>().value = sfxVolume;
-        cameraSlider.transform.GetChild(0).GetComponent<Slider>().value = cameraSens;
+        bgmSlider.value = bgmVolume;
+        sfxSlider.value = sfxVolume;
+        cameraSlider.value = cameraSens;
+
+        SetMixerVolumeViaSlider(bgmSlider, "bgmVol");
+        SetMixerVolumeViaSlider(sfxSlider, "sfxVol");
 
         submenuSelection = 0;
     }
@@ -279,22 +280,19 @@ public class PauseMenu : MonoBehaviour
         else
             Screen.fullScreenMode = FullScreenMode.Windowed;
 
-        //Update Volume Here
-        float bgmValue = bgmSlider.transform.GetChild(0).GetComponent<Slider>().value;
-        bgmValue = 30 - (30 * bgmValue);
-        mixer.SetFloat("bgmVol", -bgmValue);
+        SetMixerVolumeViaSlider(bgmSlider, "bgmVol");
+        SetMixerVolumeViaSlider(sfxSlider, "sfxVol");
 
-        float sfxValue = sfxSlider.transform.GetChild(0).GetComponent<Slider>().value;
-        sfxValue = 30 - (30 * sfxValue);
-        mixer.SetFloat("sfxVol", -sfxValue);
-
-        //Update Camera Sensitvity Here
+        bgmVolume = bgmSlider.value;
+        sfxVolume = sfxSlider.value;
 
         PlayerPrefs.SetInt("windowSetting", windowSelection);
-        PlayerPrefs.SetFloat("bgmVolume", bgmSlider.transform.GetChild(0).GetComponent<Slider>().value);
-        PlayerPrefs.SetFloat("sfxVolume", sfxSlider.transform.GetChild(0).GetComponent<Slider>().value);
-        PlayerPrefs.SetFloat("cameraSens", cameraSlider.transform.GetChild(0).GetComponent<Slider>().value);
+        PlayerPrefs.SetFloat("bgmVolume", bgmVolume);
+        PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
+        PlayerPrefs.SetFloat("cameraSens", cameraSlider.value);
     }
+    private void SetMixerVolumeViaSlider(Slider slider, string mixerFloatName)
+        => mixer.SetFloat(mixerFloatName, -1 * (30 - (30 * slider.value)));
 
     void InitMissingPrefValues()
     {
@@ -341,6 +339,13 @@ public class PauseMenu : MonoBehaviour
 
         if (exitSelection == 0)
             ApplyNewSettings();
+        else
+        {
+            bgmSlider.value = bgmVolume;
+            sfxSlider.value = sfxVolume;
+            SetMixerVolumeViaSlider(bgmSlider, "bgmVol");
+            SetMixerVolumeViaSlider(sfxSlider, "sfxVol");
+        }
 
         UnloadSettings();
     }
@@ -366,24 +371,24 @@ public class PauseMenu : MonoBehaviour
                         windowSelection = 1;
                 }
                 break;
+
             case 1:
-                if (input.x > menuInputThreshold)
-                    bgmSlider.transform.GetChild(0).GetComponent<Slider>().value += 0.1f;
-                else if (input.x < -menuInputThreshold)
-                    bgmSlider.transform.GetChild(0).GetComponent<Slider>().value -= 0.1f;
+                if (input.x > menuInputThreshold) bgmSlider.value += 0.1f;
+                else if (input.x < -menuInputThreshold) bgmSlider.value -= 0.1f;
+                SetMixerVolumeViaSlider(bgmSlider, "bgmVol");
                 break;
+
             case 2:
-                if (input.x > menuInputThreshold)
-                    sfxSlider.transform.GetChild(0).GetComponent<Slider>().value += 0.1f;
-                else if (input.x < -menuInputThreshold)
-                    sfxSlider.transform.GetChild(0).GetComponent<Slider>().value -= 0.1f;
+                if (input.x > menuInputThreshold) sfxSlider.value += 0.1f;
+                else if (input.x < -menuInputThreshold) sfxSlider.value -= 0.1f;
+                SetMixerVolumeViaSlider(sfxSlider, "sfxVol");
                 break;
+
             case 3:
-                if (input.x > menuInputThreshold)
-                    cameraSlider.transform.GetChild(0).GetComponent<Slider>().value += 0.1f;
-                else if (input.x < -menuInputThreshold)
-                    cameraSlider.transform.GetChild(0).GetComponent<Slider>().value -= 0.1f;
+                if (input.x > menuInputThreshold) cameraSlider.value += 0.1f;
+                else if (input.x < -menuInputThreshold) cameraSlider.value -= 0.1f;
                 break;
+
             case 4:
                 if (input.x > menuInputThreshold)
                 {

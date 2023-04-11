@@ -12215,14 +12215,15 @@ MonoBehaviour:
   mixer: {fileID: 24100000, guid: 19c4d08f6cea34240adf9349f6e8744e, type: 2}
   mainMenuSelection: 0
   menuInputThreshold: 0.5
+  inputCooldownTime: 0.15
   windowOptions:
   - {fileID: 846109484}
   - {fileID: 1635657640}
   submenuSelection: 0
   windowSelection: 0
-  bgmSlider: {fileID: 1351694482}
-  sfxSlider: {fileID: 1840342002}
-  cameraSlider: {fileID: 1297747241}
+  bgmSlider: {fileID: 316874414}
+  sfxSlider: {fileID: 1062943936}
+  cameraSlider: {fileID: 851530046}
   exitOptions:
   - {fileID: 807345439}
   - {fileID: 1360373200}
