@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] int mainMenuSelection;
     [SerializeField] float menuInputThreshold;
+    [SerializeField] float inputCooldownTime = 0.15f;
 
     [Header("Settings Menu Shenanigans")]
     [SerializeField] GameObject[] windowOptions;
@@ -27,6 +28,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] int exitSelection;
     [SerializeField] GameObject[] highlightableElements;
 
+    Vector2 moveInputCache;
+    Coroutine vertInputCooldown = null;
+    Coroutine horzInputCooldown = null;
+
     //
     int windowSetting;
     float bgmVolume;
@@ -34,28 +39,50 @@ public class MainMenu : MonoBehaviour
     float cameraSens;
 
     bool viewingInstructions;
+    bool inSubmenu;
 
     // Start is called before the first frame update
     void Start()
     {
         mainMenuSelection = 0;
         initialMenuOptions[0].GetComponent<Image>().enabled = true;
-        InputHub.Inst.Gameplay.MenuNav.performed += ChangeSelection;
-        InputHub.Inst.Gameplay.Jump.performed += Select;
+        inSubmenu = false;  //InputHub.Inst.UI.Move.performed += ChangeSelection;
+        InputHub.Inst.UI.Select.performed += Select;
         viewingInstructions = false;
         LoadPlayerSettings();
-
     }
 
-    void Select(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    private void Update()
+    {
+        moveInputCache = InputHub.Inst.UI.Move.ReadValue<Vector2>();
+
+        if (!moveInputCache.y.EqualWithinRange(0, menuInputThreshold))
+        {
+            if (vertInputCooldown != null)
+                moveInputCache.y = 0;
+            else vertInputCooldown = Coroutilities.DoAfterDelay(this, () => vertInputCooldown = null, inputCooldownTime, true);
+        }
+
+        if (!moveInputCache.x.EqualWithinRange(0, menuInputThreshold))
+        {
+            if (horzInputCooldown != null)
+                moveInputCache.x = 0;
+            else horzInputCooldown = Coroutilities.DoAfterDelay(this, () => horzInputCooldown = null, inputCooldownTime, true);
+        }
+
+        ChangeSelection(moveInputCache);
+        SubmenuSelection(moveInputCache);
+    }
+
+    void Select(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
         if (!viewingInstructions)
         {
             switch (mainMenuSelection)
             {
                 case 0:
-                    InputHub.Inst.Gameplay.MenuNav.performed -= ChangeSelection;
-                    InputHub.Inst.Gameplay.Jump.performed -= Select;
+                    inSubmenu = false;  //InputHub.Inst.UI.Move.performed -= ChangeSelection;
+                    InputHub.Inst.UI.Select.performed -= Select;
                     SceneManager.LoadScene(1);
                     break;
                 case 1:
@@ -69,20 +96,20 @@ public class MainMenu : MonoBehaviour
                     break;
             }
         }
-        else 
+        else
         {
             UnloadInstructions();
         }
     }
 
-    void LoadInstructions() 
+    void LoadInstructions()
     {
         mainMenu.SetActive(false);
         instructionsMenu.SetActive(true);
         viewingInstructions = true;
     }
 
-    void UnloadInstructions() 
+    void UnloadInstructions()
     {
         instructionsMenu.SetActive(false);
         mainMenu.SetActive(true);
@@ -92,11 +119,11 @@ public class MainMenu : MonoBehaviour
     void LoadSettings()
     {
         mainMenu.SetActive(false);
-        InputHub.Inst.Gameplay.MenuNav.performed -= ChangeSelection;
-        InputHub.Inst.Gameplay.Jump.performed -= Select;
+        //InputHub.Inst.UI.Move.performed -= ChangeSelection;
+        InputHub.Inst.UI.Select.performed -= Select;
 
-        InputHub.Inst.Gameplay.Jump.performed += ConfirmSettings;
-        InputHub.Inst.Gameplay.MenuNav.performed += SubmenuSelection;
+        InputHub.Inst.UI.Select.performed += ConfirmSettings;
+        inSubmenu = true;   //InputHub.Inst.UI.Move.performed += SubmenuSelection;
 
         LoadPlayerSettings();
         settingsMenu.SetActive(true);
@@ -104,11 +131,11 @@ public class MainMenu : MonoBehaviour
     void UnloadSettings()
     {
         settingsMenu.SetActive(false);
-        InputHub.Inst.Gameplay.Jump.performed -= ConfirmSettings;
-        InputHub.Inst.Gameplay.MenuNav.performed -= SubmenuSelection;
+        InputHub.Inst.UI.Select.performed -= ConfirmSettings;
+        //InputHub.Inst.UI.Move.performed -= SubmenuSelection;
 
-        InputHub.Inst.Gameplay.MenuNav.performed += ChangeSelection;
-        InputHub.Inst.Gameplay.Jump.performed += Select;
+        inSubmenu = false;  //InputHub.Inst.UI.Move.performed += ChangeSelection;
+        InputHub.Inst.UI.Select.performed += Select;
 
         foreach (GameObject element in highlightableElements)
             element.GetComponent<Image>().color = Color.white;
@@ -116,9 +143,9 @@ public class MainMenu : MonoBehaviour
         mainMenu.SetActive(true);
     }
 
-    void ChangeSelection(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    void ChangeSelection(Vector2 input)
     {
-        Vector2 input = InputHub.Inst.Gameplay.MenuNav.ReadValue<Vector2>();
+        if (inSubmenu) return;
 
         if (input.y > menuInputThreshold)
             mainMenuSelection--;
@@ -137,7 +164,7 @@ public class MainMenu : MonoBehaviour
 
     }
 
-    void LoadPlayerSettings() 
+    void LoadPlayerSettings()
     {
         windowSetting = PlayerPrefs.GetInt("windowSetting");
         bgmVolume = PlayerPrefs.GetFloat("bgmVolume");
@@ -175,7 +202,7 @@ public class MainMenu : MonoBehaviour
         submenuSelection = 0;
     }
 
-    void InitMissingPrefValues() 
+    void InitMissingPrefValues()
     {
         switch (windowSetting)
         {
@@ -248,9 +275,9 @@ public class MainMenu : MonoBehaviour
         UnloadSettings();
     }
 
-    void SubmenuSelection(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    void SubmenuSelection(Vector2 input)
     {
-        Vector2 input = InputHub.Inst.Gameplay.MenuNav.ReadValue<Vector2>();
+        if (!inSubmenu) return;
 
         //Handle Horizontal Input
         switch (submenuSelection)

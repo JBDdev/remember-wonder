@@ -5509,6 +5509,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 3648542182955554319}
   mainMenuSelection: 0
   menuInputThreshold: 0
+  inputCooldownTime: 0.15
   windowOptions:
   - {fileID: 2467751778455625123}
   - {fileID: 7285706812380147751}
