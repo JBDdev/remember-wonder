@@ -302,7 +302,7 @@ public class PlayerMovement : MonoBehaviour
 
         jumpInProgress = true;
         anim.SetBool("Jumped", true);
-        jumpBufferedTimer = null;
+        Coroutilities.TryStopCoroutine(this, ref jumpBufferedTimer);
     }
 
     public bool IsGrounded()
