@@ -191,12 +191,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1944278439}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
       value: 
       objectReference: {fileID: 1786484191}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 5.708571
+      value: 12.375237
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
@@ -204,7 +212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 6.883059
+      value: 10.2163925
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
@@ -243,7 +251,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -251,7 +271,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -1139,12 +1171,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 687097686}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
       value: 
       objectReference: {fileID: 833571883}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 5.708571
+      value: 12.375237
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
@@ -1152,7 +1192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 6.883059
+      value: 10.2163925
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
@@ -1191,7 +1231,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -1199,7 +1251,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -2085,7 +2149,7 @@ MonoBehaviour:
   liftedTag:
     str: 
   physMat: {fileID: 0}
-  maxPullDistance: 1.7
+  maxPullDistance: 1.15
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
@@ -3030,12 +3094,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1262706960}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
       value: 
       objectReference: {fileID: 157087150}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 5.708571
+      value: 12.375237
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
@@ -3043,7 +3115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 6.883059
+      value: 10.2163925
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
@@ -3082,7 +3154,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -3090,7 +3174,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -4398,12 +4494,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 582704343}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
       value: 
       objectReference: {fileID: 2129572503}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 5.708571
+      value: 12.375237
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
@@ -4411,7 +4515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 6.883059
+      value: 10.2163925
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
@@ -4450,7 +4554,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -4458,7 +4574,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -4905,12 +5033,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 44636940}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
       value: 
       objectReference: {fileID: 778413823}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 5.708571
+      value: 12.375237
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
@@ -4918,7 +5054,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 6.883059
+      value: 10.2163925
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
@@ -4957,7 +5093,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -4965,7 +5113,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -5609,7 +5769,7 @@ MonoBehaviour:
   liftedTag:
     str: 
   physMat: {fileID: 0}
-  maxPullDistance: 1.7
+  maxPullDistance: 1.15
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
@@ -6314,7 +6474,7 @@ MonoBehaviour:
   liftedTag:
     str: 
   physMat: {fileID: 0}
-  maxPullDistance: 1.7
+  maxPullDistance: 1.15
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
@@ -6421,7 +6581,7 @@ MonoBehaviour:
   liftedTag:
     str: 
   physMat: {fileID: 0}
-  maxPullDistance: 1.7
+  maxPullDistance: 1.15
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
@@ -6528,7 +6688,7 @@ MonoBehaviour:
   liftedTag:
     str: 
   physMat: {fileID: 0}
-  maxPullDistance: 1.7
+  maxPullDistance: 1.15
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
@@ -9277,7 +9437,7 @@ MonoBehaviour:
   liftedTag:
     str: 
   physMat: {fileID: 0}
-  maxPullDistance: 1.7
+  maxPullDistance: 1.15
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
@@ -9640,7 +9800,7 @@ MonoBehaviour:
   liftedTag:
     str: 
   physMat: {fileID: 0}
-  maxPullDistance: 1.7
+  maxPullDistance: 1.15
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
@@ -9837,12 +9997,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 722457036}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
       value: 
       objectReference: {fileID: 1727515162}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 5.708571
+      value: 12.375237
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
@@ -9850,7 +10018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 6.883059
+      value: 10.2163925
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
@@ -9889,7 +10057,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -9897,7 +10077,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -10540,7 +10732,7 @@ MonoBehaviour:
   liftedTag:
     str: 
   physMat: {fileID: 0}
-  maxPullDistance: 1.7
+  maxPullDistance: 1.15
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
@@ -10839,12 +11031,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1665637285}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
       value: 
       objectReference: {fileID: 506871487}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 5.708571
+      value: 12.375237
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
@@ -10852,7 +11052,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 6.883059
+      value: 10.2163925
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
@@ -10891,7 +11091,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -10899,7 +11111,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -11316,12 +11540,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 629236695}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
       value: 
       objectReference: {fileID: 2145186180}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 5.708571
+      value: 12.375237
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
@@ -11329,7 +11561,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 6.883059
+      value: 10.2163925
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
@@ -11368,7 +11600,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -11376,7 +11620,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -12300,12 +12556,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 349120574}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
       value: 
       objectReference: {fileID: 1824119158}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 5.708571
+      value: 12.375237
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
@@ -12313,7 +12577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 6.883059
+      value: 10.2163925
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
@@ -12352,7 +12616,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -12360,7 +12636,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -12649,12 +12937,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1285380446}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
       value: 
       objectReference: {fileID: 1967718143}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 5.708571
+      value: 12.375237
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
@@ -12662,7 +12958,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 6.883059
+      value: 10.2163925
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
@@ -12701,7 +12997,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -12709,7 +13017,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -14380,12 +14700,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 874995866}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
       value: 
       objectReference: {fileID: 426788726}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 5.708571
+      value: 12.375237
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
@@ -14393,7 +14721,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 6.883059
+      value: 10.2163925
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
@@ -14432,7 +14760,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -14440,7 +14780,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -15469,7 +15821,7 @@ MonoBehaviour:
   liftedTag:
     str: 
   physMat: {fileID: 0}
-  maxPullDistance: 1.7
+  maxPullDistance: 1.15
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
@@ -16470,12 +16822,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1274114651}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
       value: 
       objectReference: {fileID: 1258699235}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 5.708571
+      value: 12.375237
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
@@ -16483,7 +16843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 6.883059
+      value: 10.2163925
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
@@ -16522,7 +16882,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -16530,7 +16902,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -19632,12 +20016,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2068993085}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
       value: 
       objectReference: {fileID: 749237058}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 5.708571
+      value: 12.375237
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
@@ -19645,7 +20037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 6.883059
+      value: 10.2163925
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
@@ -19684,7 +20076,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -19692,7 +20096,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -20455,12 +20871,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1214898190}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
       value: 
       objectReference: {fileID: 477627448}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 5.708571
+      value: 12.375237
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
@@ -20468,7 +20892,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 6.883059
+      value: 10.2163925
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
@@ -20507,7 +20931,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -20515,7 +20951,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -21318,7 +21766,7 @@ MonoBehaviour:
   liftedTag:
     str: 
   physMat: {fileID: 0}
-  maxPullDistance: 1.7
+  maxPullDistance: 1.15
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
@@ -21997,14 +22445,11 @@ MonoBehaviour:
     - value: {fileID: 716609898}
       isDuplicate: 0
       index: 0
-    - value: {fileID: 0}
-      isDuplicate: 0
-      index: 1
   liftable: 0
   liftedTag:
     str: 
   physMat: {fileID: 0}
-  maxPullDistance: 1.7
+  maxPullDistance: 1.15
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
@@ -22521,7 +22966,7 @@ MonoBehaviour:
   liftedTag:
     str: 
   physMat: {fileID: 0}
-  maxPullDistance: 1.7
+  maxPullDistance: 1.15
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
@@ -23792,7 +24237,7 @@ MonoBehaviour:
   liftedTag:
     str: 
   physMat: {fileID: 0}
-  maxPullDistance: 1.7
+  maxPullDistance: 1.15
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
@@ -24684,12 +25129,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 594758440}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
       value: 
       objectReference: {fileID: 485089901}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 5.708571
+      value: 12.375237
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
@@ -24697,7 +25150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 6.883059
+      value: 10.2163925
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
@@ -24736,7 +25189,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -24744,7 +25209,19 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -25308,7 +25785,7 @@ MonoBehaviour:
   liftedTag:
     str: 
   physMat: {fileID: 0}
-  maxPullDistance: 1.7
+  maxPullDistance: 1.15
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
@@ -25802,7 +26279,7 @@ MonoBehaviour:
   liftedTag:
     str: 
   physMat: {fileID: 0}
-  maxPullDistance: 1.7
+  maxPullDistance: 1.15
   grabMoveMultipliers: {x: 1, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
