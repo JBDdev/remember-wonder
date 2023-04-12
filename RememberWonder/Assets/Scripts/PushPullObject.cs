@@ -165,4 +165,16 @@ public class PushPullObject : MonoBehaviour
 
         if (liftable) tag = initTag;
     }
+
+#if UNITY_EDITOR
+    [NaughtyAttributes.Button(topPadding: 5)]
+    private void PingFirstPrompt()
+    {
+        var firstPrompt = GetComponentInChildren<InitGrabIndicationRefs>();
+        if (firstPrompt)
+        {
+            UnityEditor.EditorGUIUtility.PingObject(firstPrompt);
+        }
+    }
+#endif
 }
