@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
-using Bewildered.Editor;
+#if UNITY_EDITOR
+using Bewildered.Editor; 
+#endif
 
 public class InitGrabIndicationRefs : MonoBehaviour
 {
