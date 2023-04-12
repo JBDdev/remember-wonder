@@ -2393,7 +2393,11 @@ MonoBehaviour:
   player: {fileID: 0}
   grabbed: 0
   defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 1532098929}
+  grabPrompts:
+    _serializedValues:
+    - value: {fileID: 1532098929}
+      isDuplicate: 0
+      index: 0
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
@@ -2871,7 +2875,11 @@ MonoBehaviour:
   player: {fileID: 0}
   grabbed: 0
   defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 1603679168}
+  grabPrompts:
+    _serializedValues:
+    - value: {fileID: 1603679168}
+      isDuplicate: 0
+      index: 0
   liftable: 0
   liftedTag:
     str: 

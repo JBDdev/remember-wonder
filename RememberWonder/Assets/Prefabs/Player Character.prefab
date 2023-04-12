@@ -289,6 +289,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineRendCache: {fileID: 1244827308449117351}
   arrowRendCache: {fileID: 4154762973627017177}
+  colliderRef: {fileID: 7921580319277698254}
+  player: {fileID: 5864955303093575427}
+  maxRaiseDistance: 1
+  raiseYOffset: 0.01
+  ignoredLayers:
+    serializedVersion: 2
+    m_Bits: 0
   ignoredTags:
     _serializedValues:
     - value:

@@ -37,11 +37,11 @@ public class DisplayPrompt : MonoBehaviour
 
     /// <summary>
     /// Invoked whenever this prompt is told to start appearing/disappearing.
+    /// <br/>- <see cref="DisplayPrompt"/>: The controller of the prompt whose state was changed. I.e., <see langword="this"/>.
     /// <br/>- <see cref="bool"/>: Whether this prompt should be appearing or not.
     /// <br/>- <see cref="Collider"/>: The collider that triggered the state change. Null if not triggered by a collision event.
-    /// <br/>- <see cref="bool"/>: Is this prompt currently active (promptObj.activeSelf)?
     /// </summary>
-    public System.Action<bool, Collider, bool> PromptStateChange;
+    public System.Action<DisplayPrompt, bool, Collider> PromptStateChange;
 
     public bool IsActivePrompt { get => activePromptDisplayer == this; }
     public PushPullObject GrabbablePromptOwner { get => grabbablePromptOwner; set => grabbablePromptOwner = value; }
@@ -191,7 +191,7 @@ public class DisplayPrompt : MonoBehaviour
                 appearBufferCorout = Coroutilities.DoAfterDelayFrames(this,
                         () =>
                         {
-                            PromptStateChange?.Invoke(true, triggerer, promptObj.activeSelf);
+                            PromptStateChange?.Invoke(this, true, triggerer);
                             appearBufferCorout = null;
                         },
                         3);
@@ -203,7 +203,7 @@ public class DisplayPrompt : MonoBehaviour
             Coroutilities.TryStopCoroutine(this, ref appearBufferCorout);
 
             promptCorout = StartCoroutine(PromptDisappear());
-            PromptStateChange?.Invoke(false, triggerer, promptObj.activeSelf);
+            PromptStateChange?.Invoke(this, false, triggerer);
         }
     }
 
