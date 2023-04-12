@@ -448,7 +448,7 @@ MonoBehaviour:
   jumpForce: 350
   jumpInProgress: 0
   maxIncline: 0.5
-  fallGravMultiplier: 1
+  fallGravMultiplier: 1.75
   groundLayers:
     serializedVersion: 2
     m_Bits: 4294967295

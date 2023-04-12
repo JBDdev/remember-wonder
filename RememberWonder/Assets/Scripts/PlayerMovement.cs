@@ -237,14 +237,15 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //If NOT grounded and fall gravity should be modified,
-        if (!grounded && !Mathf.Approximately(fallGravMultiplier, 1) && rb.velocity.y < 0)
+        if (!grounded && !Mathf.Approximately(fallGravMultiplier, 1))
         {
-            //then, if we're falling or not holding the jump button,
-            if (rb.velocity.y < 0 || !jumpInputHeld)
+            //then, if we're falling or rising without the jump button held,
+            if (rb.velocity.y < 0 || (rb.velocity.y > 0 && !jumpInputHeld))
             {
                 //Apply extra force based on the multiplier (There's no "gravity scale" for 3D Rigidbodies).
                 //Gravity's already applied once by default; if 1.01, apply the extra 0.01
-                rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
+                rb.velocity += Physics.gravity * (fallGravMultiplier - 1) * Time.deltaTime;
+                //rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
             }
         }
 
