@@ -123,6 +123,11 @@ public static class UtilFunctions
         return result;
     }
 
+    /// <summary>
+    /// Uses bit operators to determine if a given layer is in this layer mask.<br/>
+    /// Sourced from <see href="https://forum.unity.com/threads/checking-if-a-layer-is-in-a-layer-mask.1190230/#post-7613611"/>.
+    public static bool Includes(this LayerMask mask, int layer) => (mask.value & (1 << layer)) != 0;
+
     public static float GetSurfaceArea(this Bounds bounds)
         => 2 * bounds.size.x * bounds.size.y + 2 * bounds.size.x * bounds.size.z + 2 * bounds.size.y * bounds.size.z;
 
