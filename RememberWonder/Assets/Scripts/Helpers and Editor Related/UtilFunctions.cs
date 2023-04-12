@@ -319,6 +319,7 @@ public static class UtilFunctions
     public static bool EqualWithinRange(this float subject, float target, float range)
         => subject >= target - range && subject <= target + range;
 
+    /// <inheritdoc cref="EqualWithinRange(float, float, float)"/>
     public static bool EqualWithinRange(this Vector3 subject, Vector3 target, float range)
         => (target - subject).sqrMagnitude <= range * range;
 
