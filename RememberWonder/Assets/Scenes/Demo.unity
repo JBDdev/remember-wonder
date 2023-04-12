@@ -259,7 +259,11 @@ MonoBehaviour:
   player: {fileID: 0}
   grabbed: 0
   defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 1272959417}
+  grabPrompts:
+    _serializedValues:
+    - value: {fileID: 1272959417}
+      isDuplicate: 0
+      index: 0
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
@@ -718,7 +722,11 @@ MonoBehaviour:
   player: {fileID: 0}
   grabbed: 0
   defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 898162288}
+  grabPrompts:
+    _serializedValues:
+    - value: {fileID: 898162288}
+      isDuplicate: 0
+      index: 0
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
@@ -927,19 +935,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.033859093, y: 0.015480583, z: 0.101064324}
   m_Center: {x: -0.0058947885, y: 0.0064185467, z: 0.0000729084}
---- !u!65 &95982021
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4497810064241720747}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.0035, y: 0.002, z: 0.101302855}
-  m_Center: {x: 0.0203, y: 0.00074498163, z: -0.00004636591}
 --- !u!114 &95982022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -955,7 +950,11 @@ MonoBehaviour:
   player: {fileID: 0}
   grabbed: 0
   defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 2043549643}
+  grabPrompts:
+    _serializedValues:
+    - value: {fileID: 2043549643}
+      isDuplicate: 0
+      index: 0
   liftable: 0
   liftedTag:
     str: 
@@ -1015,19 +1014,6 @@ MonoBehaviour:
     useMinDistance: 0
     useMaxDistance: 0
   printRegistrationResults: 0
---- !u!65 &95982023
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1356379712079475517}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.0022656473, y: 0.0015, z: 0.101064324}
-  m_Center: {x: 0.015036083, y: 0.0059046918, z: 0.0000729084}
 --- !u!114 &95982024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1043,7 +1029,14 @@ MonoBehaviour:
   player: {fileID: 0}
   grabbed: 0
   defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 470639459}
+  grabPrompts:
+    _serializedValues:
+    - value: {fileID: 470639459}
+      isDuplicate: 0
+      index: 0
+    - value: {fileID: 721415418}
+      isDuplicate: 0
+      index: 1
   liftable: 0
   liftedTag:
     str: 
@@ -1984,7 +1977,11 @@ MonoBehaviour:
   player: {fileID: 0}
   grabbed: 0
   defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 83386696}
+  grabPrompts:
+    _serializedValues:
+    - value: {fileID: 83386696}
+      isDuplicate: 0
+      index: 0
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
@@ -3021,6 +3018,315 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1078023230342990759, guid: e2e17d63fd07bcf4599cd947b9b16b45, type: 3}
   m_PrefabInstance: {fileID: 308357990}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &314800329
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8444879262259879790}
+    m_Modifications:
+    - target: {fileID: 740504704665694918, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 740504704665694918, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: grabbableObj
+      value: 
+      objectReference: {fileID: 1243906476}
+    - target: {fileID: 740504704665694918, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: positionType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 740504704665694918, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: grabbablePromptOwner
+      value: 
+      objectReference: {fileID: 1243906476}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826889, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Name
+      value: Grab Prompt (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshObj
+      value: 
+      objectReference: {fileID: 1977078286988663077}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshRend
+      value: 
+      objectReference: {fileID: 2098311751}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingGrabbable
+      value: 
+      objectReference: {fileID: 1243906476}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerPosOffset.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: grabbableSparkleOwner
+      value: 
+      objectReference: {fileID: 1243906476}
+    - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Size.x
+      value: 0.07043181
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Size.y
+      value: 0.014090911
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Size.z
+      value: 0.05045455
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Center.x
+      value: 0.0042769834
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Center.y
+      value: 0.012203745
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Center.z
+      value: 0.025500003
+      objectReference: {fileID: 0}
+    - target: {fileID: 4766279115182911359, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Radius
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5483606427473192515, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: ShapeModule.m_MeshRenderer
+      value: 
+      objectReference: {fileID: 2098311751}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: getRefs
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: grabbableOwner
+      value: 
+      objectReference: {fileID: 1243906476}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: applyToTriggers
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshRend
+      value: 
+      objectReference: {fileID: 2098311751}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: giveOwnerPromptRef
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevGrabbableOwner
+      value: 
+      objectReference: {fileID: 1243906476}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparklingMeshRend
+      value: 
+      objectReference: {fileID: 2098311751}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: promptTriggerPosOffset.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: promptTriggerPosOffset.y
+      value: -0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: promptTriggerSizeOffset.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: promptTriggerSizeOffset.y
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: promptTriggerSizeOffset.z
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerPosOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: usePromptTriggerPosOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerPosOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevPromptTriggerPosOffset.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevPromptTriggerPosOffset.y
+      value: -0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevPromptTriggerSizeOffset.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevPromptTriggerSizeOffset.y
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevPromptTriggerSizeOffset.z
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerPosOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUsePromptTriggerPosOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerPosOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.009068183
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.010909092
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.011818184
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.005950289
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.006749199
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.025500003
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+--- !u!4 &314800330 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+  m_PrefabInstance: {fileID: 314800329}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &314800331 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 740504704665694918, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+  m_PrefabInstance: {fileID: 314800329}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 982daa45eea846f47866a99f01b7911f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &316943685 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6902374573651916502, guid: d79dcfd64a3bd3944931343a1ab1217a, type: 3}
@@ -5204,7 +5510,7 @@ PrefabInstance:
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparklingMeshRend
       value: 
-      objectReference: {fileID: 1977078286988663077}
+      objectReference: {fileID: 1680620686}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparklingGrabbable
       value: 
@@ -5215,7 +5521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: triggerSizeOffset.x
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: triggerSizeOffset.y
@@ -5223,7 +5529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: triggerSizeOffset.z
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
@@ -5231,27 +5537,27 @@ PrefabInstance:
       objectReference: {fileID: 1243906476}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 0.09192821
+      value: 0.07043181
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
-      value: 0.025566477
+      value: 0.014090911
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 0.11056635
+      value: 0.05045455
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
-      value: -0.025213253
+      value: 0.0042769834
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.y
-      value: 0.01269407
+      value: 0.012203745
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.z
-      value: 0.000007872149
+      value: -0.025500003
       objectReference: {fileID: 0}
     - target: {fileID: 4766279115182911359, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Radius
@@ -5260,7 +5566,7 @@ PrefabInstance:
     - target: {fileID: 5483606427473192515, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: ShapeModule.m_MeshRenderer
       value: 
-      objectReference: {fileID: 1977078286988663077}
+      objectReference: {fileID: 1680620686}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: getRefs
       value: 0
@@ -5276,7 +5582,7 @@ PrefabInstance:
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparklingMeshRend
       value: 
-      objectReference: {fileID: 1977078286988663077}
+      objectReference: {fileID: 1680620686}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: giveOwnerPromptRef
       value: 0
@@ -5288,26 +5594,26 @@ PrefabInstance:
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevSparklingMeshRend
       value: 
-      objectReference: {fileID: 1977078286988663077}
+      objectReference: {fileID: 1680620686}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerPosOffset.x
-      value: 0.4
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerPosOffset.y
-      value: -0.65
+      value: -0.6
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.y
-      value: -0.75
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.z
-      value: 0
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparkleTriggerPosOffset.x
@@ -5319,7 +5625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparkleTriggerSizeOffset.x
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparkleTriggerSizeOffset.y
@@ -5327,7 +5633,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparkleTriggerSizeOffset.z
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
@@ -5343,23 +5649,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerPosOffset.x
-      value: 0.4
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerPosOffset.y
-      value: -0.65
+      value: -0.6
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.y
-      value: -0.75
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.z
-      value: 0
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevSparkleTriggerPosOffset.x
@@ -5371,7 +5677,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevSparkleTriggerSizeOffset.x
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevSparkleTriggerSizeOffset.y
@@ -5379,7 +5685,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevSparkleTriggerSizeOffset.z
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
@@ -5395,27 +5701,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.051019117
+      value: 0.009068183
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.009657386
+      value: 0.010909092
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.10147544
+      value: 0.011818184
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.03339507
+      value: -0.005950289
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0067849793
+      value: 0.006749199
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.000007872149
+      value: -0.025500003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -6996,6 +7302,315 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 231410886672187845, guid: a1e268590ffedca4ca83908590dbdcfc, type: 3}
   m_PrefabInstance: {fileID: 3219964827668800405}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &721415416
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5605564940803748415}
+    m_Modifications:
+    - target: {fileID: 740504704665694918, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 740504704665694918, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: grabbableObj
+      value: 
+      objectReference: {fileID: 95982024}
+    - target: {fileID: 740504704665694918, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: positionType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 740504704665694918, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: grabbablePromptOwner
+      value: 
+      objectReference: {fileID: 95982024}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_RootOrder
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919230254484826889, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Name
+      value: Grab Prompt (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshObj
+      value: 
+      objectReference: {fileID: 659626337968074504}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshRend
+      value: 
+      objectReference: {fileID: 1761934219}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingGrabbable
+      value: 
+      objectReference: {fileID: 95982024}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerPosOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: triggerSizeOffset.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: grabbableSparkleOwner
+      value: 
+      objectReference: {fileID: 95982024}
+    - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Size.x
+      value: 0.047612704
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Size.y
+      value: 0.014090911
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Size.z
+      value: 0.05045455
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Center.x
+      value: 0.013851905
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Center.y
+      value: 0.0059634447
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Center.z
+      value: 0.025500003
+      objectReference: {fileID: 0}
+    - target: {fileID: 4766279115182911359, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_Radius
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5483606427473192515, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: ShapeModule.m_MeshRenderer
+      value: 
+      objectReference: {fileID: 1761934219}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: getRefs
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: grabbableOwner
+      value: 
+      objectReference: {fileID: 95982024}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: applyToTriggers
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparklingMeshRend
+      value: 
+      objectReference: {fileID: 1761934219}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: giveOwnerPromptRef
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevGrabbableOwner
+      value: 
+      objectReference: {fileID: 95982024}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparklingMeshRend
+      value: 
+      objectReference: {fileID: 1761934219}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: promptTriggerPosOffset.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: promptTriggerPosOffset.y
+      value: -0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: promptTriggerSizeOffset.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: promptTriggerSizeOffset.y
+      value: -0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: promptTriggerSizeOffset.z
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerPosOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: usePromptTriggerPosOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: sparkleTriggerSizeOffset.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: usePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerPosOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: useSparkleTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevPromptTriggerPosOffset.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevPromptTriggerPosOffset.y
+      value: -0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevPromptTriggerSizeOffset.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevPromptTriggerSizeOffset.y
+      value: -0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevPromptTriggerSizeOffset.z
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerPosOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUsePromptTriggerPosOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevSparkleTriggerSizeOffset.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUsePromptTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerPosOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: prevUseSparkleTriggerSizeOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0061301943
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.002727274
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.011818184
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.016156489
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0045998082
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.025500003
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+--- !u!4 &721415417 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+  m_PrefabInstance: {fileID: 721415416}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &721415418 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 740504704665694918, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
+  m_PrefabInstance: {fileID: 721415416}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 982daa45eea846f47866a99f01b7911f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &732234177
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9021,7 +9636,11 @@ MonoBehaviour:
   player: {fileID: 0}
   grabbed: 0
   defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 815358441}
+  grabPrompts:
+    _serializedValues:
+    - value: {fileID: 815358441}
+      isDuplicate: 0
+      index: 0
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
@@ -9404,18 +10023,18 @@ PrefabInstance:
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparklingMeshRend
       value: 
-      objectReference: {fileID: 659626337968074504}
+      objectReference: {fileID: 1760765080}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparklingGrabbable
       value: 
       objectReference: {fileID: 95982024}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: triggerPosOffset.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: triggerSizeOffset.x
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: triggerSizeOffset.y
@@ -9423,7 +10042,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: triggerSizeOffset.z
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
@@ -9431,27 +10050,27 @@ PrefabInstance:
       objectReference: {fileID: 95982024}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 0.061995342
+      value: 0.047612704
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
-      value: 0.025576003
+      value: 0.014090911
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 0.11056635
+      value: 0.05045455
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
-      value: 0.003153815
+      value: 0.013851905
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.y
-      value: 0.005920443
+      value: 0.0060634515
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.z
-      value: 0.000007872149
+      value: -0.025500003
       objectReference: {fileID: 0}
     - target: {fileID: 4766279115182911359, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Radius
@@ -9460,7 +10079,7 @@ PrefabInstance:
     - target: {fileID: 5483606427473192515, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: ShapeModule.m_MeshRenderer
       value: 
-      objectReference: {fileID: 659626337968074504}
+      objectReference: {fileID: 1760765080}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: getRefs
       value: 0
@@ -9476,7 +10095,7 @@ PrefabInstance:
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparklingMeshRend
       value: 
-      objectReference: {fileID: 659626337968074504}
+      objectReference: {fileID: 1760765080}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: giveOwnerPromptRef
       value: 0
@@ -9488,26 +10107,26 @@ PrefabInstance:
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevSparklingMeshRend
       value: 
-      objectReference: {fileID: 659626337968074504}
+      objectReference: {fileID: 1760765080}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerPosOffset.x
-      value: 0.4
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerPosOffset.y
-      value: -0.05
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.y
-      value: -1.75
+      value: -0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.z
-      value: 0
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparkleTriggerPosOffset.x
@@ -9519,7 +10138,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparkleTriggerSizeOffset.x
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparkleTriggerSizeOffset.y
@@ -9527,7 +10146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparkleTriggerSizeOffset.z
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
@@ -9543,23 +10162,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerPosOffset.x
-      value: 0.4
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerPosOffset.y
-      value: -0.05
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.y
-      value: -1.75
+      value: -0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.z
-      value: 0
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevSparkleTriggerPosOffset.x
@@ -9571,7 +10190,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevSparkleTriggerSizeOffset.x
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevSparkleTriggerSizeOffset.y
@@ -9579,7 +10198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevSparkleTriggerSizeOffset.z
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
@@ -9595,27 +10214,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.034340333
+      value: 0.0061301943
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.0005760044
+      value: 0.002727274
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.10147544
+      value: 0.011818184
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0023771867
+      value: 0.016156489
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0054658977
+      value: 0.004699815
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.000007872149
+      value: -0.025500003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -9731,7 +10350,11 @@ MonoBehaviour:
   player: {fileID: 0}
   grabbed: 0
   defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 268595420}
+  grabPrompts:
+    _serializedValues:
+    - value: {fileID: 268595420}
+      isDuplicate: 0
+      index: 0
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
@@ -11635,7 +12258,11 @@ MonoBehaviour:
   player: {fileID: 0}
   grabbed: 0
   defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 263945926}
+  grabPrompts:
+    _serializedValues:
+    - value: {fileID: 263945926}
+      isDuplicate: 0
+      index: 0
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
@@ -11882,7 +12509,14 @@ MonoBehaviour:
   player: {fileID: 0}
   grabbed: 0
   defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 777575856}
+  grabPrompts:
+    _serializedValues:
+    - value: {fileID: 777575856}
+      isDuplicate: 0
+      index: 0
+    - value: {fileID: 314800331}
+      isDuplicate: 0
+      index: 1
   liftable: 0
   liftedTag:
     str: 
@@ -11942,19 +12576,6 @@ MonoBehaviour:
     useMinDistance: 0
     useMaxDistance: 0
   printRegistrationResults: 0
---- !u!65 &1243906477
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8182359105268566048}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.006, y: 0.01, z: 0.10143223}
-  m_Center: {x: -0.009, y: 0.008, z: 0.000018319217}
 --- !u!114 &1243906479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12425,7 +13046,11 @@ MonoBehaviour:
   player: {fileID: 0}
   grabbed: 0
   defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 702531429}
+  grabPrompts:
+    _serializedValues:
+    - value: {fileID: 702531429}
+      isDuplicate: 0
+      index: 0
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
@@ -13634,7 +14259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_RootOrder
-      value: 28
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13687,7 +14312,7 @@ PrefabInstance:
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparklingMeshRend
       value: 
-      objectReference: {fileID: 9093593160176916751}
+      objectReference: {fileID: 1013540999}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparklingGrabbable
       value: 
@@ -13698,7 +14323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: triggerSizeOffset.x
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: triggerSizeOffset.y
@@ -13706,7 +14331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: triggerSizeOffset.z
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
@@ -13714,27 +14339,27 @@ PrefabInstance:
       objectReference: {fileID: 95982022}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
-      value: 0.06127846
+      value: 0.046954546
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.y
-      value: 0.025457658
+      value: 0.014090911
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.z
-      value: 0.11056635
+      value: 0.0959091
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.x
-      value: 0.00999338
+      value: 0.0290909
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.y
-      value: 0.000710845
+      value: 0.0004999995
       objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Center.z
-      value: 0.000007872149
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4766279115182911359, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Radius
@@ -13743,7 +14368,7 @@ PrefabInstance:
     - target: {fileID: 5483606427473192515, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: ShapeModule.m_MeshRenderer
       value: 
-      objectReference: {fileID: 9093593160176916751}
+      objectReference: {fileID: 1013540999}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: getRefs
       value: 0
@@ -13759,7 +14384,7 @@ PrefabInstance:
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparklingMeshRend
       value: 
-      objectReference: {fileID: 9093593160176916751}
+      objectReference: {fileID: 1013540999}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: giveOwnerPromptRef
       value: 0
@@ -13771,26 +14396,26 @@ PrefabInstance:
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevSparklingMeshRend
       value: 
-      objectReference: {fileID: 9093593160176916751}
+      objectReference: {fileID: 1013540999}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerPosOffset.x
-      value: 0.4
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerPosOffset.y
-      value: -0.1
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.y
-      value: -1.75
+      value: -0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: promptTriggerSizeOffset.z
-      value: 0
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparkleTriggerPosOffset.x
@@ -13802,7 +14427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparkleTriggerSizeOffset.x
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparkleTriggerSizeOffset.y
@@ -13810,7 +14435,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: sparkleTriggerSizeOffset.z
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: usePromptTriggerSizeOffset
@@ -13826,23 +14451,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerPosOffset.x
-      value: 0.4
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerPosOffset.y
-      value: -0.1
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.y
-      value: -1.75
+      value: -0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevPromptTriggerSizeOffset.z
-      value: 0
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevSparkleTriggerPosOffset.x
@@ -13854,7 +14479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevSparkleTriggerSizeOffset.x
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevSparkleTriggerSizeOffset.y
@@ -13862,7 +14487,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevSparkleTriggerSizeOffset.z
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevUsePromptTriggerSizeOffset
@@ -13878,27 +14503,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.03400573
+      value: 0.006045455
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.0004576575
+      value: 0.002727274
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.10147544
+      value: 0.011818184
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.004538835
+      value: 0.02227272
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.00019824592
+      value: -0.00086363696
       objectReference: {fileID: 0}
     - target: {fileID: 8690362428020157886, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.000007872149
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
@@ -14317,7 +14942,11 @@ MonoBehaviour:
   player: {fileID: 0}
   grabbed: 0
   defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 349470966}
+  grabPrompts:
+    _serializedValues:
+    - value: {fileID: 349470966}
+      isDuplicate: 0
+      index: 0
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
@@ -17380,7 +18009,11 @@ MonoBehaviour:
   player: {fileID: 0}
   grabbed: 0
   defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 2066998997}
+  grabPrompts:
+    _serializedValues:
+    - value: {fileID: 2066998997}
+      isDuplicate: 0
+      index: 0
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
@@ -20457,7 +21090,11 @@ MonoBehaviour:
   player: {fileID: 0}
   grabbed: 0
   defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 149776160}
+  grabPrompts:
+    _serializedValues:
+    - value: {fileID: 149776160}
+      isDuplicate: 0
+      index: 0
   liftable: 1
   liftedTag:
     str: CurrentlyLifted
@@ -22899,7 +23536,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5605564940803748415}
   - component: {fileID: 95982015}
-  - component: {fileID: 95982023}
   - component: {fileID: 95982024}
   - component: {fileID: 95982028}
   m_Layer: 0
@@ -26281,7 +26917,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6181556292825418166}
   - component: {fileID: 95982013}
-  - component: {fileID: 95982021}
   - component: {fileID: 95982022}
   - component: {fileID: 95982027}
   m_Layer: 0
@@ -27947,6 +28582,7 @@ Transform:
   - {fileID: 654359165}
   - {fileID: 97764413}
   - {fileID: 679776567}
+  - {fileID: 721415417}
   m_Father: {fileID: 543450653637604952}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -30407,7 +31043,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8444879262259879790}
   - component: {fileID: 44756579}
-  - component: {fileID: 1243906477}
   - component: {fileID: 1243906476}
   - component: {fileID: 1243906479}
   m_Layer: 0
@@ -30819,6 +31454,7 @@ Transform:
   - {fileID: 1049268710}
   - {fileID: 1503830554}
   - {fileID: 1867144127}
+  - {fileID: 314800330}
   m_Father: {fileID: 543450653637604952}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

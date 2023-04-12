@@ -2551,7 +2551,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 802047793082209028}
-  - component: {fileID: 802047793082209027}
   m_Layer: 0
   m_Name: Bin
   m_TagString: Untagged
@@ -2578,81 +2577,6 @@ Transform:
   m_Father: {fileID: 802047793213568901}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &802047793082209027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 802047793082209026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c344a8712a7dd4abff953822864279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  grabbed: 0
-  defaultPos: {x: 0, y: 0, z: 0}
-  grabPrompt: {fileID: 101259715131114468}
-  liftable: 0
-  liftedTag:
-    str: 
-  physMat: {fileID: 0}
-  maxPullDistance: 5
-  grabMoveMultipliers: {x: 1, y: 0, z: 0}
-  liftAudio: 0
-  liftAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  putDownAudio: 0
-  putDownAudioSettings:
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 1
-    reverbZoneMix: 1
-    dopplerLevel: 0
-    spread: 0
-    volumeRolloff: 0
-    minDistance: 1
-    maxDistance: 500
-    useLoop: 0
-    usePriority: 0
-    useVolume: 0
-    usePitch: 0
-    useStereoPan: 0
-    useSpatialBlend: 0
-    useReverbZoneMix: 0
-    useDopplerLevel: 0
-    useSpread: 0
-    useVolumeRolloff: 0
-    useMinDistance: 0
-    useMaxDistance: 0
-  printRegistrationResults: 0
 --- !u!1 &802047793186272759
 GameObject:
   m_ObjectHideFlags: 0
@@ -3476,7 +3400,7 @@ PrefabInstance:
     - target: {fileID: 740504704665694918, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbablePromptOwner
       value: 
-      objectReference: {fileID: 802047793082209027}
+      objectReference: {fileID: 0}
     - target: {fileID: 740504704665694918, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: offsetFromTriggerer.y
       value: 1
@@ -3548,7 +3472,7 @@ PrefabInstance:
     - target: {fileID: 2368735634120701254, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableSparkleOwner
       value: 
-      objectReference: {fileID: 802047793082209027}
+      objectReference: {fileID: 0}
     - target: {fileID: 3183176413045614687, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: m_Size.x
       value: 8.007162
@@ -3580,7 +3504,7 @@ PrefabInstance:
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: grabbableOwner
       value: 
-      objectReference: {fileID: 802047793082209027}
+      objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: applyToTriggers
       value: 0
@@ -3596,7 +3520,7 @@ PrefabInstance:
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevGrabbableOwner
       value: 
-      objectReference: {fileID: 802047793082209027}
+      objectReference: {fileID: 0}
     - target: {fileID: 6731086222666355576, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
       propertyPath: prevSparklingMeshRend
       value: 
@@ -3719,17 +3643,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
---- !u!114 &101259715131114468 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 740504704665694918, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
-  m_PrefabInstance: {fileID: 802047791922164002}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 982daa45eea846f47866a99f01b7911f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &567648426237631018 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 919230254484826888, guid: a2c074f71c019a0459f295ceb166449b, type: 3}
