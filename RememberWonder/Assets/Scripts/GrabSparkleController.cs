@@ -14,7 +14,10 @@ public class GrabSparkleController : MonoBehaviour
     [Header("Settings")]
     [Tooltip("How many particles to emit, for each 6 unity units squared in the surface area of sparklingMesh's axis aligned bounding box. " +
         "I.e., if sparklingMesh is a normal, unrotated cube with scale (1,1,1), sparkleSystem's rate over time will equal this.")]
-    [SerializeField] private float sparklesPerUnitCube = 10;
+    [SerializeField][Min(0)] private float sparklesPerUnitCube = 10;
+    [Tooltip("An absolute minimum number of sparkles that'll override sparkles per unit cube; handy for small objects that need more " +
+        "sparkles than their size implies.")]
+    [SerializeField][Min(0)] private float minSparkles = 0;
     [SerializeField][Min(0.1f)] private float colorChangeSpeed = 1;
     [Tooltip("Trigger Collider is sized to fit the Sparkling Mesh Rend. How much extra size (in world space) should this trigger have?")]
     [SerializeField] private Vector3 triggerSizeOffset = Vector3.zero;
@@ -101,6 +104,7 @@ public class GrabSparkleController : MonoBehaviour
 
         var sparkleSysEmission = sparkleSystem.emission;
         sparkleSysEmission.rateOverTime = sparklesPerUnitCube * (sparklingMeshRend.bounds.GetSurfaceArea() / UNIT_CUBE_SURFACE_AREA);
+        sparkleSysEmission.rateOverTime = Mathf.Max(sparkleSysEmission.rateOverTime.constant, minSparkles);
 
         var sparkleSysMain = sparkleSystem.main;
         sparkleSysMain.customSimulationSpace = sparklingMeshRend.transform.parent;

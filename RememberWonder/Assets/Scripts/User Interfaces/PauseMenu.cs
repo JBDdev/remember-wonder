@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
-using UnityEngine.InputSystem.Interactions;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -20,17 +19,22 @@ public class PauseMenu : MonoBehaviour
 
     [SerializeField] int mainMenuSelection;
     [SerializeField] float menuInputThreshold;
+    [SerializeField] float inputCooldownTime = 0.15f;
 
     [Header("Settings Menu Shenanigans")]
     [SerializeField] GameObject[] windowOptions;
     [SerializeField] int submenuSelection;
     [SerializeField] int windowSelection;
-    [SerializeField] GameObject bgmSlider;
-    [SerializeField] GameObject sfxSlider;
-    [SerializeField] GameObject cameraSlider;
+    [SerializeField] Slider bgmSlider;
+    [SerializeField] Slider sfxSlider;
+    [SerializeField] Slider cameraSlider;
     [SerializeField] GameObject[] exitOptions;
     [SerializeField] int exitSelection;
     [SerializeField] GameObject[] highlightableElements;
+
+    Vector2 moveInputCache;
+    Coroutine vertInputCooldown = null;
+    Coroutine horzInputCooldown = null;
 
     //Settings values
     int windowSetting;
@@ -39,12 +43,13 @@ public class PauseMenu : MonoBehaviour
     float cameraSens;
 
     bool paused;
+    bool inSubmenu;
 
     bool viewingInstructions;
     bool viewingSettings;
 
-    float defaultBGMVolume;
-    float defaultSFXVolume;
+    float bgmVolumeAtStart;
+    float sfxVolumeAtStart;
 
     // Start is called before the first frame update
     void Start()
@@ -57,26 +62,47 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player");
 
-        mixer.GetFloat("bgmVol", out defaultBGMVolume);
-        mixer.GetFloat("sfxVol", out defaultSFXVolume);
+        mixer.GetFloat("bgmVol", out bgmVolumeAtStart);
+        mixer.GetFloat("sfxVol", out sfxVolumeAtStart);
 
         LoadPlayerSettings();
     }
 
-    void PauseInput(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    private void Update()
+    {
+        moveInputCache = InputHub.Inst.UI.Move.ReadValue<Vector2>();
+
+        if (!moveInputCache.y.EqualWithinRange(0, menuInputThreshold))
+        {
+            if (vertInputCooldown != null)
+                moveInputCache.y = 0;
+            else vertInputCooldown = Coroutilities.DoAfterDelay(this, () => vertInputCooldown = null, inputCooldownTime, true);
+        }
+
+        if (!moveInputCache.x.EqualWithinRange(0, menuInputThreshold))
+        {
+            if (horzInputCooldown != null)
+                moveInputCache.x = 0;
+            else horzInputCooldown = Coroutilities.DoAfterDelay(this, () => horzInputCooldown = null, inputCooldownTime, true);
+        }
+
+        ChangeSelection(moveInputCache);
+        SubmenuSelection(moveInputCache);
+    }
+
+    void PauseInput(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
         TogglePauseMenu();
     }
-    void TogglePauseMenu() 
+    void TogglePauseMenu()
     {
-
         if (viewingSettings)
             return;
 
         if (paused)
         {
-            InputHub.Inst.Gameplay.MenuNav.performed -= ChangeSelection;
-            InputHub.Inst.Gameplay.Jump.performed -= Select;
+            inSubmenu = false;  //InputHub.Inst.UI.Move.performed -= ChangeSelection;
+            InputHub.Inst.UI.Select.performed -= Select;
             if (viewingInstructions)
                 UnloadInstructions();
 
@@ -93,8 +119,8 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
-            InputHub.Inst.Gameplay.MenuNav.performed += ChangeSelection;
-            InputHub.Inst.Gameplay.Jump.performed += Select;
+            inSubmenu = false;  //InputHub.Inst.UI.Move.performed += ChangeSelection;
+            InputHub.Inst.UI.Select.performed += Select;
             pauseMenu.SetActive(true);
             initialMenuOptions[mainMenuSelection].GetComponent<Image>().enabled = true;
             paused = true;
@@ -105,9 +131,9 @@ public class PauseMenu : MonoBehaviour
         player.GetComponent<PlayerMovement>().TogglePause();
     }
 
-    void ChangeSelection(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    void ChangeSelection(Vector2 input)
     {
-        Vector2 input = InputHub.Inst.Gameplay.MenuNav.ReadValue<Vector2>();
+        if (!paused || inSubmenu) return;
 
         if (input.y > menuInputThreshold)
             mainMenuSelection--;
@@ -133,7 +159,7 @@ public class PauseMenu : MonoBehaviour
         {
             UnloadSettings();
         }
-        else 
+        else
         {
             //This block covers the default pause menu
             switch (mainMenuSelection)
@@ -149,8 +175,8 @@ public class PauseMenu : MonoBehaviour
                     break;
                 case 3:
                     InputHub.Inst.Gameplay.Pause.performed -= PauseInput;
-                    InputHub.Inst.Gameplay.MenuNav.performed -= ChangeSelection;
-                    InputHub.Inst.Gameplay.Jump.performed -= Select;
+                    inSubmenu = false;  //InputHub.Inst.UI.Move.performed -= ChangeSelection;
+                    InputHub.Inst.UI.Select.performed -= Select;
                     Time.timeScale = 1f;
                     SceneManager.LoadScene(0);
                     break;
@@ -171,15 +197,15 @@ public class PauseMenu : MonoBehaviour
         viewingInstructions = false;
     }
 
-    void LoadSettings() 
+    void LoadSettings()
     {
         mainMenu.SetActive(false);
         InputHub.Inst.Gameplay.Pause.performed -= PauseInput;
-        InputHub.Inst.Gameplay.MenuNav.performed -= ChangeSelection;
-        InputHub.Inst.Gameplay.Jump.performed -= Select;
+        //InputHub.Inst.UI.Move.performed -= ChangeSelection;
+        InputHub.Inst.UI.Select.performed -= Select;
 
-        InputHub.Inst.Gameplay.Jump.performed += ConfirmSettings;
-        InputHub.Inst.Gameplay.MenuNav.performed += SubmenuSelection;
+        InputHub.Inst.UI.Select.performed += ConfirmSettings;
+        inSubmenu = true;   //InputHub.Inst.UI.Move.performed += SubmenuSelection;
 
         LoadPlayerSettings();
         settingsMenu.SetActive(true);
@@ -188,24 +214,24 @@ public class PauseMenu : MonoBehaviour
     void UnloadSettings()
     {
         settingsMenu.SetActive(false);
-        InputHub.Inst.Gameplay.Jump.performed -= ConfirmSettings;
-        InputHub.Inst.Gameplay.MenuNav.performed -= SubmenuSelection;
+        InputHub.Inst.UI.Select.performed -= ConfirmSettings;
+        //InputHub.Inst.UI.Move.performed -= SubmenuSelection;
 
         InputHub.Inst.Gameplay.Pause.performed += PauseInput;
-        InputHub.Inst.Gameplay.MenuNav.performed += ChangeSelection;
-        InputHub.Inst.Gameplay.Jump.performed += Select;
+        inSubmenu = false;   //InputHub.Inst.UI.Move.performed += ChangeSelection;
+        InputHub.Inst.UI.Select.performed += Select;
 
         foreach (GameObject element in highlightableElements)
             element.GetComponent<Image>().color = Color.white;
 
-        mainMenu.SetActive(true);        
+        mainMenu.SetActive(true);
         viewingSettings = false;
     }
 
     //Settings Menu Functionality
     #region Settings Menu Nonsense
     //ReadPlayerSettings
-    void LoadPlayerSettings() 
+    void LoadPlayerSettings()
     {
         windowSetting = PlayerPrefs.GetInt("windowSetting");
         bgmVolume = PlayerPrefs.GetFloat("bgmVolume");
@@ -225,7 +251,7 @@ public class PauseMenu : MonoBehaviour
             windowOptions[1].GetComponent<Image>().color = Color.white;
             windowOptions[1].GetComponent<Image>().enabled = false;
         }
-        else 
+        else
         {
             windowOptions[0].GetComponent<Image>().color = Color.white;
             windowOptions[0].GetComponent<Image>().enabled = false;
@@ -233,42 +259,40 @@ public class PauseMenu : MonoBehaviour
             windowOptions[1].GetComponent<Image>().color = Color.cyan;
             windowOptions[1].GetComponent<Image>().enabled = true;
         }
-        
-
 
         submenuSelection = windowSetting;
         //Sliders
-        bgmSlider.transform.GetChild(0).GetComponent<Slider>().value = bgmVolume;
-        sfxSlider.transform.GetChild(0).GetComponent<Slider>().value = sfxVolume;
-        cameraSlider.transform.GetChild(0).GetComponent<Slider>().value = cameraSens;
+        bgmSlider.value = bgmVolume;
+        sfxSlider.value = sfxVolume;
+        cameraSlider.value = cameraSens;
+
+        SetMixerVolumeViaSlider(bgmSlider, "bgmVol");
+        SetMixerVolumeViaSlider(sfxSlider, "sfxVol");
 
         submenuSelection = 0;
     }
 
     //WriteNewSettings
-    void ApplyNewSettings() 
+    void ApplyNewSettings()
     {
         if (windowSelection == 0)
             Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
         else
             Screen.fullScreenMode = FullScreenMode.Windowed;
 
-        //Update Volume Here
-        float bgmValue = bgmSlider.transform.GetChild(0).GetComponent<Slider>().value;
-        bgmValue = 30 - (30 * bgmValue);
-        mixer.SetFloat("bgmVol", -bgmValue);
+        SetMixerVolumeViaSlider(bgmSlider, "bgmVol");
+        SetMixerVolumeViaSlider(sfxSlider, "sfxVol");
 
-        float sfxValue = sfxSlider.transform.GetChild(0).GetComponent<Slider>().value;
-        sfxValue = 30 - (30 * sfxValue);
-        mixer.SetFloat("sfxVol", -sfxValue);
-
-        //Update Camera Sensitvity Here
+        bgmVolume = bgmSlider.value;
+        sfxVolume = sfxSlider.value;
 
         PlayerPrefs.SetInt("windowSetting", windowSelection);
-        PlayerPrefs.SetFloat("bgmVolume", bgmSlider.transform.GetChild(0).GetComponent<Slider>().value);
-        PlayerPrefs.SetFloat("sfxVolume", sfxSlider.transform.GetChild(0).GetComponent<Slider>().value);
-        PlayerPrefs.SetFloat("cameraSens", cameraSlider.transform.GetChild(0).GetComponent<Slider>().value);
+        PlayerPrefs.SetFloat("bgmVolume", bgmVolume);
+        PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
+        PlayerPrefs.SetFloat("cameraSens", cameraSlider.value);
     }
+    private void SetMixerVolumeViaSlider(Slider slider, string mixerFloatName)
+        => mixer.SetFloat(mixerFloatName, -1 * (30 - (30 * slider.value)));
 
     void InitMissingPrefValues()
     {
@@ -308,23 +332,30 @@ public class PauseMenu : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    void ConfirmSettings(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    void ConfirmSettings(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
         if (submenuSelection < 4)
             return;
 
         if (exitSelection == 0)
             ApplyNewSettings();
+        else
+        {
+            bgmSlider.value = bgmVolume;
+            sfxSlider.value = sfxVolume;
+            SetMixerVolumeViaSlider(bgmSlider, "bgmVol");
+            SetMixerVolumeViaSlider(sfxSlider, "sfxVol");
+        }
 
         UnloadSettings();
     }
 
-    void SubmenuSelection(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    void SubmenuSelection(Vector2 input)
     {
-        Vector2 input = InputHub.Inst.Gameplay.MenuNav.ReadValue<Vector2>();
+        if (!paused || !inSubmenu) return;
 
         //Handle Horizontal Input
-        switch (submenuSelection) 
+        switch (submenuSelection)
         {
             case 0:
                 if (input.x >= menuInputThreshold)
@@ -340,24 +371,24 @@ public class PauseMenu : MonoBehaviour
                         windowSelection = 1;
                 }
                 break;
+
             case 1:
-                if (input.x > menuInputThreshold)
-                    bgmSlider.transform.GetChild(0).GetComponent<Slider>().value += 0.1f;
-                else if (input.x < -menuInputThreshold)
-                    bgmSlider.transform.GetChild(0).GetComponent<Slider>().value -= 0.1f;
+                if (input.x > menuInputThreshold) bgmSlider.value += 0.1f;
+                else if (input.x < -menuInputThreshold) bgmSlider.value -= 0.1f;
+                SetMixerVolumeViaSlider(bgmSlider, "bgmVol");
                 break;
+
             case 2:
-                if (input.x > menuInputThreshold)
-                    sfxSlider.transform.GetChild(0).GetComponent<Slider>().value += 0.1f;
-                else if (input.x < -menuInputThreshold)
-                    sfxSlider.transform.GetChild(0).GetComponent<Slider>().value -= 0.1f;
+                if (input.x > menuInputThreshold) sfxSlider.value += 0.1f;
+                else if (input.x < -menuInputThreshold) sfxSlider.value -= 0.1f;
+                SetMixerVolumeViaSlider(sfxSlider, "sfxVol");
                 break;
+
             case 3:
-                if (input.x > menuInputThreshold)
-                    cameraSlider.transform.GetChild(0).GetComponent<Slider>().value += 0.1f;
-                else if (input.x < -menuInputThreshold)
-                    cameraSlider.transform.GetChild(0).GetComponent<Slider>().value -= 0.1f;
+                if (input.x > menuInputThreshold) cameraSlider.value += 0.1f;
+                else if (input.x < -menuInputThreshold) cameraSlider.value -= 0.1f;
                 break;
+
             case 4:
                 if (input.x > menuInputThreshold)
                 {
@@ -391,7 +422,7 @@ public class PauseMenu : MonoBehaviour
 
         //Highlight the correct element and reset all the others
 
-        foreach (GameObject element in highlightableElements) 
+        foreach (GameObject element in highlightableElements)
             element.GetComponent<Image>().color = Color.white;
 
         if (windowSelection == 0)
@@ -399,17 +430,17 @@ public class PauseMenu : MonoBehaviour
             highlightableElements[0].GetComponent<Image>().enabled = true;
             highlightableElements[1].GetComponent<Image>().enabled = false;
         }
-        else if (windowSelection == 1) 
+        else if (windowSelection == 1)
         {
             highlightableElements[0].GetComponent<Image>().enabled = false;
             highlightableElements[1].GetComponent<Image>().enabled = true;
         }
 
-        switch (submenuSelection) 
+        switch (submenuSelection)
         {
             case 0:
-                if (windowSelection == 0) 
-                    highlightableElements[0].GetComponent<Image>().color = Color.cyan;                
+                if (windowSelection == 0)
+                    highlightableElements[0].GetComponent<Image>().color = Color.cyan;
                 else
                     highlightableElements[1].GetComponent<Image>().color = Color.cyan;
                 break;
@@ -423,7 +454,7 @@ public class PauseMenu : MonoBehaviour
                 highlightableElements[4].GetComponent<Image>().color = Color.cyan;
                 break;
             case 4:
-                if(exitSelection == 0)
+                if (exitSelection == 0)
                     highlightableElements[5].GetComponent<Image>().color = Color.cyan;
                 else
                     highlightableElements[6].GetComponent<Image>().color = Color.cyan;
@@ -432,5 +463,4 @@ public class PauseMenu : MonoBehaviour
 
     }
     #endregion
-
 }
