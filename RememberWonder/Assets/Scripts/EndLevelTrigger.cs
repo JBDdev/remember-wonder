@@ -59,6 +59,7 @@ public class EndLevelTrigger : MonoBehaviour
     {
         //Run the call to clear the UI
         //Debug.Log(moteCanvas);
+        transform.GetComponent<BoxCollider>().enabled = false;
         moteCanvas.SetActive(false);
 
         AudioHub.Inst.Play(pullUpMenu, sourceSettings);
