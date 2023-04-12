@@ -42,6 +42,12 @@ public class PivotControl : MonoBehaviour
         initialOffset = player.transform.TransformVector(transform.localPosition);
         transform.parent = null;
 
+        //Set target rotation and such to the rotation we just spawned with (but remove the Z euler/roll)
+        targetRotation = transform.rotation;
+        targetRotation.eulerAngles = targetRotation.eulerAngles.Adjust(2, 0);
+        yaw = targetRotation.eulerAngles.y;
+        pitch = targetRotation.eulerAngles.x;
+
         Coroutilities.DoNextFrame(this, () =>
         {
             if (player) player.GetCapsuleCastParams(out playerCapsuleHeight, out _, out _, out _);
