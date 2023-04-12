@@ -9,7 +9,7 @@ public class PushPullObject : MonoBehaviour
     [SerializeField][ReadOnlyInspector] private PlayerMovement player;
     [SerializeField][ReadOnlyInspector] private bool grabbed;
     [ReadOnlyInspector] public Vector3 defaultPos;
-    [SerializeField] private DisplayPrompt grabPrompt;
+    [SerializeField] private Bewildered.UHashSet<DisplayPrompt> grabPrompts;
     public bool liftable;
     [SerializeField][NaughtyAttributes.ShowIf("liftable")] private TagString liftedTag;
     [SerializeField][NaughtyAttributes.ShowIf("liftable")] PhysicMaterial physMat;
@@ -37,12 +37,14 @@ public class PushPullObject : MonoBehaviour
 
     private void OnEnable()
     {
-        if (grabPrompt) grabPrompt.PromptStateChange += OnGrabPromptStateChange;
-        else Debug.LogWarning($"\"{name}\" does not have a grab prompt reference; it won't be able to be grabbed.");
+        foreach (var prompt in grabPrompts) prompt.PromptStateChange += OnGrabPromptStateChange;
+
+        if (grabPrompts.Count < 1)
+            Debug.LogWarning($"\"{name}\" does not have a grab prompt reference; it won't be able to be grabbed.");
     }
     private void OnDisable()
     {
-        if (grabPrompt) grabPrompt.PromptStateChange -= OnGrabPromptStateChange;
+        foreach (var prompt in grabPrompts) prompt.PromptStateChange -= OnGrabPromptStateChange;
     }
 
     void Start()
@@ -58,10 +60,7 @@ public class PushPullObject : MonoBehaviour
     void OnInteractPerformedWhileRegistered(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
         //If we don't have a player reference, bail out.
-        //If this isn't liftable and the player's not grounded, bail out.
-        //  Airborne grabbing liftables sometimes causes anti-gravity nonsense when it really,
-        //  REALLY shouldn't, so change this at risk.
-        if (!player || (!liftable && !player.IsGrounded())) return;
+        if (!player) return;
 
         if (liftable && player.DropLocation.InvalidDropPosition) return;
 
@@ -119,15 +118,14 @@ public class PushPullObject : MonoBehaviour
         }
     }
 
-    private void OnGrabPromptStateChange(bool appearing, Collider changeTriggerer, bool currentActive)
+    private void OnGrabPromptStateChange(DisplayPrompt promptThatChanged, bool appearing, Collider changeTriggerer)
     {
 #if UNITY_EDITOR
         if (printRegistrationResults)
         {
             print($"{name}: <color={(appearing ? "#0F0" : "#FF0")}>Prompt state changed @ {Time.timeAsDouble}!</color> " +
                 $"<color=#777>appearing: {appearing}, changeTriggerer: {(changeTriggerer ? changeTriggerer : "null")}, " +
-                $"currentActive: {currentActive}</color>" +
-                $"\n\t{(appearing ? $"Registering? {!!changeTriggerer}" : $"Deregistering? {!grabPrompt.IsActivePrompt}")}");
+                $"\n\t{(appearing ? $"Registering? {!!changeTriggerer}" : $"Deregistering? {!promptThatChanged.IsActivePrompt}")}");
         }
 #endif
 
@@ -136,7 +134,7 @@ public class PushPullObject : MonoBehaviour
             Register(changeTriggerer);
         }
         //Don't deregister if the prompt has disappeared, but is still the active prompt.
-        else if (!appearing && !grabPrompt.IsActivePrompt)
+        else if (!appearing && !promptThatChanged.IsActivePrompt)
         {
             Deregister();
         }
@@ -167,4 +165,16 @@ public class PushPullObject : MonoBehaviour
 
         if (liftable) tag = initTag;
     }
+
+#if UNITY_EDITOR
+    [NaughtyAttributes.Button(topPadding: 5)]
+    private void PingFirstPrompt()
+    {
+        var firstPrompt = GetComponentInChildren<InitGrabIndicationRefs>();
+        if (firstPrompt)
+        {
+            UnityEditor.EditorGUIUtility.PingObject(firstPrompt);
+        }
+    }
+#endif
 }
