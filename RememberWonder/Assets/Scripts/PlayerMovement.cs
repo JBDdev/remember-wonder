@@ -29,6 +29,11 @@ public class PlayerMovement : MonoBehaviour
     public float fallGravMultiplier = 1;
     [SerializeField] private LayerMask groundLayers = ~0;
 
+    [Header("Jump Leeway Options")]
+    [SerializeField][Min(0)] float jumpBufferDuration = 0.1f;
+    [Tooltip("How much extra time the player has to jump when they walk off a ledge and thus stop being grounded.")]
+    [SerializeField][Min(0)] float coyoteTime = 0.1f;
+
     [Header("Self Component References")]
     [SerializeField] private Rigidbody rb;
     [SerializeField] private CapsuleCollider primaryCol;
@@ -58,6 +63,17 @@ public class PlayerMovement : MonoBehaviour
 
     bool paused;
     bool landed = false;
+
+    bool groundedLastFrame;
+    bool jumpInputHeld;
+
+    /// <summary>
+    /// Nullifies itself after <see cref="jumpBufferDuration"/> seconds when jump is pressed.<br/>
+    /// If this isn't null, that means there's a jump currently buffered.<br/><br/>
+    /// See <see cref="OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext)"/>.
+    /// </summary>
+    Coroutine jumpBufferedTimer;
+    Coroutine coyoteTimeTimer;
 
     /// <summary>
     /// Invoked whenever this we start or stop grabbing something..
@@ -98,19 +114,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        //print($"Jump performed, did we press or release?: " +
-        //$"{(InputHub.Inst.Gameplay.Jump.WasPressedThisFrame() ? "Pressed" : "Released")}");
-
-        if (!IsGrounded() || jumpInProgress)
-            return;
-
         if (pullingObject && !PulledObject.liftable)
             return;
 
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        rb.AddForce(new Vector3(0f, jumpForce, 0f));
-        jumpInProgress = true;
-        anim.SetBool("Jumped", true);
+        //This is called when jump is performed, which happens on press and release.
+        //If we're pressing, input's held. When we release, this'll be set to false again.
+        jumpInputHeld = InputHub.Inst.Gameplay.Jump.WasPressedThisFrame();
+
+        if (jumpBufferDuration > 0 && jumpInputHeld)
+        {
+            Coroutilities.TryStopCoroutine(this, ref jumpBufferedTimer);
+            jumpBufferedTimer = Coroutilities.DoAfterDelay(this, () => jumpBufferedTimer = null, jumpBufferDuration);
+        }
     }
 
     public void TogglePause()
@@ -200,7 +215,6 @@ public class PlayerMovement : MonoBehaviour
         var grounded = IsGrounded();
 
         if (!grounded) landed = false;
-        
 
         anim.SetBool("Jumped", jumpInProgress);
         if (grounded && !landed && rb.velocity.y < 0)
@@ -212,14 +226,30 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(anim.GetAnimatorTransitionInfo(0).IsUserName("Landing"));
 
         ApplyMoveForce(grounded);
+        if (jumpBufferedTimer != null) TryDoJump();
 
-        //If NOT grounded, fall gravity should be modified, and we're falling (not rising),
-        if (!grounded && !Mathf.Approximately(fallGravMultiplier, 1) && rb.velocity.y < 0)
+        //If we're not grounded, we were grounded last frame, and we're not jumping,
+        if (coyoteTime > 0 && !grounded && groundedLastFrame && !jumpInProgress)
         {
-            //Apply extra force based on the multiplier (There's no "gravity scale" for 3D Rigidbodies).
-            //Gravity's already applied once by default; if 1.01, apply the extra 0.01
-            rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
+            //Give the player some time to jump anyway, even though they're starting to fall.
+            Coroutilities.TryStopCoroutine(this, ref coyoteTimeTimer);
+            coyoteTimeTimer = Coroutilities.DoAfterDelay(this, () => coyoteTimeTimer = null, coyoteTime);
         }
+
+        //If NOT grounded and fall gravity should be modified,
+        if (!grounded && !Mathf.Approximately(fallGravMultiplier, 1))
+        {
+            //then, if we're falling or rising without the jump button held,
+            if (rb.velocity.y < 0 || (rb.velocity.y > 0 && !jumpInputHeld))
+            {
+                //Apply extra force based on the multiplier (There's no "gravity scale" for 3D Rigidbodies).
+                //Gravity's already applied once by default; if 1.01, apply the extra 0.01
+                rb.velocity += Physics.gravity * (fallGravMultiplier - 1) * Time.deltaTime;
+                //rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
+            }
+        }
+
+        groundedLastFrame = grounded;
     }
 
     private void ApplyMoveForce(bool grounded)
@@ -245,7 +275,7 @@ public class PlayerMovement : MonoBehaviour
             || Mathf.Abs(directionLastFrame.z - direction.z) > dirChangeThreshold))
         {
             //Make velocity point in the direction of input; input direction with the XZ magnitude of velocity, with the Y component of velocity
-            rb.velocity = (direction.normalized * Vector3.ProjectOnPlane(rb.velocity, Vector3.up).magnitude).Adjust(1, rb.velocity.y);
+            rb.velocity = (direction * Vector3.ProjectOnPlane(rb.velocity, Vector3.up).magnitude).Adjust(1, rb.velocity.y);
         }
 
         //If both axes are under max speed, apply force in direction.
@@ -256,6 +286,24 @@ public class PlayerMovement : MonoBehaviour
 
         directionLastFrame = direction;
         DrawDebugMovementRays(direction);
+    }
+
+    private void TryDoJump()
+    {
+        //No jumping if you've already jumped
+        if (jumpInProgress)
+            return;
+
+        //If not grounded, and not in coyote time, no jumping
+        if (!IsGrounded() && coyoteTimeTimer == null)
+            return;
+
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.AddForce(new Vector3(0f, jumpForce, 0f));
+
+        jumpInProgress = true;
+        anim.SetBool("Jumped", true);
+        Coroutilities.TryStopCoroutine(this, ref jumpBufferedTimer);
     }
 
     public bool IsGrounded()
@@ -287,46 +335,50 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         //Otherwise, if this object isn't liftable, we shouldn't be able to pull it if we're not grounded
+        //  We can bail out ONLY because we've already zeroed everything
         if (!grounded && !PulledObject.liftable)
         {
-            restrictedDir = Vector3.zero;
+            ZeroDirAndVelocity(ref restrictedDir, 3);
             return;
         }
 
         restrictedDir.x *= PulledObject.GrabMoveMultipliers.x;
         restrictedDir.z *= PulledObject.GrabMoveMultipliers.z;
 
-        //-- Restrict axis movement via max pull distance --//
+        if (BeyondMaxDistance(restrictedDir, 0))    //X is beyond max distance
+            ZeroDirAndVelocity(ref restrictedDir, 0);
 
-        //X is beyond the negative max distance
-        if (restrictedDir.x < 0
-            && PulledObject.transform.position.x < PulledObject.defaultPos.x - PulledObject.maxPullDistance)
-        {
-            restrictedDir.x = 0f;
-            rb.velocity = Vector3.zero;
-        }
-        //X is beyond the positive max distance
-        else if (restrictedDir.x > 0
-            && PulledObject.transform.position.x > PulledObject.defaultPos.x + PulledObject.maxPullDistance)
-        {
-            restrictedDir.x = 0f;
-            rb.velocity = Vector3.zero;
-        }
-        //Z is beyond the negative max distance
-        if (restrictedDir.z < 0
-            && PulledObject.transform.position.z < PulledObject.defaultPos.z - PulledObject.maxPullDistance)
-        {
-            restrictedDir.z = 0f;
-            rb.velocity = Vector3.zero;
-        }
-        //Z is beyond the positive max distance
-        else if (restrictedDir.z > 0
-            && PulledObject.transform.position.z > PulledObject.defaultPos.z + PulledObject.maxPullDistance)
-        {
-            restrictedDir.z = 0f;
-            rb.velocity = Vector3.zero;
-        }
+        if (BeyondMaxDistance(restrictedDir, 2))    //Z is beyond max distance
+            ZeroDirAndVelocity(ref restrictedDir, 2);
     }
+    #region Restriction Helper Functions
+    /// <param name="axis">012, XYZ. Input any other int to zero out ALL axes.</param>
+    private void ZeroDirAndVelocity(ref Vector3 dir, int axis)
+    {
+        switch (axis)
+        {
+            case 0: dir.x = 0f; break;
+            case 1: dir.y = 0f; break;
+            case 2: dir.z = 0f; break;
+            default:
+                dir = Vector3.zero;
+                break;
+        }
+
+        rb.velocity = Vector3.zero;
+    }
+    /// <param name="axis">012, XYZ. Clamped using <see cref="Mathf.Clamp(int, int, int)"/>.</param>
+    private bool BeyondMaxDistance(Vector3 direction, int axis)
+    {
+        axis = Mathf.Clamp(axis, 0, 2);
+
+        return
+            //Beyond negative max
+            (direction[axis] < 0 && PulledObject.transform.position[axis] < PulledObject.defaultPos[axis] - PulledObject.maxPullDistance)
+            //Beyond positive max
+            || (direction[axis] > 0 && PulledObject.transform.position[axis] > PulledObject.defaultPos[axis] + PulledObject.maxPullDistance);
+    }
+    #endregion
 
     private void RotateCharacterModel(Vector3 direction)
     {

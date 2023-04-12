@@ -289,6 +289,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineRendCache: {fileID: 1244827308449117351}
   arrowRendCache: {fileID: 4154762973627017177}
+  colliderRef: {fileID: 7921580319277698254}
+  player: {fileID: 5864955303093575427}
+  maxRaiseDistance: 1
+  raiseYOffset: 0.01
+  ignoredLayers:
+    serializedVersion: 2
+    m_Bits: 0
   ignoredTags:
     _serializedValues:
     - value:
@@ -448,10 +455,12 @@ MonoBehaviour:
   jumpForce: 350
   jumpInProgress: 0
   maxIncline: 0.5
-  fallGravMultiplier: 1
+  fallGravMultiplier: 1.75
   groundLayers:
     serializedVersion: 2
     m_Bits: 4294967295
+  jumpBufferDuration: 0.1
+  coyoteTime: 0.1
   rb: {fileID: 5864955303093575426}
   primaryCol: {fileID: 5958626486520442641}
   secondaryCol: {fileID: 0}

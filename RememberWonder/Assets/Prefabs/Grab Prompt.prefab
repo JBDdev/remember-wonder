@@ -406,6 +406,7 @@ MonoBehaviour:
   grabbableSparkleOwner: {fileID: 0}
   sparklingMeshRend: {fileID: 0}
   sparklesPerUnitCube: 7.5
+  minSparkles: 7.5
   colorChangeSpeed: 4
   triggerSizeOffset: {x: 0, y: 0, z: 0}
   triggerPosOffset: {x: 0, y: 0, z: 0}

@@ -15,17 +15,22 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] int mainMenuSelection;
     [SerializeField] float menuInputThreshold;
+    [SerializeField] float inputCooldownTime = 0.15f;
 
     [Header("Settings Menu Shenanigans")]
     [SerializeField] GameObject[] windowOptions;
     [SerializeField] int submenuSelection;
     [SerializeField] int windowSelection;
-    [SerializeField] GameObject bgmSlider;
-    [SerializeField] GameObject sfxSlider;
-    [SerializeField] GameObject cameraSlider;
+    [SerializeField] Slider bgmSlider;
+    [SerializeField] Slider sfxSlider;
+    [SerializeField] Slider cameraSlider;
     [SerializeField] GameObject[] exitOptions;
     [SerializeField] int exitSelection;
     [SerializeField] GameObject[] highlightableElements;
+
+    Vector2 moveInputCache;
+    Coroutine vertInputCooldown = null;
+    Coroutine horzInputCooldown = null;
 
     //
     int windowSetting;
@@ -34,28 +39,50 @@ public class MainMenu : MonoBehaviour
     float cameraSens;
 
     bool viewingInstructions;
+    bool inSubmenu;
 
     // Start is called before the first frame update
     void Start()
     {
         mainMenuSelection = 0;
         initialMenuOptions[0].GetComponent<Image>().enabled = true;
-        InputHub.Inst.Gameplay.MenuNav.performed += ChangeSelection;
-        InputHub.Inst.Gameplay.Jump.performed += Select;
+        inSubmenu = false;  //InputHub.Inst.UI.Move.performed += ChangeSelection;
+        InputHub.Inst.UI.Select.performed += Select;
         viewingInstructions = false;
         LoadPlayerSettings();
-
     }
 
-    void Select(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    private void Update()
+    {
+        moveInputCache = InputHub.Inst.UI.Move.ReadValue<Vector2>();
+
+        if (!moveInputCache.y.EqualWithinRange(0, menuInputThreshold))
+        {
+            if (vertInputCooldown != null)
+                moveInputCache.y = 0;
+            else vertInputCooldown = Coroutilities.DoAfterDelay(this, () => vertInputCooldown = null, inputCooldownTime, true);
+        }
+
+        if (!moveInputCache.x.EqualWithinRange(0, menuInputThreshold))
+        {
+            if (horzInputCooldown != null)
+                moveInputCache.x = 0;
+            else horzInputCooldown = Coroutilities.DoAfterDelay(this, () => horzInputCooldown = null, inputCooldownTime, true);
+        }
+
+        ChangeSelection(moveInputCache);
+        SubmenuSelection(moveInputCache);
+    }
+
+    void Select(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
         if (!viewingInstructions)
         {
             switch (mainMenuSelection)
             {
                 case 0:
-                    InputHub.Inst.Gameplay.MenuNav.performed -= ChangeSelection;
-                    InputHub.Inst.Gameplay.Jump.performed -= Select;
+                    inSubmenu = false;  //InputHub.Inst.UI.Move.performed -= ChangeSelection;
+                    InputHub.Inst.UI.Select.performed -= Select;
                     SceneManager.LoadScene(1);
                     break;
                 case 1:
@@ -69,20 +96,20 @@ public class MainMenu : MonoBehaviour
                     break;
             }
         }
-        else 
+        else
         {
             UnloadInstructions();
         }
     }
 
-    void LoadInstructions() 
+    void LoadInstructions()
     {
         mainMenu.SetActive(false);
         instructionsMenu.SetActive(true);
         viewingInstructions = true;
     }
 
-    void UnloadInstructions() 
+    void UnloadInstructions()
     {
         instructionsMenu.SetActive(false);
         mainMenu.SetActive(true);
@@ -92,11 +119,11 @@ public class MainMenu : MonoBehaviour
     void LoadSettings()
     {
         mainMenu.SetActive(false);
-        InputHub.Inst.Gameplay.MenuNav.performed -= ChangeSelection;
-        InputHub.Inst.Gameplay.Jump.performed -= Select;
+        //InputHub.Inst.UI.Move.performed -= ChangeSelection;
+        InputHub.Inst.UI.Select.performed -= Select;
 
-        InputHub.Inst.Gameplay.Jump.performed += ConfirmSettings;
-        InputHub.Inst.Gameplay.MenuNav.performed += SubmenuSelection;
+        InputHub.Inst.UI.Select.performed += ConfirmSettings;
+        inSubmenu = true;   //InputHub.Inst.UI.Move.performed += SubmenuSelection;
 
         LoadPlayerSettings();
         settingsMenu.SetActive(true);
@@ -104,11 +131,11 @@ public class MainMenu : MonoBehaviour
     void UnloadSettings()
     {
         settingsMenu.SetActive(false);
-        InputHub.Inst.Gameplay.Jump.performed -= ConfirmSettings;
-        InputHub.Inst.Gameplay.MenuNav.performed -= SubmenuSelection;
+        InputHub.Inst.UI.Select.performed -= ConfirmSettings;
+        //InputHub.Inst.UI.Move.performed -= SubmenuSelection;
 
-        InputHub.Inst.Gameplay.MenuNav.performed += ChangeSelection;
-        InputHub.Inst.Gameplay.Jump.performed += Select;
+        inSubmenu = false;  //InputHub.Inst.UI.Move.performed += ChangeSelection;
+        InputHub.Inst.UI.Select.performed += Select;
 
         foreach (GameObject element in highlightableElements)
             element.GetComponent<Image>().color = Color.white;
@@ -116,9 +143,9 @@ public class MainMenu : MonoBehaviour
         mainMenu.SetActive(true);
     }
 
-    void ChangeSelection(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
+    void ChangeSelection(Vector2 input)
     {
-        Vector2 input = InputHub.Inst.Gameplay.MenuNav.ReadValue<Vector2>();
+        if (inSubmenu) return;
 
         if (input.y > menuInputThreshold)
             mainMenuSelection--;
@@ -137,7 +164,7 @@ public class MainMenu : MonoBehaviour
 
     }
 
-    void LoadPlayerSettings() 
+    void LoadPlayerSettings()
     {
         windowSetting = PlayerPrefs.GetInt("windowSetting");
         bgmVolume = PlayerPrefs.GetFloat("bgmVolume");
@@ -168,14 +195,17 @@ public class MainMenu : MonoBehaviour
 
         submenuSelection = windowSetting;
         //Sliders
-        bgmSlider.transform.GetChild(0).GetComponent<Slider>().value = bgmVolume;
-        sfxSlider.transform.GetChild(0).GetComponent<Slider>().value = sfxVolume;
-        cameraSlider.transform.GetChild(0).GetComponent<Slider>().value = cameraSens;
+        bgmSlider.value = bgmVolume;
+        sfxSlider.value = sfxVolume;
+        cameraSlider.value = cameraSens;
+
+        SetMixerVolumeViaSlider(bgmSlider, "bgmVol");
+        SetMixerVolumeViaSlider(sfxSlider, "sfxVol");
 
         submenuSelection = 0;
     }
 
-    void InitMissingPrefValues() 
+    void InitMissingPrefValues()
     {
         switch (windowSetting)
         {
@@ -220,22 +250,19 @@ public class MainMenu : MonoBehaviour
         else
             Screen.fullScreenMode = FullScreenMode.Windowed;
 
-        //Update Volume Here
-        float bgmValue = bgmSlider.transform.GetChild(0).GetComponent<Slider>().value;
-        bgmValue = 30 - (30 * bgmValue);
-        mixer.SetFloat("bgmVol", -bgmValue);
+        SetMixerVolumeViaSlider(bgmSlider, "bgmVol");
+        SetMixerVolumeViaSlider(sfxSlider, "sfxVol");
 
-        float sfxValue = sfxSlider.transform.GetChild(0).GetComponent<Slider>().value;
-        sfxValue = 30 - (30 * sfxValue);
-        mixer.SetFloat("sfxVol", -sfxValue);
-
-        //Update Camera Sensitvity Here
+        bgmVolume = bgmSlider.value;
+        sfxVolume = sfxSlider.value;
 
         PlayerPrefs.SetInt("windowSetting", windowSelection);
-        PlayerPrefs.SetFloat("bgmVolume", bgmSlider.transform.GetChild(0).GetComponent<Slider>().value);
-        PlayerPrefs.SetFloat("sfxVolume", sfxSlider.transform.GetChild(0).GetComponent<Slider>().value);
-        PlayerPrefs.SetFloat("cameraSens", cameraSlider.transform.GetChild(0).GetComponent<Slider>().value);
+        PlayerPrefs.SetFloat("bgmVolume", bgmVolume);
+        PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
+        PlayerPrefs.SetFloat("cameraSens", cameraSlider.value);
     }
+    private void SetMixerVolumeViaSlider(Slider slider, string mixerFloatName)
+        => mixer.SetFloat(mixerFloatName, -1 * (30 - (30 * slider.value)));
 
     void ConfirmSettings(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
@@ -244,13 +271,20 @@ public class MainMenu : MonoBehaviour
 
         if (exitSelection == 0)
             ApplyNewSettings();
+        else
+        {
+            bgmSlider.value = bgmVolume;
+            sfxSlider.value = sfxVolume;
+            SetMixerVolumeViaSlider(bgmSlider, "bgmVol");
+            SetMixerVolumeViaSlider(sfxSlider, "sfxVol");
+        }
 
         UnloadSettings();
     }
 
-    void SubmenuSelection(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    void SubmenuSelection(Vector2 input)
     {
-        Vector2 input = InputHub.Inst.Gameplay.MenuNav.ReadValue<Vector2>();
+        if (!inSubmenu) return;
 
         //Handle Horizontal Input
         switch (submenuSelection)
@@ -269,24 +303,24 @@ public class MainMenu : MonoBehaviour
                         windowSelection = 1;
                 }
                 break;
+
             case 1:
-                if (input.x > menuInputThreshold)
-                    bgmSlider.transform.GetChild(0).GetComponent<Slider>().value += 0.1f;
-                else if (input.x < -menuInputThreshold)
-                    bgmSlider.transform.GetChild(0).GetComponent<Slider>().value -= 0.1f;
+                if (input.x > menuInputThreshold) bgmSlider.value += 0.1f;
+                else if (input.x < -menuInputThreshold) bgmSlider.value -= 0.1f;
+                SetMixerVolumeViaSlider(bgmSlider, "bgmVol");
                 break;
+
             case 2:
-                if (input.x > menuInputThreshold)
-                    sfxSlider.transform.GetChild(0).GetComponent<Slider>().value += 0.1f;
-                else if (input.x < -menuInputThreshold)
-                    sfxSlider.transform.GetChild(0).GetComponent<Slider>().value -= 0.1f;
+                if (input.x > menuInputThreshold) sfxSlider.value += 0.1f;
+                else if (input.x < -menuInputThreshold) sfxSlider.value -= 0.1f;
+                SetMixerVolumeViaSlider(sfxSlider, "sfxVol");
                 break;
+
             case 3:
-                if (input.x > menuInputThreshold)
-                    cameraSlider.transform.GetChild(0).GetComponent<Slider>().value += 0.1f;
-                else if (input.x < -menuInputThreshold)
-                    cameraSlider.transform.GetChild(0).GetComponent<Slider>().value -= 0.1f;
+                if (input.x > menuInputThreshold) cameraSlider.value += 0.1f;
+                else if (input.x < -menuInputThreshold) cameraSlider.value -= 0.1f;
                 break;
+
             case 4:
                 if (input.x > menuInputThreshold)
                 {

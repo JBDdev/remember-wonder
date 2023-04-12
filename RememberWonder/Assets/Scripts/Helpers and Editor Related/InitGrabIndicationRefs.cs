@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+#if UNITY_EDITOR
+using Bewildered.Editor; 
+#endif
 
 public class InitGrabIndicationRefs : MonoBehaviour
 {
@@ -87,10 +90,18 @@ public class InitGrabIndicationRefs : MonoBehaviour
         }
 
         var serializedOwner = new UnityEditor.SerializedObject(grabbableOwner);
+        var serializedPrompts = serializedOwner.FindProperty("grabPrompts");
 
-        serializedOwner.FindProperty("grabPrompt").objectReferenceValue = promptController;
+        //Praise the lort for Bewildered and their Get/Set extension methods
+        //Be warned that if the type of grabPrompts changes, things could maybe get hairy due to this cast (not sure)
+        var promptRefs = serializedPrompts.GetValue<Bewildered.UHashSet<DisplayPrompt>>();
+        if (promptRefs != null)
+        {
+            promptRefs.Add(promptController);
+            serializedPrompts.SetValue(promptRefs);
+        }
+
         UnityEditor.EditorGUIUtility.PingObject(grabbableOwner);
-
         serializedOwner.ApplyModifiedProperties();
     }
 

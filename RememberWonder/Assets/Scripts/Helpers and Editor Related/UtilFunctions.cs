@@ -123,6 +123,11 @@ public static class UtilFunctions
         return result;
     }
 
+    /// <summary>
+    /// Uses bit operators to determine if a given layer is in this layer mask.<br/>
+    /// Sourced from <see href="https://forum.unity.com/threads/checking-if-a-layer-is-in-a-layer-mask.1190230/#post-7613611"/>.
+    public static bool Includes(this LayerMask mask, int layer) => (mask.value & (1 << layer)) != 0;
+
     public static float GetSurfaceArea(this Bounds bounds)
         => 2 * bounds.size.x * bounds.size.y + 2 * bounds.size.x * bounds.size.z + 2 * bounds.size.y * bounds.size.z;
 
@@ -271,7 +276,6 @@ public static class UtilFunctions
             }
         }
     }
-
     private static Vector3[] _cacheUnitSphere = MakeUnitSphere(16);
     /// <summary>
     /// Makes a unit circle out of points. Three rings of points for each axis;<br/>
@@ -293,6 +297,21 @@ public static class UtilFunctions
         return v;
     }
 
+    /// <param name="xAxis">If <see langword="default"/> (zero alpha black), will be set to <see cref="Color.red"/>.</param>
+    /// <param name="yAxis">If <see langword="default"/> (zero alpha black), will be set to <see cref="Color.green"/>.</param>
+    /// <param name="zAxis">If <see langword="default"/> (zero alpha black), will be set to <see cref="Color.blue"/>.</param>
+    public static void DrawAxes(Transform axesOwner, float length = 1f, float duration = 0f,
+        Color xAxis = default, Color yAxis = default, Color zAxis = default)
+    {
+        if (xAxis == default) xAxis = Color.red;
+        if (yAxis == default) yAxis = Color.green;
+        if (zAxis == default) zAxis = Color.blue;
+
+        Debug.DrawRay(axesOwner.position, axesOwner.right * length, xAxis, duration);
+        Debug.DrawRay(axesOwner.position, axesOwner.up * length, yAxis, duration);
+        Debug.DrawRay(axesOwner.position, axesOwner.forward * length, zAxis, duration);
+    }
+
     /// <summary>
     /// Checks to see if this float is equal to <paramref name="target"/>, within a 
     /// given <paramref name="range"/>.
@@ -300,6 +319,7 @@ public static class UtilFunctions
     public static bool EqualWithinRange(this float subject, float target, float range)
         => subject >= target - range && subject <= target + range;
 
+    /// <inheritdoc cref="EqualWithinRange(float, float, float)"/>
     public static bool EqualWithinRange(this Vector3 subject, Vector3 target, float range)
         => (target - subject).sqrMagnitude <= range * range;
 
