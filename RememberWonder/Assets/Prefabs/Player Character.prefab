@@ -452,6 +452,8 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 4294967295
+  jumpBufferDuration: 0.1
+  coyoteTime: 0.1
   rb: {fileID: 5864955303093575426}
   primaryCol: {fileID: 5958626486520442641}
   secondaryCol: {fileID: 0}
