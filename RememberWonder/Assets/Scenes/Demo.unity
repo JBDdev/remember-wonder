@@ -490,7 +490,7 @@ MonoBehaviour:
     loop: 0
     priority: 128
     volume: 1
-    pitch: 1
+    pitch: 0.8
     stereoPan: 0
     spatialBlend: 1
     reverbZoneMix: 1
@@ -502,7 +502,7 @@ MonoBehaviour:
     useLoop: 0
     usePriority: 0
     useVolume: 0
-    usePitch: 0
+    usePitch: 1
     useStereoPan: 0
     useSpatialBlend: 0
     useReverbZoneMix: 0
@@ -958,7 +958,7 @@ MonoBehaviour:
     loop: 0
     priority: 128
     volume: 1
-    pitch: 1
+    pitch: 0.8
     stereoPan: 0
     spatialBlend: 1
     reverbZoneMix: 1
@@ -970,7 +970,7 @@ MonoBehaviour:
     useLoop: 0
     usePriority: 0
     useVolume: 0
-    usePitch: 0
+    usePitch: 1
     useStereoPan: 0
     useSpatialBlend: 0
     useReverbZoneMix: 0
@@ -2492,7 +2492,7 @@ MonoBehaviour:
     loop: 0
     priority: 128
     volume: 1
-    pitch: 1
+    pitch: 0.8
     stereoPan: 0
     spatialBlend: 1
     reverbZoneMix: 1
@@ -2504,7 +2504,7 @@ MonoBehaviour:
     useLoop: 0
     usePriority: 0
     useVolume: 0
-    usePitch: 0
+    usePitch: 1
     useStereoPan: 0
     useSpatialBlend: 0
     useReverbZoneMix: 0
@@ -11928,7 +11928,7 @@ MonoBehaviour:
     loop: 0
     priority: 128
     volume: 1
-    pitch: 1
+    pitch: 0.8
     stereoPan: 0
     spatialBlend: 1
     reverbZoneMix: 1
@@ -11940,7 +11940,7 @@ MonoBehaviour:
     useLoop: 0
     usePriority: 0
     useVolume: 0
-    usePitch: 0
+    usePitch: 1
     useStereoPan: 0
     useSpatialBlend: 0
     useReverbZoneMix: 0
@@ -12831,7 +12831,7 @@ MonoBehaviour:
     loop: 0
     priority: 128
     volume: 1
-    pitch: 1
+    pitch: 0.8
     stereoPan: 0
     spatialBlend: 1
     reverbZoneMix: 1
@@ -12843,7 +12843,7 @@ MonoBehaviour:
     useLoop: 0
     usePriority: 0
     useVolume: 0
-    usePitch: 0
+    usePitch: 1
     useStereoPan: 0
     useSpatialBlend: 0
     useReverbZoneMix: 0
@@ -15139,7 +15139,7 @@ MonoBehaviour:
     loop: 0
     priority: 128
     volume: 1
-    pitch: 1
+    pitch: 0.8
     stereoPan: 0
     spatialBlend: 1
     reverbZoneMix: 1
@@ -15151,7 +15151,7 @@ MonoBehaviour:
     useLoop: 0
     usePriority: 0
     useVolume: 0
-    usePitch: 0
+    usePitch: 1
     useStereoPan: 0
     useSpatialBlend: 0
     useReverbZoneMix: 0
@@ -16016,7 +16016,7 @@ MonoBehaviour:
     loop: 0
     priority: 128
     volume: 1
-    pitch: 1
+    pitch: 0.8
     stereoPan: 0
     spatialBlend: 1
     reverbZoneMix: 1
@@ -16028,7 +16028,7 @@ MonoBehaviour:
     useLoop: 0
     usePriority: 0
     useVolume: 0
-    usePitch: 0
+    usePitch: 1
     useStereoPan: 0
     useSpatialBlend: 0
     useReverbZoneMix: 0
@@ -18111,7 +18111,7 @@ MonoBehaviour:
     loop: 0
     priority: 128
     volume: 1
-    pitch: 1
+    pitch: 0.8
     stereoPan: 0
     spatialBlend: 1
     reverbZoneMix: 1
@@ -18123,7 +18123,7 @@ MonoBehaviour:
     useLoop: 0
     usePriority: 0
     useVolume: 0
-    usePitch: 0
+    usePitch: 1
     useStereoPan: 0
     useSpatialBlend: 0
     useReverbZoneMix: 0
@@ -21594,7 +21594,7 @@ MonoBehaviour:
     loop: 0
     priority: 128
     volume: 1
-    pitch: 1
+    pitch: 0.8
     stereoPan: 0
     spatialBlend: 1
     reverbZoneMix: 1
@@ -21606,7 +21606,7 @@ MonoBehaviour:
     useLoop: 0
     usePriority: 0
     useVolume: 0
-    usePitch: 0
+    usePitch: 1
     useStereoPan: 0
     useSpatialBlend: 0
     useReverbZoneMix: 0
@@ -25012,7 +25012,7 @@ MonoBehaviour:
     loop: 0
     priority: 128
     volume: 1
-    pitch: 1
+    pitch: 0.8
     stereoPan: 0
     spatialBlend: 1
     reverbZoneMix: 1
@@ -25024,7 +25024,7 @@ MonoBehaviour:
     useLoop: 0
     usePriority: 0
     useVolume: 0
-    usePitch: 0
+    usePitch: 1
     useStereoPan: 0
     useSpatialBlend: 0
     useReverbZoneMix: 0
