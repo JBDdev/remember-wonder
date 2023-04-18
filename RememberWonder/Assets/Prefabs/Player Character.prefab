@@ -474,8 +474,6 @@ MonoBehaviour:
   shadowLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  heldObject: {fileID: 0}
-  pushPullObject: {fileID: 0}
   anim: {fileID: 0}
   rotationSpeed: 20
   minRotationDistance: 0.01
@@ -505,8 +503,8 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
-  fallingVelocityThreshold: -0.00001
-  timeUntilFalling: 0.1
+  fallingVelocityThreshold: -0.02
+  timeUntilFalling: 0.25
   landingSFXCooldown: 0.5
 --- !u!54 &5864955303093575426
 Rigidbody:
