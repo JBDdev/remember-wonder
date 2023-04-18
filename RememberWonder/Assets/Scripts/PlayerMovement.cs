@@ -60,9 +60,13 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player SFX")]
     [SerializeField] AudioList landingSFX;
     [SerializeField] SourceSettings landingSettings;
+    [Space(5)]
+    [SerializeField][NaughtyAttributes.MaxValue(0)] float fallingVelocityThreshold = -1e-05f;
+    [SerializeField][Min(0)] float timeUntilFalling = 0.1f;
+    [SerializeField][Range(0, 2)] float landingSFXCooldown;
 
     bool paused;
-    bool landed = false;
+    bool landSFXFlag = false;
 
     bool groundedLastFrame;
     bool jumpInputHeld;
@@ -74,6 +78,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     Coroutine jumpBufferedTimer;
     Coroutine coyoteTimeTimer;
+    Coroutine landSFXCooldown;
 
     /// <summary>
     /// Invoked whenever this we start or stop grabbing something..
@@ -209,18 +214,30 @@ public class PlayerMovement : MonoBehaviour
             //float yPos = hit.collider.bounds.center.y + hit.collider.bounds.extents.y;
             shadow.position = new Vector3(hit.point.x, hit.point.y + shadowFloorOffset, hit.point.z);
         }
+
+        //If we have downward velocity for more than x seconds, we're falling, thus we haven't landed.
+        if (rb.velocity.y < fallingVelocityThreshold)
+        {
+            Coroutilities.DoAfterDelay(this, () =>
+            {
+                if (rb.velocity.y < fallingVelocityThreshold) landSFXFlag = false;
+            }, timeUntilFalling);
+        }
     }
     void FixedUpdate()
     {
         var grounded = IsGrounded();
 
-        if (!grounded) landed = false;
-
         anim.SetBool("Jumped", jumpInProgress);
-        if (grounded && !landed && rb.velocity.y < 0)
+        if (grounded && !landSFXFlag)
         {
-            landed = true;
-            AudioHub.Inst.Play(landingSFX, landingSettings, transform.position);
+            landSFXFlag = true;
+
+            if (landSFXCooldown == null)
+            {
+                AudioHub.Inst.Play(landingSFX, landingSettings, transform.position);
+                landSFXCooldown = Coroutilities.DoAfterDelay(this, () => landSFXCooldown = null, landingSFXCooldown);
+            }
         }
 
         //Debug.Log(anim.GetAnimatorTransitionInfo(0).IsUserName("Landing"));

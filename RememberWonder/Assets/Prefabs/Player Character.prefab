@@ -505,6 +505,9 @@ MonoBehaviour:
     useVolumeRolloff: 0
     useMinDistance: 0
     useMaxDistance: 0
+  fallingVelocityThreshold: -0.00001
+  timeUntilFalling: 0.1
+  landingSFXCooldown: 0.5
 --- !u!54 &5864955303093575426
 Rigidbody:
   m_ObjectHideFlags: 0
