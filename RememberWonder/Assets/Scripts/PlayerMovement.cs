@@ -49,8 +49,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask shadowLayerMask = ~0;
 
     [Header("External References")]
-    [SerializeField] GameObject heldObject;
-    [SerializeField] PushPullObject pushPullObject;
     [SerializeField] Animator anim;
 
     [Header("Rotation Controls")]
@@ -83,15 +81,16 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>
     /// Invoked whenever this we start or stop grabbing something..
     /// <br/>- <see cref="bool"/>: True if we just grabbed something. False if just stopped.
+    /// <br/>- <see cref="PushPullObject"/>: The object we just grabbed, if applicable.
     /// </summary>
-    public static Action<bool> GrabStateChange;
+    public static Action<bool, PushPullObject> GrabStateChange;
 
     //Accessors
     public Transform PickUpPivot { get { return pickUpPivot; } }
     public GameObject CharacterModel { get { return characterModel; } }
     public DropPointTrigger DropLocation { get { return dropLocation; } }
 
-    public PushPullObject PulledObject { get { return pushPullObject; } set { pushPullObject = value; } }
+    public PushPullObject PulledObject { get; set; }
     public Vector3 Velocity { get => rb.velocity; }
     public Collider PrimaryCollider { get => primaryCol; }
     public Collider SecondaryCollider { get => secondaryCol; }
@@ -105,6 +104,8 @@ public class PlayerMovement : MonoBehaviour
         paused = false;
 
         PulledObject = null;
+
+        Coroutilities.DoNextFrame(this, () => GrabStateChange?.Invoke(false, null));
 
         InputHub.Inst.Gameplay.Jump.performed += OnJumpPerformed;
         InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
@@ -190,7 +191,7 @@ public class PlayerMovement : MonoBehaviour
             rb.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezeRotation;
         }
 
-        GrabStateChange?.Invoke(pullingObject);
+        GrabStateChange?.Invoke(pullingObject, PulledObject);
     }
 
     //---Core Methods---//
