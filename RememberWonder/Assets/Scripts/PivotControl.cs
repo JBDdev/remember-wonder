@@ -48,7 +48,7 @@ public class PivotControl : MonoBehaviour
         targetRotation = transform.rotation;
         targetRotation.eulerAngles = targetRotation.eulerAngles.Adjust(2, 0);
         yaw = targetRotation.eulerAngles.y;
-        pitch = targetRotation.eulerAngles.x;
+        pitch = -targetRotation.eulerAngles.x;
 
         Coroutilities.DoNextFrame(this, () =>
         {
