@@ -6,9 +6,11 @@ using UnityEngine;
 
 public class PushPullObject : MonoBehaviour
 {
+    [Space(5)]
     [SerializeField][ReadOnlyInspector] private PlayerMovement player;
     [SerializeField][ReadOnlyInspector] private bool grabbed;
     [ReadOnlyInspector] public Vector3 defaultPos;
+    [Space(5)]
     [SerializeField] private Bewildered.UHashSet<DisplayPrompt> grabPrompts;
     public bool liftable;
     [SerializeField][NaughtyAttributes.ShowIf("liftable")] private TagString liftedTag;
@@ -16,11 +18,11 @@ public class PushPullObject : MonoBehaviour
     [NaughtyAttributes.HideIf("liftable")] public float maxPullDistance;
     [SerializeField] private Vector3 grabMoveMultipliers = Vector3.one;
     [Header("Audio")]
-    [SerializeField] private AudioList liftAudio;
-    [SerializeField] private SourceSettings liftAudioSettings;
+    [SerializeField][NaughtyAttributes.ShowIf("liftable")] private AudioList liftAudio;
+    [SerializeField][NaughtyAttributes.ShowIf("liftable")] private SourceSettings liftAudioSettings;
     [Space(5)]
-    [SerializeField] private AudioList putDownAudio;
-    [SerializeField] private SourceSettings putDownAudioSettings;
+    [SerializeField][NaughtyAttributes.ShowIf("liftable")] private AudioList putDownAudio;
+    [SerializeField][NaughtyAttributes.ShowIf("liftable")] private SourceSettings putDownAudioSettings;
 #if UNITY_EDITOR
     [Header("EDITOR ONLY")]
     [SerializeField] bool printRegistrationResults;
@@ -45,7 +47,7 @@ public class PushPullObject : MonoBehaviour
     private void OnDisable()
     {
         foreach (var prompt in grabPrompts) prompt.PromptStateChange -= OnGrabPromptStateChange;
-        
+
         InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformedWhileRegistered;
     }
 
