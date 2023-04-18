@@ -142,7 +142,7 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""136210b7-ef87-41dc-ae04-c5c5157d78f8"",
                     ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Grab"",
