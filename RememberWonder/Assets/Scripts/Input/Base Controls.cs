@@ -131,7 +131,7 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""20101107-3108-4c17-99f9-8f0af907073b"",
                     ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Grab"",

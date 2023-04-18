@@ -163,6 +163,19 @@ public class PlayerMovement : MonoBehaviour
         //If a PulledObject hasn't been registered, don't do anything. (See PushPullObject)
         if (!PulledObject) return;
 
+        //If this is a release input,
+        if (InputHub.Inst.Gameplay.Grab.WasReleasedThisFrame())
+        {
+            //...ignore it if we're not holding an object right now.
+            if (!pullingObject) return;
+
+            //...and we're not using a toggle for this kind of object, ignore this input. We only care about press input.
+            string targetKey = PulledObject.liftable ? "holdToLift" : "holdToPull";
+
+            if (PlayerPrefs.HasKey(targetKey) && PlayerPrefs.GetInt(targetKey) == 0)
+                return;
+        }
+
         if (!pullingObject)
         {
             pullingObject = true;
