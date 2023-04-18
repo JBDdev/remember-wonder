@@ -45,6 +45,8 @@ public class PushPullObject : MonoBehaviour
     private void OnDisable()
     {
         foreach (var prompt in grabPrompts) prompt.PromptStateChange -= OnGrabPromptStateChange;
+        
+        InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformedWhileRegistered;
     }
 
     void Start()
