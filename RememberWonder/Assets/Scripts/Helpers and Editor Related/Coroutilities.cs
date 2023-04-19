@@ -10,6 +10,49 @@ using UnityEngine;
 public static class Coroutilities
 {
     /// <summary>
+    /// A dedicated class for simple timers.<br/><br/>
+    /// Run it with <see cref="StartTimer(MonoBehaviour, bool, float)"/>, and check when it's done/reached a <br/>
+    /// certain point with <see cref="IsRunning"/>, <see cref="IsNotRunning"/>, or <see cref="Progress"/>.
+    /// </summary>
+    public class CorouTimer
+    {
+        private float timeRunning = 0;
+        private Coroutine timerCorout = null;
+
+        public float Duration { get; private set; }
+
+        public bool IsRunning { get => timerCorout != null; }
+        public bool IsNotRunning { get => timerCorout == null; }
+        /// <summary>How close this timer is to done; 0 is 0%, 1 is 100%.</summary>
+        public float Progress
+        {
+            get
+            {
+                if (Duration <= 0) return 0;
+                return timeRunning / Duration;
+            }
+        }
+
+        public Coroutine StartTimer(MonoBehaviour timerCoroutOwner, bool realTime = false, float newDuration = -1)
+        {
+            if (newDuration >= 0) Duration = newDuration;
+
+            timerCorout = DoForSeconds(timerCoroutOwner, () =>
+            {
+                timeRunning += realTime ? Time.unscaledDeltaTime : Time.deltaTime;
+                if (timeRunning >= Duration) timerCorout = null;
+            }, Duration, 0, realTime);
+
+            return timerCorout;
+        }
+
+        public CorouTimer(float duration)
+        {
+            Duration = duration;
+        }
+    }
+
+    /// <summary>
     /// Calls <paramref name="thingToDo"/> in <paramref name="delay"/> seconds.
     /// </summary>
     /// <remarks>
