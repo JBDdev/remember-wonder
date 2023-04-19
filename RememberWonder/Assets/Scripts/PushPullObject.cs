@@ -30,7 +30,7 @@ public class PushPullObject : MonoBehaviour
 
     Rigidbody rb;
 
-    string initTag;    //QUICK AND DIRTY FIX for camera collision, Delete later?
+    string initTag;
     Transform parentBeforeGrab;
     float initMass;
 
