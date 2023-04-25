@@ -54,6 +54,11 @@ public class MainMenu : MonoBehaviour
         viewingInstructions = false;
         LoadPlayerSettings();
     }
+    private void OnDestroy()
+    {
+        InputHub.Inst.UI.Select.performed -= Select;
+        InputHub.Inst.UI.Select.performed -= ConfirmSettings;
+    }
 
     private void Update()
     {

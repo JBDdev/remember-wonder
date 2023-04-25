@@ -70,6 +70,12 @@ public class PauseMenu : MonoBehaviour
 
         LoadPlayerSettings();
     }
+    private void OnDestroy()
+    {
+        InputHub.Inst.UI.Select.performed -= Select;
+        InputHub.Inst.UI.Select.performed -= ConfirmSettings;
+        InputHub.Inst.Gameplay.Pause.performed -= PauseInput;
+    }
 
     private void Update()
     {
@@ -143,10 +149,9 @@ public class PauseMenu : MonoBehaviour
         else if (input.y < -menuInputThreshold)
             mainMenuSelection++;
 
-        if (mainMenuSelection < 0)
-            mainMenuSelection = 4;
-        else if (mainMenuSelection > 4)
-            mainMenuSelection = 0;
+        mainMenuSelection = mainMenuSelection < 0
+            ? initialMenuOptions.Length - 1
+            : mainMenuSelection % initialMenuOptions.Length;
 
         foreach (GameObject option in initialMenuOptions)
             option.GetComponent<Image>().enabled = false;
@@ -311,7 +316,7 @@ public class PauseMenu : MonoBehaviour
             PlayerPrefs.SetInt("holdToLift", 1);
             PlayerPrefs.SetInt("holdToPull", 1);
         }
-        else 
+        else
         {
             PlayerPrefs.SetInt("holdToLift", 0);
             PlayerPrefs.SetInt("holdToPull", 0);
@@ -350,7 +355,7 @@ public class PauseMenu : MonoBehaviour
         }
 
 
-        if(!PlayerPrefs.HasKey("holdToLift")) PlayerPrefs.SetInt("holdToLift", 0);
+        if (!PlayerPrefs.HasKey("holdToLift")) PlayerPrefs.SetInt("holdToLift", 0);
         PlayerPrefs.SetInt("holdToPull", 0);
 
         if (!PlayerPrefs.HasKey("bgmVolume"))
