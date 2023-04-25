@@ -355,8 +355,11 @@ public class PauseMenu : MonoBehaviour
         }
 
 
-        if (!PlayerPrefs.HasKey("holdToLift")) PlayerPrefs.SetInt("holdToLift", 0);
-        PlayerPrefs.SetInt("holdToPull", 0);
+        if (!PlayerPrefs.HasKey("holdToLift"))
+        {
+            PlayerPrefs.SetInt("holdToLift", 0);
+            PlayerPrefs.SetInt("holdToPull", 0);
+        }
 
         if (!PlayerPrefs.HasKey("bgmVolume"))
         {
