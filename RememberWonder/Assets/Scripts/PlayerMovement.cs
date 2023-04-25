@@ -163,6 +163,19 @@ public class PlayerMovement : MonoBehaviour
         //If a PulledObject hasn't been registered, don't do anything. (See PushPullObject)
         if (!PulledObject) return;
 
+        //If this is a release input,
+        if (InputHub.Inst.Gameplay.Grab.WasReleasedThisFrame())
+        {
+            //...ignore it if we're not holding an object right now.
+            if (!pullingObject) return;
+
+            //...and we're not using a toggle for this kind of object, ignore this input. We only care about press input.
+            string targetKey = PulledObject.liftable ? "holdToLift" : "holdToPull";
+
+            if (PlayerPrefs.HasKey(targetKey) && PlayerPrefs.GetInt(targetKey) == 0)
+                return;
+        }
+
         if (!pullingObject)
         {
             pullingObject = true;
@@ -184,8 +197,16 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            //Don't do anything if this is an invalid place to drop the lifted object.
             if (PulledObject.liftable && dropLocation.InvalidDropPosition)
+            {
+                //If the grab button's released (not just this frame), try again next frame. The cycle will be
+                //broken if the player starts pressing the grab button again.
+                //  If this evaluates to true, we MUST be using a toggle, since we would have bailed out earlier otherwise.
+                if (!InputHub.Inst.Gameplay.Grab.WasPressedThisFrame())
+                    Coroutilities.DoNextFrame(this, () => OnInteractPerformed(ctx));
                 return;
+            }
 
             pullingObject = false;
             rb.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezeRotation;
