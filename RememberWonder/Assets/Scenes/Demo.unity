@@ -1427,7 +1427,7 @@ MonoBehaviour:
     str: 
   physMat: {fileID: 0}
   maxPullDistance: 1.75
-  grabMoveMultipliers: {x: 1, y: 0, z: 0}
+  grabMoveMultipliers: {x: 0.75, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
     loop: 0
@@ -1509,7 +1509,7 @@ MonoBehaviour:
     str: 
   physMat: {fileID: 0}
   maxPullDistance: 1
-  grabMoveMultipliers: {x: 1, y: 0, z: 0}
+  grabMoveMultipliers: {x: 0.75, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
     loop: 0
@@ -15452,7 +15452,7 @@ MonoBehaviour:
     str: 
   physMat: {fileID: 0}
   maxPullDistance: 2.5
-  grabMoveMultipliers: {x: 1, y: 0, z: 0}
+  grabMoveMultipliers: {x: 0.75, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
     loop: 0

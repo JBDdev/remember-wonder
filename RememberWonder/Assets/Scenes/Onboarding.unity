@@ -2432,7 +2432,7 @@ MonoBehaviour:
     str: 
   physMat: {fileID: 0}
   maxPullDistance: 5
-  grabMoveMultipliers: {x: 1, y: 0, z: 0}
+  grabMoveMultipliers: {x: 0.75, y: 0, z: 0}
   liftAudio: 0
   liftAudioSettings:
     loop: 0
