@@ -25,7 +25,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Slider sfxSlider;
     [SerializeField] Slider cameraSlider;
     [SerializeField] GameObject[] exitOptions;
+    [SerializeField] GameObject[] grabToggleOptions;
     [SerializeField] int exitSelection;
+    [SerializeField] int grabSelection;
     [SerializeField] GameObject[] highlightableElements;
 
     Vector2 moveInputCache;
@@ -37,6 +39,7 @@ public class MainMenu : MonoBehaviour
     float bgmVolume;
     float sfxVolume;
     float cameraSens;
+    int holdToGrab;
 
     bool viewingInstructions;
     bool inSubmenu;
@@ -170,6 +173,7 @@ public class MainMenu : MonoBehaviour
         bgmVolume = PlayerPrefs.GetFloat("bgmVolume");
         sfxVolume = PlayerPrefs.GetFloat("sfxVolume");
         cameraSens = PlayerPrefs.GetFloat("cameraSens");
+        holdToGrab = PlayerPrefs.GetInt("holdToLift");
 
         //This call might be able to be removed later
         InitMissingPrefValues();
@@ -193,6 +197,26 @@ public class MainMenu : MonoBehaviour
             windowOptions[1].GetComponent<Image>().enabled = true;
         }
 
+        if (holdToGrab == 1)
+        {
+            grabToggleOptions[0].GetComponent<Image>().color = Color.white;
+            grabToggleOptions[0].GetComponent<Image>().enabled = true;
+
+            grabToggleOptions[1].GetComponent<Image>().color = Color.white;
+            grabToggleOptions[1].GetComponent<Image>().enabled = false;
+
+            grabSelection = 0;
+        }
+        else
+        {
+            grabToggleOptions[0].GetComponent<Image>().color = Color.white;
+            grabToggleOptions[0].GetComponent<Image>().enabled = false;
+
+            grabToggleOptions[1].GetComponent<Image>().color = Color.white;
+            grabToggleOptions[1].GetComponent<Image>().enabled = true;
+            grabSelection = 1;
+        }
+
         submenuSelection = windowSetting;
         //Sliders
         bgmSlider.value = bgmVolume;
@@ -207,6 +231,7 @@ public class MainMenu : MonoBehaviour
 
     void InitMissingPrefValues()
     {
+        if (!PlayerPrefs.HasKey("windowSetting")) windowSetting = 0;
         switch (windowSetting)
         {
             case -1:
@@ -222,19 +247,23 @@ public class MainMenu : MonoBehaviour
                 break;
         }
 
-        if (bgmVolume == -1f)
+
+        if (!PlayerPrefs.HasKey("holdToLift")) PlayerPrefs.SetInt("holdToLift", 0);
+        PlayerPrefs.SetInt("holdToPull", 0);
+
+        if (!PlayerPrefs.HasKey("bgmVolume"))
         {
             bgmVolume = 0.5f;
             PlayerPrefs.SetFloat("bgmVolume", bgmVolume);
         }
 
-        if (sfxVolume == -1f)
+        if (!PlayerPrefs.HasKey("sfxVolume"))
         {
             sfxVolume = 0.5f;
             PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
         }
 
-        if (cameraSens == -1f)
+        if (!PlayerPrefs.HasKey("cameraSens"))
         {
             cameraSens = 0.5f;
             PlayerPrefs.SetFloat("cameraSens", cameraSens);
@@ -249,6 +278,17 @@ public class MainMenu : MonoBehaviour
             Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
         else
             Screen.fullScreenMode = FullScreenMode.Windowed;
+
+        if (grabSelection == 0)
+        {
+            PlayerPrefs.SetInt("holdToLift", 1);
+            PlayerPrefs.SetInt("holdToPull", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("holdToLift", 0);
+            PlayerPrefs.SetInt("holdToPull", 0);
+        }
 
         SetMixerVolumeViaSlider(bgmSlider, "bgmVol");
         SetMixerVolumeViaSlider(sfxSlider, "sfxVol");
@@ -320,8 +360,22 @@ public class MainMenu : MonoBehaviour
                 if (input.x > menuInputThreshold) cameraSlider.value += 0.1f;
                 else if (input.x < -menuInputThreshold) cameraSlider.value -= 0.1f;
                 break;
-
             case 4:
+                if (input.x >= menuInputThreshold)
+                {
+                    grabSelection++;
+                    if (grabSelection > 1)
+                        grabSelection = 0;
+                }
+                else if (input.x < -menuInputThreshold)
+                {
+                    grabSelection--;
+                    if (grabSelection < 0)
+                        grabSelection = 1;
+                }
+                break;
+
+            case 5:
                 if (input.x > menuInputThreshold)
                 {
                     exitSelection++;
@@ -343,12 +397,12 @@ public class MainMenu : MonoBehaviour
         {
             submenuSelection--;
             if (submenuSelection < 0)
-                submenuSelection = 4;
+                submenuSelection = 5;
         }
         else if (input.y < -menuInputThreshold)
         {
             submenuSelection++;
-            if (submenuSelection > 4)
+            if (submenuSelection > 5)
                 submenuSelection = 0;
         }
 
@@ -366,6 +420,17 @@ public class MainMenu : MonoBehaviour
         {
             highlightableElements[0].GetComponent<Image>().enabled = false;
             highlightableElements[1].GetComponent<Image>().enabled = true;
+        }
+
+        if (grabSelection == 0)
+        {
+            highlightableElements[5].GetComponent<Image>().enabled = true;
+            highlightableElements[6].GetComponent<Image>().enabled = false;
+        }
+        else
+        {
+            highlightableElements[5].GetComponent<Image>().enabled = false;
+            highlightableElements[6].GetComponent<Image>().enabled = true;
         }
 
         switch (submenuSelection)
@@ -386,10 +451,16 @@ public class MainMenu : MonoBehaviour
                 highlightableElements[4].GetComponent<Image>().color = Color.cyan;
                 break;
             case 4:
-                if (exitSelection == 0)
+                if (grabSelection == 0)
                     highlightableElements[5].GetComponent<Image>().color = Color.cyan;
                 else
                     highlightableElements[6].GetComponent<Image>().color = Color.cyan;
+                break;
+            case 5:
+                if (exitSelection == 0)
+                    highlightableElements[7].GetComponent<Image>().color = Color.cyan;
+                else
+                    highlightableElements[8].GetComponent<Image>().color = Color.cyan;
                 break;
         }
 

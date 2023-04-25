@@ -271,6 +271,8 @@ public class PauseMenu : MonoBehaviour
 
             grabToggleOptions[1].GetComponent<Image>().color = Color.white;
             grabToggleOptions[1].GetComponent<Image>().enabled = false;
+
+            grabSelection = 0;
         }
         else
         {
@@ -279,6 +281,7 @@ public class PauseMenu : MonoBehaviour
 
             grabToggleOptions[1].GetComponent<Image>().color = Color.white;
             grabToggleOptions[1].GetComponent<Image>().enabled = true;
+            grabSelection = 1;
         }
 
         submenuSelection = windowSetting;
