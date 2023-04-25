@@ -140,6 +140,17 @@ public partial class @BaseControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""136210b7-ef87-41dc-ae04-c5c5157d78f8"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Grab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""5ed2a397-65d5-4468-8dc7-b173e822df31"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",

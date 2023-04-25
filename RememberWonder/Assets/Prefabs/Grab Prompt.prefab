@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 919230253819991551}
   - component: {fileID: 919230253819991545}
   - component: {fileID: 919230253819991550}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Prompt Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 919230253831900583}
   - component: {fileID: 919230253831900580}
   - component: {fileID: 919230253831900582}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Prompt Canvas
   m_TagString: MemoryMote
   m_Icon: {fileID: 0}
@@ -313,7 +313,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 919230254670630460}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Prompt Image Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5341,7 +5341,7 @@ GameObject:
   - component: {fileID: 1061249276530888348}
   - component: {fileID: 2157449919875015717}
   - component: {fileID: 2466501408970508355}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Prompt Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5418,7 +5418,7 @@ GameObject:
   - component: {fileID: 7572764212615441383}
   - component: {fileID: 6964870875329784551}
   - component: {fileID: 709797915542852478}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

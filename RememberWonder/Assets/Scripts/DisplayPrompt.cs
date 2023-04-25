@@ -73,7 +73,7 @@ public class DisplayPrompt : MonoBehaviour
     {
         PlayerMovement.GrabStateChange -= SetSomethingIsGrabbed;
     }
-    private void SetSomethingIsGrabbed(bool isGrabbed) => somethingIsGrabbed = isGrabbed;
+    private void SetSomethingIsGrabbed(bool isGrabbed, PushPullObject _) => somethingIsGrabbed = isGrabbed;
 
     //--- Core Functions ---//
 
