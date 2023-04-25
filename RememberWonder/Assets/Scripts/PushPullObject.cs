@@ -68,6 +68,19 @@ public class PushPullObject : MonoBehaviour
 
         if (liftable && player.DropLocation.InvalidDropPosition) return;
 
+        //If this is a release input,
+        if (InputHub.Inst.Gameplay.Grab.WasReleasedThisFrame())
+        {
+            //...ignore it if we're not already grabbed.
+            if (!grabbed) return;
+
+            //...and we're not using a toggle for this kind of object, ignore this input. We only care about press input.
+            string targetKey = liftable ? "holdToLift" : "holdToPull";
+
+            if (PlayerPrefs.HasKey(targetKey) && PlayerPrefs.GetInt(targetKey) == 0)
+                return;
+        }
+
         grabbed = !grabbed;
 
         if (liftable)
