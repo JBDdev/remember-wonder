@@ -66,7 +66,29 @@ public class PushPullObject : MonoBehaviour
         //If we don't have a player reference, bail out.
         if (!player) return;
 
-        if (liftable && player.DropLocation.InvalidDropPosition) return;
+        //If this is a release input,
+        if (InputHub.Inst.Gameplay.Grab.WasReleasedThisFrame())
+        {
+            //...ignore it if we're not already grabbed.
+            if (!grabbed) return;
+
+            //...and we're not using a toggle for this kind of object, ignore this input. We only care about press input.
+            string targetKey = liftable ? "holdToLift" : "holdToPull";
+
+            if (PlayerPrefs.HasKey(targetKey) && PlayerPrefs.GetInt(targetKey) == 0)
+                return;
+        }
+
+        //If this is an invalid drop position, bail out.
+        if (liftable && player.DropLocation.InvalidDropPosition)
+        {
+            //If the grab button's released (not just this frame), try again next frame. The cycle will be
+            //broken if the player starts pressing the grab button again.
+            //  If this evaluates to true, we MUST be using a toggle, since we would have bailed out earlier otherwise.
+            if (!InputHub.Inst.Gameplay.Grab.WasPressedThisFrame())
+                Coroutilities.DoNextFrame(this, () => OnInteractPerformedWhileRegistered(ctx));
+            return;
+        }
 
         grabbed = !grabbed;
 
