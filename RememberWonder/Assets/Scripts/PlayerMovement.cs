@@ -197,8 +197,16 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            //Don't do anything if this is an invalid place to drop the lifted object.
             if (PulledObject.liftable && dropLocation.InvalidDropPosition)
+            {
+                //If the grab button's released (not just this frame), try again next frame. The cycle will be
+                //broken if the player starts pressing the grab button again.
+                //  If this evaluates to true, we MUST be using a toggle, since we would have bailed out earlier otherwise.
+                if (!InputHub.Inst.Gameplay.Grab.WasPressedThisFrame())
+                    Coroutilities.DoNextFrame(this, () => OnInteractPerformed(ctx));
                 return;
+            }
 
             pullingObject = false;
             rb.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezeRotation;
