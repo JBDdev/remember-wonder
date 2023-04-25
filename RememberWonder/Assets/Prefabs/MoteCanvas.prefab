@@ -2537,7 +2537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2613,7 +2613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5754717, g: 0.5673282, b: 0.5673282, a: 0.392}
+  m_Color: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 0.5803922}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2645,7 +2645,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &151993705954125838
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3256,7 +3256,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3273,8 +3273,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4449,7 +4449,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2478784027419641692
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4821,7 +4821,7 @@ GameObject:
   - component: {fileID: 5102090577730445680}
   - component: {fileID: 26452670432328894}
   m_Layer: 5
-  m_Name: Press
+  m_Name: OFF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4996,9 +4996,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Press the A Button
-
-'
+  m_text: Press A to close
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5082,7 +5080,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8888822077276986681
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5259,7 +5257,7 @@ GameObject:
   - component: {fileID: 7122462350628397094}
   - component: {fileID: 2605469291363433038}
   m_Layer: 5
-  m_Name: Hold
+  m_Name: ON
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6025,7 +6023,7 @@ MonoBehaviour:
   moteUI: {fileID: 9197286215229045254}
   pauseMenu: {fileID: 3648542182955554319}
   mainMenuSelection: 0
-  menuInputThreshold: 0
+  menuInputThreshold: 0.5
   inputCooldownTime: 0.15
   windowOptions:
   - {fileID: 2467751778455625123}
@@ -6035,17 +6033,22 @@ MonoBehaviour:
   bgmSlider: {fileID: 2432951246229632627}
   sfxSlider: {fileID: 1871006374021097617}
   cameraSlider: {fileID: 3149407258717440915}
-  grabToggle: {fileID: 0}
+  grabToggleOptions:
+  - {fileID: 6823106530229264293}
+  - {fileID: 6649816665118152076}
   exitOptions:
   - {fileID: 3499262073675983140}
   - {fileID: 4677946447652260346}
   exitSelection: 0
+  grabSelection: 0
   highlightableElements:
   - {fileID: 2467751778455625123}
   - {fileID: 7285706812380147751}
   - {fileID: 8830891812339506809}
   - {fileID: 382163737640307920}
   - {fileID: 9024679213907017216}
+  - {fileID: 6823106530229264293}
+  - {fileID: 6649816665118152076}
   - {fileID: 3499262073675983140}
   - {fileID: 4677946447652260346}
 --- !u!1 &8296108395789656216
