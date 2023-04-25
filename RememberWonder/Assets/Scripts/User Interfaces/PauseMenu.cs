@@ -28,8 +28,10 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] Slider bgmSlider;
     [SerializeField] Slider sfxSlider;
     [SerializeField] Slider cameraSlider;
+    [SerializeField] GameObject[] grabToggleOptions;
     [SerializeField] GameObject[] exitOptions;
     [SerializeField] int exitSelection;
+    [SerializeField] int grabSelection;
     [SerializeField] GameObject[] highlightableElements;
 
     Vector2 moveInputCache;
@@ -41,6 +43,7 @@ public class PauseMenu : MonoBehaviour
     float bgmVolume;
     float sfxVolume;
     float cameraSens;
+    int holdToGrab;
 
     bool paused;
     bool inSubmenu;
@@ -141,8 +144,8 @@ public class PauseMenu : MonoBehaviour
             mainMenuSelection++;
 
         if (mainMenuSelection < 0)
-            mainMenuSelection = 3;
-        else if (mainMenuSelection > 3)
+            mainMenuSelection = 4;
+        else if (mainMenuSelection > 4)
             mainMenuSelection = 0;
 
         foreach (GameObject option in initialMenuOptions)
@@ -237,11 +240,12 @@ public class PauseMenu : MonoBehaviour
         bgmVolume = PlayerPrefs.GetFloat("bgmVolume");
         sfxVolume = PlayerPrefs.GetFloat("sfxVolume");
         cameraSens = PlayerPrefs.GetFloat("cameraSens");
+        holdToGrab = PlayerPrefs.GetInt("holdToGrab");
 
         //This call might be able to be removed later
         InitMissingPrefValues();
 
-        //Window Settings
+        //Button Settings
 
         if (windowSetting == 0)
         {
@@ -260,7 +264,25 @@ public class PauseMenu : MonoBehaviour
             windowOptions[1].GetComponent<Image>().enabled = true;
         }
 
+        if (holdToGrab == 0)
+        {
+            grabToggleOptions[0].GetComponent<Image>().color = Color.white;
+            grabToggleOptions[0].GetComponent<Image>().enabled = true;
+
+            grabToggleOptions[1].GetComponent<Image>().color = Color.white;
+            grabToggleOptions[1].GetComponent<Image>().enabled = false;
+        }
+        else
+        {
+            grabToggleOptions[0].GetComponent<Image>().color = Color.white;
+            grabToggleOptions[0].GetComponent<Image>().enabled = false;
+
+            grabToggleOptions[1].GetComponent<Image>().color = Color.white;
+            grabToggleOptions[1].GetComponent<Image>().enabled = true;
+        }
+
         submenuSelection = windowSetting;
+
         //Sliders
         bgmSlider.value = bgmVolume;
         sfxSlider.value = sfxVolume;
@@ -268,6 +290,7 @@ public class PauseMenu : MonoBehaviour
 
         SetMixerVolumeViaSlider(bgmSlider, "bgmVol");
         SetMixerVolumeViaSlider(sfxSlider, "sfxVol");
+
 
         submenuSelection = 0;
     }
