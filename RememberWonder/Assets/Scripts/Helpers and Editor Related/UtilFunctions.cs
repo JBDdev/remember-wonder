@@ -57,6 +57,20 @@ public static class UtilFunctions
             Debug.Log(indent + property.name + "\n");
         }
     }
+
+    /// <summary>
+    /// Clears the log of <see cref="Debug.Log(object)"/> messages and similar.<br/><br/>
+    /// Sourced from <see href="https://stackoverflow.com/a/40578161"/>.<br/>
+    /// <b>CAUTION: This method uses reflection,</b> so if Unity changes <br/>the names of anything, 
+    /// this method will stop working.
+    /// </summary>
+    public static void ClearEditorLog()
+    {
+        var assembly = System.Reflection.Assembly.GetAssembly(typeof(UnityEditor.Editor));
+        var type = assembly.GetType("UnityEditor.LogEntries");
+        var method = type.GetMethod("Clear");
+        method.Invoke(new object(), null);
+    }
 #endif
 
     /// <summary>
@@ -109,6 +123,52 @@ public static class UtilFunctions
         return totalBounds is Bounds result
             ? result
             : new Bounds(defaultCenter, Vector3.zero);
+    }
+
+    /// <summary>
+    /// Counts the bounding box corners of the given RectTransform that are visible from the given Camera in screen space.
+    /// </summary>
+    /// <returns>The amount of bounding box corners that are visible from the Camera.</returns>
+    /// <remarks>Sourced from <see href="https://forum.unity3d.com/threads/test-if-ui-element-is-visible-on-screen.276549/#post-2978773"/>.</remarks>
+    private static int CountCornersVisibleFrom(this RectTransform rectTransform, Camera camera)
+    {
+        Rect screenBounds = new Rect(0f, 0f, Screen.width, Screen.height); // Screen space bounds (assumes camera renders across the entire screen)
+        Vector3[] objectCorners = new Vector3[4];
+        rectTransform.GetWorldCorners(objectCorners);
+
+        int visibleCorners = 0;
+        Vector3 tempScreenSpaceCorner; // Cached
+        for (var i = 0; i < objectCorners.Length; i++) // For each corner in rectTransform
+        {
+            tempScreenSpaceCorner = camera.WorldToScreenPoint(objectCorners[i]); // Transform world space position of corner to screen space
+            if (screenBounds.Contains(tempScreenSpaceCorner)) // If the corner is inside the screen
+            {
+                visibleCorners++;
+            }
+        }
+        return visibleCorners;
+    }
+
+    /// <summary>
+    /// Determines if this RectTransform is fully visible from the specified camera.<br/>
+    /// Works by checking if each bounding box corner of this RectTransform is inside the cameras screen space view frustrum.
+    /// </summary>
+    /// <returns><c>true</c> if is fully visible from the specified camera; otherwise, <c>false</c>.</returns>
+    /// <inheritdoc cref="CountCornersVisibleFrom(RectTransform, Camera)"/>
+    public static bool IsFullyVisibleFrom(this RectTransform rectTransform, Camera camera)
+    {
+        return CountCornersVisibleFrom(rectTransform, camera) == 4; // True if all 4 corners are visible
+    }
+
+    /// <summary>
+    /// Determines if this RectTransform is at least partially visible from the specified camera.<br/>
+    /// Works by checking if any bounding box corner of this RectTransform is inside the cameras screen space view frustrum.
+    /// </summary>
+    /// <returns><c>true</c> if is at least partially visible from the specified camera; otherwise, <c>false</c>.</returns>
+    /// <inheritdoc cref="CountCornersVisibleFrom(RectTransform, Camera)"/>
+    public static bool IsVisibleFrom(this RectTransform rectTransform, Camera camera)
+    {
+        return CountCornersVisibleFrom(rectTransform, camera) > 0; // True if any corners are visible
     }
 
     public static Bounds EncapsulateAll(params Bounds[] bounds)
