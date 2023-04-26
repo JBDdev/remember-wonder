@@ -57,6 +57,20 @@ public static class UtilFunctions
             Debug.Log(indent + property.name + "\n");
         }
     }
+
+    /// <summary>
+    /// Clears the log of <see cref="Debug.Log(object)"/> messages and similar.<br/><br/>
+    /// Sourced from <see href="https://stackoverflow.com/a/40578161"/>.<br/>
+    /// <b>CAUTION: This method uses reflection,</b> so if Unity changes <br/>the names of anything, 
+    /// this method will stop working.
+    /// </summary>
+    public static void ClearEditorLog()
+    {
+        var assembly = System.Reflection.Assembly.GetAssembly(typeof(UnityEditor.Editor));
+        var type = assembly.GetType("UnityEditor.LogEntries");
+        var method = type.GetMethod("Clear");
+        method.Invoke(new object(), null);
+    }
 #endif
 
     /// <summary>
