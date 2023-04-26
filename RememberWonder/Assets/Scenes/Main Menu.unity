@@ -13343,7 +13343,7 @@ GameObject:
   - component: {fileID: 1691633702}
   - component: {fileID: 1691633701}
   m_Layer: 5
-  m_Name: How To Play
+  m_Name: Credits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13630,7 +13630,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: How To Play
+  m_text: 'Credits
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 55b07adde78664242ab0ac146aeaa8ff, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: ae167e54a0c363d49b0b15e152fbaadf, type: 2}

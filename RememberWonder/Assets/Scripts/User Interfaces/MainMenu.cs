@@ -112,9 +112,7 @@ public class MainMenu : MonoBehaviour
 
     void LoadInstructions()
     {
-        mainMenu.SetActive(false);
-        instructionsMenu.SetActive(true);
-        viewingInstructions = true;
+        SceneManager.LoadScene(3);
     }
 
     void UnloadInstructions()
