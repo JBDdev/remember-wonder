@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class EndLevelSequence : MonoBehaviour
 {
+    [SerializeField] GameObject creditsText;
+    [SerializeField] float scrollSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +16,7 @@ public class EndLevelSequence : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        creditsText.transform.position += new Vector3(0, scrollSpeed, 0) * Time.deltaTime;
     }
 
     void LoadTitleScreen(UnityEngine.InputSystem.InputAction.CallbackContext ctx) 
