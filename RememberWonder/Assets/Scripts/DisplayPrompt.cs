@@ -70,6 +70,12 @@ public class DisplayPrompt : MonoBehaviour
     {
         PlayerMovement.GrabStateChange -= SetSomethingIsGrabbed;
     }
+
+    private void OnDestroy()
+    {
+        Destroy(promptObj);
+    }
+
     private void SetSomethingIsGrabbed(bool isGrabbed, PushPullObject _) => somethingIsGrabbed = isGrabbed;
 
     //--- Core Functions ---//
