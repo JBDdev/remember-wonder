@@ -1496,8 +1496,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -5, y: -10}
-  m_SizeDelta: {x: 55, y: 60}
+  m_AnchoredPosition: {x: 0, y: -10}
+  m_SizeDelta: {x: 52, y: 60}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &3615496979789016345
 CanvasRenderer:
@@ -1530,7 +1530,7 @@ MonoBehaviour:
   m_text: 14
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 55b07adde78664242ab0ac146aeaa8ff, type: 2}
-  m_sharedMaterial: {fileID: 1813686045233374231, guid: 55b07adde78664242ab0ac146aeaa8ff, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: ae167e54a0c363d49b0b15e152fbaadf, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1803,7 +1803,7 @@ MonoBehaviour:
   m_text: 14
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 55b07adde78664242ab0ac146aeaa8ff, type: 2}
-  m_sharedMaterial: {fileID: 1813686045233374231, guid: 55b07adde78664242ab0ac146aeaa8ff, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: ae167e54a0c363d49b0b15e152fbaadf, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2076,7 +2076,7 @@ MonoBehaviour:
   m_text: /
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 55b07adde78664242ab0ac146aeaa8ff, type: 2}
-  m_sharedMaterial: {fileID: 1813686045233374231, guid: 55b07adde78664242ab0ac146aeaa8ff, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: ae167e54a0c363d49b0b15e152fbaadf, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4546,7 +4546,7 @@ MonoBehaviour:
   m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 55b07adde78664242ab0ac146aeaa8ff, type: 2}
-  m_sharedMaterial: {fileID: 1813686045233374231, guid: 55b07adde78664242ab0ac146aeaa8ff, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: ae167e54a0c363d49b0b15e152fbaadf, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6062,6 +6062,7 @@ GameObject:
   - component: {fileID: 8904127550487072211}
   - component: {fileID: 4559643905332495849}
   - component: {fileID: 4250320245852887719}
+  - component: {fileID: 4127885583327417171}
   m_Layer: 5
   m_Name: Mote Image
   m_TagString: Untagged
@@ -6128,6 +6129,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4127885583327417171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296108395789656216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &8450782035934511971
 GameObject:
   m_ObjectHideFlags: 0

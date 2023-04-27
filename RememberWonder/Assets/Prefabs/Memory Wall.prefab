@@ -10243,13 +10243,45 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3134527012384578962, guid: 7e880452f89014e4fad44fbb91e90d41, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -0.425
+      objectReference: {fileID: 0}
+    - target: {fileID: 3134527012384578962, guid: 7e880452f89014e4fad44fbb91e90d41, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.425
+      objectReference: {fileID: 0}
     - target: {fileID: 3134527012384578963, guid: 7e880452f89014e4fad44fbb91e90d41, type: 3}
       propertyPath: m_text
-      value: x ##
+      value: x 10
       objectReference: {fileID: 0}
     - target: {fileID: 3134527012384578963, guid: 7e880452f89014e4fad44fbb91e90d41, type: 3}
       propertyPath: m_fontSize
-      value: 0.3
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3134527012384578963, guid: 7e880452f89014e4fad44fbb91e90d41, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 55b07adde78664242ab0ac146aeaa8ff, type: 2}
+    - target: {fileID: 3134527012384578963, guid: 7e880452f89014e4fad44fbb91e90d41, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3134527012384578963, guid: 7e880452f89014e4fad44fbb91e90d41, type: 3}
+      propertyPath: m_wordSpacing
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3134527012384578963, guid: 7e880452f89014e4fad44fbb91e90d41, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: ba69d28ff45fe3f48ad284e78f9368ef, type: 2}
+    - target: {fileID: 3134527012384578963, guid: 7e880452f89014e4fad44fbb91e90d41, type: 3}
+      propertyPath: m_charWidthMaxAdj
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3134527012384578963, guid: 7e880452f89014e4fad44fbb91e90d41, type: 3}
+      propertyPath: m_characterSpacing
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 3244594653024860843, guid: 7e880452f89014e4fad44fbb91e90d41, type: 3}
       propertyPath: positionType
