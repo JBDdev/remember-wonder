@@ -49,8 +49,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask shadowLayerMask = ~0;
 
     [Header("External References")]
-    [SerializeField] GameObject heldObject;
-    [SerializeField] PushPullObject pushPullObject;
     [SerializeField] Animator anim;
 
     [Header("Rotation Controls")]
@@ -60,9 +58,13 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player SFX")]
     [SerializeField] AudioList landingSFX;
     [SerializeField] SourceSettings landingSettings;
+    [Space(5)]
+    [SerializeField][NaughtyAttributes.MaxValue(0)] float fallingVelocityThreshold = -1e-05f;
+    [SerializeField][Min(0)] float timeUntilFalling = 0.1f;
+    [SerializeField][Range(0, 2)] float landingSFXCooldown;
 
     bool paused;
-    bool landed = false;
+    bool landSFXFlag = false;
 
     bool groundedLastFrame;
     bool jumpInputHeld;
@@ -74,19 +76,21 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     Coroutine jumpBufferedTimer;
     Coroutine coyoteTimeTimer;
+    Coroutine landSFXCooldown;
 
     /// <summary>
     /// Invoked whenever this we start or stop grabbing something..
     /// <br/>- <see cref="bool"/>: True if we just grabbed something. False if just stopped.
+    /// <br/>- <see cref="PushPullObject"/>: The object we just grabbed, if applicable.
     /// </summary>
-    public static Action<bool> GrabStateChange;
+    public static Action<bool, PushPullObject> GrabStateChange;
 
     //Accessors
     public Transform PickUpPivot { get { return pickUpPivot; } }
     public GameObject CharacterModel { get { return characterModel; } }
     public DropPointTrigger DropLocation { get { return dropLocation; } }
 
-    public PushPullObject PulledObject { get { return pushPullObject; } set { pushPullObject = value; } }
+    public PushPullObject PulledObject { get; set; }
     public Vector3 Velocity { get => rb.velocity; }
     public Collider PrimaryCollider { get => primaryCol; }
     public Collider SecondaryCollider { get => secondaryCol; }
@@ -100,6 +104,8 @@ public class PlayerMovement : MonoBehaviour
         paused = false;
 
         PulledObject = null;
+
+        Coroutilities.DoNextFrame(this, () => GrabStateChange?.Invoke(false, null));
 
         InputHub.Inst.Gameplay.Jump.performed += OnJumpPerformed;
         InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
@@ -157,6 +163,19 @@ public class PlayerMovement : MonoBehaviour
         //If a PulledObject hasn't been registered, don't do anything. (See PushPullObject)
         if (!PulledObject) return;
 
+        //If this is a release input,
+        if (InputHub.Inst.Gameplay.Grab.WasReleasedThisFrame())
+        {
+            //...ignore it if we're not holding an object right now.
+            if (!pullingObject) return;
+
+            //...and we're not using a toggle for this kind of object, ignore this input. We only care about press input.
+            string targetKey = PulledObject.liftable ? "holdToLift" : "holdToPull";
+
+            if (PlayerPrefs.HasKey(targetKey) && PlayerPrefs.GetInt(targetKey) == 0)
+                return;
+        }
+
         if (!pullingObject)
         {
             pullingObject = true;
@@ -178,14 +197,22 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            //Don't do anything if this is an invalid place to drop the lifted object.
             if (PulledObject.liftable && dropLocation.InvalidDropPosition)
+            {
+                //If the grab button's released (not just this frame), try again next frame. The cycle will be
+                //broken if the player starts pressing the grab button again.
+                //  If this evaluates to true, we MUST be using a toggle, since we would have bailed out earlier otherwise.
+                if (!InputHub.Inst.Gameplay.Grab.WasPressedThisFrame())
+                    Coroutilities.DoNextFrame(this, () => OnInteractPerformed(ctx));
                 return;
+            }
 
             pullingObject = false;
             rb.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezeRotation;
         }
 
-        GrabStateChange?.Invoke(pullingObject);
+        GrabStateChange?.Invoke(pullingObject, PulledObject);
     }
 
     //---Core Methods---//
@@ -209,18 +236,30 @@ public class PlayerMovement : MonoBehaviour
             //float yPos = hit.collider.bounds.center.y + hit.collider.bounds.extents.y;
             shadow.position = new Vector3(hit.point.x, hit.point.y + shadowFloorOffset, hit.point.z);
         }
+
+        //If we have downward velocity for more than x seconds, we're falling, thus we haven't landed.
+        if (rb.velocity.y < fallingVelocityThreshold)
+        {
+            Coroutilities.DoAfterDelay(this, () =>
+            {
+                if (rb.velocity.y < fallingVelocityThreshold) landSFXFlag = false;
+            }, timeUntilFalling);
+        }
     }
     void FixedUpdate()
     {
         var grounded = IsGrounded();
 
-        if (!grounded) landed = false;
-
         anim.SetBool("Jumped", jumpInProgress);
-        if (grounded && !landed && rb.velocity.y < 0)
+        if (grounded && !landSFXFlag)
         {
-            landed = true;
-            AudioHub.Inst.Play(landingSFX, landingSettings, transform.position);
+            landSFXFlag = true;
+
+            if (landSFXCooldown == null)
+            {
+                AudioHub.Inst.Play(landingSFX, landingSettings, transform.position);
+                landSFXCooldown = Coroutilities.DoAfterDelay(this, () => landSFXCooldown = null, landingSFXCooldown);
+            }
         }
 
         //Debug.Log(anim.GetAnimatorTransitionInfo(0).IsUserName("Landing"));

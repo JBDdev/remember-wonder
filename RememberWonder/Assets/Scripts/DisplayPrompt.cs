@@ -60,9 +60,6 @@ public class DisplayPrompt : MonoBehaviour
 
         promptOffset = promptObj.transform.localPosition;
         ((RectTransform)promptObj.transform).SetParent(promptContainer.transform, false);
-
-        if (positionType == PromptPositionType.Default)
-            Coroutilities.DoUntil(this, () => promptObj.transform.position = transform.position + promptOffset, () => !Application.isPlaying);
     }
 
     private void OnEnable()
@@ -73,7 +70,7 @@ public class DisplayPrompt : MonoBehaviour
     {
         PlayerMovement.GrabStateChange -= SetSomethingIsGrabbed;
     }
-    private void SetSomethingIsGrabbed(bool isGrabbed) => somethingIsGrabbed = isGrabbed;
+    private void SetSomethingIsGrabbed(bool isGrabbed, PushPullObject _) => somethingIsGrabbed = isGrabbed;
 
     //--- Core Functions ---//
 
@@ -110,7 +107,7 @@ public class DisplayPrompt : MonoBehaviour
             if (!promptObj.activeSelf && (!grabbablePromptOwner || !grabbablePromptOwner.IsGrabbed))
             {
                 //appear without setting (no need, it's already set).
-                TriggerPromptChange(true, false);
+                TriggerPromptChange(true, false, null, lastKnownTriggerer);
             }
 
             //...and it's owner is currently grabbed, disappear, but remain the active prompt.
@@ -167,34 +164,30 @@ public class DisplayPrompt : MonoBehaviour
             {
                 default:
                 case PromptPositionType.Default:
+                    PositionPrompt(transform, promptOffset, true);
                     break;
 
                 case PromptPositionType.TriggererStatic:
-                    promptObj.transform.position = triggerer.transform.position + offsetFromTriggerer;
+                    PositionPrompt(triggerer.transform, offsetFromTriggerer, false);
                     break;
 
                 case PromptPositionType.TriggererFollow:
-                    followCorout = Coroutilities.DoUntil(this,
-                        () =>
-                        {
-                            if (!triggerer) return;
-                            promptObj.transform.position = triggerer.transform.position + offsetFromTriggerer;
-                        },
-                        () => !IsActivePrompt);
+                    PositionPrompt(triggerer.transform, offsetFromTriggerer, true);
                     break;
             }
 
             promptCorout = StartCoroutine(PromptAppear());
+
             //Wait a little to let any false positives settle down before triggering a state change.
             if (appearBufferCorout == null)
             {
                 appearBufferCorout = Coroutilities.DoAfterDelayFrames(this,
-                        () =>
-                        {
-                            PromptStateChange?.Invoke(this, true, triggerer);
-                            appearBufferCorout = null;
-                        },
-                        3);
+                    () =>
+                    {
+                        PromptStateChange?.Invoke(this, true, triggerer);
+                        appearBufferCorout = null;
+                    },
+                    3);
             }
         }
         else
@@ -205,6 +198,16 @@ public class DisplayPrompt : MonoBehaviour
             promptCorout = StartCoroutine(PromptDisappear());
             PromptStateChange?.Invoke(this, false, triggerer);
         }
+    }
+
+    private void PositionPrompt(Transform positionRef, Vector3 offset, bool shouldFollow)
+    {
+        promptObj.transform.position = positionRef.position + offset;
+        if (!shouldFollow) return;
+
+        followCorout = Coroutilities.DoUntil(this,
+            () => promptObj.transform.position = positionRef.position + offset,
+            () => !IsActivePrompt && !promptObj.activeSelf);
     }
 
     private IEnumerator PromptAppear()

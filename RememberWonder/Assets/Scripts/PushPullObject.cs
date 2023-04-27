@@ -6,9 +6,11 @@ using UnityEngine;
 
 public class PushPullObject : MonoBehaviour
 {
+    [Space(5)]
     [SerializeField][ReadOnlyInspector] private PlayerMovement player;
     [SerializeField][ReadOnlyInspector] private bool grabbed;
     [ReadOnlyInspector] public Vector3 defaultPos;
+    [Space(5)]
     [SerializeField] private Bewildered.UHashSet<DisplayPrompt> grabPrompts;
     public bool liftable;
     [SerializeField][NaughtyAttributes.ShowIf("liftable")] private TagString liftedTag;
@@ -16,11 +18,11 @@ public class PushPullObject : MonoBehaviour
     [NaughtyAttributes.HideIf("liftable")] public float maxPullDistance;
     [SerializeField] private Vector3 grabMoveMultipliers = Vector3.one;
     [Header("Audio")]
-    [SerializeField] private AudioList liftAudio;
-    [SerializeField] private SourceSettings liftAudioSettings;
+    [SerializeField][NaughtyAttributes.ShowIf("liftable")] private AudioList liftAudio;
+    [SerializeField][NaughtyAttributes.ShowIf("liftable")] private SourceSettings liftAudioSettings;
     [Space(5)]
-    [SerializeField] private AudioList putDownAudio;
-    [SerializeField] private SourceSettings putDownAudioSettings;
+    [SerializeField][NaughtyAttributes.ShowIf("liftable")] private AudioList putDownAudio;
+    [SerializeField][NaughtyAttributes.ShowIf("liftable")] private SourceSettings putDownAudioSettings;
 #if UNITY_EDITOR
     [Header("EDITOR ONLY")]
     [SerializeField] bool printRegistrationResults;
@@ -28,7 +30,7 @@ public class PushPullObject : MonoBehaviour
 
     Rigidbody rb;
 
-    string initTag;    //QUICK AND DIRTY FIX for camera collision, Delete later?
+    string initTag;
     Transform parentBeforeGrab;
     float initMass;
 
@@ -45,6 +47,8 @@ public class PushPullObject : MonoBehaviour
     private void OnDisable()
     {
         foreach (var prompt in grabPrompts) prompt.PromptStateChange -= OnGrabPromptStateChange;
+
+        InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformedWhileRegistered;
     }
 
     void Start()
@@ -62,7 +66,29 @@ public class PushPullObject : MonoBehaviour
         //If we don't have a player reference, bail out.
         if (!player) return;
 
-        if (liftable && player.DropLocation.InvalidDropPosition) return;
+        //If this is a release input,
+        if (InputHub.Inst.Gameplay.Grab.WasReleasedThisFrame())
+        {
+            //...ignore it if we're not already grabbed.
+            if (!grabbed) return;
+
+            //...and we're not using a toggle for this kind of object, ignore this input. We only care about press input.
+            string targetKey = liftable ? "holdToLift" : "holdToPull";
+
+            if (PlayerPrefs.HasKey(targetKey) && PlayerPrefs.GetInt(targetKey) == 0)
+                return;
+        }
+
+        //If this is an invalid drop position, bail out.
+        if (liftable && player.DropLocation.InvalidDropPosition)
+        {
+            //If the grab button's released (not just this frame), try again next frame. The cycle will be
+            //broken if the player starts pressing the grab button again.
+            //  If this evaluates to true, we MUST be using a toggle, since we would have bailed out earlier otherwise.
+            if (!InputHub.Inst.Gameplay.Grab.WasPressedThisFrame())
+                Coroutilities.DoNextFrame(this, () => OnInteractPerformedWhileRegistered(ctx));
+            return;
+        }
 
         grabbed = !grabbed;
 

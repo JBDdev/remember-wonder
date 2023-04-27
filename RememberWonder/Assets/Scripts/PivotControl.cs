@@ -12,6 +12,8 @@ public class PivotControl : MonoBehaviour
     [Space(5)]
     [Tooltip("Degrees per second. Speed up/slow down individual input sources in the input asset.")]
     [SerializeField] float lookSpeed;
+    [Tooltip("Degrees per second. This can ensure look speed will never be 0.")]
+    [SerializeField][Range(0, 10)] float minLookSpeed;
     [Tooltip("The name of the saved setting that determines camera sensitivity.")]
     [SerializeField] string lookSpeedOptionName;
     [Space(5)]
@@ -46,7 +48,7 @@ public class PivotControl : MonoBehaviour
         targetRotation = transform.rotation;
         targetRotation.eulerAngles = targetRotation.eulerAngles.Adjust(2, 0);
         yaw = targetRotation.eulerAngles.y;
-        pitch = targetRotation.eulerAngles.x;
+        pitch = -targetRotation.eulerAngles.x;
 
         Coroutilities.DoNextFrame(this, () =>
         {
@@ -62,6 +64,7 @@ public class PivotControl : MonoBehaviour
     {
         var sensitivityMultiplier = PlayerPrefs.GetFloat(lookSpeedOptionName);
         lookSpeed = initMaxLookSpeed * sensitivityMultiplier;
+        lookSpeed = Mathf.Max(lookSpeed, minLookSpeed);
 
         //After the player pauses next, schedule another sensitivity assignment.
         Coroutilities.DoWhen(this, ScheduleSensitivityAssignment, () => Time.timeScale <= 0);
