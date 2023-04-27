@@ -318,7 +318,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 143, y: -1100}
+  m_AnchoredPosition: {x: 143, y: -350}
   m_SizeDelta: {x: 1199.1, y: 116.8315}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &245169834
@@ -341,12 +341,19 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Credits\n\n\n\nGameplay Programming\n\nBrody Davison\nPatrick Mitchell\n\n\nLevel
-    Design\n\nMatt Palermo\n\n\nAudio Design & Art Direction\n\nMingshen Wu\n\n\nGame
-    Design\n\nMatt Palermo\nMingshen Wu\n\n\nProduction\n\nPatrick Mitchell\n\n\nSource
-    Control Managment\n\nBrody Davison\n\n\n\nCharacter Animations \n\nJia Wang\n\n\nAdditional
-    Art\n\nBohan Li\n\n\nAdditional External Assets by:\n\nBen Briggs\n(Music)\n\nSamer
-    Khatib (Snowconesolid Productions) LLC\n(Rubber Ducks)\n\nRobot Skeleton \n(Party
+  m_text: "<b>Credits</b>\n\n\n\n<b>Gameplay Programming</b>\n\nBrody Davison\nPatrick
+    Mitchell\n\n\n<b>Level Design</b>\n\nMatt Palermo\n\n\n<b>Audio Design & Art
+    Direction</b>\n\nMingshen Wu\n\n\n<b>Game Design</b>\n\nMatt Palermo\nMingshen
+    Wu\n\n\n<b>Production</b>\n\nPatrick Mitchell\n\n\n<b>Source Control Managment</b>\n\nPatrick
+    Mitchell\nBrody Davison\n\n\n\n<b>Character Animations </b>\n\nJia Wang\n\n\n<b>Additional
+    Art</b>\n\nBohan Li\n\n\n<b>Additional External Assets by:</b>\n\nToy Clattering
+    Drop SFX: https://freesound.org/people/MattRuthSound/sounds/561579/\n\nSoft Pillowy
+    Drop SFX: https://freesound.org/people/MattRuthSound/sounds/562040/\n\nCup Drop
+    SFX: https://freesound.org/people/MattRuthSound/sounds/562040/\n\nRubber Duck
+    SFX: https://freesound.org/people/miaopolus/sounds/656324/\n\n\nDon't Force It
+    - Ben Briggs: https://youtu.be/75-fDVMV_EQ\n\nYou Make Me Feel - Ben Briggs:
+    https://youtu.be/3GLmrHqiO5w\n\nDewdrop Jungle - Ben Briggs: https://youtu.be/Rxs83B7krQE\n\n\nSamer
+    Khatib [Snowconesolid Productions LLC]\n(Rubber Ducks)\n\nRobot Skeleton \n(Party
     Pack)\n\nreach the enD\n (Food & Kitchen Props)\n\nPULSAR BYTES\n (Worldskies
     Free Skybox Pack)\n\n3D Paw\n(Children's room)"
   m_isRightToLeft: 0
@@ -383,7 +390,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -411,7 +418,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 10, y: -486.40494, z: 10, w: -729.60785}
+  m_margin: {x: 75, y: -486.40494, z: 75, w: -729.60785}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
