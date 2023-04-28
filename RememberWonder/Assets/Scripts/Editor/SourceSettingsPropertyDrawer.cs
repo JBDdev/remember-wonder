@@ -18,7 +18,7 @@ public class SourceSettingsPropertyDrawer : PropertyDrawer
         {
             editedHeight += lineSpacing;
             editedHeight *= numberOfVars + 1;   //Plus one for the header/foldout itself
-            editedHeight -= lineSpacing;        //No need extra line spacing on the bottom line
+            editedHeight -= lineSpacing;        //No need for extra line spacing on the bottom line
         }
         return editedHeight;
     }

@@ -9,8 +9,14 @@ public class PivotControl : MonoBehaviour
     [SerializeField] bool clickAndDrag;
     [SerializeField] bool invertX;
     [SerializeField] bool invertY;
+    [Space(5)]
     [Tooltip("Degrees per second. Speed up/slow down individual input sources in the input asset.")]
     [SerializeField] float lookSpeed;
+    [Tooltip("Degrees per second. This can ensure look speed will never be 0.")]
+    [SerializeField][Range(0, 10)] float minLookSpeed;
+    [Tooltip("The name of the saved setting that determines camera sensitivity.")]
+    [SerializeField] string lookSpeedOptionName;
+    [Space(5)]
     [SerializeField][VectorLabels("Min", "Max")] Vector2 pitchRange;
     [Header("Reposition on Jump")]
     [Tooltip("How far this pivot can be from its initial local Y when the player jumps. Ignored if player is null.")]
@@ -25,6 +31,7 @@ public class PivotControl : MonoBehaviour
     float pitch;
     Vector2 lookAxis;
     Quaternion targetRotation;
+    float initMaxLookSpeed;
 
     Vector3 followCache;
     bool repositioning;
@@ -37,11 +44,33 @@ public class PivotControl : MonoBehaviour
         initialOffset = player.transform.TransformVector(transform.localPosition);
         transform.parent = null;
 
+        //Set target rotation and such to the rotation we just spawned with (but remove the Z euler/roll)
+        targetRotation = transform.rotation;
+        targetRotation.eulerAngles = targetRotation.eulerAngles.Adjust(2, 0);
+        yaw = targetRotation.eulerAngles.y;
+        pitch = -targetRotation.eulerAngles.x;
+
         Coroutilities.DoNextFrame(this, () =>
         {
             if (player) player.GetCapsuleCastParams(out playerCapsuleHeight, out _, out _, out _);
         });
+
+        //Since 0.5 is the default value, and what's in the inspector should be default, the max should be double the inspector value.
+        initMaxLookSpeed = lookSpeed * 2;
+        AssignSensitivity();
     }
+
+    private void AssignSensitivity()
+    {
+        var sensitivityMultiplier = PlayerPrefs.GetFloat(lookSpeedOptionName);
+        lookSpeed = initMaxLookSpeed * sensitivityMultiplier;
+        lookSpeed = Mathf.Max(lookSpeed, minLookSpeed);
+
+        //After the player pauses next, schedule another sensitivity assignment.
+        Coroutilities.DoWhen(this, ScheduleSensitivityAssignment, () => Time.timeScale <= 0);
+    }
+    /// <summary>Makes it so sensitvity will be assigned when the player unpauses (i.e. when timeScale is nonzero).</summary>
+    private void ScheduleSensitivityAssignment() => Coroutilities.DoWhen(this, AssignSensitivity, () => Time.timeScale > 0);
 
     void Update()
     {

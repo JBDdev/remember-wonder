@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 919230253819991551}
   - component: {fileID: 919230253819991545}
   - component: {fileID: 919230253819991550}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Prompt Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Grab
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 55b07adde78664242ab0ac146aeaa8ff, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: ba69d28ff45fe3f48ad284e78f9368ef, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -99,16 +99,16 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 0.1
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
+  m_charWidthMaxAdj: 50
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 919230253831900583}
   - component: {fileID: 919230253831900580}
   - component: {fileID: 919230253831900582}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Prompt Canvas
   m_TagString: MemoryMote
   m_Icon: {fileID: 0}
@@ -288,16 +288,22 @@ MonoBehaviour:
   sparklingMeshRend: {fileID: 0}
   useSparkleTriggerSizeOffset: 0
   sparkleTriggerSizeOffset: {x: 0, y: 0, z: 0}
+  useSparkleTriggerPosOffset: 0
+  sparkleTriggerPosOffset: {x: 0, y: 0, z: 0}
   usePromptTriggerSizeOffset: 0
   promptTriggerSizeOffset: {x: 0, y: 0, z: 0}
-  getRefs: 0
-  applyToTriggers: 0
+  usePromptTriggerPosOffset: 0
+  promptTriggerPosOffset: {x: 0, y: 0, z: 0}
   prevGrabbableOwner: {fileID: 0}
   prevSparklingMeshRend: {fileID: 0}
   prevUseSparkleTriggerSizeOffset: 0
   prevSparkleTriggerSizeOffset: {x: 0, y: 0, z: 0}
   prevUsePromptTriggerSizeOffset: 0
   prevPromptTriggerSizeOffset: {x: 0, y: 0, z: 0}
+  prevUseSparkleTriggerPosOffset: 0
+  prevSparkleTriggerPosOffset: {x: 0, y: 0, z: 0}
+  prevUsePromptTriggerPosOffset: 0
+  prevPromptTriggerPosOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &919230254670630461
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +313,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 919230254670630460}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Prompt Image Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,8 +405,11 @@ MonoBehaviour:
   triggerCollider: {fileID: 3183176413045614687}
   grabbableSparkleOwner: {fileID: 0}
   sparklingMeshRend: {fileID: 0}
-  triggerSizeOffset: {x: 0, y: 0, z: 0}
   sparklesPerUnitCube: 7.5
+  minSparkles: 7.5
+  colorChangeSpeed: 4
+  triggerSizeOffset: {x: 0, y: 0, z: 0}
+  triggerPosOffset: {x: 0, y: 0, z: 0}
   activatorTags:
     _serializedValues:
     - value:
@@ -415,7 +424,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3657898923889593943}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -543,7 +552,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.025
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1351,28 +1360,37 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 1
+      scalar: 1.25
       minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0
-          inSlope: 29.91554
-          outSlope: 29.91554
+          value: 0.0034965032
+          inSlope: 5.293389
+          outSlope: 5.293389
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.24844716
+          outWeight: 0.04623791
         - serializedVersion: 3
-          time: 0.1
+          time: 0.6
           value: 1
-          inSlope: -4.3071737
-          outSlope: -4.3071737
+          inSlope: -0.319227
+          outSlope: -0.319227
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.61180127
+          inWeight: 0.127785
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0.8
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -1634,7 +1652,7 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.5
+          time: 1
           value: 0
           inSlope: 0
           outSlope: 0
@@ -1658,7 +1676,7 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.5
+          time: 1
           value: 0
           inSlope: 0
           outSlope: 0
@@ -1681,18 +1699,18 @@ ParticleSystem:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0}
         key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 1, g: 1, b: 1, a: 1}
-        key3: {r: 0, g: 0, b: 0, a: 0}
-        key4: {r: 0, g: 0, b: 0, a: 0}
-        key5: {r: 0, g: 0, b: 0, a: 0}
+        key2: {r: 1, g: 1, b: 0.19999999, a: 1}
+        key3: {r: 0.19999999, g: 1, b: 0.19999999, a: 0}
+        key4: {r: 0.19999999, g: 0.53143823, b: 1, a: 0}
+        key5: {r: 0.7333336, g: 0.19999999, b: 1, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
         ctime1: 65535
-        ctime2: 65535
-        ctime3: 0
-        ctime4: 0
-        ctime5: 0
+        ctime2: 30146
+        ctime3: 41942
+        ctime4: 53739
+        ctime5: 65535
         ctime6: 0
         ctime7: 0
         atime0: 0
@@ -1708,33 +1726,33 @@ ParticleSystem:
         m_NumAlphaKeys: 4
       minGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 0}
-        key3: {r: 0, g: 0, b: 0, a: 0}
-        key4: {r: 0, g: 0, b: 0, a: 0}
-        key5: {r: 0, g: 0, b: 0, a: 0}
-        key6: {r: 0, g: 0, b: 0, a: 0}
+        key0: {r: 0.7333336, g: 0.19999999, b: 1, a: 0}
+        key1: {r: 0.19999999, g: 0.53333336, b: 1, a: 1}
+        key2: {r: 0.19999999, g: 1, b: 0.19999999, a: 1}
+        key3: {r: 1, g: 1, b: 0.19999999, a: 0}
+        key4: {r: 1, g: 0.46666667, b: 0.19999999, a: 0}
+        key5: {r: 1, g: 0.19999999, b: 0.19999999, a: 0}
+        key6: {r: 0.7333336, g: 0.19999999, b: 1, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
-        ctime0: 0
-        ctime1: 65535
-        ctime2: 0
-        ctime3: 0
-        ctime4: 0
-        ctime5: 0
-        ctime6: 0
+        ctime0: 6554
+        ctime1: 18350
+        ctime2: 30146
+        ctime3: 41942
+        ctime4: 53739
+        ctime5: 65535
+        ctime6: 65535
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
-        atime3: 0
+        atime1: 6554
+        atime2: 32768
+        atime3: 65535
         atime4: 0
         atime5: 0
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumColorKeys: 6
+        m_NumAlphaKeys: 4
   UVModule:
     serializedVersion: 2
     enabled: 1
@@ -2615,7 +2633,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -0.025
+      scalar: -0.0125
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4554,38 +4572,38 @@ ParticleSystem:
     vectorComponentCount0: 4
     color0:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 1
       minColor: {r: 1, g: 1, b: 1, a: 1}
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 0}
-        key3: {r: 0, g: 0, b: 0, a: 0}
-        key4: {r: 0, g: 0, b: 0, a: 0}
-        key5: {r: 0, g: 0, b: 0, a: 0}
+        key0: {r: 1, g: 0.19999999, b: 0.19999999, a: 0}
+        key1: {r: 1, g: 0.46666667, b: 0.19999999, a: 1}
+        key2: {r: 1, g: 1, b: 0.19999999, a: 1}
+        key3: {r: 0.19999999, g: 1, b: 0.19999999, a: 0}
+        key4: {r: 0.19999999, g: 0.53143823, b: 1, a: 0}
+        key5: {r: 0.7333336, g: 0.19999999, b: 1, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
-        ctime0: 0
-        ctime1: 65535
-        ctime2: 0
-        ctime3: 0
-        ctime4: 0
-        ctime5: 0
+        ctime0: 6554
+        ctime1: 18350
+        ctime2: 30146
+        ctime3: 41942
+        ctime4: 53739
+        ctime5: 65535
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
-        atime3: 0
+        atime1: 6554
+        atime2: 32768
+        atime3: 65535
         atime4: 0
         atime5: 0
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumColorKeys: 6
+        m_NumAlphaKeys: 4
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5297,10 +5315,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 982daa45eea846f47866a99f01b7911f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerCol: {fileID: 1384953003691579062}
   promptObj: {fileID: 919230253831900587}
   grabbablePromptOwner: {fileID: 0}
   positionType: 0
-  offsetFromTriggerer: {x: 0, y: 0, z: 0}
+  offsetFromTriggerer: {x: 0, y: 0.6, z: 0}
   activatorTags:
     _serializedValues:
     - value:
@@ -5322,7 +5341,7 @@ GameObject:
   - component: {fileID: 1061249276530888348}
   - component: {fileID: 2157449919875015717}
   - component: {fileID: 2466501408970508355}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Prompt Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5399,7 +5418,7 @@ GameObject:
   - component: {fileID: 7572764212615441383}
   - component: {fileID: 6964870875329784551}
   - component: {fileID: 709797915542852478}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3134527011676505681}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Prompt Image Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 3134527012384578962}
   - component: {fileID: 3134527012384578964}
   - component: {fileID: 3134527012384578963}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Prompt Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 3134527012447077834}
   - component: {fileID: 3134527012447077833}
   - component: {fileID: 3134527012447077835}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Prompt Canvas
   m_TagString: MemoryMote
   m_Icon: {fileID: 0}
@@ -384,10 +384,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 982daa45eea846f47866a99f01b7911f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerCol: {fileID: 3781202711959215835}
   promptObj: {fileID: 3134527012447077830}
   grabbablePromptOwner: {fileID: 0}
   positionType: 0
-  offsetFromTriggerer: {x: 0, y: 0, z: 0}
+  offsetFromTriggerer: {x: 0, y: 0.6, z: 0}
   activatorTags:
     _serializedValues:
     - value:
@@ -409,7 +410,7 @@ GameObject:
   - component: {fileID: 5644712736480617354}
   - component: {fileID: 5181920883577053834}
   - component: {fileID: 3357545466157439763}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -544,7 +545,7 @@ GameObject:
   - component: {fileID: 3025152476756346609}
   - component: {fileID: 4229194489210563656}
   - component: {fileID: 394932795300315182}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Prompt Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}

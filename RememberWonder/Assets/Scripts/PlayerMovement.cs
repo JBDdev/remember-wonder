@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,10 +11,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSpeed;
     [SerializeField] float accModifier;
     public bool pullingObject = false;
+#if UNITY_EDITOR
+    [SerializeField][ReadOnlyInspector] private PushPullObject _PulledObjPreview = null;
+#endif
     [Space(5)]
     [SerializeField] Vector3 directionLastFrame;
     [SerializeField] float dirChangeThreshold = 0.01f;
-    [SerializeField][Range(0, 1)] float airFriction = 1f;
 #if UNITY_EDITOR
     [Space(5)]
     [SerializeField] bool visualizeMoveInput;
@@ -23,44 +27,85 @@ public class PlayerMovement : MonoBehaviour
     public bool jumpInProgress = false;
     public float maxIncline;
     public float fallGravMultiplier = 1;
+    [SerializeField] private LayerMask groundLayers = ~0;
+
+    [Header("Jump Leeway Options")]
+    [SerializeField][Min(0)] float jumpBufferDuration = 0.1f;
+    [Tooltip("How much extra time the player has to jump when they walk off a ledge and thus stop being grounded.")]
+    [SerializeField][Min(0)] float coyoteTime = 0.1f;
+
+    [Header("Self Component References")]
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private CapsuleCollider primaryCol;
+    [SerializeField] private CapsuleCollider secondaryCol;
 
     [Header("Child Object References")]
-    [SerializeField] GameObject holdLocation;
+    [SerializeField] Transform pickUpPivot;
     [SerializeField] GameObject characterModel;
-    [SerializeField] GameObject dropLocation;
+    [SerializeField] DropPointTrigger dropLocation;
+    [SerializeField] GameObject cameraPivot;
+    [SerializeField] Transform shadow;
+    [SerializeField] float shadowFloorOffset;
+    [SerializeField] LayerMask shadowLayerMask = ~0;
 
     [Header("External References")]
-    [SerializeField] GameObject cameraPivot;
-    [SerializeField] GameObject heldObject;
-    [SerializeField] PushPullObject pushPullObject;
-
-    //Internal Component References
-    Rigidbody rb;
-    CapsuleCollider col;
+    [SerializeField] Animator anim;
 
     [Header("Rotation Controls")]
     [SerializeField] float rotationSpeed;
     [SerializeField] float minRotationDistance;
 
+    [Header("Player SFX")]
+    [SerializeField] AudioList landingSFX;
+    [SerializeField] SourceSettings landingSettings;
+    [Space(5)]
+    [SerializeField][NaughtyAttributes.MaxValue(0)] float fallingVelocityThreshold = -1e-05f;
+    [SerializeField][Min(0)] float timeUntilFalling = 0.1f;
+    [SerializeField][Range(0, 2)] float landingSFXCooldown;
+
     bool paused;
+    bool landSFXFlag = false;
+
+    bool groundedLastFrame;
+    bool jumpInputHeld;
+
+    /// <summary>
+    /// Nullifies itself after <see cref="jumpBufferDuration"/> seconds when jump is pressed.<br/>
+    /// If this isn't null, that means there's a jump currently buffered.<br/><br/>
+    /// See <see cref="OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext)"/>.
+    /// </summary>
+    Coroutine jumpBufferedTimer;
+    Coroutine coyoteTimeTimer;
+    Coroutine landSFXCooldown;
+
+    /// <summary>
+    /// Invoked whenever this we start or stop grabbing something..
+    /// <br/>- <see cref="bool"/>: True if we just grabbed something. False if just stopped.
+    /// <br/>- <see cref="PushPullObject"/>: The object we just grabbed, if applicable.
+    /// </summary>
+    public static Action<bool, PushPullObject> GrabStateChange;
 
     //Accessors
-    public GameObject HoldLocation { get { return holdLocation; } }
+    public Transform PickUpPivot { get { return pickUpPivot; } }
     public GameObject CharacterModel { get { return characterModel; } }
-    public GameObject DropLocation { get { return dropLocation; } }
+    public DropPointTrigger DropLocation { get { return dropLocation; } }
 
-    public PushPullObject PulledObject { get { return pushPullObject; } set { pushPullObject = value; } }
+    public PushPullObject PulledObject { get; set; }
     public Vector3 Velocity { get => rb.velocity; }
+    public Collider PrimaryCollider { get => primaryCol; }
+    public Collider SecondaryCollider { get => secondaryCol; }
+
 
     void Start()
     {
         //Get references to components on the GameObject
-        rb = GetComponent<Rigidbody>();
-        col = GetComponent<CapsuleCollider>();
+        anim = transform.GetComponentInChildren<Animator>();
 
         paused = false;
 
         PulledObject = null;
+
+        Coroutilities.DoNextFrame(this, () => GrabStateChange?.Invoke(false, null));
 
         InputHub.Inst.Gameplay.Jump.performed += OnJumpPerformed;
         InputHub.Inst.Gameplay.Grab.performed += OnInteractPerformed;
@@ -75,18 +120,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        //print($"Jump performed, did we press or release?: " +
-        //$"{(InputHub.Inst.Gameplay.Jump.WasPressedThisFrame() ? "Pressed" : "Released")}");
-
-        if (!IsGrounded())
-            return;
-
         if (pullingObject && !PulledObject.liftable)
             return;
 
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        rb.AddForce(new Vector3(0f, jumpForce, 0f));
-        jumpInProgress = true;
+        //This is called when jump is performed, which happens on press and release.
+        //If we're pressing, input's held. When we release, this'll be set to false again.
+        jumpInputHeld = InputHub.Inst.Gameplay.Jump.WasPressedThisFrame();
+
+        if (jumpBufferDuration > 0 && jumpInputHeld)
+        {
+            Coroutilities.TryStopCoroutine(this, ref jumpBufferedTimer);
+            jumpBufferedTimer = Coroutilities.DoAfterDelay(this, () => jumpBufferedTimer = null, jumpBufferDuration);
+        }
     }
 
     public void TogglePause()
@@ -100,26 +145,44 @@ public class PlayerMovement : MonoBehaviour
             {
                 jumpInProgress = false;
             }
+            rb.isKinematic = false;
+            rb.freezeRotation = true;
         }
         else
         {
             paused = true;
             InputHub.Inst.Gameplay.Jump.performed -= OnJumpPerformed;
             InputHub.Inst.Gameplay.Grab.performed -= OnInteractPerformed;
+            rb.isKinematic = true;
+            rb.freezeRotation = false;
         }
     }
 
     private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        if (!IsGrounded() || !PulledObject)
-            return;
+        //If a PulledObject hasn't been registered, don't do anything. (See PushPullObject)
+        if (!PulledObject) return;
+
+        //If this is a release input,
+        if (InputHub.Inst.Gameplay.Grab.WasReleasedThisFrame())
+        {
+            //...ignore it if we're not holding an object right now.
+            if (!pullingObject) return;
+
+            //...and we're not using a toggle for this kind of object, ignore this input. We only care about press input.
+            string targetKey = PulledObject.liftable ? "holdToLift" : "holdToPull";
+
+            if (PlayerPrefs.HasKey(targetKey) && PlayerPrefs.GetInt(targetKey) == 0)
+                return;
+        }
 
         if (!pullingObject)
         {
             pullingObject = true;
+
             if (PulledObject.liftable)
             {
-                dropLocation.SetActive(true);
+                dropLocation.gameObject.SetActive(true);
             }
             else
             {
@@ -134,39 +197,98 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (PulledObject.liftable && dropLocation.GetComponent<DropPointTrigger>().InvalidDropPosition)
+            //Don't do anything if this is an invalid place to drop the lifted object.
+            if (PulledObject.liftable && dropLocation.InvalidDropPosition)
+            {
+                //If the grab button's released (not just this frame), try again next frame. The cycle will be
+                //broken if the player starts pressing the grab button again.
+                //  If this evaluates to true, we MUST be using a toggle, since we would have bailed out earlier otherwise.
+                if (!InputHub.Inst.Gameplay.Grab.WasPressedThisFrame())
+                    Coroutilities.DoNextFrame(this, () => OnInteractPerformed(ctx));
                 return;
+            }
 
             pullingObject = false;
             rb.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezeRotation;
-            //dropLocation.SetActive(false);
         }
+
+        GrabStateChange?.Invoke(pullingObject, PulledObject);
     }
 
     //---Core Methods---//
 
+    private void Update()
+    {
+#if UNITY_EDITOR
+        _PulledObjPreview = PulledObject;
+#endif
+
+        //Update Drop Shadow 
+        RaycastHit hit;
+        if (shadow && Physics.Raycast(
+            transform.position.Adjust(1, -0.5f, true),
+            Vector3.down,
+            out hit,
+            Mathf.Infinity,
+            shadowLayerMask,
+            QueryTriggerInteraction.Ignore))
+        {
+            //float yPos = hit.collider.bounds.center.y + hit.collider.bounds.extents.y;
+            shadow.position = new Vector3(hit.point.x, hit.point.y + shadowFloorOffset, hit.point.z);
+        }
+
+        //If we have downward velocity for more than x seconds, we're falling, thus we haven't landed.
+        if (rb.velocity.y < fallingVelocityThreshold)
+        {
+            Coroutilities.DoAfterDelay(this, () =>
+            {
+                if (rb.velocity.y < fallingVelocityThreshold) landSFXFlag = false;
+            }, timeUntilFalling);
+        }
+    }
     void FixedUpdate()
     {
         var grounded = IsGrounded();
 
-        ApplyMoveForce(grounded);
-
-        //If NOT grounded, fall gravity should be modified, and we're falling (not rising),
-        if (!grounded && !Mathf.Approximately(fallGravMultiplier, 1) && rb.velocity.y < 0)
+        anim.SetBool("Jumped", jumpInProgress);
+        if (grounded && !landSFXFlag)
         {
-            //Apply extra force based on the multiplier (There's no "gravity scale" for 3D Rigidbodies).
-            //Gravity's already applied once by default; if 1.01, apply the extra 0.01
-            rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
-        }
+            landSFXFlag = true;
 
-        if (PulledObject != null)
-        {
-            if ((PulledObject.transform.position - transform.position).sqrMagnitude > 3 && PulledObject.liftable)
+            if (landSFXCooldown == null)
             {
-                PulledObject = null;
-                pullingObject = false;
+                AudioHub.Inst.Play(landingSFX, landingSettings, transform.position);
+                landSFXCooldown = Coroutilities.DoAfterDelay(this, () => landSFXCooldown = null, landingSFXCooldown);
             }
         }
+
+        //Debug.Log(anim.GetAnimatorTransitionInfo(0).IsUserName("Landing"));
+
+        ApplyMoveForce(grounded);
+        if (jumpBufferedTimer != null) TryDoJump();
+
+        //If we're not grounded, we were grounded last frame, and we're not jumping,
+        if (coyoteTime > 0 && !grounded && groundedLastFrame && !jumpInProgress)
+        {
+            //Give the player some time to jump anyway, even though they're starting to fall.
+            Coroutilities.TryStopCoroutine(this, ref coyoteTimeTimer);
+            coyoteTimeTimer = Coroutilities.DoAfterDelay(this, () => coyoteTimeTimer = null, coyoteTime);
+        }
+
+        //If NOT grounded and fall gravity should be modified,
+        if (!grounded && !Mathf.Approximately(fallGravMultiplier, 1))
+        {
+            //then, if we're falling or rising without the jump button held,
+            if (rb.velocity.y < 0 || (rb.velocity.y > 0 && !jumpInputHeld))
+            {
+                //Apply extra force based on the multiplier (There's no "gravity scale" for 3D Rigidbodies).
+                //Gravity's already applied once by default; if 1.01, apply the extra 0.01
+                rb.velocity += Physics.gravity * (fallGravMultiplier - 1) * Time.deltaTime;
+                //rb.AddForce(Physics.gravity * (fallGravMultiplier - 1f), ForceMode.Acceleration);
+            }
+        }
+
+        groundedLastFrame = grounded;
     }
 
     private void ApplyMoveForce(bool grounded)
@@ -175,35 +297,52 @@ public class PlayerMovement : MonoBehaviour
 
         direction = Quaternion.LookRotation(Vector3.Cross(cameraPivot.transform.right, Vector3.up)) * direction.SwapAxes(1, 2);
 
-        if (direction.sqrMagnitude > minRotationDistance)
+        anim.SetFloat("Walk Speed", direction.sqrMagnitude);
+
+        if (direction.sqrMagnitude > minRotationDistance * minRotationDistance)
             RotateCharacterModel(direction.normalized);
 
-        ApplyPullRestrictions(ref direction);
+        ApplyPullRestrictions(ref direction, grounded);
         if (direction == Vector3.zero) return;
 
         float percentHeld = direction.magnitude;
 
-        //If we are not grounded and moving in a significantly different direction (axis delta > deadzone),
-        if (!IsGrounded()
+        //If we are not grounded, inputting significantly, and in a significantly different direction (axis delta > deadzone),
+        if (!grounded
+            && direction.sqrMagnitude > minRotationDistance * minRotationDistance
             && (Mathf.Abs(directionLastFrame.x - direction.x) > dirChangeThreshold
             || Mathf.Abs(directionLastFrame.z - direction.z) > dirChangeThreshold))
         {
-            rb.velocity = new Vector3(rb.velocity.x * airFriction, rb.velocity.y, rb.velocity.z * airFriction);
+            //Make velocity point in the direction of input; input direction with the XZ magnitude of velocity, with the Y component of velocity
+            rb.velocity = (direction * Vector3.ProjectOnPlane(rb.velocity, Vector3.up).magnitude).Adjust(1, rb.velocity.y);
         }
 
         //If both axes are under max speed, apply force in direction.
         if (Mathf.Abs(rb.velocity.x) < maxSpeed * percentHeld && Mathf.Abs(rb.velocity.z) < maxSpeed * percentHeld)
         {
             rb.AddForce(direction * accModifier, ForceMode.Force);
-
-            //if (rb.velocity.sqrMagnitude > minRotationDistance)
-            //{
-            //    RotateCharacterModel(rb.velocity);
-            //}
         }
 
         directionLastFrame = direction;
         DrawDebugMovementRays(direction);
+    }
+
+    private void TryDoJump()
+    {
+        //No jumping if you've already jumped
+        if (jumpInProgress)
+            return;
+
+        //If not grounded, and not in coyote time, no jumping
+        if (!IsGrounded() && coyoteTimeTimer == null)
+            return;
+
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.AddForce(new Vector3(0f, jumpForce, 0f));
+
+        jumpInProgress = true;
+        anim.SetBool("Jumped", true);
+        Coroutilities.TryStopCoroutine(this, ref jumpBufferedTimer);
     }
 
     public bool IsGrounded()
@@ -215,16 +354,18 @@ public class PlayerMovement : MonoBehaviour
             point1, point2,
             radius, Vector3.down,
             out RaycastHit groundHit,
-            0.1f);
+            0.1f,
+            groundLayers,
+            QueryTriggerInteraction.Ignore);
 
         if (jumpInProgress && groundedCheck)
         {
-            Coroutilities.DoNextFrame(this, () => jumpInProgress = rb.velocity.y > 0);
+            Coroutine c = Coroutilities.DoNextFrame(this, () => jumpInProgress = rb.velocity.y > 0);
         }
         return groundedCheck && groundHit.normal.y >= maxIncline;
     }
 
-    private void ApplyPullRestrictions(ref Vector3 restrictedDir)
+    private void ApplyPullRestrictions(ref Vector3 restrictedDir, bool grounded)
     {
         //If not pulling, unrestrict all move axes and bail out
         if (!pullingObject)
@@ -232,41 +373,51 @@ public class PlayerMovement : MonoBehaviour
             rb.constraints &= ~(RigidbodyConstraints.FreezePosition);
             return;
         }
+        //Otherwise, if this object isn't liftable, we shouldn't be able to pull it if we're not grounded
+        //  We can bail out ONLY because we've already zeroed everything
+        if (!grounded && !PulledObject.liftable)
+        {
+            ZeroDirAndVelocity(ref restrictedDir, 3);
+            return;
+        }
 
         restrictedDir.x *= PulledObject.GrabMoveMultipliers.x;
         restrictedDir.z *= PulledObject.GrabMoveMultipliers.z;
 
-        //-- Restrict axis movement via max pull distance --//
+        if (BeyondMaxDistance(restrictedDir, 0))    //X is beyond max distance
+            ZeroDirAndVelocity(ref restrictedDir, 0);
 
-        //X is beyond the negative max distance
-        if (restrictedDir.x < 0
-            && PulledObject.transform.position.x < PulledObject.defaultPos.x - PulledObject.maxPullDistance)
-        {
-            restrictedDir.x = 0f;
-            rb.velocity = Vector3.zero;
-        }
-        //X is beyond the positive max distance
-        else if (restrictedDir.x > 0
-            && PulledObject.transform.position.x > PulledObject.defaultPos.x + PulledObject.maxPullDistance)
-        {
-            restrictedDir.x = 0f;
-            rb.velocity = Vector3.zero;
-        }
-        //Z is beyond the negative max distance
-        if (restrictedDir.z < 0
-            && PulledObject.transform.position.z < PulledObject.defaultPos.z - PulledObject.maxPullDistance)
-        {
-            restrictedDir.z = 0f;
-            rb.velocity = Vector3.zero;
-        }
-        //Z is beyond the positive max distance
-        else if (restrictedDir.z > 0
-            && PulledObject.transform.position.z > PulledObject.defaultPos.z + PulledObject.maxPullDistance)
-        {
-            restrictedDir.z = 0f;
-            rb.velocity = Vector3.zero;
-        }
+        if (BeyondMaxDistance(restrictedDir, 2))    //Z is beyond max distance
+            ZeroDirAndVelocity(ref restrictedDir, 2);
     }
+    #region Restriction Helper Functions
+    /// <param name="axis">012, XYZ. Input any other int to zero out ALL axes.</param>
+    private void ZeroDirAndVelocity(ref Vector3 dir, int axis)
+    {
+        switch (axis)
+        {
+            case 0: dir.x = 0f; break;
+            case 1: dir.y = 0f; break;
+            case 2: dir.z = 0f; break;
+            default:
+                dir = Vector3.zero;
+                break;
+        }
+
+        rb.velocity = Vector3.zero;
+    }
+    /// <param name="axis">012, XYZ. Clamped using <see cref="Mathf.Clamp(int, int, int)"/>.</param>
+    private bool BeyondMaxDistance(Vector3 direction, int axis)
+    {
+        axis = Mathf.Clamp(axis, 0, 2);
+
+        return
+            //Beyond negative max
+            (direction[axis] < 0 && PulledObject.transform.position[axis] < PulledObject.defaultPos[axis] - PulledObject.maxPullDistance)
+            //Beyond positive max
+            || (direction[axis] > 0 && PulledObject.transform.position[axis] > PulledObject.defaultPos[axis] + PulledObject.maxPullDistance);
+    }
+    #endregion
 
     private void RotateCharacterModel(Vector3 direction)
     {
@@ -278,8 +429,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void GetCapsuleCastParams(out float height, out float radius, out Vector3 top, out Vector3 bottom)
     {
-        height = col.height * transform.localScale.y;
-        radius = col.radius * transform.localScale.y;
+        height = primaryCol.height * transform.localScale.y;
+        radius = primaryCol.radius * transform.localScale.y;
 
         top = transform.position + Vector3.up * height / 2;
         top += Vector3.down * radius;   //Go from tip to center of cap-sphere

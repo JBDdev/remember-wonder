@@ -4,6 +4,75 @@ using UnityEngine;
 
 public static class UtilFunctions
 {
+#if UNITY_EDITOR
+    /// <summary>
+    /// Prints the properties of a serialized object to the console using <see cref="Debug.Log(object)"/>.
+    /// </summary>
+    /// <param name="maxDepth">How many levels of child properties to print. 0 means no child properties.</param>
+    public static void PrintProperties(this UnityEditor.SerializedObject propertyOwner, int maxDepth = int.MaxValue)
+    {
+        //no negativity allowed
+        maxDepth = Mathf.Max(maxDepth, 0);
+
+        var propertyIterator = propertyOwner.GetIterator();
+        if (propertyIterator == null)
+        {
+            Debug.LogWarning($"Object {propertyOwner} has no properties.");
+            return;
+        }
+
+        propertyIterator.PrintProperties(maxDepth);
+    }
+    /// <summary>
+    /// Prints the child properties of a serialized property to the console using <see cref="Debug.Log(object)"/>.
+    /// </summary>
+    /// <inheritdoc cref="PrintProperties(UnityEditor.SerializedObject, int)"/>
+    public static void PrintProperties(this UnityEditor.SerializedProperty property, int maxDepth = int.MaxValue)
+    {
+        //no negativity allowed
+        maxDepth = Mathf.Max(maxDepth, 0);
+
+        if (!property.hasChildren)
+        {
+            Debug.LogWarning($"Property {property.name} has no child properties.");
+            return;
+        }
+
+        property.Next(true);
+        Debug.Log(">\t" + property.name + "\n");
+        int initDepth = property.depth;
+
+        string indent;
+        var currentDepth = 0;
+        while (property.Next(currentDepth < maxDepth))
+        {
+            currentDepth = property.depth - initDepth;
+            if (currentDepth < 0) break;
+
+            //Indent equal to depth, and put a ">" before the last tab.
+            indent = (currentDepth == 0 ? ">" : "") + "\t";
+            for (int i = 0; i < currentDepth - 1; i++) indent += "\t";
+            if (currentDepth > 0) indent += ">\t";
+
+            Debug.Log(indent + property.name + "\n");
+        }
+    }
+
+    /// <summary>
+    /// Clears the log of <see cref="Debug.Log(object)"/> messages and similar.<br/><br/>
+    /// Sourced from <see href="https://stackoverflow.com/a/40578161"/>.<br/>
+    /// <b>CAUTION: This method uses reflection,</b> so if Unity changes <br/>the names of anything, 
+    /// this method will stop working.
+    /// </summary>
+    public static void ClearEditorLog()
+    {
+        var assembly = System.Reflection.Assembly.GetAssembly(typeof(UnityEditor.Editor));
+        var type = assembly.GetType("UnityEditor.LogEntries");
+        var method = type.GetMethod("Clear");
+        method.Invoke(new object(), null);
+    }
+#endif
+
     /// <summary>
     /// Gets the renderers of <paramref name="obj"/> and its children, and returns the combined bounds of 
     /// all the active/enabled ones.<br/>
@@ -56,6 +125,52 @@ public static class UtilFunctions
             : new Bounds(defaultCenter, Vector3.zero);
     }
 
+    /// <summary>
+    /// Counts the bounding box corners of the given RectTransform that are visible from the given Camera in screen space.
+    /// </summary>
+    /// <returns>The amount of bounding box corners that are visible from the Camera.</returns>
+    /// <remarks>Sourced from <see href="https://forum.unity3d.com/threads/test-if-ui-element-is-visible-on-screen.276549/#post-2978773"/>.</remarks>
+    private static int CountCornersVisibleFrom(this RectTransform rectTransform, Camera camera)
+    {
+        Rect screenBounds = new Rect(0f, 0f, Screen.width, Screen.height); // Screen space bounds (assumes camera renders across the entire screen)
+        Vector3[] objectCorners = new Vector3[4];
+        rectTransform.GetWorldCorners(objectCorners);
+
+        int visibleCorners = 0;
+        Vector3 tempScreenSpaceCorner; // Cached
+        for (var i = 0; i < objectCorners.Length; i++) // For each corner in rectTransform
+        {
+            tempScreenSpaceCorner = camera.WorldToScreenPoint(objectCorners[i]); // Transform world space position of corner to screen space
+            if (screenBounds.Contains(tempScreenSpaceCorner)) // If the corner is inside the screen
+            {
+                visibleCorners++;
+            }
+        }
+        return visibleCorners;
+    }
+
+    /// <summary>
+    /// Determines if this RectTransform is fully visible from the specified camera.<br/>
+    /// Works by checking if each bounding box corner of this RectTransform is inside the cameras screen space view frustrum.
+    /// </summary>
+    /// <returns><c>true</c> if is fully visible from the specified camera; otherwise, <c>false</c>.</returns>
+    /// <inheritdoc cref="CountCornersVisibleFrom(RectTransform, Camera)"/>
+    public static bool IsFullyVisibleFrom(this RectTransform rectTransform, Camera camera)
+    {
+        return CountCornersVisibleFrom(rectTransform, camera) == 4; // True if all 4 corners are visible
+    }
+
+    /// <summary>
+    /// Determines if this RectTransform is at least partially visible from the specified camera.<br/>
+    /// Works by checking if any bounding box corner of this RectTransform is inside the cameras screen space view frustrum.
+    /// </summary>
+    /// <returns><c>true</c> if is at least partially visible from the specified camera; otherwise, <c>false</c>.</returns>
+    /// <inheritdoc cref="CountCornersVisibleFrom(RectTransform, Camera)"/>
+    public static bool IsVisibleFrom(this RectTransform rectTransform, Camera camera)
+    {
+        return CountCornersVisibleFrom(rectTransform, camera) > 0; // True if any corners are visible
+    }
+
     public static Bounds EncapsulateAll(params Bounds[] bounds)
     {
         if (bounds.Length < 1)
@@ -67,6 +182,11 @@ public static class UtilFunctions
 
         return result;
     }
+
+    /// <summary>
+    /// Uses bit operators to determine if a given layer is in this layer mask.<br/>
+    /// Sourced from <see href="https://forum.unity.com/threads/checking-if-a-layer-is-in-a-layer-mask.1190230/#post-7613611"/>.
+    public static bool Includes(this LayerMask mask, int layer) => (mask.value & (1 << layer)) != 0;
 
     public static float GetSurfaceArea(this Bounds bounds)
         => 2 * bounds.size.x * bounds.size.y + 2 * bounds.size.x * bounds.size.z + 2 * bounds.size.y * bounds.size.z;
@@ -216,7 +336,6 @@ public static class UtilFunctions
             }
         }
     }
-
     private static Vector3[] _cacheUnitSphere = MakeUnitSphere(16);
     /// <summary>
     /// Makes a unit circle out of points. Three rings of points for each axis;<br/>
@@ -238,6 +357,21 @@ public static class UtilFunctions
         return v;
     }
 
+    /// <param name="xAxis">If <see langword="default"/> (zero alpha black), will be set to <see cref="Color.red"/>.</param>
+    /// <param name="yAxis">If <see langword="default"/> (zero alpha black), will be set to <see cref="Color.green"/>.</param>
+    /// <param name="zAxis">If <see langword="default"/> (zero alpha black), will be set to <see cref="Color.blue"/>.</param>
+    public static void DrawAxes(Transform axesOwner, float length = 1f, float duration = 0f,
+        Color xAxis = default, Color yAxis = default, Color zAxis = default)
+    {
+        if (xAxis == default) xAxis = Color.red;
+        if (yAxis == default) yAxis = Color.green;
+        if (zAxis == default) zAxis = Color.blue;
+
+        Debug.DrawRay(axesOwner.position, axesOwner.right * length, xAxis, duration);
+        Debug.DrawRay(axesOwner.position, axesOwner.up * length, yAxis, duration);
+        Debug.DrawRay(axesOwner.position, axesOwner.forward * length, zAxis, duration);
+    }
+
     /// <summary>
     /// Checks to see if this float is equal to <paramref name="target"/>, within a 
     /// given <paramref name="range"/>.
@@ -245,6 +379,7 @@ public static class UtilFunctions
     public static bool EqualWithinRange(this float subject, float target, float range)
         => subject >= target - range && subject <= target + range;
 
+    /// <inheritdoc cref="EqualWithinRange(float, float, float)"/>
     public static bool EqualWithinRange(this Vector3 subject, Vector3 target, float range)
         => (target - subject).sqrMagnitude <= range * range;
 
@@ -268,6 +403,18 @@ public static class UtilFunctions
         if (indexToAdjust < 0 || indexToAdjust > 3) return c;
 
         c[indexToAdjust] = addValue ? c[indexToAdjust] + value : value;
+        return c;
+    }
+    /// <remarks>
+    /// <b>Note this is for <see cref="Color32"/>s; values should be between 0 and 255.</b><br/>
+    /// Will return the color unchanged if <paramref name="indexToAdjust"/> is invalid (i&lt;0, i&gt;3).
+    /// </remarks>
+    /// <inheritdoc cref="Adjust(Color, int, float, bool)"/>
+    public static Color32 Adjust(this Color32 c, int indexToAdjust, byte value, bool addValue = false)
+    {
+        if (indexToAdjust < 0 || indexToAdjust > 3) return c;
+
+        c[indexToAdjust] = addValue ? (byte)(c[indexToAdjust] + value) : value;
         return c;
     }
 
@@ -372,6 +519,9 @@ public static class UtilFunctions
     public static float MinAbs(float a, float b) => Mathf.Abs(a) < Mathf.Abs(b) ? a : b;
     /// <inheritdoc cref="MinAbs(float[])"/>
     public static float MinAbs(int a, int b) => Mathf.Abs(a) < Mathf.Abs(b) ? a : b;
+
+    public static float MaxComponent(this Vector3 v) => Mathf.Max(v.x, v.y, v.z);
+    public static float MinComponent(this Vector3 v) => Mathf.Min(v.x, v.y, v.z);
 
     /// <summary>
     /// Divides two vectors component-wise.
